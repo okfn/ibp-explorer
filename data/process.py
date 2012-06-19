@@ -8,7 +8,7 @@ def process_questions(questions_xls,outputdir):
     sheet = wb.sheet_by_name('Sheet2')
     # Step 1: Parse the Excel spreadsheets
     questions = get_question_data(sheet)
-    # Step 2: Dump as CSV
+    # Step 2: Dump as JSON
     filename = os.path.join(outputdir, 'questions.json')
     json.dump(questions,open(filename,'w'))
     print 'wrote %s' % filename
