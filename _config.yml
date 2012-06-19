@@ -1,6 +1,5 @@
 # Jekyll site lives in a subfolder
 source: www
-destination: www/_site
 
 # Settings
 auto: true
