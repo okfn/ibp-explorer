@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python process.py OBI_2010_Database.xls rawdata.csv
+python process.py OBI_2010_Database.xls ../../gh-pages/rawdata.csv
