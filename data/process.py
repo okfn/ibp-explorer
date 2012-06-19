@@ -1,56 +1,55 @@
 import xlrd
-import sys
 import os
-import json
 import csv
-from pprint import pprint
+import json
 
-def find_sheet(workbook, sheet_name):
-    """Takes an Excel workbook and looks for a sheet.
-
-    Returns an Excel sheet object, or throws an error."""
-    for sheet in workbook.sheets():
-        if sheet.name == sheet_name:
-            return sheet
-    raise NameError("No such sheet in workbook: %s" % sheet_name)
-
-def parse(database,outfile):
-    wb = xlrd.open_workbook(database)
-    sheet = find_sheet(wb,'Individual Question Letters')
-    #data = get_json(sheet)
-    #json.dump( data, open(outfile,'w') )
-    # Step 1: Parse the Excel spreadsheet to build one-per-row dicts
-    data = get_csv(sheet)
+def process_questions(questions_xls,outputdir):
+    wb = xlrd.open_workbook(questions_xls)
+    sheet = wb.sheet_by_name('Sheet2')
+    # Step 1: Parse the Excel spreadsheets
+    questions = get_question_data(sheet)
     # Step 2: Dump as CSV
-    writer = csv.writer( open(outfile,'w'), delimiter=',')
-    for row in data:
+    filename = os.path.join(outputdir, 'questions.json')
+    json.dump(questions,open(filename,'w'))
+    print 'wrote %s' % filename
+    
+def process_answers(answers_xls,outputdir):
+    wb = xlrd.open_workbook(answers_xls)
+    sheet = wb.sheet_by_name('Individual Question Letters')
+    # Step 1: Parse the Excel spreadsheet
+    answers = get_answers_data(sheet)
+    # Step 2: Dump as CSV
+    filename = os.path.join(outputdir, 'answers.csv')
+    writer = csv.writer( open(filename,'w'), delimiter=',')
+    for row in answers:
         writer.writerow(row)
+    print 'wrote %s' % filename
 
-def get_json(sheet):
+def get_question_data(sheet):
     """Use the XLRD library to interpret the spreadsheet.
-    returns { CountryName -> [ score1, score2... ] }"""
+    returns CSV format."""
+    out = []
+    for n in range(1,sheet.nrows):
+        out.append({ 
+          'question': sheet.cell(n,1).value,
+          'a': sheet.cell(n,2).value,
+          'b': sheet.cell(n,3).value,
+          'c': sheet.cell(n,4).value,
+          'd': sheet.cell(n,5).value,
+          'e': sheet.cell(n,6).value,
+          })
+    return out
 
-    row_header = 5
-    json_dict = {}
-    for col in range(1, sheet.ncols):
-        country_name = sheet.cell(row_header,col).value
-        json_dict[country_name] = [ x.value for x in sheet.col_slice(col,row_header+1) ]
-    return json_dict
-
-def get_csv(sheet):
+def get_answers_data(sheet):
     """Use the XLRD library to interpret the spreadsheet.
     returns [ ['country','q1'..], ['Afghanistan','b',...] ...]"""
 
     row_header = 5
 
-    data = []
     header = [ 'country' ] + [ 'q'+str(x) for x in range(sheet.nrows-row_header-1) ]
-    data.append(header)
+    data = [ header ]
     for col in range(1, sheet.ncols):
-        country_name = sheet.cell(row_header,col).value
-        row = [ country_name ]
-        for x in sheet.col_slice(col,row_header+1):
-            row.append( x.value )
+        row = [ x.value for x in sheet.col_slice(col,row_header) ]
         data.append(row)
     # All rows should be same length
     row_lengths = [len(row) for row in data] 
@@ -64,9 +63,18 @@ def get_csv(sheet):
 
 if __name__=='__main__':
     import argparse
+    import sys
     parser = argparse.ArgumentParser(description='IBP data wrangling utility.')
-    parser.add_argument('datafile')
-    parser.add_argument('outputfile')
+    parser.add_argument('questions_xls')
+    parser.add_argument('answers_xls')
+    parser.add_argument('outputdir')
     arg = parser.parse_args()
     
-    parse( arg.datafile, arg.outputfile )
+    if arg.questions_xls[-4:]=='xlsx' or \
+       arg.answers_xls[-4:]=='xlsx':
+       parser.print_usage()
+       print 'Error: XLSX is not supported. Files must be in XLS format.'
+       sys.exit(-1)
+
+    process_questions( arg.questions_xls, arg.outputdir )
+    process_answers( arg.answers_xls, arg.outputdir )
