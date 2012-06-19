@@ -1,44 +1,35 @@
 
-$.fn.budgetDataDump = function(data) {
+$.fn.budgetDataDump = function(ds) {
   var box = $('<pre style="max-height: 200px; overflow: scroll;"/>');
-  this.append( box.html(JSON.stringify(data)) );
+  this.append( box.html(JSON.stringify(ds)) );
   return this;
 }
 
-$.fn.budgetDataAnalysis = function(data) {
+$.fn.budgetDataAnalysis = function(ds) {
   $.each(this,function() {
     var $this = $(this);
-    var ds = new Miso.Dataset({
-      data : data
-    });
     var logBox = $('<pre/>').appendTo($this);
     function log(str) {
       logBox.append('&bull; '+str+'\n');
     }
 
-    ds.fetch({ 
-      success : function() {
-        log("Dataset Ready. Columns: " + this.columnNames());
-        log("There are " + this.length + " rows");
-        log("Available Colors: " + this.column("color").data);
-      }
-    });
+    log("Dataset Ready. Columns: " + ds.columnNames());
+    log("There are " + ds.length + " rows");
+    log("Available Countries: " + ds.column("country").data);
   });
   return this;
 }
 
 $(function() {
-  var dataFile = 'rawdata.json';
-  //var dataFile = 'testdata.json';
+  var dataFile = 'rawdata.csv';
 
   // On load...
   $('.requires-data').spin();
 
-  function gotData(data) {
+  function gotData() {
     $('.requires-data').spin(false);
-    $('#data-dump').budgetDataDump(data);
-    $('#data-analysis').budgetDataAnalysis(data);
-
+    $('#data-dump').budgetDataDump(this);
+    $('#data-analysis').budgetDataAnalysis(this);
   }
   function error(err) {
     $('.requires-data').spin(false);
@@ -47,10 +38,12 @@ $(function() {
       .append( $('<pre/>').text(JSON.stringify(err,null,2)) )
       .prependTo( $('section') );
   }
-  $.ajax({
-    url: dataFile,
+  var ds = new Miso.Dataset({
+    url : dataFile,
+    delimiter : ','
+  });
+  ds.fetch({
     success: gotData,
-    error: error,
-    dataType: 'json'
+    error: error
   });
 });
