@@ -33,10 +33,12 @@ $(function() {
   }
   function error(err) {
     $('.requires-data').spin(false);
-    $('<div class="alert alert-error container"/>')
+    var errBox = $('<div class="alert alert-error container"/>')
       .html('Error loading data: '+dataFile+'<br/>')
-      .append( $('<pre/>').text(JSON.stringify(err,null,2)) )
       .prependTo( $('section') );
+    if (err) {
+      errBox.append( $('<pre/>').text(JSON.stringify(err,null,2)) )
+    }
   }
   var ds = new Miso.Dataset({
     url : dataFile,
