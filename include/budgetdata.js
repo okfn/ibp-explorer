@@ -21,7 +21,7 @@ $.fn.budgetDataAnalysis = function(ds) {
 }
 
 $(function() {
-  var dataFile = 'rawdata.csv';
+  var dataFile = 'data/rawdata.csv';
 
   // On load...
   $('.requires-data').spin();
