@@ -1,16 +1,14 @@
 template = require 'views/templates/country'
-data = require 'data'
+application = require 'application'
 
 module.exports = class CountryView extends Backbone.View
   initialize: (@countryName) ->
-    if not data[@countryName]?
+    @query = application.data.rows( (row)=>row.country==@countryName )
+    if not @query.length
       throw ('"'+@countryName+'" not in dataset.')
 
   render: =>
     # console.debug "Rendering #{@constructor.name}"
-    renderData = {
-      country: @countryName
-      data: data[@countryName]
-    }
+    renderData = @query.rowByPosition(0)
     @$el.html template renderData
     this
