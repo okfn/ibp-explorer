@@ -11,7 +11,7 @@ Application =
     @homeView = new HomeView()
 
     # Render static parts of the page
-    $('#sidebar').html(sidebar.render().el)
+    $('nav').html(sidebar.render().el)
 
     # Instantiate the router
     @router = new Router()

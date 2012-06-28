@@ -4,6 +4,8 @@ application = require 'application'
 class SidebarView extends Backbone.View
   template: template
   render: ->
+    $('<a href="/" class="home-link">Home</a>').appendTo( @$el )
+
     country_list = application.data.column('country').data
     _.each(country_list, 
         (country) => 
