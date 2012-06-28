@@ -30,7 +30,7 @@ exports.config =
         ]
 
     stylesheets:
-      defaultExtension: 'styl'
+      defaultExtension: 'css'
       joinTo: 'stylesheets/app.css'
       order:
         before: ['vendor/styles/normalize.css']

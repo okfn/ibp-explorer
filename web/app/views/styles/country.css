@@ -1,0 +1,23 @@
+.country-raw-data th,
+.country-raw-data .q-id {
+  background: #666;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+.country-raw-data .q-id {
+  width: 30px;
+}
+.country-raw-data .q-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  padding: 0 10px;
+  max-width: 560px;
+}
+.country-raw-data .q-answer {
+  text-align: center;
+  width: 80px;
+}
+

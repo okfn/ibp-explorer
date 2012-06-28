@@ -4,9 +4,9 @@ $ ->
   answersFile = 'answers.csv';
   $('.requires-data').spin();
 
-  miso_success = ->
+  miso_success = (questions,dataset)->
     $('.requires-data').spin(false);
-    application.initialize(this)
+    application.initialize(questions,dataset)
     Backbone.history.start()
 
   miso_error = (err)->
@@ -17,16 +17,14 @@ $ ->
     if (err) 
       errBox.append( $('<pre/>').text(JSON.stringify(err,null,2)) )
 
-  # Fetch Questions, then Answers (you can do better with underscore)
+  # TODO roll all data into a single JSON and then boot Miso datasets from them
   $.getJSON('questions.json', (questions)->
     ds = new Miso.Dataset({
       url : answersFile
       delimiter : ','
     })
     ds.fetch({
-      success: miso_success
+      success: -> miso_success(questions,ds)
       error: miso_error
     })
-    # Debug purposes
-    window.ds = ds;
   )

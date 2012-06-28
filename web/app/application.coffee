@@ -1,6 +1,6 @@
 # The application bootstrapper.
 Application =
-  initialize: (@data) ->
+  initialize: (@questions,@data) ->
     HomeView = require 'views/home_view'
     Router = require 'router'
     sidebar = require 'views/sidebar_view'
