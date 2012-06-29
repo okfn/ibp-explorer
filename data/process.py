@@ -46,6 +46,47 @@ def get_answers(answers_xls):
     
     return out
 
+def parse_int_list(int_list):
+    if not type(int_list) is unicode:
+        int_list = unicode(int(int_list))
+    
+    out = []
+    for s in int_list.replace(' ','').split(','):
+        split = s.split('-')
+        assert len(split)<3, 'Invalid range: %s' % s
+        if len(split)==1:
+            out.append(int(split[0]))
+        else:
+            for i in range(int(split[0]), int(split[1])):
+                out.append(i)
+    return out
+
+def get_groupings(groupings_xls):
+    wb = xlrd.open_workbook(groupings_xls)
+    sheet = wb.sheet_by_name('QuestionsGroups')
+
+    i = 1
+    out = []
+    # scroll down column B
+    while i < sheet.nrows:
+        title = sheet.row(i)[1].value
+        if title:
+            group = {
+                'by': title,
+                'entries': [],
+            }
+            while i<sheet.nrows-1 and sheet.row(i+1)[1].value:
+                i += 1
+                group['entries'].append({
+                  'title': sheet.row(i)[1].value,
+                  'qs': parse_int_list( sheet.row(i)[2].value ),
+                })
+            out.append( group )
+        i += 1
+    import json
+    #print json.dumps(out, indent=2)
+    return out
+
 # =================
 # Entry Point Logic 
 # =================
@@ -56,18 +97,20 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description='IBP data wrangling utility.')
     parser.add_argument('questions_xls')
     parser.add_argument('answers_xls')
+    parser.add_argument('groupings_xls')
     parser.add_argument('outputdir')
     arg = parser.parse_args()
-    
-    if arg.questions_xls[-4:]=='xlsx' or \
-       arg.answers_xls[-4:]=='xlsx':
-       parser.print_usage()
-       print 'Error: XLSX is not supported. Files must be in XLS format.'
-       sys.exit(-1)
+
+    for v in vars(arg).values():
+      if v[-4:]=='xlsx':
+         parser.print_usage()
+         print 'Error: XLSX is not supported. Files must be in XLS format.'
+         sys.exit(-1)
 
     data = {
         'questions' : get_questions( arg.questions_xls ),
         'answers'   : get_answers(   arg.answers_xls ),
+        'groupings' : get_groupings(  arg.groupings_xls ),
     }
     filename = os.path.join(arg.outputdir, 'data.json')
     json.dump(data, open(filename,'w') )
