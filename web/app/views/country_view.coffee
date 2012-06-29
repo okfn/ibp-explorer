@@ -1,28 +1,24 @@
-# TODO these could be combined into a single template, given HBS' power
 template = require 'views/templates/country'
-template_row = require 'views/templates/country_row'
 application = require 'application'
+
+answerDict = (row, answerIndex) ->
+  id: answerIndex
+  question: application.questions[answerIndex].question
+  letter: row['l'+answerIndex]
+  number: row['n'+answerIndex]
 
 module.exports = class CountryView extends Backbone.View
   initialize: (@countryName) ->
     query = application.answers.rows( (row)=>row.country==@countryName )
     if not query.length
       throw ('"'+@countryName+'" not in dataset.')
-    @row = query.rowByPosition(0)
+    row = query.rowByPosition(0)
+    @renderData = { 
+      country: row.country
+      answers: answerDict(row,i) for i in [1..123] 
+    }
 
   render: =>
-    # console.debug "Rendering #{@constructor.name}"
-    dom = $(template(@row))
+    dom = $(template(@renderData))
     @$el.append dom
-
-    # Append data dump to the DOM
-    table = dom.find('tbody')
-    for i in [1..123]
-      table.append $(template_row
-        id: i
-        text: application.questions[i].question
-        answer_number: @row['n'+i]
-        answer_letter: @row['l'+i]
-      )
-
     this
