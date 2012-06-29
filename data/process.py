@@ -6,7 +6,7 @@ import json
 def get_questions(questions_xls):
     wb = xlrd.open_workbook(questions_xls)
     sheet = wb.sheet_by_name('Sheet2')
-    out = []
+    out = [{ 'question':'ERROR: Do not try to access question 0!', 'a':'', 'b':'', 'c':'', 'd':'', 'e':''}]
     for n in range(1,sheet.nrows):
         out.append({ 
           'question': sheet.cell(n,1).value,
@@ -20,16 +20,24 @@ def get_questions(questions_xls):
     
 def get_answers(answers_xls):
     wb = xlrd.open_workbook(answers_xls)
-    sheet = wb.sheet_by_name('Individual Question Letters')
+    sheet_n = wb.sheet_by_name('Individual Question Numbers')
+    sheet_l = wb.sheet_by_name('Individual Question Letters')
+
+    assert sheet_l.ncols==sheet_n.ncols, 'Numbers & Letters worksheets should be same width in columns'
+
     row_header = 5
-
     out = [ ]
-    for col in range(1, sheet.ncols):
-        s = sheet.col_slice(col,row_header) 
-        row = { 'country' : s[0].value }
-        for i in range(1,len(s)):
-          row[i] = s[i].value
-
+    for col in range(1, sheet_n.ncols):
+        column_n = sheet_n.col_slice(col,row_header) 
+        column_l = sheet_l.col_slice(col,row_header) 
+        assert column_n[0].value==column_l[0].value, 'Numbers & Lettes worksheets should have countries in the same order'
+        row = { 'country' : column_n[0].value }
+        for i in range(1,len(column_n)):
+            number = column_n[i].value
+            number = int(number) if number else -1
+            letter = column_l[i].value
+            row['n%d'%i] = number
+            row['l%d'%i] = letter
         out.append(row)
 
     # All rows should be same length
