@@ -5,7 +5,7 @@ application = require 'application'
 
 module.exports = class CountryView extends Backbone.View
   initialize: (@countryName) ->
-    @query = application.data.rows( (row)=>row.country==@countryName )
+    @query = application.answers.rows( (row)=>row.country==@countryName )
     if not @query.length
       throw ('"'+@countryName+'" not in dataset.')
 
@@ -17,11 +17,11 @@ module.exports = class CountryView extends Backbone.View
 
     # Append data dump to the DOM
     table = dom.find('tbody')
-    for i in [0..122]
+    for i in [1..123]
       table.append $(template_row
-        id: i+1
-        text: application.questions[i].question
-        answer: row['q'+i]
+        id: i
+        text: application.questions[i-1].question
+        answer: row[i]
       )
 
     this

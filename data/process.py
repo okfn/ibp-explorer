@@ -3,31 +3,9 @@ import os
 import csv
 import json
 
-def process_questions(questions_xls,outputdir):
+def get_questions(questions_xls):
     wb = xlrd.open_workbook(questions_xls)
     sheet = wb.sheet_by_name('Sheet2')
-    # Step 1: Parse the Excel spreadsheets
-    questions = get_question_data(sheet)
-    # Step 2: Dump as JSON
-    filename = os.path.join(outputdir, 'questions.json')
-    json.dump(questions,open(filename,'w'))
-    print 'wrote %s' % filename
-    
-def process_answers(answers_xls,outputdir):
-    wb = xlrd.open_workbook(answers_xls)
-    sheet = wb.sheet_by_name('Individual Question Letters')
-    # Step 1: Parse the Excel spreadsheet
-    answers = get_answers_data(sheet)
-    # Step 2: Dump as CSV
-    filename = os.path.join(outputdir, 'answers.csv')
-    writer = csv.writer( open(filename,'w'), delimiter=',')
-    for row in answers:
-        writer.writerow(row)
-    print 'wrote %s' % filename
-
-def get_question_data(sheet):
-    """Use the XLRD library to interpret the spreadsheet.
-    returns CSV format."""
     out = []
     for n in range(1,sheet.nrows):
         out.append({ 
@@ -39,23 +17,26 @@ def get_question_data(sheet):
           'e': sheet.cell(n,6).value,
           })
     return out
-
-def get_answers_data(sheet):
-    """Use the XLRD library to interpret the spreadsheet.
-    returns [ ['country','q1'..], ['Afghanistan','b',...] ...]"""
-
+    
+def get_answers(answers_xls):
+    wb = xlrd.open_workbook(answers_xls)
+    sheet = wb.sheet_by_name('Individual Question Letters')
     row_header = 5
 
-    header = [ 'country' ] + [ 'q'+str(x) for x in range(sheet.nrows-row_header-1) ]
-    data = [ header ]
+    out = [ ]
     for col in range(1, sheet.ncols):
-        row = [ x.value for x in sheet.col_slice(col,row_header) ]
-        data.append(row)
-    # All rows should be same length
-    row_lengths = [len(row) for row in data] 
-    assert len(set(row_lengths))==1, 'All rows should have same length: %s' % row_lengths
+        s = sheet.col_slice(col,row_header) 
+        row = { 'country' : s[0].value }
+        for i in range(1,len(s)):
+          row[i] = s[i].value
 
-    return data
+        out.append(row)
+
+    # All rows should be same length
+    row_lengths = [len(row) for row in out] 
+    assert len(set(row_lengths))==1, 'All rows should have same length: %s' % row_lengths
+    
+    return out
 
 # =================
 # Entry Point Logic 
@@ -76,5 +57,11 @@ if __name__=='__main__':
        print 'Error: XLSX is not supported. Files must be in XLS format.'
        sys.exit(-1)
 
-    process_questions( arg.questions_xls, arg.outputdir )
-    process_answers( arg.answers_xls, arg.outputdir )
+    data = {
+        'questions' : get_questions( arg.questions_xls ),
+        'answers'   : get_answers(   arg.answers_xls ),
+    }
+    filename = os.path.join(arg.outputdir, 'data.json')
+    json.dump(data, open(filename,'w') )
+    print 'wrote %s' % filename
+

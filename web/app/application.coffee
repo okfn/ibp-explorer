@@ -1,16 +1,20 @@
+
 # The application bootstrapper.
 Application =
-  initialize: (@questions,@data) ->
+  initialize: (rawdata) ->
     HomeView = require 'views/home_view'
     Router = require 'router'
     sidebar = require 'views/sidebar_view'
 
-    # Ideally, initialized classes should be kept in controllers & mediator.
-    # If you're making big webapp, here's more sophisticated skeleton
-    # https://github.com/paulmillr/brunch-with-chaplin
-    @homeView = new HomeView()
+    @questions = rawdata.questions
 
-    # Render static parts of the page
+    @answers = new Miso.Dataset({
+      data: rawdata.answers
+    })
+    @answers.fetch()
+
+    # Static view components
+    @homeView = new HomeView()
     $('nav').html(sidebar.render().el)
 
     # Instantiate the router

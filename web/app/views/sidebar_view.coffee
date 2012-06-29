@@ -5,7 +5,7 @@ class SidebarView extends Backbone.View
   template: template
   render: ->
     renderData = 
-      countries: application.data.column('country').data
+      countries: application.answers.column('country').data
 
     @$el.append( template(renderData) )
     this
