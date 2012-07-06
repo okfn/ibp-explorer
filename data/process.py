@@ -87,6 +87,18 @@ def get_groupings(groupings_xls):
     #print json.dumps(out, indent=2)
     return out
 
+def get_regions(groupings_xls):
+    wb = xlrd.open_workbook(groupings_xls)
+    sheet = wb.sheet_by_name('CountriesRegions')
+    header_row = 2
+    out = {}
+    for col_number in range(sheet.ncols):
+        col = sheet.col_slice(col_number,header_row)
+        l = [ col[i].value for i in range(1, len(col)) ]
+        # Strip empty strings and store the list
+        out[ col[0].value ] = filter(bool,l)
+    return out
+
 # =================
 # Entry Point Logic 
 # =================
@@ -111,6 +123,7 @@ if __name__=='__main__':
         'questions' : get_questions( arg.questions_xls ),
         'answers'   : get_answers(   arg.answers_xls ),
         'groupings' : get_groupings(  arg.groupings_xls ),
+        'regions'   : get_regions(  arg.groupings_xls ),
     }
     filename = os.path.join(arg.outputdir, 'data.json')
     json.dump(data, open(filename,'w') )
