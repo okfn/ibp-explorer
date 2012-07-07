@@ -1,0 +1,89 @@
+header {
+  padding: 20px 0;
+  background: #eef;
+}
+header a {
+  font-weight: normal;
+  color: #666;
+}
+header a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+section {
+  padding: 20px 0;
+  min-height: 400px;
+}
+
+.requires-data {
+  min-height: 100px;
+}
+
+.budget-view-outer {
+  border: 1px solid #ccc;
+  width: 802px;
+  position: relative;
+  padding-left: 138px;
+}
+.budget-view {
+  font-size: 10px;
+  font-family: monospace;
+  display: block;
+  overflow-x: scroll;
+}
+.budget-view tr td {
+  padding: 0 2px;
+  background: #fff;
+}
+.budget-view tr:nth-child(even) td {
+  background: #eee;
+}
+.budget-view .country {
+  text-align: right;
+  padding-right: 8px;
+  white-space: nowrap;
+  position: absolute;
+  width: 130px;
+  left: 0;
+  top: auto;
+}
+.budget-view .score {
+  text-align: center;
+  min-width: 16px;
+}
+.budget-view .active {
+  background: #ff0 !important;
+}
+.budget-view td.score {
+  background: #f0f;
+  outline: 1px solid transparent;
+}
+.budget-view td.score:hover {
+  outline-color: #ff3;
+}
+.budget-view .score.a {
+  background: #ccc;
+}
+.budget-view .score.b {
+  background: #aaa;
+}
+.budget-view .score.c {
+  background: #888;
+  color: #fff;
+}
+.budget-view .score.d {
+  background: #666;
+  color: #fff;
+}
+.budget-view .score.e {
+  background: #f99;
+}
+
+#questionBox,
+#answerBox {
+  margin-left: 3%;
+  width:45%;
+  float: left;
+  min-height: 100px;
+}
