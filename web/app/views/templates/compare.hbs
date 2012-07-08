@@ -1,0 +1,27 @@
+<h2>Compare: {{title}}</h2>
+<ul>
+{{#each view_without}}
+  <li><a href="{{link}}">Remove {{name}}</a></li>
+{{/each}}
+</ul>
+<table class="country-raw-data">
+  <thead>
+    <th>#</th>
+    <th>Question</th>
+    {{#each countries}}
+      <th>{{this}}</th>
+    {{/each}}
+  </thead>
+  <tbody>
+  {{#each data}}
+    <tr>
+      <td class="q-id">{{id}}</td>
+      <td class="q-text">{{question}}</td>
+      {{#each answers}}
+        <td class="q-answer">{{this}}</td>
+      {{/each}}
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
