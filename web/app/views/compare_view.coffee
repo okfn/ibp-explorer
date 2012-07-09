@@ -19,13 +19,16 @@ module.exports = class CompareView extends Backbone.View
           id: i
           question: application.questions[i].question
           answers: answers
-    missing_countries = _.without application.answers.column('country').data, @countries
+    missing_countries = _.difference application.answers.column('country').data, @countries
     @renderData = 
       countries: @countries
       title: @countries.join(', ')
       view_without: (@view_without c for c in @countries)
       view_with: (@view_with c for c in missing_countries)
       data: data
+
+  sidebar: =>
+    'asdf'
 
   lookup_row: (country) =>
     query = application.answers.rows( (row)=>row.country==country )

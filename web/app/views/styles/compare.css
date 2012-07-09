@@ -1,8 +1,0 @@
-#view-compare .compare-without {
-  list-style-type: none;
-}
-#view-compare .compare-without .close {
-  float: none !important;
-  font-size: 12px;
-  padding-right: 8px;
-}

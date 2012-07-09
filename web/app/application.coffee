@@ -1,10 +1,8 @@
-
 # The application bootstrapper.
 Application =
   initialize: (rawdata) ->
     HomeView = require 'views/home_view'
     Router = require 'router'
-    sidebar = require 'views/sidebar_view'
 
     @questions = rawdata.questions
 
@@ -15,7 +13,6 @@ Application =
 
     # Static view components
     @homeView = new HomeView()
-    $('nav').html(sidebar.render().el)
 
     # Instantiate the router
     @router = new Router()
