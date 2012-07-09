@@ -1,9 +1,17 @@
-<h2>Compare: {{title}}</h2>
-<ul>
+<h2>Comparing:</h2>
+<ul class="compare-without">
 {{#each view_without}}
-  <li><a href="{{link}}">Remove {{name}}</a></li>
+  <li><a href="{{link}}" class="close ibp-close">x</a>{{name}}</li>
 {{/each}}
 </ul>
+<h2>Add Country:</h2>
+<select id="compare-add-country">
+  <option>Select a country...</option>
+  {{#each view_with}}
+    <option value="{{name}}">{{name}}</option>
+  {{/each}}
+</select>
+<h2>Dataset:</h2>
 <table class="country-raw-data">
   <thead>
     <th>#</th>

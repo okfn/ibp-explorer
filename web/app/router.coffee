@@ -19,4 +19,6 @@ module.exports = class Router extends Backbone.Router
     path = path.split('/')
     path = _.filter path, _.identity
 
-    $('#content').html new CompareView(path).render().el
+    view = new CompareView(path)
+    $('#content').html view.render().el
+    view.post_render()
