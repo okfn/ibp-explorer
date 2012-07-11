@@ -34,7 +34,7 @@ def get_answers(answers_xls):
         row = { 'country' : column_n[0].value }
         for i in range(1,len(column_n)):
             number = column_n[i].value
-            number = int(number) if number else -1
+            number = -1 if number is '' else int(number)
             letter = column_l[i].value
             row['n%d'%i] = number
             row['l%d'%i] = letter

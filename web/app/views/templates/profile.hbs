@@ -17,7 +17,7 @@
           <thead>
             <th>#</th>
             <th>Question</th>
-            <th colspan="2">Score</th>
+            <th colspan="3">Score</th>
           </thead>
           <tbody>
           {{#each answers}}
@@ -25,7 +25,12 @@
               <td class="q-id">{{id}}</td>
               <td class="q-text">{{question}}</td>
               <td class="q-answer letter letter-{{letter}}">{{letter_processed}}</td>
-              <td class="q-answer number">{{number}}</td>
+              <td class="q-answer number">{{number}}%</td>
+              {{#if render_pie_chart}}
+                <td class="q-answer chart pie">{{number}}/100</td>
+              {{else}}
+                <td class="q-answer chart">&nbsp;</td>
+              {{/if}}
             </tr>
           {{/each}}
           </tbody>

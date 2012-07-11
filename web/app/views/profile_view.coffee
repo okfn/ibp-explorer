@@ -10,16 +10,18 @@ module.exports = class ProfileView extends Backbone.View
     letter_processed = letter.toUpperCase()
     if letter_processed=='E'
       letter_processed = 'n/a'
+    number = row['n'+answerIndex]
     id: answerIndex
     question: application.questions[answerIndex].question
     letter: letter
     letter_processed: letter_processed
-    number: row['n'+answerIndex]
+    render_pie_chart: number>=0
+    number: number
 
   initialize: (@countryName) ->
     if not @countryName
       @renderData = 
-        country: '<em>(none)</em>'
+        country: '<span style="font-weight: normal; font-style: italic;">(select a country)</span>'
         countries: application.answers.column('country').data
     else 
       query = application.answers.rows( (row)=>row.country==@countryName )
@@ -35,3 +37,7 @@ module.exports = class ProfileView extends Backbone.View
     dom = template @renderData
     @$el.append dom
     this
+
+  post_render: =>
+    $('.pie').peity('pie')
+

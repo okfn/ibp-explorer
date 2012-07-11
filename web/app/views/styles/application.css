@@ -106,17 +106,21 @@ footer .okfn-credit {
   text-align: center;
 }
 #profile-table td {
-  padding: 0 1px;
+  padding: 1px 0 0 0;
 }
 #profile-table .q-id {
-  width: 20px;
+  width: 30px;
 }
 #profile-table .q-answer {
-  width: 20px;
+  width: 30px;
   text-align: center;
-}
-#profile-table .letter {
   font-family: monospace;
+}
+#profile-table .q-answer.number {
+  text-align: right;
+  width: 45px;
+}
+#profile-table .q-answer.letter {
   font-weight: bold;
 }
 #profile-table .letter-a { background: #faeac8; }
@@ -129,10 +133,10 @@ footer .okfn-credit {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 10px;
-  padding: 0 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   max-width: 200px;
-  width: 300px;
+  font-size: 10px;
 }
 
 
