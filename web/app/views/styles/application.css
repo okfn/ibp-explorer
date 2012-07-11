@@ -80,10 +80,10 @@ footer .okfn-credit {
 
 /* View : Home */
 /* =========== */
-#home-view {
-  width: 480px
-  margin: 0 auto
-}
+
+/* View : Profile/Table */
+/* ==================== */
+/*
 .country-raw-data th,
 .country-raw-data .q-id {
   background: #666;
@@ -94,22 +94,46 @@ footer .okfn-credit {
 .country-raw-data .q-id {
   width: 30px;
 }
-.country-raw-data .q-text {
+.country-raw-data .q-answer {
+  text-align: center;
+  width: 80px;
+}
+*/
+#profile-table .q-id,
+#profile-table th {
+  background: #999;
+  color: #fff;
+  text-align: center;
+}
+#profile-table td {
+  padding: 0 1px;
+}
+#profile-table .q-id {
+  width: 20px;
+}
+#profile-table .q-answer {
+  width: 20px;
+  text-align: center;
+}
+#profile-table .letter {
+  font-family: monospace;
+  font-weight: bold;
+}
+#profile-table .letter-a { background: #faeac8; }
+#profile-table .letter-b { background: #f8c175; }
+#profile-table .letter-c { background: #f5854e; color: #fff; }
+#profile-table .letter-d { background: #cb3727; color: #fff; }
+#profile-table .letter-e { background: #ccc;  font-weight: normal;}
+
+#profile-table .q-text {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 10px;
   padding: 0 10px;
   max-width: 200px;
-  width: 200px;
+  width: 300px;
 }
-.country-raw-data .q-answer {
-  text-align: center;
-  width: 80px;
-}
-
-/* View : Country */
-/* ============== */
 
 
 /* View : Compare */

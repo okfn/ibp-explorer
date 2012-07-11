@@ -1,17 +1,14 @@
 application = require 'application'
-CountryView = require 'views/country_view'
 ProfileView = require 'views/profile_view'
 CompareView = require 'views/compare_view'
 
 module.exports = class Router extends Backbone.Router
   routes:
     '': 'home'
-    'country': 'countryview'
-    'country/:id': 'countryview'
     'compare' : 'compare'
     'compare/*path' : 'compare'
-    'profile' : 'profile'
-    'profile/*path' : 'profile'
+    'profile/table' : 'profile_table'
+    'profile/table/*path' : 'profile_table'
 
   initialize: ->
     @on('all', @postRender)
@@ -34,10 +31,7 @@ module.exports = class Router extends Backbone.Router
   home: ->
     @active = application.homeView
 
-  countryview: (country='') ->
-    @active = new CountryView(country)
-
-  profile: (country='') ->
+  profile_table: (country='') ->
     @active = new ProfileView(country)
 
 compare: (path='') ->

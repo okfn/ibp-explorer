@@ -3,11 +3,17 @@ application = require 'application'
 
 module.exports = class ProfileView extends Backbone.View
   template: template
+  id: 'profile-table'
 
   answerDict: (row, answerIndex) ->
+    letter = row['l'+answerIndex]
+    letter_processed = letter.toUpperCase()
+    if letter_processed=='E'
+      letter_processed = 'n/a'
     id: answerIndex
     question: application.questions[answerIndex].question
-    letter: row['l'+answerIndex]
+    letter: letter
+    letter_processed: letter_processed
     number: row['n'+answerIndex]
 
   initialize: (@countryName) ->

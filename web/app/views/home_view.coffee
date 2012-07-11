@@ -2,7 +2,6 @@ template = require './templates/home'
 application = require 'application'
 
 module.exports = class HomeView extends Backbone.View
-  id: 'home-view'
   status: ->
     ds = application.answers
     rows: ds.length

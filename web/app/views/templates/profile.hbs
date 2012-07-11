@@ -4,7 +4,7 @@
       <h4>Select...</h4>
       <ul>
         {{#each countries}}
-          <li><a href="#profile/{{this}}">{{this}}</a></li>
+          <li><a href="#profile/table/{{this}}">{{this}}</a></li>
         {{/each}}
       </ul>
     </div>
@@ -13,20 +13,19 @@
     <div id="main">
       <h2>{{{country}}}</h2>
       {{#if answers}}
-        <table class="country-raw-data">
+        <table class="table table-striped table-small">
           <thead>
             <th>#</th>
             <th>Question</th>
-            <th>Letter</th>
-            <th>Index</th>
+            <th colspan="2">Score</th>
           </thead>
           <tbody>
           {{#each answers}}
             <tr>
               <td class="q-id">{{id}}</td>
               <td class="q-text">{{question}}</td>
-              <td class="q-answer">{{letter}}</td>
-              <td class="q-answer">{{number}}</td>
+              <td class="q-answer letter letter-{{letter}}">{{letter_processed}}</td>
+              <td class="q-answer number">{{number}}</td>
             </tr>
           {{/each}}
           </tbody>
