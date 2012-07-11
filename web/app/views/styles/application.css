@@ -76,29 +76,24 @@ footer .okfn-credit {
   max-height: 200px; 
   overflow: scroll;
 }
-
+.country-sidebar {
+  list-style-type: none;
+  margin: 0;
+}
+.country-sidebar li {
+  display: block;
+  height: 21px;
+  text-align: right;
+}
+.country-sidebar .bar {
+  padding-left: 12px;
+}
 
 /* View : Home */
 /* =========== */
 
 /* View : Profile/Table */
 /* ==================== */
-/*
-.country-raw-data th,
-.country-raw-data .q-id {
-  background: #666;
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-}
-.country-raw-data .q-id {
-  width: 30px;
-}
-.country-raw-data .q-answer {
-  text-align: center;
-  width: 80px;
-}
-*/
 #profile-table .q-id,
 #profile-table th {
   background: #999;

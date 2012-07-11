@@ -22,7 +22,7 @@ module.exports = class ProfileView extends Backbone.View
     if not @countryName
       @renderData = 
         country: '<span style="font-weight: normal; font-style: italic;">(select a country)</span>'
-        countries: application.answers.column('country').data
+        countries: application.countries
     else 
       query = application.answers.rows( (row)=>row.country==@countryName )
       if not query.length
@@ -31,7 +31,7 @@ module.exports = class ProfileView extends Backbone.View
       @renderData = 
         country: row.country
         answers: @answerDict(row,i) for i in [1..123] 
-        countries: application.answers.column('country').data
+        countries: application.countries
 
   render: =>
     dom = template @renderData
@@ -40,4 +40,5 @@ module.exports = class ProfileView extends Backbone.View
 
   post_render: =>
     $('.pie').peity('pie')
+    $('.bar').peity('bar')
 
