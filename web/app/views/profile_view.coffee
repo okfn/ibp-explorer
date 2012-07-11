@@ -40,5 +40,7 @@ module.exports = class ProfileView extends Backbone.View
 
   post_render: =>
     $('.pie').peity('pie')
-    $('.bar').peity('bar')
+    $('.bar').peity('bar_multicolour', {colour: ['#faeac8', '#f8c175', '#f5854e', '#cb3727']} )
+
+
 
