@@ -72,6 +72,10 @@ footer .okfn-credit {
 .li-add {
   margin-top: 8px;
 }
+.data-dump {
+  max-height: 200px; 
+  overflow: scroll;
+}
 
 
 /* View : Home */

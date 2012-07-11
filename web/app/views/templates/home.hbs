@@ -1,1 +1,17 @@
-<p><code>IBP/OKFN data prototype :: loaded</code></p>
+<h2>Status</h2>
+<pre style="color: #D14;">
+<b>Dataset loaded.</b> 
+  Rows: {{status.rows}} 
+  Columns: {{status.columns}}
+<b>Countries:</b>{{#each status.countries}}
+  {{this}}{{/each}}
+</pre></code>
+<br/>
+<h2>JSON: Questions</h2>
+<pre class="data-dump">
+  {{dump_questions}}
+</pre>
+<h2>JSON: Answers</h2>
+<pre class="data-dump">
+  {{dump_answers}}
+</pre>
