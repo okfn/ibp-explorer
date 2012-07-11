@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="span3">
+    <div id="sidebar">
+      <h4>Select...</h4>
+      <ul>
+        {{#each countries}}
+          <li><a href="#profile/{{this}}">{{this}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  <div class="span9">
+    <div id="main">
+      <h2>{{{country}}}</h2>
+      {{#if answers}}
+        <table class="country-raw-data">
+          <thead>
+            <th>#</th>
+            <th>Question</th>
+            <th>Letter</th>
+            <th>Index</th>
+          </thead>
+          <tbody>
+          {{#each answers}}
+            <tr>
+              <td class="q-id">{{id}}</td>
+              <td class="q-text">{{question}}</td>
+              <td class="q-answer">{{letter}}</td>
+              <td class="q-answer">{{number}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 application = require 'application'
 CountryView = require 'views/country_view'
+ProfileView = require 'views/profile_view'
 CompareView = require 'views/compare_view'
 
 module.exports = class Router extends Backbone.Router
@@ -9,23 +10,23 @@ module.exports = class Router extends Backbone.Router
     'country/:id': 'countryview'
     'compare' : 'compare'
     'compare/*path' : 'compare'
+    'profile' : 'profile'
+    'profile/*path' : 'profile'
 
   initialize: ->
-    @on('all', @updateNav)
+    @on('all', @postRender)
 
-  updateNav: (trigger) ->
+  postRender: (trigger) ->
     # Trigger nav updates
     trigger = trigger.split(':')
     if trigger[0]=='route'
       $('nav li').removeClass 'active'
       $('nav li[action='+trigger[1]+']').addClass 'active'
     # Fill out content
-    $('#content').html @active.render().el
-    # Fill out sidebar
-    if @active and @active.sidebar
-      $('#sidebar').html @active.sidebar()
+    if @active
+      $('#content').html @active.render().el
     else
-      $('#sidebar').html ''
+      $('#content').html ''
     # Trigger post_render hook
     if @active and @active.post_render
       @active.post_render()
@@ -36,7 +37,10 @@ module.exports = class Router extends Backbone.Router
   countryview: (country='') ->
     @active = new CountryView(country)
 
-  compare: (path='') ->
+  profile: (country='') ->
+    @active = new ProfileView(country)
+
+compare: (path='') ->
     # Split by / and remove empty strings
     path = path.split('/')
     path = _.filter path, _.identity
