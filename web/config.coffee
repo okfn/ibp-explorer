@@ -4,6 +4,7 @@ exports.config =
   # Edit the next line to change default build path.
   paths:
     public: 'public'
+    assets: ['app/assets','vendor/assets']
 
   files:
     javascripts:
