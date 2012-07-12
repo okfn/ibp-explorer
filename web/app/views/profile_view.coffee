@@ -23,13 +23,7 @@ module.exports = class ProfileView extends Backbone.View
       country: row.country
       data: @getData(row,i) for i in [1..123] 
     @renderData.data_sorted = @renderData.data.slice(0)
-    @renderData.data_sorted.sort( (a,b) -> 
-      if a.answer.letter > b.answer.letter 
-        return 1
-      if a.answer.letter < b.answer.letter
-        return -1
-      return a.id - b.id
-    )
+    @renderData.data_sorted.sort( util.answerComparator )
 
   getData:  (row,i) ->
     id: i

@@ -15,7 +15,15 @@ module.exports =
   stringToUrl: (s) ->
     s = s.replace(/\([^\)]*\)/g, '')
     s = $.trim(s)
-    s = s.replace(/\W+/g,'-')
+    s = s.replace(/[^\w ]+/g,'')
+    s = s.replace(/\s+/g,'-')
     s = s.toLowerCase()
     s
+
+  answerComparator: (a,b) ->
+    if a.answer.letter > b.answer.letter 
+      return 1
+    if a.answer.letter < b.answer.letter
+      return -1
+    return a.id - b.id
 

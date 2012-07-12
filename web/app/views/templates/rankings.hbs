@@ -6,16 +6,33 @@
         {{#each groupings}}
         <optgroup label="{{by}}">
           {{#each entries}}
-            <option value="{{id}}">{{title}}</option>
+            <option value="{{id}}" {{category_selected id}}>{{title}}</option>
           {{/each}}
         </optgroup>
+        {{/each}}
+      </select>
+      <br/> <br/>
+      <h2>Region</h2>
+      <select id="compare-choose-region">
+        {{#each regions}}
+          <option value="{{id}}" {{region_selected id}}>{{title}}</option>
         {{/each}}
       </select>
     </div>
   </div>
   <div id="main" class="span8">
     <h1>Rankings</h1>
-    hello world
+    <div class="rankings-tooltip" style="display:none;"></div>
+    <table class="rankings-table">
+      {{#each data}}
+        <tr>
+          <td class="country">{{country}}</td>
+          {{#each answers}}
+            <td data-id="{{id}}" data-answer="{{answer.letter}}" class="letter letter-{{answer.letter}}"></td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </table>
   </div>
 </div>
 

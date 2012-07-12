@@ -18,11 +18,13 @@ Application =
       by: 'All'
       entries: [
         title: 'Show All Questions'
-        qs: [0..123]
+        qs: [1..123]
       ]
     @groupingsMap = @generateGroupingsMap @groupings
 
     @countries = (@get_country(row) for row in rawdata.answers )
+
+    @regions = @getRegions rawdata.regions
 
     # Static view components
     @homeView = new HomeView()
@@ -56,6 +58,28 @@ Application =
             entry.id += '_'
         out[entry.id] = entry.qs
     out
+
+  getRegions: (raw) ->
+    out = []
+    filterList = (list) =>
+      valid_countries = (c.name for c in @countries)
+      _.filter list, (country) =>
+        if not _.contains valid_countries, country
+          console.warn('Warning: '+country+' listed in regions but not in dataset.')
+          return false
+        return true
+
+    $.each raw, (k,v) ->
+      out.push
+        title: k
+        entries: filterList(v)
+        id: util.stringToUrl(k)
+    # Pop a list of 'all regions' on the front
+    out.unshift 
+      title: 'All Regions'
+      id: ''
+      entries: _.reduce(out, ((l,o)->l.concat(o.entries)),[]).sort()
+    return out
 
 
 module.exports = Application

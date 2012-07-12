@@ -23,7 +23,8 @@ module.exports = class Router extends Backbone.Router
     trigger = trigger.split(':')
     if trigger[0]=='route'
       $('nav li').removeClass 'active'
-      $('nav li[action='+trigger[1]+']').addClass 'active'
+      path = window.location.hash.substr(1).split('/')[0]
+      $('nav li[action='+path+']').addClass 'active'
     # Fill out content
     if @active
       $('#content').html @active.render().el

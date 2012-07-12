@@ -151,6 +151,31 @@ footer .okfn-credit {
 .hover-hint {
   margin-left: 290px;
 }
+.rankings-table {
+  width: 100%;
+}
+.rankings-table .country {
+  font-size: 10px;
+  padding-right: 10px;
+  text-align: right;
+  color: #999;
+  width: 120px;
+}
+.rankings-table .letter:hover {
+  background: #fff !important;
+}
+.rankings-tooltip {
+  position: absolute;
+  left: 300;
+  top: 600;
+  background: rgba(0,0,0,0.5);
+  font-size: 9px;
+  z-index: 10;
+  padding: 8px;
+  line-height: 11px;
+  color: #fff;
+  width: 250px;
+}
 
 /* View : Home */
 /* =========== */
