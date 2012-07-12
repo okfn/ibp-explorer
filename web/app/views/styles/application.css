@@ -148,6 +148,9 @@ footer .okfn-credit {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.hover-hint {
+  margin-left: 290px;
+}
 
 /* View : Home */
 /* =========== */
