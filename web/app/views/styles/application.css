@@ -33,8 +33,10 @@ nav a,
 nav a:visited {
   color: #08c;
 }
-#main {
+#content {
   min-height: 400px;
+}
+#main {
   margin-top: 30px;
 }
 footer {
@@ -64,7 +66,7 @@ footer .okfn-credit {
 
 /* General Purpose */
 /* =============== */
-#main h1 {
+#content h1 {
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
   margin-bottom: 14px;
@@ -89,42 +91,38 @@ footer .okfn-credit {
   padding-left: 12px;
 }
 
-/* View : Home */
-/* =========== */
-
-/* View : Profile/Table */
-/* ==================== */
-#profile-table .q-id,
-#profile-table th {
-  background: #999;
+/* Country Tables */
+/* ============== */
+.country-table .q-id,
+.country-table th {
+  background: #999 !important;
   color: #fff;
   text-align: center;
 }
-#profile-table td {
+.country-table td {
   padding: 1px 0 0 0;
 }
-#profile-table .q-id {
+.country-table .q-id {
   width: 30px;
 }
-#profile-table .q-answer {
+.country-table .q-answer {
   width: 30px;
   text-align: center;
   font-family: monospace;
 }
-#profile-table .q-answer.number {
+.country-table .q-answer.number {
   text-align: right;
   width: 45px;
 }
-#profile-table .q-answer.letter {
+.country-table .q-answer.letter {
   font-weight: bold;
 }
-#profile-table .letter-a { background: #faeac8; }
-#profile-table .letter-b { background: #f8c175; }
-#profile-table .letter-c { background: #f5854e; color: #fff; }
-#profile-table .letter-d { background: #cb3727; color: #fff; }
-#profile-table .letter-e { background: #ccc;  font-weight: normal;}
-
-#profile-table .q-text {
+.country-table .letter-a { background: #faeac8 !important; }
+.country-table .letter-b { background: #f8c175 !important; }
+.country-table .letter-c { background: #f5854e !important; color: #fff; }
+.country-table .letter-d { background: #cb3727 !important; color: #fff; }
+.country-table .letter-e { background: #ccc !important;  font-weight: normal;}
+.country-table .q-text {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -134,11 +132,33 @@ footer .okfn-credit {
   font-size: 10px;
 }
 
+.country-comparison th.q-answer {
+  padding: 0 2px;
+  font-family: inherit;
+  font-size: 10px;
+}
+.country-comparison .q-answer {
+  width: 60px;
+  max-width: 60px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* View : Home */
+/* =========== */
+
+/* View : Profile/Table */
+/* ==================== */
 
 /* View : Compare */
 /* ============== */
 #view-compare .compare-without {
   list-style-type: none;
+  margin: 0;
+}
+#view-compare #compare-add-country {
+  width: 200px;
 }
 #view-compare .compare-without .close {
   float: none !important;

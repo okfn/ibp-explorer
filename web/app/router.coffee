@@ -34,7 +34,7 @@ module.exports = class Router extends Backbone.Router
   profile_table: (country='') ->
     @active = new ProfileView(country)
 
-compare: (path='') ->
+  compare: (path='') ->
     # Split by / and remove empty strings
     path = path.split('/')
     path = _.filter path, _.identity

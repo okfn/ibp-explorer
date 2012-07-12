@@ -1,20 +1,16 @@
 template = require 'views/templates/compare'
 application = require 'application'
-
-# TODO this is violating DRY...
-answerDict = (row, answerIndex) ->
-  id: answerIndex
-  question: application.questions[answerIndex].question
-  letter: row['l'+answerIndex]
-  number: row['n'+answerIndex]
+util = require 'util'
 
 module.exports = class CompareView extends Backbone.View
   id: 'view-compare'
   initialize: (@countries) ->
     data = []
     all_answers = (@lookup_row c for c in @countries)
-    for i in [1..application.questions.length-1]
-        answers = (row['l'+i] for row in all_answers)
+    # TODO questions.length does not match answers.length
+    #for i in [1..application.questions.length-1]
+    for i in [1..123]
+        answers = (util.answerDict(row,i) for row in all_answers)
         data.push
           id: i
           question: application.questions[i].question
@@ -26,9 +22,6 @@ module.exports = class CompareView extends Backbone.View
       view_without: (@view_without c for c in @countries)
       view_with: (@view_with c for c in missing_countries)
       data: data
-
-  sidebar: =>
-    'asdf'
 
   lookup_row: (country) =>
     query = application.answers.rows( (row)=>row.country==country )
@@ -52,7 +45,7 @@ module.exports = class CompareView extends Backbone.View
     Backbone.history.navigate(window.location.hash+'/'+country,{trigger:true})
 
   render: =>
-    dom = $(template(@renderData))
+    dom = $(template @renderData)
     @$el.append dom
     this
 

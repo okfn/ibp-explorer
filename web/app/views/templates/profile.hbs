@@ -8,33 +8,31 @@
       </ul>
     </div>
   </div>
-  <div class="span9">
-    <div id="main">
-      <h2>{{{country}}}</h2>
-      {{#if answers}}
-        <table class="table table-striped table-small">
-          <thead>
-            <th>#</th>
-            <th>Question</th>
-            <th colspan="3">Score</th>
-          </thead>
-          <tbody>
-          {{#each answers}}
-            <tr>
-              <td class="q-id">{{id}}</td>
-              <td class="q-text">{{question}}</td>
-              <td class="q-answer letter letter-{{letter}}">{{letter_processed}}</td>
-              <td class="q-answer number">{{number}}%</td>
-              {{#if render_pie_chart}}
-                <td class="q-answer chart pie">{{number}}/100</td>
-              {{else}}
-                <td class="q-answer chart">&nbsp;</td>
-              {{/if}}
-            </tr>
-          {{/each}}
-          </tbody>
-        </table>
-      {{/if}}
-    </div>
+  <div id="main" class="span9">
+    <h2>{{{country}}}</h2>
+    {{#if data}}
+      <table class="table table-striped table-small country-table">
+        <thead>
+          <th>#</th>
+          <th>Question</th>
+          <th colspan="3">Score</th>
+        </thead>
+        <tbody>
+        {{#each data}}
+          <tr>
+            <td class="q-id">{{id}}</td>
+            <td class="q-text">{{question}}</td>
+            <td class="q-answer letter letter-{{answer.letter}}">{{answer.letter_processed}}</td>
+            <td class="q-answer number">{{answer.number}}%</td>
+            {{#if answer.render_pie_chart}}
+              <td class="q-answer chart pie">{{answer.number}}/100</td>
+            {{else}}
+              <td class="q-answer chart">&nbsp;</td>
+            {{/if}}
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
   </div>
 </div>
