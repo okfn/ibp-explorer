@@ -7,12 +7,12 @@ module.exports = class Router extends Backbone.Router
   routes:
     '': 'home'
     'compare/category/:category/*path' : 'compare'
-    'compare/*path' : 'compare_all'
+    'compare/*path' : 'compare__all'
     'profile/table/*country' : 'profile_table'
     'profile/grid/*country' : 'profile_grid'
     'rankings/' : 'rankings'
     'rankings/category-:category/' : 'rankings'
-    'rankings/region-:region/' : 'rankings_all_categories'
+    'rankings/region-:region/' : 'rankings__all_categories'
     'rankings/category-:category/region-:region/' : 'rankings'
 
   initialize: ->
@@ -23,7 +23,7 @@ module.exports = class Router extends Backbone.Router
     trigger = trigger.split(':')
     if trigger[0]=='route'
       $('nav li').removeClass 'active'
-      path = window.location.hash.substr(1).split('/')[0]
+      path = trigger[1].split('__')[0]
       $('nav li[action='+path+']').addClass 'active'
     # Fill out content
     if @active
@@ -43,7 +43,7 @@ module.exports = class Router extends Backbone.Router
   profile_grid: (country='') ->
     @active = new ProfileView(country,'grid')
 
-  compare_all: (path='') ->
+  compare__all: (path='') ->
     @compare('',path)
 
   compare: (category,path='') ->
@@ -52,7 +52,7 @@ module.exports = class Router extends Backbone.Router
     path = _.filter path, _.identity
     @active = new CompareView(category,path)
 
-  rankings_all_categories: (region) -> @rankings('',region)
+  rankings__all_categories: (region) -> @rankings('',region)
   rankings: (category='',region='') ->
     @active = new RankingsView(category,region)
 
