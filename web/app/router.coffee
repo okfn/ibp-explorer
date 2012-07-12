@@ -1,6 +1,7 @@
 application = require 'application'
 ProfileView = require 'views/profile_view'
 CompareView = require 'views/compare_view'
+RankingsView = require 'views/rankings_view'
 
 module.exports = class Router extends Backbone.Router
   routes:
@@ -9,6 +10,10 @@ module.exports = class Router extends Backbone.Router
     'compare/*path' : 'compare_all'
     'profile/table/*country' : 'profile_table'
     'profile/grid/*country' : 'profile_grid'
+    'rankings/' : 'rankings'
+    'rankings/category-:category/' : 'rankings'
+    'rankings/region-:region/' : 'rankings_all_categories'
+    'rankings/category-:category/region-:region/' : 'rankings'
 
   initialize: ->
     @on('all', @postRender)
@@ -45,3 +50,8 @@ module.exports = class Router extends Backbone.Router
     path = path.split('/')
     path = _.filter path, _.identity
     @active = new CompareView(category,path)
+
+  rankings_all_categories: (region) -> @rankings('',region)
+  rankings: (category='',region='') ->
+    @active = new RankingsView(category,region)
+

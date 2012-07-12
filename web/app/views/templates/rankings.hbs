@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="span4">
+    <div id="sidebar">
+      <h2>Category</h2>
+      <select id="compare-choose-group">
+        {{#each groupings}}
+        <optgroup label="{{by}}">
+          {{#each entries}}
+            <option value="{{id}}">{{title}}</option>
+          {{/each}}
+        </optgroup>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <div id="main" class="span8">
+    <h1>Rankings</h1>
+    hello world
+  </div>
+</div>
+
+
