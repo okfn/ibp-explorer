@@ -1,3 +1,4 @@
+util = require 'util'
 # The application bootstrapper.
 Application =
   initialize: (rawdata) ->
@@ -10,6 +11,16 @@ Application =
       data: rawdata.answers
     })
     @answers.fetch()
+
+    @groupings = rawdata.groupings
+    # Add in a global grouping
+    @groupings.unshift 
+      by: 'All'
+      entries: [
+        title: 'Show All Questions'
+        qs: [0..123]
+      ]
+    @groupingsMap = @generateGroupingsMap @groupings
 
     @countries = (@get_country(row) for row in rawdata.answers )
 
@@ -31,5 +42,20 @@ Application =
     count_c: _.reduce(values, count('c'), 0 )
     count_d: _.reduce(values, count('d'), 0 )
     count_e: _.reduce(values, count('e'), 0 )
+
+  generateGroupingsMap: (groupings) ->
+    out = {}
+    _.each groupings, (group) =>
+      _.each group.entries, (entry) =>
+        if entry.title=='Show All Questions'
+          entry.id = ''
+        else 
+          entry.id = util.stringToUrl(entry.title)
+          # Deduplication hack
+          while out[entry.id]
+            entry.id += '_'
+        out[entry.id] = entry.qs
+    out
+
 
 module.exports = Application

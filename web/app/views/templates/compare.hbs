@@ -1,6 +1,17 @@
 <div class="row">
-  <div class="span3">
+  <div class="span4">
     <div id="sidebar">
+      <h2>Category</h2>
+      <select id="compare-choose-group">
+        {{#each groupings}}
+        <optgroup label="{{by}}">
+          {{#each entries}}
+            <option value="{{id}}" {{selected id}}>{{title}}</option>
+          {{/each}}
+        </optgroup>
+        {{/each}}
+      </select>
+      <br/><br/>
       <h2>Countries</h2>
       <ul class="compare-without">
         {{#each view_without}}
@@ -9,13 +20,20 @@
         <li class="li-add"><select id="compare-add-country">
           <option>Add a country...</option>
           {{#each view_with}}
-            <option value="{{name}}">{{name}}</option>
+            <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select></li>
       </ul>
+      {{#each groupings}}
+        {{#each entries}}
+          {{#if go}}
+            {{title}}
+          {{/if}}
+        {{/each}}
+      {{/each}}
     </div>
   </div>
-  <div id="main" class="span9">
+  <div id="main" class="span8">
     <h1>Comparison</h1>
     <table class="table table-striped table-small country-table country-comparison">
       <thead>
@@ -27,6 +45,7 @@
       </thead>
       <tbody>
       {{#each data}}
+      {{#if included}}
         <tr>
           <td class="q-id">{{id}}</td>
           <td class="q-text">{{question}}</td>
@@ -34,6 +53,7 @@
             <td class="q-answer letter letter-{{letter}}">{{letter_processed}}</td>
           {{/each}}
         </tr>
+      {{/if}}
       {{/each}}
       </tbody>
     </table>

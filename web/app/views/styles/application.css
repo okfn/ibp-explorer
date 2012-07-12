@@ -157,8 +157,8 @@ footer .okfn-credit {
   list-style-type: none;
   margin: 0;
 }
-#view-compare #compare-add-country {
-  width: 200px;
+#view-compare #sidebar select {
+  width: 280px;
 }
 #view-compare .compare-without .close {
   float: none !important;

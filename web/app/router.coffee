@@ -5,9 +5,8 @@ CompareView = require 'views/compare_view'
 module.exports = class Router extends Backbone.Router
   routes:
     '': 'home'
-    'compare' : 'compare'
-    'compare/*path' : 'compare'
-    'profile/table' : 'profile_table'
+    'compare/category/:category/*path' : 'compare'
+    'compare/*path' : 'compare_all'
     'profile/table/*path' : 'profile_table'
 
   initialize: ->
@@ -34,8 +33,11 @@ module.exports = class Router extends Backbone.Router
   profile_table: (country='') ->
     @active = new ProfileView(country)
 
-  compare: (path='') ->
+  compare_all: (path='') ->
+    @compare('',path)
+
+  compare: (category,path='') ->
     # Split by / and remove empty strings
     path = path.split('/')
     path = _.filter path, _.identity
-    @active = new CompareView(path)
+    @active = new CompareView(category,path)

@@ -12,3 +12,10 @@ module.exports =
     render_pie_chart: number>=0
     number: number
 
+  stringToUrl: (s) ->
+    s = s.replace(/\([^\)]*\)/g, '')
+    s = $.trim(s)
+    s = s.replace(/\W+/g,'-')
+    s = s.toLowerCase()
+    s
+
