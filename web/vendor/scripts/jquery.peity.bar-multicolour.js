@@ -1,4 +1,5 @@
 $(function() {
+  var devicePixelRatio = window.devicePixelRatio || 1;
   function createCanvas(width, height) {
     var canvas = document.createElement("canvas")
     canvas.setAttribute("width", width * devicePixelRatio)
