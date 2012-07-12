@@ -7,7 +7,8 @@ module.exports = class Router extends Backbone.Router
     '': 'home'
     'compare/category/:category/*path' : 'compare'
     'compare/*path' : 'compare_all'
-    'profile/table/*path' : 'profile_table'
+    'profile/table/*country' : 'profile_table'
+    'profile/grid/*country' : 'profile_grid'
 
   initialize: ->
     @on('all', @postRender)
@@ -31,7 +32,10 @@ module.exports = class Router extends Backbone.Router
     @active = application.homeView
 
   profile_table: (country='') ->
-    @active = new ProfileView(country)
+    @active = new ProfileView(country,'table')
+
+  profile_grid: (country='') ->
+    @active = new ProfileView(country,'grid')
 
   compare_all: (path='') ->
     @compare('',path)

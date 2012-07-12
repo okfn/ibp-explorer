@@ -90,6 +90,15 @@ footer .okfn-credit {
 .country-sidebar .bar {
   padding-left: 12px;
 }
+.letter {
+  font-family: monospace;
+  font-weight: bold;
+}
+.letter-a { background: #faeac8 !important; }
+.letter-b { background: #f8c175 !important; }
+.letter-c { background: #f5854e !important; color: #fff; }
+.letter-d { background: #cb3727 !important; color: #fff; }
+.letter-e { background: #ccc !important;  font-weight: normal; font-size: 80%;}
 
 /* Country Tables */
 /* ============== */
@@ -117,11 +126,6 @@ footer .okfn-credit {
 .country-table .q-answer.letter {
   font-weight: bold;
 }
-.country-table .letter-a { background: #faeac8 !important; }
-.country-table .letter-b { background: #f8c175 !important; }
-.country-table .letter-c { background: #f5854e !important; color: #fff; }
-.country-table .letter-d { background: #cb3727 !important; color: #fff; }
-.country-table .letter-e { background: #ccc !important;  font-weight: normal;}
 .country-table .q-text {
   overflow: hidden;
   white-space: nowrap;
@@ -150,6 +154,28 @@ footer .okfn-credit {
 
 /* View : Profile/Table */
 /* ==================== */
+
+/* View : Profile/Table */
+/* ==================== */
+.country-grid .cell {
+  width: 28px;
+  padding: 7px 0 5px 0;
+  float: left;
+  vertical-align: middle;
+  text-align: center;
+}
+.country-stripes .stripe {
+  height: 150px;
+  width: 3px;
+  float: left;
+  border: 1px solid transparent;
+}
+.country-stripes .stripe:hover {
+  border: 1px solid #000;
+}
+.stripe-text {
+  width: 580px;
+}
 
 /* View : Compare */
 /* ============== */

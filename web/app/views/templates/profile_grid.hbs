@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="span3">
+    <div id="sidebar">
+      <ul class="country-sidebar">
+        {{#each countries}}
+        <li><a href="#profile/grid/{{name}}">{{name}}</a><span class="bar">{{count_a}},{{count_b}},{{count_c}},{{count_d}}</span></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  <div id="main" class="span9">
+    {{#unless data}}<h2><em>&laquo; Choose a country</em></h2>{{/unless}}
+    {{#if data}}
+      <h2>{{{country}}}: Raw</h2>
+      <div class="country-grid">
+        {{#each data}}
+          <div class="cell letter letter-{{answer.letter}}">{{answer.letter_processed}}</div>
+        {{/each}}
+      </div>
+      <div class="clearfix">&nbsp;</div>
+      <br/>
+    {{/if}}
+    {{#if data_sorted}}
+      <h2>{{{country}}}: Sorted</h2>
+      <div class="country-grid">
+        {{#each data_sorted}}
+          <div class="cell letter letter-{{answer.letter}}">{{id}}</div>
+        {{/each}}
+      </div>
+      <div class="clearfix">&nbsp;</div>
+      <br/>
+    {{/if}}
+    {{#if data_sorted}}
+      <h2>{{{country}}}: Striped</h2>
+      <div class="country-stripes">
+        {{#each data_sorted}}
+          <div data-id="{{id}}" data-answer="{{answer.letter}}" class="stripe letter letter-{{answer.letter}}"></div>
+        {{/each}}
+      </div>
+      <div class="clearfix">&nbsp;</div>
+      <br/>
+      <div class="well stripe-text" style="display: none;"></div>
+    {{/if}}
+  </div>
+</div>
