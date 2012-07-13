@@ -33,6 +33,22 @@
         </tr>
       {{/each}}
     </table>
+    {{#if data}}
+      <div class="form-actions" style="padding-left: 80%;">
+        <div class="btn-group">
+          <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+            Download
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick="return false;">Download as CSV</a></li>
+            <li><a href="#" onclick="return false;">Download as XLS</a></li>
+            <li><a href="#" onclick="return false;">Download as PDF</a></li>
+            <!-- dropdown menu links -->
+          </ul>
+        </div>
+      </div>
+    {{/if}}
   </div>
 </div>
 

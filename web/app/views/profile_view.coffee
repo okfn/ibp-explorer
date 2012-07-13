@@ -30,11 +30,6 @@ module.exports = class ProfileView extends Backbone.View
     question: application.questions[i].question
     answer: util.answerDict(row,i)
 
-  mouseout_stripe: (e) ->
-    if not @stripe_text
-      @stripe_text = $('.stripe-text')
-    @stripe_text.hide()
-
   mouseover_stripe: (e) ->
     if not @stripe_text
       @stripe_text = $('.stripe-text')
@@ -42,7 +37,7 @@ module.exports = class ProfileView extends Backbone.View
     answer = $(e.currentTarget).attr('data-answer')
     answerText = application.questions[id][answer]
     question = application.questions[id].question
-    @stripe_text.show().html '<b>Question '+id+':</b> '+question+'<br/><br/><b>'+answer.toUpperCase()+':</b> '+answerText
+    @stripe_text.html '<b>Question '+id+':</b> '+question+'<br/><br/><b>'+answer.toUpperCase()+':</b> '+answerText
 
   render: =>
     dom = @template @renderData
@@ -53,7 +48,6 @@ module.exports = class ProfileView extends Backbone.View
     $('.pie').peity('pie')
     $('.bar').peity('bar_multicolour', {colour: ['#faeac8', '#f8c175', '#f5854e', '#cb3727']} )
     $('.stripe').mouseover(@mouseover_stripe)
-    $('.country-stripes').mouseout(@mouseout_stripe)
 
 
 
