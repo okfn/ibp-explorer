@@ -5,7 +5,7 @@ RankingsView = require 'views/rankings_view'
 
 module.exports = class Router extends Backbone.Router
   routes:
-    '': 'home'
+    '': 'profile_table__default'
     'compare/category/:category/*path' : 'compare'
     'compare/*path' : 'compare__all'
     'profile/table/*country' : 'profile_table'
@@ -37,6 +37,7 @@ module.exports = class Router extends Backbone.Router
   home: ->
     @active = application.homeView
 
+  profile_table__default: () -> @profile_table('Afghanistan')
   profile_table: (country='') ->
     @active = new ProfileView(country,'table')
 
