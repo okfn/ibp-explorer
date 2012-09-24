@@ -1,3 +1,5 @@
+Router = require('router')
+
 $ ->
-  $('#content').html 'hello world'
+  router = new Router()
   Backbone.history.start()

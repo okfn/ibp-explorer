@@ -16,7 +16,11 @@ singletons =
 
 module.exports = class Router extends Backbone.Router
     routes:
-        '': 'project'
+        '': 'hello'
+    hello: ->
+      content().html 'hey there'
+
+###
         'person': 'person'
         'project': 'project'
         'project/:projectName': 'project'
@@ -59,3 +63,4 @@ module.exports = class Router extends Backbone.Router
         @setCurrent singletons.twitterView()
     recline: ->
         @setCurrent singletons.reclineView()
+###
