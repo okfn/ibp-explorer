@@ -1,0 +1,100 @@
+#content {
+  margin-top: 60px;
+  min-height: 300px;
+}
+#content h1 {
+  border-bottom: 1px solid #000;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+#loading {
+    width: 400px;
+    height: 20px;
+    position: absolute;
+    margin-left: -100px;
+    left: 50%;
+    top: 64px;
+    z-index: 99;
+}
+#loading .text {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    color: #fff;
+    z-index: 999;
+    width: 380px;
+    text-align: center;
+    font-size: 11px;
+    text-shadow: 0 0 2px #000;
+}
+
+.footer {
+  border-top: 2px solid #ccc;
+  margin-top: 50px;
+  padding-top: 20px;
+  margin-bottom: 50px;
+}
+.footer .etc-link {
+  float: right;
+}
+.footer .etc-link a {
+  display: block;
+  text-align: right;
+}
+
+/* TODO export to project.css? */
+
+.pane {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 15px;
+  width: 350px;
+  float: left;
+}
+.label-pane {
+  position: relative;
+  padding-top: 40px;
+}
+.label-pane label {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+
+.statistic-container {
+    margin: 0 auto;
+    width: 80%;
+}
+.statistic {
+  float: left;
+  text-align: center;
+}
+.statistic .top {
+    font-size: 25px;
+}
+.statistic .bottom {
+    padding: 5px 0;
+}
+
+.github .statistic,
+.twitter .statistic {
+  width: 33%;
+}
+.twitter .name {
+  font-weight: bold;
+}
+.statistics-pane .sub-name {
+  color: #999;
+}
+
