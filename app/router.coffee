@@ -18,7 +18,7 @@ module.exports = class Router extends Backbone.Router
     routes:
         '': 'hello'
     hello: ->
-      content().html 'hey there'
+      content().html '<iframe width="900" height="460" scrolling="no" frameborder="no" src="https://www.google.com/fusiontables/embedviz?viz=MAP&amp;q=select+col0%3E%3E1+from+1VHNhuYeDjeOfaz0nOr8cB3e3Ch1K41SO0D89MWU&amp;h=false&amp;lat=56.984365424637964&amp;lng=-290.390625&amp;z=2&amp;t=1&amp;l=col0%3E%3E1&amp;y=2&amp;tmplt=-1"></iframe>'
 
 ###
         'person': 'person'

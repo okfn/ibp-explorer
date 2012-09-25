@@ -1,7 +1,61 @@
 import xlrd
-import os
-import csv
-import json
+
+def verify_xls_format(*args):
+    for v in args:
+        if v[-4:]=='xlsx':
+            raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
+
+def read(q_xls, a_xls):
+    q_workbook = xlrd.open_workbook(q_xls)
+    a_workbook = xlrd.open_workbook(a_xls)
+    # Output to populate
+    out = {}
+    # Question dict
+    sheet = q_workbook.sheet_by_name('Sheet2')
+    out['question'] = {}
+    for n in range(1,sheet.nrows):
+        out['question'][n] = { 
+          'question': sheet.cell(n,1).value,
+          'a': sheet.cell(n,2).value,
+          'b': sheet.cell(n,3).value,
+          'c': sheet.cell(n,4).value,
+          'd': sheet.cell(n,5).value,
+          'e': sheet.cell(n,6).value,
+          }
+    # Country dict
+    out['country'] = {}
+    sheet_n = a_workbook.sheet_by_name('Individual Question Numbers')
+    sheet_l = a_workbook.sheet_by_name('Individual Question Letters')
+    for col in range(1, sheet_n.ncols):
+        column_n = sheet_n.col_slice(col,5) 
+        column_l = sheet_l.col_slice(col,5) 
+        assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
+        country_name = column_n[0].value
+        c = out['country'][country_name] = {}
+        c['score'] = {}
+        c['letter'] = {}
+        for i in range(1,len(column_n)):
+            number = column_n[i].value
+            number = int(number) if number is not '' else -1
+            letter = column_l[i].value
+            c['score'][i] = number
+            c['letter'][i] = letter
+    # Which questions are used to calcule the Open Budget Index?
+    sheet = a_workbook.sheet_by_name('Open Budget Index Numbers')
+    out['questions_in_index'] = [ int(x.value) for x in sheet.col_slice(0,4) ]
+    # Calculate the OBI score
+    # Note the floating point arithmetic to ensure Python produces the same result as Excel 
+    for country,data in out['country'].items():
+        acc = 0
+        count = 0
+        for x in out['questions_in_index']:
+            score = data['score'][x]
+            if not score==-1:
+                count += 1
+                acc += score
+        data['open_budget_index'] = int(round(float(acc)/count))
+    return out
+
 
 def get_questions(questions_xls):
     wb = xlrd.open_workbook(questions_xls)
@@ -30,7 +84,7 @@ def get_answers(answers_xls):
     for col in range(1, sheet_n.ncols):
         column_n = sheet_n.col_slice(col,row_header) 
         column_l = sheet_l.col_slice(col,row_header) 
-        assert column_n[0].value==column_l[0].value, 'Numbers & Lettes worksheets should have countries in the same order'
+        assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
         row = { 'country' : column_n[0].value }
         for i in range(1,len(column_n)):
             number = column_n[i].value
@@ -98,36 +152,4 @@ def get_regions(groupings_xls):
         # Strip empty strings and store the list
         out[ col[0].value ] = filter(bool,l)
     return out
-
-# =================
-# Entry Point Logic 
-# =================
-
-if __name__=='__main__':
-    import argparse
-    import sys
-    parser = argparse.ArgumentParser(description='IBP data wrangling utility.')
-    parser.add_argument('questions_xls', help="XLS file of 2010 questions")
-    parser.add_argument('answers_xls', help="XLS file of 2010 survey answers")
-    parser.add_argument('groupings_xls', help="XLS file of question groupings")
-    parser.add_argument('output_json', help="Output JSON filename to write")
-    arg = parser.parse_args()
-
-    for v in vars(arg).values():
-      if v[-4:]=='xlsx':
-         parser.print_usage()
-         print 'Error: XLSX is not supported. Files must be in XLS format.'
-         sys.exit(-1)
-
-    data = {
-        'questions' : get_questions( arg.questions_xls ),
-        'answers'   : get_answers(   arg.answers_xls ),
-        'groupings' : get_groupings(  arg.groupings_xls ),
-        'regions'   : get_regions(  arg.groupings_xls ),
-    }
-    output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(data)
-    f = open(arg.output_json,'w') 
-    print >>f, output_js
-    f.close()
-    print 'wrote %s' % arg.output_json
 
