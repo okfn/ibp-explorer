@@ -1,5 +1,4 @@
 HomePage = require 'views/page/home'
-GoogleMapPage = require 'views/page/googlemap'
 VectorMapPage = require 'views/page/vectormap'
 
 # Function to consistently target the main div
@@ -7,14 +6,12 @@ content = -> $('#content')
 # Generator of singleton view pages
 singletons =
     homePage:  -> return @_home = @_home or new HomePage()
-    googleMapPage:  -> return @_googleMap = @_googleMap or new GoogleMapPage()
     vectorMapPage:  -> return @_vectorMap = @_vectorMap or new VectorMapPage()
 
 module.exports = class Router extends Backbone.Router
     routes:
         '': 'home'
-        'map/google' : 'googleMap'
-        'map/vector' : 'vectorMap'
+        'map' : 'vectorMap'
 
     initialize: ->
         # Trigger nav updates
@@ -34,8 +31,6 @@ module.exports = class Router extends Backbone.Router
 
     home: ->
       @setCurrent singletons.homePage()
-    googleMap: ->
-      @setCurrent singletons.googleMapPage()
     vectorMap: ->
       @setCurrent singletons.vectorMapPage()
 
