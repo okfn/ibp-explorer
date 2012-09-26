@@ -25,9 +25,8 @@ exports.config =
           'vendor/scripts/console-helper.js',
           'vendor/scripts/jquery-1.7.2.js',
           'vendor/scripts/underscore-1.3.3.js',
-          'vendor/scripts/backbone-0.9.2.js'
-          'vendor/scripts/d3.min.js',
-          'vendor/scripts/d3.layout.min.js',
+          'vendor/scripts/backbone-0.9.2.js',
+          'vendor/jvectormap-dev/jquery-jvectormap.dev.js',
         ]
 
     stylesheets:
