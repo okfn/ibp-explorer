@@ -1,11 +1,15 @@
 import xlrd
+import json
 
 def verify_xls_format(*args):
     for v in args:
         if v[-4:]=='xlsx':
             raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
 
-def read(q_xls, a_xls):
+def read(iso_file, q_xls, a_xls):
+    # Read country mapping
+    iso_mapping = json.load(open(iso_file))
+    # Open Excel files...
     q_workbook = xlrd.open_workbook(q_xls)
     a_workbook = xlrd.open_workbook(a_xls)
     # Output to populate
@@ -15,7 +19,7 @@ def read(q_xls, a_xls):
     out['question'] = {}
     for n in range(1,sheet.nrows):
         out['question'][n] = { 
-          'question': sheet.cell(n,1).value,
+          'text': sheet.cell(n,1).value,
           'a': sheet.cell(n,2).value,
           'b': sheet.cell(n,3).value,
           'c': sheet.cell(n,4).value,
@@ -32,6 +36,9 @@ def read(q_xls, a_xls):
         assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
         country_name = column_n[0].value
         c = out['country'][country_name] = {}
+        if not country_name in iso_mapping:
+            raise ValueError('I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (country_name, iso_file))
+        c['alpha2'] = iso_mapping[country_name]
         c['score'] = {}
         c['letter'] = {}
         for i in range(1,len(column_n)):
