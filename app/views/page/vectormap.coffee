@@ -1,10 +1,15 @@
 template_page = require 'views/templates/page/vectormap'
 
 MAP_NAME = 'world_mill_en'
+IBP_COLORS = [
+  '#B7282E'
+  '#F58024'
+  '#DAC402'
+  '#22aa33'
+]
 
 module.exports = class ProjectPage extends Backbone.View
     vectorMapData: {}
-    vectorMapDeadzone: {}
 
     initialize: =>
       countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
@@ -16,9 +21,6 @@ module.exports = class ProjectPage extends Backbone.View
               continue
           @vectorMapData[v.alpha2] = v.open_budget_index
           coverage.push v.alpha2
-      for k,v of countries_in_map
-          if not (k in coverage)
-              @vectorMapDeadzone[k]=1
 
     hackMinValue: (object, minValue) ->
         # Useful. jVectorMap will white out a country with a score of 0%
@@ -37,16 +39,17 @@ module.exports = class ProjectPage extends Backbone.View
           series: {
             regions: [{
               values: @hackMinValue(@vectorMapData,1)
-              scale: ['#ff0000', '#ffff00', '#00ff00']
-              min: 0
-              max: 100
-            }
-            {
-              values: @vectorMapDeadzone
-              scale: ['#888888']
+              scale: IBP_COLORS
             }
             ]
           }
+          regionStyle: 
+              initial: 
+                  stroke: 'none'
+                  'stroke-width' : '1.0'
+                  'stroke-opacity' : '0.5'
+                  fill: '#cccccc'
+          backgroundColor: '#f0f0f0'
           onRegionLabelShow: @labelShow
         }
 
