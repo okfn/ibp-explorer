@@ -25,7 +25,7 @@ if __name__=='__main__':
          print 'Error: XLSX is not supported. Files must be in XLS format.'
          sys.exit(-1)
 
-    data = process.read( arg.isofile, arg.qfile, arg.afile )
+    data = process.read( arg.isofile, arg.qfile, arg.afile, arg.gfile )
 
     output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(data)
     f = open(arg.ofile,'w') 

@@ -6,7 +6,7 @@ def verify_xls_format(*args):
         if v[-4:]=='xlsx':
             raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
 
-def read(iso_file, q_xls, a_xls):
+def read(iso_file, q_xls, a_xls, g_xls):
     # Read country mapping
     iso_mapping = json.load(open(iso_file))
     # Open Excel files...
@@ -63,51 +63,30 @@ def read(iso_file, q_xls, a_xls):
                 count += 1
                 acc += score
         data['open_budget_index'] = int(round(float(acc)/count))
+    # Question groupings
+    g_workbook = xlrd.open_workbook(g_xls)
+    sheet = g_workbook.sheet_by_name('QuestionsGroups')
+    i = 1
+    out['groupings'] = []
+    # Scroll down column B
+    while i < sheet.nrows:
+        title = sheet.row(i)[1].value
+        if title:
+            group = {
+                'by': title,
+                'entries': [],
+            }
+            while i<sheet.nrows-1 and sheet.row(i+1)[1].value:
+                i += 1
+                group['entries'].append({
+                  'title': sheet.row(i)[1].value,
+                  'qs': parse_int_list( sheet.row(i)[2].value ),
+                })
+            out['groupings'].append( group )
+        i += 1
     return out
 
 
-def get_questions(questions_xls):
-    wb = xlrd.open_workbook(questions_xls)
-    sheet = wb.sheet_by_name('Sheet2')
-    out = [{ 'question':'ERROR: Do not try to access question 0!', 'a':'', 'b':'', 'c':'', 'd':'', 'e':''}]
-    for n in range(1,sheet.nrows):
-        out.append({ 
-          'question': sheet.cell(n,1).value,
-          'a': sheet.cell(n,2).value,
-          'b': sheet.cell(n,3).value,
-          'c': sheet.cell(n,4).value,
-          'd': sheet.cell(n,5).value,
-          'e': sheet.cell(n,6).value,
-          })
-    return out
-    
-def get_answers(answers_xls):
-    wb = xlrd.open_workbook(answers_xls)
-    sheet_n = wb.sheet_by_name('Individual Question Numbers')
-    sheet_l = wb.sheet_by_name('Individual Question Letters')
-
-    assert sheet_l.ncols==sheet_n.ncols, 'Numbers & Letters worksheets should be same width in columns'
-
-    row_header = 5
-    out = [ ]
-    for col in range(1, sheet_n.ncols):
-        column_n = sheet_n.col_slice(col,row_header) 
-        column_l = sheet_l.col_slice(col,row_header) 
-        assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
-        row = { 'country' : column_n[0].value }
-        for i in range(1,len(column_n)):
-            number = column_n[i].value
-            number = -1 if number is '' else int(number)
-            letter = column_l[i].value
-            row['n%d'%i] = number
-            row['l%d'%i] = letter
-        out.append(row)
-
-    # All rows should be same length
-    row_lengths = [len(row) for row in out] 
-    assert len(set(row_lengths))==1, 'All rows should have same length: %s' % row_lengths
-    
-    return out
 
 def parse_int_list(int_list):
     if not type(int_list) is unicode:
@@ -124,31 +103,6 @@ def parse_int_list(int_list):
                 out.append(i)
     return out
 
-def get_groupings(groupings_xls):
-    wb = xlrd.open_workbook(groupings_xls)
-    sheet = wb.sheet_by_name('QuestionsGroups')
-
-    i = 1
-    out = []
-    # scroll down column B
-    while i < sheet.nrows:
-        title = sheet.row(i)[1].value
-        if title:
-            group = {
-                'by': title,
-                'entries': [],
-            }
-            while i<sheet.nrows-1 and sheet.row(i+1)[1].value:
-                i += 1
-                group['entries'].append({
-                  'title': sheet.row(i)[1].value,
-                  'qs': parse_int_list( sheet.row(i)[2].value ),
-                })
-            out.append( group )
-        i += 1
-    import json
-    #print json.dumps(out, indent=2)
-    return out
 
 def get_regions(groupings_xls):
     wb = xlrd.open_workbook(groupings_xls)

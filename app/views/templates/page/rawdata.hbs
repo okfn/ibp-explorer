@@ -1,0 +1,38 @@
+<div class="row">
+<div class="span2">
+    <h3>Countries</h3>
+    <ul>
+    {{#each country}}
+      <li>{{alpha2}}</li>
+    {{/each}}
+    </ul>
+</div>
+<div class="span6">
+    <h3>Questions</h3>
+    {{#each question}}
+    <div class="question">
+      {{#if in_index}}<span class="label">index</span>{{/if}}
+      <span class="text">
+          <span class="number">{{number}}: </span> 
+          {{text}}
+          <a class="expand" href="#">[...]</a>
+      </span>
+      <span class="answer a"><span class="prefix">A: </span>{{a}}</span>
+      <span class="answer b"><span class="prefix">B: </span>{{b}}</span>
+      <span class="answer c"><span class="prefix">C: </span>{{c}}</span>
+      {{#if d}}<span class="answer d"><span class="prefix">D: </span>{{d}}</span>{{/if}}
+      {{#if e}}<span class="answer e"><span class="prefix">E: </span>{{e}}</span>{{/if}}
+    </div>
+    {{/each}}
+</div>
+<div class="span4">
+    <h3>Groupings</h3>
+    {{#each groupings}}
+        <h4 style="border-bottom: 1px solid #000; margin-top: 15px;">{{by}}</h4>
+        {{#each entries}}
+            <h6 style="margin-bottom: 0;">{{title}}:</h6>
+            <p>{{#each qs}}{{this}}, {{/each}}</p>
+        {{/each}}
+    {{/each}}
+</div>
+</div>

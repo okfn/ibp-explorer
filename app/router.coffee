@@ -1,6 +1,7 @@
 HomePage = require 'views/page/home'
 VectorMapPage = require 'views/page/vectormap'
 QueryPage = require 'views/page/query'
+RawDataPage = require 'views/page/rawdata'
 
 # Function to consistently target the main div
 content = -> $('#content')
@@ -9,12 +10,14 @@ singletons =
     homePage:  -> return @_home = @_home or new HomePage()
     vectorMapPage:  -> return @_vectorMap = @_vectorMap or new VectorMapPage()
     queryPage:  -> return @_query = @_query or new QueryPage()
+    rawDataPage:  -> return @_rawData = @_rawData or new RawDataPage()
 
 module.exports = class Router extends Backbone.Router
     routes:
         '': 'home'
         'map' : 'vectorMap'
         'query' : 'query'
+        'rawdata' : 'rawdata'
 
     initialize: ->
         # Trigger nav updates
@@ -38,6 +41,8 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.vectorMapPage()
     query: ->
       @setCurrent singletons.queryPage()
+    rawdata: ->
+      @setCurrent singletons.rawDataPage()
 
 ###
     project: (projectName='okfn') ->
