@@ -19,6 +19,7 @@ def read(iso_file, q_xls, a_xls):
     out['question'] = {}
     for n in range(1,sheet.nrows):
         out['question'][n] = { 
+          'number': n,
           'text': sheet.cell(n,1).value,
           'a': sheet.cell(n,2).value,
           'b': sheet.cell(n,3).value,
@@ -27,7 +28,7 @@ def read(iso_file, q_xls, a_xls):
           'e': sheet.cell(n,6).value,
           }
     # Country dict
-    out['country'] = {}
+    out['country'] = []
     sheet_n = a_workbook.sheet_by_name('Individual Question Numbers')
     sheet_l = a_workbook.sheet_by_name('Individual Question Letters')
     for col in range(1, sheet_n.ncols):
@@ -35,7 +36,8 @@ def read(iso_file, q_xls, a_xls):
         column_l = sheet_l.col_slice(col,5) 
         assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
         country_name = column_n[0].value
-        c = out['country'][country_name] = {}
+        c = {}
+        out['country'].append(c)
         if not country_name in iso_mapping:
             raise ValueError('I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (country_name, iso_file))
         c['alpha2'] = iso_mapping[country_name]
@@ -52,7 +54,7 @@ def read(iso_file, q_xls, a_xls):
     out['questions_in_index'] = [ int(x.value) for x in sheet.col_slice(0,4) ]
     # Calculate the OBI score
     # Note the floating point arithmetic to ensure Python produces the same result as Excel 
-    for country,data in out['country'].items():
+    for data in out['country']:
         acc = 0
         count = 0
         for x in out['questions_in_index']:
