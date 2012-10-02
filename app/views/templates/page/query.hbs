@@ -1,19 +1,45 @@
 <div class="row">
-    <div class="span8">
+    <div class="span7">
         <h1>Query generator</h1>
-        <div class="question-toggles">
+        <div class="toggle-boxes">
         {{#each question}}
-            <div class="toggle {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</div>
+            <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</a>
         {{/each}}
         <div class="clearfix"></div>
         </div>
     </div>
+    <div class="span5">
+        <div id="question-view"></div>
+    </div>
+</div>
+<div class="row">
     <div class="span4">
-        {{#each groupings}}
+        {{#each groupings0}}
             <h6 style="border-bottom: 1px solid #000; margin-top: 15px;">{{by}}</h6>
             {{#each entries}}
             <a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a><br/>
             {{/each}}
         {{/each}}
     </div>
+    <div class="span4">
+        {{#each groupings1}}
+            <h6 style="border-bottom: 1px solid #000; margin-top: 15px;">{{by}}</h6>
+            {{#each entries}}
+            <a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a><br/>
+            {{/each}}
+        {{/each}}
+    </div>
+    <div class="span4">
+        {{#each groupings2}}
+            <h6 style="border-bottom: 1px solid #000; margin-top: 15px;">{{by}}</h6>
+            {{#each entries}}
+            <a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a><br/>
+            {{/each}}
+        {{/each}}
+    </div>
+</div>
+<div class="row">
+  <div id="report">
+
+  </div>
 </div>

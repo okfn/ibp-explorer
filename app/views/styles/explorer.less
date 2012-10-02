@@ -40,11 +40,15 @@
     }
 }
 
-.question-toggles {
-    background: #eee;
+.toggle-boxes {
     @per_row: 18;
     width: @per_row*27px;
-    .toggle {
+    .toggle-box {
+        opacity: 0.5;
+        background: #fff;
+        display: block;
+        text-decoration: none;
+        color: #000;
         border: 1px solid #000;
         margin-left: -1px;
         margin-top: -1px;
@@ -55,9 +59,22 @@
         padding-bottom: 4px;
         font-size: 11px;
         font-weight: bold;
+        &:hover,
         &.hover {
-            background: #fcc;
+            background: #fdd;
+            color: #fff;
+            text-shadow: 0 0 2px #000;
+            opacity: 0.8;
+        }
+        &.select {
+            background: #f99;
+            opacity: 1.0 !important;
         }
     }
-
+}
+#question-view {
+    background: #fcf;
+    border: 1px solid #000;
+    min-height: 150px;
+    display: none;
 }

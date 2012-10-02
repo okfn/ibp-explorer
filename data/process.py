@@ -89,7 +89,9 @@ def read(iso_file, q_xls, a_xls, g_xls):
 
 
 def parse_int_list(int_list):
-    if not type(int_list) is unicode:
+    if type(int_list) is str:
+        int_list = unicode(int_list)
+    if type(int_list) is float:
         int_list = unicode(int(int_list))
     
     out = []
@@ -99,7 +101,7 @@ def parse_int_list(int_list):
         if len(split)==1:
             out.append(int(split[0]))
         else:
-            for i in range(int(split[0]), int(split[1])):
+            for i in range(int(split[0]), int(split[1])+1):
                 out.append(i)
     return out
 
