@@ -1,10 +1,12 @@
+template_explorer = require 'views/templates/explorer'
+
 HomePage = require 'views/page/home'
 VectorMapPage = require 'views/page/vectormap'
 QueryPage = require 'views/page/query'
 RawDataPage = require 'views/page/rawdata'
 
 # Function to consistently target the main div
-content = -> $('#content')
+content = -> $('#explorer')
 # Generator of singleton view pages
 singletons =
     homePage:  -> return @_home = @_home or new HomePage()
@@ -33,7 +35,8 @@ module.exports = class Router extends Backbone.Router
     setCurrent: (view) =>
         if not (view==@currentView)
             @currentView = view
-            view.renderPage content()
+            $('#content').html template_explorer 'helo'
+            #view.renderPage content()
 
     home: ->
       @setCurrent singletons.homePage()

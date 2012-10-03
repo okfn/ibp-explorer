@@ -61,10 +61,6 @@ module.exports = class ProjectPage extends Backbone.View
         jsPlumb.connect {source: els[0], target: els[1], overlays: jsPlumb._custom_overlay}
         jsPlumb.connect {source: els[1], target: els[2], overlays: jsPlumb._custom_overlay}
 
-    mouseoutRanking: (e) ->
-      #$('.rankings-table tr').removeClass 'hover'
-        #jsPlumb.deleteEveryEndpoint()
-
     updateReport: =>
         questionSet = @questionSet()
         if questionSet.length == 0
@@ -121,8 +117,10 @@ module.exports = class ProjectPage extends Backbone.View
             el = $(e.delegateTarget)
             alpha2 = el.attr('data-alpha2')
             if alpha2 then @mouseoverRanking alpha2
-        $('.rankings-table tr').bind 'mouseout', @mouseoutRanking
-        @mouseoverRanking 'ZA'
+        # Pre-select the top-most entrant in the latest results
+        preselect = $('#rankings-2010 tbody tr:first-child').attr('data-alpha2')
+        console.log 'preselect ',preselect
+        @mouseoverRanking preselect
 
     renderPage: (target) =>
         renderData = 
