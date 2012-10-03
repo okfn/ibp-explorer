@@ -33,7 +33,7 @@ exports.config =
       defaultExtension: 'less'
       joinTo: 'stylesheets/app.css'
       order:
-        before: ['vendor/styles/bootstrap.min.css']
+        before: ['vendor/styles/bootstrap-2.1.1-targeted.css']
         after: []
 
     templates:
