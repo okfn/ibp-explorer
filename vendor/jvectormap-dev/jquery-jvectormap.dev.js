@@ -2003,5 +2003,5 @@ jvm.WorldMap.apiEvents = {
   onMarkerOver: 'markerOver',
   onMarkerOut: 'markerOut',
   onMarkerClick: 'markerClick',
-  onMarkerSelected: 'markerSelected',
+  onMarkerSelected: 'markerSelected'
 };
