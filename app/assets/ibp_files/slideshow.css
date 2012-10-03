@@ -1,0 +1,93 @@
+/********************************************
+// Slide Formatting
+********************************************/
+
+.orbit-wrapper {}
+ 
+.orbit-wrapper .slide {
+background: white;
+}
+.orbit-wrapper .slide .image {}
+.orbit-wrapper .slide .meta {
+  position: absolute;
+  padding: 10px 20px;
+  top: 50%;
+  left: 0%;
+  width: 80%;
+  height: 30%;
+  color: white;
+}
+.orbit-wrapper .slide .meta h3, .orbit-wrapper .slide .meta h3 a{}
+
+
+.orbit-wrapper .slide .meta-back {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 80%;
+  height: 40%;
+  background: black;
+  opacity: 0.7;
+}
+
+
+/********************************************
+// Tabbed Formatting
+********************************************/
+
+.orbit_tabshow {}
+ 
+.orbit_tabshow .tab-content {
+background: #ddd;
+position: relative;
+}
+.orbit_tabshow .tab-content .image {}
+.orbit_tabshow .tab-content .meta {
+  position: absolute;
+  padding: 10px 20px;
+  top: 50%;
+  left: 0%;
+  width: 80%;
+  height: 30%;
+  color: white;
+}
+.orbit_tabshow .tab-content .meta h3, .orbit_tabshow .tab-content .meta h3 a{}
+
+
+.orbit_tabshow .tab-content .meta-back {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 80%;
+  height: 40%;
+  background: black;
+  opacity: 0.7;
+}
+
+.orbit_tabshow .tabs-content {
+  background: #ddd;
+}
+
+/********************************************
+// The Buttons
+********************************************/
+
+.orbit-wrapper .slider-nav span{
+  width: 30px;
+  height: 50px;
+  text-indent: -9999px;
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  margin-top: -50px;
+  cursor: pointer;
+}
+.orbit-wrapper .slider-nav .left{
+  background: url(images/left-arrow.png);
+}
+.orbit-wrapper .slider-nav .right{
+  background: url(images/right-arrow.png);
+}
+
+
+
