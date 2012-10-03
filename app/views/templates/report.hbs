@@ -1,5 +1,65 @@
-<table>
-  {{#each this}}
-  <tr><td>{{country}}</td><td>{{score}}</td><td>{{debugScore}}</td></tr>
-  {{/each}}
-</table>
+{{#with rankings}}
+<div class="span4">
+  <h4>Rankings (2006)</h4>
+  <table class="rankings-table" id="rankings-2006">
+    <thead>
+      <tr>
+        <th class="ranking-cell-name">Name</th>
+        <th class="ranking-cell-score">Score</th>
+        <th class="ranking-cell-rank">Ranking</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each r2006}}
+      <tr class="ranking-row-{{alpha2}}" data-alpha2="{{alpha2}}">
+        <td class="ranking-cell-name" style="text-align: right; padding-right: 10px;">{{country}}</td>
+        <td class="ranking-cell-score">{{score}}</td>
+        <td class="ranking-cell-rank">{{ranking}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
+<div class="span4">
+  <h4>Rankings (2008)</h4>
+  <table class="rankings-table" id="rankings-2008">
+    <thead>
+      <tr>
+        <th class="ranking-cell-name">Name</th>
+        <th class="ranking-cell-score">Score</th>
+        <th class="ranking-cell-rank">Ranking</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each r2008}}
+      <tr class="ranking-row-{{alpha2}}" data-alpha2="{{alpha2}}">
+        <td class="ranking-cell-name" style="text-align: right; padding-right: 10px;">{{country}}</td>
+        <td class="ranking-cell-score">{{score}}</td>
+        <td class="ranking-cell-rank">{{ranking}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
+<div class="span4">
+  <h4>Rankings (2010)</h4>
+  <table class="rankings-table" id="rankings-2010">
+    <thead>
+      <tr>
+        <th class="ranking-cell-name">Name</th>
+        <th class="ranking-cell-score">Score</th>
+        <th class="ranking-cell-rank">Ranking</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each r2010}}
+      <tr class="ranking-row-{{alpha2}}" data-alpha2="{{alpha2}}">
+        <td class="ranking-cell-name" style="text-align: right; padding-right: 10px;">{{country}}</td>
+        <td class="ranking-cell-score">{{score}}</td>
+        <td class="ranking-cell-rank">{{ranking}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
+{{/with}}

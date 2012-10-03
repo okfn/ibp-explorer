@@ -6,15 +6,13 @@ def verify_xls_format(*args):
         if v[-4:]=='xlsx':
             raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
 
-def read(iso_file, q_xls, a_xls, g_xls):
+def read(iso_file, q_xls, g_xls, a_2006, a_2008, a_2010):
     # Read country mapping
     iso_mapping = json.load(open(iso_file))
-    # Open Excel files...
-    q_workbook = xlrd.open_workbook(q_xls)
-    a_workbook = xlrd.open_workbook(a_xls)
     # Output to populate
     out = {}
     # Question dict
+    q_workbook = xlrd.open_workbook(q_xls)
     sheet = q_workbook.sheet_by_name('Sheet2')
     out['question'] = {}
     for n in range(1,sheet.nrows):
@@ -27,42 +25,27 @@ def read(iso_file, q_xls, a_xls, g_xls):
           'd': sheet.cell(n,5).value,
           'e': sheet.cell(n,6).value,
           }
-    # Country dict
-    out['country'] = []
-    sheet_n = a_workbook.sheet_by_name('Individual Question Numbers')
-    sheet_l = a_workbook.sheet_by_name('Individual Question Letters')
-    for col in range(1, sheet_n.ncols):
-        column_n = sheet_n.col_slice(col,5) 
-        column_l = sheet_l.col_slice(col,5) 
-        assert column_n[0].value==column_l[0].value, 'Numbers & Letters worksheets should have countries in the same order'
-        country_name = column_n[0].value
-        c = {}
-        out['country'].append(c)
-        if not country_name in iso_mapping:
-            raise ValueError('I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (country_name, iso_file))
-        c['alpha2'] = iso_mapping[country_name]
-        c['score'] = {}
-        c['letter'] = {}
-        for i in range(1,len(column_n)):
-            number = column_n[i].value
-            number = int(number) if number is not '' else -1
-            letter = column_l[i].value
-            c['score'][i] = number
-            c['letter'][i] = letter
-    # Which questions are used to calcule the Open Budget Index?
-    sheet = a_workbook.sheet_by_name('Open Budget Index Numbers')
-    out['questions_in_index'] = [ int(x.value) for x in sheet.col_slice(0,4) ]
-    # Calculate the OBI score
-    # Note the floating point arithmetic to ensure Python produces the same result as Excel 
-    for data in out['country']:
-        acc = 0
-        count = 0
-        for x in out['questions_in_index']:
-            score = data['score'][x]
-            if not score==-1:
-                count += 1
-                acc += score
-        data['open_budget_index'] = int(round(float(acc)/count))
+    # Load all country spreadsheets
+    db_2006 = load_database(a_2006, 'Individual Question Response')
+    db_2008 = load_database(a_2008, 'Individual Question Response')
+    db_2010 = load_database(a_2010, 'Individual Question Numbers')
+    # Merge into one dict
+    merge = {}
+    for (dbname,db) in [ 
+            ('db_2006',db_2006), 
+            ('db_2008',db_2008), 
+            ('db_2010',db_2010)]:
+        for x in db:
+            country_name = x['name']
+            if not country_name in iso_mapping:
+                raise ValueError('I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (country_name, iso_file))
+            alpha2 = iso_mapping[country_name]
+            merge[alpha2] = merge.get(alpha2,{})
+            merge[alpha2]['alpha2'] = alpha2
+            merge[alpha2]['name'] = country_name
+            merge[alpha2][dbname] = x['score']
+    out['country'] = sorted(merge.values(),key=lambda x: x['name'])
+
     # Question groupings
     g_workbook = xlrd.open_workbook(g_xls)
     sheet = g_workbook.sheet_by_name('QuestionsGroups')
@@ -86,6 +69,34 @@ def read(iso_file, q_xls, a_xls, g_xls):
         i += 1
     return out
 
+def load_database(filename, sheetname):
+    workbook = xlrd.open_workbook(filename)
+    sheet = workbook.sheet_by_name(sheetname)
+    out = []
+    header_row = 0
+    while not (sheet.cell(header_row+1,0).value==1):
+        header_row += 1
+    for col in range(1, sheet.ncols):
+        column = sheet.col_slice(col,header_row) 
+        country_name = column[0].value
+        c = {}
+        out.append(c)
+        c['name'] = country_name.strip()
+        c['score'] = {}
+        for i in range(1,len(column)):
+            raw = column[i].value
+            if raw is '' or raw is u'':
+                c['score'][i] = -1
+            elif type(raw) is float:
+                c['score'][i] = int(round(raw))
+            elif type(raw) in [str,unicode]:
+                raw = str(raw)
+                # Special case found in '08 document:
+                if raw=='b': 
+                    c['score'][i] = 67
+                else: 
+                    raise ValueError('what is this string? %s' % raw)
+    return out
 
 
 def parse_int_list(int_list):
