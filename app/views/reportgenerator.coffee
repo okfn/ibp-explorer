@@ -30,7 +30,7 @@ class ReportGenerator extends Backbone.View
         @$el.find('.group-toggler').bind 'mouseover', @_hoverGroupToggle
         @$el.find('.group-toggler').bind 'click', @_clickGroupToggle
         @$el.find('.group-toggler').bind 'mouseout', (e) =>
-            @$el.find('.toggle-boxes .toggle-box').removeClass 'hover'
+            @$el.find('.toggle-box').removeClass 'hover'
         @$el.find('.toggle-box').bind 'click', @_clickBoxToggle
         #@$el.find('.toggle-box').bind 'mouseover', @_showQuestion
         #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
@@ -69,7 +69,7 @@ class ReportGenerator extends Backbone.View
     _hoverGroupToggle: (e) ->
         el = $(e.delegateTarget)
         group = el.attr('id')
-        $('.toggle-boxes .'+group).addClass 'hover'
+        $('#toggle-boxes .'+group).addClass 'hover'
 
     _clickGroupToggle: (e) =>
         e.preventDefault()
@@ -78,8 +78,9 @@ class ReportGenerator extends Backbone.View
         @$el.find('.group-toggler').removeClass 'active'
         el.addClass 'active'
         @_setSubtitle el.text()
-        $('.toggle-boxes .toggle-box').removeClass 'select'
-        $('.toggle-boxes .'+group).addClass 'select'
+        x = @$el.find('#toggle-boxes')
+        x.find('.toggle-box').removeClass 'select'
+        x.find(' .'+group).addClass 'select'
         @trigger 'update'
         return false
 

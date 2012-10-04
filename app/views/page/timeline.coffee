@@ -1,9 +1,9 @@
-template_page = require 'views/templates/page/rankings'
+template_page = require 'views/templates/page/timeline'
 template_ranking_column = require 'views/templates/ranking_column'
 
 reportGenerator = require 'views/reportgenerator'
 
-module.exports = class RankingsPage extends Backbone.View
+module.exports = class TimelinePage extends Backbone.View
 
     ##################
     ## Public methods
@@ -13,13 +13,14 @@ module.exports = class RankingsPage extends Backbone.View
         @$el.html template_page()
         target.html @$el
         # Bind to on-page elements
-        $('#ranking-toggle-button').toggleButtons
-            onChange: @_onRankingViewChange
-            width: 160
+        $('#timeline-toggle-button').toggleButtons
+            onChange: @_onToggleMode
+            width: 136
             style:
-                disabled: 'primary'
+                enabled: 'primary'
+                disabled: 'success'
             label: 
-                enabled: "Ranking"
+                enabled: "Rank"
                 disabled: "Score"
         reportGenerator.bind 'update', @_updateReport
         reportGenerator.bind 'resize', @_redrawJsPlumb
@@ -28,8 +29,8 @@ module.exports = class RankingsPage extends Backbone.View
     ##################
     ## Private methods
     ##################
-    _onRankingViewChange: (el,@showRankings=true) =>
-        if @showRankings
+    _onToggleMode: (el,@showRank=true) =>
+        if @showRank
             $('.ranking-cell-score').hide()
             $('.ranking-cell-rank').show()
         else
@@ -37,6 +38,7 @@ module.exports = class RankingsPage extends Backbone.View
             $('.ranking-cell-score').show()
 
     _calculateScore: (db, questionSet) ->
+        if questionSet.length==0 then return 0
         acc = 0
         count = 0
         for x in questionSet
@@ -83,36 +85,40 @@ module.exports = class RankingsPage extends Backbone.View
 
     _updateReport: =>
         questionSet = reportGenerator.questionSet()
-        if questionSet.length == 0
-            $('#ranking-columns').html '(no questions selected)'
-            return
-        # Render
-        $('#ranking-columns').empty()
+        # PreRender
+        html = ''
         for year in [2006,2008,2010,2012]
-            $('#ranking-columns').append $( 
-                template_ranking_column
-                    year: year
-                    data: @_buildRankingTable(year, questionSet)
-            )
+            html += template_ranking_column
+                year: year
+                data: @_buildRankingTable(year, questionSet)
+        # Large DOM rebuild here. Trigger a single reflow.
+        $('#ranking-columns').html html
         $('.rankings-table tr').bind 'mouseover', @_mouseoverRanking
         # Pre-select the top-most entrant in the latest results
         $('#ranking-column-2012 tbody tr:first-child').trigger 'mouseover'
-        @_onRankingViewChange null,@showRankings
+        # Show rankings or scores as appropriate
+        @_onToggleMode null,@showRankings
 
     _mouseoverRanking: (e) =>
         el = $(e.delegateTarget)
         alpha2 = el.attr('data-alpha2')
-        if not alpha2 then return
-        @_redrawJsPlumb alpha2
+        if alpha2 
+            @_redrawJsPlumb alpha2
 
     _redrawJsPlumb: (alpha2=null) =>
         if alpha2 then @mouseoverAlpha2 = alpha2
         @$el.find('.rankings-table tr.hover').removeClass 'hover'
         els = @$el.find('.ranking-row-'+@mouseoverAlpha2)
+        if not els.length then return
         els.addClass 'hover'
         jsPlumb.deleteEveryEndpoint()
-        for x in [0...els.length-1]
-            jsPlumb.connect {source: els[x], target: els[x+1], overlays: jsPlumb._custom_overlay}
+        # This is expensive, so hold off until the mouse has settled for a few ms
+        if @timeout then clearTimeout @timeout
+        @timeout = setTimeout( ->
+            for x in [0...els.length-1]
+                jsPlumb.connect {source: els[x], target: els[x+1], overlays: jsPlumb._custom_overlay}
+            @timeout = null
+        , 50)
 
         
 

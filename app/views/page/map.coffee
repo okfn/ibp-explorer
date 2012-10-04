@@ -1,4 +1,4 @@
-template_page = require 'views/templates/page/vectormap'
+template_page = require 'views/templates/page/map'
 
 MAP_NAME = 'world_mill_en'
 IBP_COLORS = [
