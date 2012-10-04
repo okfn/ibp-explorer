@@ -1,5 +1,5 @@
 template_page = require 'views/templates/page/timeline'
-template_ranking_column = require 'views/templates/ranking_column'
+template_timeline_column = require 'views/templates/timeline_column'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -31,11 +31,11 @@ module.exports = class TimelinePage extends Backbone.View
     ##################
     _onToggleMode: (el,@showRank=true) =>
         if @showRank
-            $('.ranking-cell-score').hide()
-            $('.ranking-cell-rank').show()
+            $('.timeline-cell-score').hide()
+            $('.timeline-cell-rank').show()
         else
-            $('.ranking-cell-rank').hide()
-            $('.ranking-cell-score').show()
+            $('.timeline-cell-rank').hide()
+            $('.timeline-cell-score').show()
 
     _calculateScore: (db, questionSet) ->
         if questionSet.length==0 then return 0
@@ -70,11 +70,11 @@ module.exports = class TimelinePage extends Backbone.View
                 rank = n
             else
                 tag_duplicates.push x.score
-            x.ranking = rank
+            x.rank = rank
         # Append an equals sign where scores are neck-and-neck
         for x in out
             if x.score in tag_duplicates
-                x.ranking = '= '+x.ranking
+                x.rank = '= '+x.rank
         return out
 
     _sortFunction: (a,b) ->
@@ -88,16 +88,18 @@ module.exports = class TimelinePage extends Backbone.View
         # PreRender
         html = ''
         for year in [2006,2008,2010,2012]
-            html += template_ranking_column
+            html += template_timeline_column
                 year: year
                 data: @_buildRankingTable(year, questionSet)
         # Large DOM rebuild here. Trigger a single reflow.
-        $('#ranking-columns').html html
-        $('.rankings-table tr').bind 'mouseover', @_mouseoverRanking
+        $('#timeline-columns').html html
+        $('#timeline-columns tr').bind 'mouseover', @_mouseoverRanking
         # Pre-select the top-most entrant in the latest results
-        $('#ranking-column-2012 tbody tr:first-child').trigger 'mouseover'
-        # Show rankings or scores as appropriate
-        @_onToggleMode null,@showRankings
+        if not @mouseoverAlpha2
+            @mouseoverAlpha2 = $('#timeline-column-2012 tbody tr:first-child').attr 'data-alpha2'
+        @_redrawJsPlumb()
+        # Show ranks or scores as appropriate
+        @_onToggleMode null,@showRank
 
     _mouseoverRanking: (e) =>
         el = $(e.delegateTarget)
@@ -107,8 +109,8 @@ module.exports = class TimelinePage extends Backbone.View
 
     _redrawJsPlumb: (alpha2=null) =>
         if alpha2 then @mouseoverAlpha2 = alpha2
-        @$el.find('.rankings-table tr.hover').removeClass 'hover'
-        els = @$el.find('.ranking-row-'+@mouseoverAlpha2)
+        @$el.find('.hover').removeClass 'hover'
+        els = @$el.find('.timeline-row-'+@mouseoverAlpha2)
         if not els.length then return
         els.addClass 'hover'
         jsPlumb.deleteEveryEndpoint()

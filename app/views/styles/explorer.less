@@ -158,13 +158,13 @@ div#content {
 
     }
 
-    .ranking-column {
+    .timeline-column {
         float: left;
         padding: 0 22px;
-        &#ranking-column-2006 {
+        &#timeline-column-2006 {
             padding-left: 4px;
         }
-        &#ranking-column-2012 {
+        &#timeline-column-2012 {
             padding-right: 0;
         }
 
@@ -173,7 +173,7 @@ div#content {
             margin-bottom: 2px;
         }
 
-        .rankings-table {
+        table {
             /* Column widths: */
             @c1: 116px;
             @c2: 20px;
@@ -196,7 +196,7 @@ div#content {
                     color: #fff;
                     padding: 4px 5px;
                 }
-                .ranking-cell-name {
+                .timeline-cell-name {
                     width: @c1 - 11px;
                     max-width: @c1 - 11px;
                     padding-left: 4px;
@@ -206,26 +206,26 @@ div#content {
                     text-overflow: ellipsis;
                     text-align: right;
                 }
-                .ranking-cell-flag {
+                .timeline-cell-flag {
                     width: @c2;
                     max-width: @c2;
                     padding: 0 0 2px 0;
                 }
-                th.ranking-cell-score {
+                th.timeline-cell-score {
                     text-align: center;
                     display: none;
                 }
-                td.ranking-cell-score {
+                td.timeline-cell-score {
                     text-align: right;
                     padding-right: 2px;
                     display: none;
                     width: @c3 - 2px;
                     max-width: @c3 - 2px;
                 }
-                th.ranking-cell-rank {
+                th.timeline-cell-rank {
                     text-align: center;
                 }
-                td.ranking-cell-rank {
+                td.timeline-cell-rank {
                     text-align: right;
                     padding-right: 8px;
                     width: @c3 - 8px;
