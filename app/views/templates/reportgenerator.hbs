@@ -1,0 +1,42 @@
+<h1>Report Generator <small><span class="subtitle"></span>
+<span class="expand-collapse">
+    &nbsp;<a href="#" class="more-options">edit &raquo;</a>
+    <a href="#" class="less-options" style="display:none;">&laquo; close</a>
+</span>
+</small></h1>
+<div class="inner" style="display: none;">
+    <div class="row">
+      <div class="span3 grouplist grouplist1">
+          {{#each groupings0}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+      <div class="span3 grouplist grouplist1">
+          {{#each groupings1}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+      <div class="span5">
+          <div class="select-or-clear">
+              <button class="btn btn-primary btn-small select">Select All</button>
+              <button class="btn btn-small clear">Clear All</button>
+          </div>
+          <div class="toggle-boxes">
+          {{#each question}}
+              <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</a>
+          {{/each}}
+          <div class="clearfix"></div>
+          </div>
+      </div>
+    </div>
+</div>

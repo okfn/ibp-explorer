@@ -1,4 +1,4 @@
-#content {
+div#content {
     /* Constrained by the layout of the IBP framework */
     margin-top: 70px;
     min-height: 300px;
@@ -7,8 +7,26 @@
     padding: 20px 0;
     width: 868px;
 
+    h1 {
+        margin-left: 0;
+        background: none;
+        color: #000;
+    }
     #explorer-nav {
-        background: #f0f0f0;
+        background: #005081;
+        padding-left: 10px;
+        margin-top: 20px;
+        margin-bottom: 0;
+        a {
+            color: #fff;
+        }
+        a:hover {
+            background: #64A0C5;
+        }
+        .active a {
+            background: lighten(#68A6CB, 35%);
+            color: #000;
+        }
     }
     #explorer {
         padding: 0 4px;
@@ -34,38 +52,68 @@
         box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
-    .reportgenerator {
-        background: #fcf;
+    #report-generator {
+        margin-bottom: 10px;
+        h1 {
+            width: 100%;
+            padding: 5px 10px;
+            margin: 0 0 0 0;
+            font-size: 26px;
+            small {
+                font-size: 18px;
+            }
+        }
+        .expand-collapse {
+            margin: 5px 10px 0 0;
+
+
+        }
+        .inner {
+            padding-bottom: 7px;
+            padding-left: 7px;
+        }
+        .select-or-clear {
+            padding-bottom: 8px;
+            text-align: center;
+        }
+        .group-toggler {
+            &.active {
+                text-decoration: underline;
+                color: #000;
+            }
+        }
 
         .toggle-boxes {
-            @per_row: 18;
+            @per_row: 14;
             width: @per_row*27px;
+            padding-left: 9px;
+            position: relative;
             .toggle-box {
-                opacity: 0.5;
-                background: #fff;
+                position: relative;
+                background: #f0f0f0;
+                color: #ccc;
                 display: block;
                 text-decoration: none;
-                color: #000;
-                border: 1px solid #000;
+                border: 1px solid #ccc;
                 margin-left: -1px;
                 margin-top: -1px;
                 float: left;
-                width: 26px;
+                width: 25px;
                 text-align: center;
                 padding-top: 4px;
                 padding-bottom: 4px;
                 font-size: 11px;
-                font-weight: bold;
+                letter-spacing: -1px;
                 &:hover,
                 &.hover {
-                    background: #fdd;
-                    color: #fff;
-                    text-shadow: 0 0 2px #000;
-                    opacity: 0.8;
+                    background: #fdd !important;
+                    color: #888;
                 }
                 &.select {
-                    background: #f99;
-                    opacity: 1.0 !important;
+                    background: #fff;
+                    color: #000;
+                    border-color: #000;
+                    z-index: 1;
                 }
             }
         }
@@ -109,21 +157,31 @@
 
     }
 
-    .report-column {
-        width: 200px;
+    .ranking-column {
         float: left;
-        padding: 0 42px;
+        padding: 0 22px;
+        &#ranking-column-2006 {
+            padding-left: 4px;
+        }
+        &#ranking-column-2012 {
+            padding-right: 0;
+        }
 
         h4 {
-            padding-left: 10px;
+            padding-left: 20px;
             margin-bottom: 2px;
         }
 
         .rankings-table {
+            /* Column widths: */
+            @c1: 116px;
+            @c2: 20px;
+            @c3: 44px;
+
             background: #f0f0f0;
             font-size: 11px;
             border-radius: 5px;
-            width: 160px;
+            width: @c1 + @c2 + @c3;
             margin-top: 0;
 
             tr:nth-child(even) {
@@ -138,31 +196,39 @@
                     padding: 4px 5px;
                 }
                 .ranking-cell-name {
-                    width: 100px;
-                    max-width: 100px;
+                    width: @c1 - 11px;
+                    max-width: @c1 - 11px;
+                    padding-left: 4px;
+                    padding-right: 7px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     text-align: right;
-                    padding-left: 5px;
+                }
+                .ranking-cell-flag {
+                    width: @c2;
+                    max-width: @c2;
+                    padding: 0 0 2px 0;
                 }
                 th.ranking-cell-score {
                     text-align: center;
                     display: none;
                 }
                 td.ranking-cell-score {
-                    padding-left: 15px;
+                    text-align: right;
+                    padding-right: 2px;
                     display: none;
-                    width: 45px;
-                    max-width: 45px;
+                    width: @c3 - 2px;
+                    max-width: @c3 - 2px;
                 }
                 th.ranking-cell-rank {
                     text-align: center;
                 }
                 td.ranking-cell-rank {
-                    padding-left: 15px;
-                    width: 45px;
-                    max-width: 45px;
+                    text-align: right;
+                    padding-right: 8px;
+                    width: @c3 - 8px;
+                    max-width: @c3 - 8px;
                 }
                 &.hover {
                     td {

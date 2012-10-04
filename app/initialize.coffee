@@ -7,6 +7,16 @@ loadDataset = ->
     for x in _EXPLORER_DATASET.groupings
         for y in x.entries
             y.group_id = id++
+    # Assign group IDs to all questions
+    id = 0
+    for qnum, qdata of _EXPLORER_DATASET.question
+        qnum = parseInt(qnum)
+        qdata.groups = []
+        # Tag the question with a list of parent groups
+        for category in _EXPLORER_DATASET.groupings
+            for group in category.entries
+                if group.qs.contains qnum
+                    qdata.groups.push ('group-'+group.group_id)
 
 initJsPlumb = ->
     color = '#aaa'
@@ -16,9 +26,6 @@ initJsPlumb = ->
         Endpoint : 'Blank'
         EndpointStyle : { radius:9, fillStyle:color }
         Connector : [ "Bezier", {curviness: 30} ]
-        #DragOptions : { cursor: "pointer", zIndex:2000 },
-        #HoverPaintStyle : {strokeStyle:"#ec9f2e" },
-        #EndpointHoverStyle : {fillStyle:"#ec9f2e" },			
       arrowCommon = { foldback:0.8, fillStyle:color, width:9, length: 10 }
       jsPlumb._custom_overlay = [
         [ "Arrow", { location:0.5 }, arrowCommon ]

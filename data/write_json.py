@@ -5,6 +5,7 @@ DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xls'
 DEFAULT_ANSWERFILE_2006 = 'OBI_2006_Database.xls'
 DEFAULT_ANSWERFILE_2008 = 'OBI_2008_Database.xls'
 DEFAULT_ANSWERFILE_2010 = 'OBI_2010_Database.xls'
+DEFAULT_ANSWERFILE_2012 = 'OBI_2012_Database.xls'
 DEFAULT_GROUPINGSFILE = 'OBI_2012_groupings.xls'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
 
@@ -15,11 +16,12 @@ if __name__=='__main__':
     import sys
     parser = argparse.ArgumentParser(description='IBP data wrangling utility.')
     parser.add_argument('--iso', dest='isofile', default=DEFAULT_ISOFILE, help="JSON file of country_name to iso-3166 alpha 2 codes")
-    parser.add_argument('--questions', dest='qfile', default=DEFAULT_QUESTIONFILE, help="XLS file of 2010 questions")
+    parser.add_argument('--questions', dest='qfile', default=DEFAULT_QUESTIONFILE, help="XLS file of 2012 questions")
     parser.add_argument('--groupings', dest='gfile', default=DEFAULT_GROUPINGSFILE, help="XLS file of question groupings")
     parser.add_argument('--2006', dest='afile2006', default=DEFAULT_ANSWERFILE_2006, help="XLS file of 2006 survey answers")
     parser.add_argument('--2008', dest='afile2008', default=DEFAULT_ANSWERFILE_2008, help="XLS file of 2008 survey answers")
     parser.add_argument('--2010', dest='afile2010', default=DEFAULT_ANSWERFILE_2010, help="XLS file of 2010 survey answers")
+    parser.add_argument('--2012', dest='afile2012', default=DEFAULT_ANSWERFILE_2012, help="XLS file of 2012 survey answers")
     parser.add_argument('--output', dest='ofile', default=DEFAULT_OUTPUT, help="Output filename to write")
 
     arg = parser.parse_args()
@@ -29,7 +31,7 @@ if __name__=='__main__':
          print 'Error: XLSX is not supported. Files must be in XLS format.'
          sys.exit(-1)
 
-    data = process.read( arg.isofile, arg.qfile, arg.gfile, arg.afile2006, arg.afile2008, arg.afile2010 )
+    data = process.read( arg.isofile, arg.qfile, arg.gfile, arg.afile2006, arg.afile2008, arg.afile2010, arg.afile2012 )
 
     output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(data)
     f = open(arg.ofile,'w') 

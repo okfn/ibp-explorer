@@ -6,7 +6,7 @@ def verify_xls_format(*args):
         if v[-4:]=='xlsx':
             raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
 
-def read(iso_file, q_xls, g_xls, a_2006, a_2008, a_2010):
+def read(iso_file, q_xls, g_xls, a_2006, a_2008, a_2010, a_2012):
     # Read country mapping
     iso_mapping = json.load(open(iso_file))
     # Output to populate
@@ -29,12 +29,14 @@ def read(iso_file, q_xls, g_xls, a_2006, a_2008, a_2010):
     db_2006 = load_database(a_2006, 'Individual Question Response')
     db_2008 = load_database(a_2008, 'Individual Question Response')
     db_2010 = load_database(a_2010, 'Individual Question Numbers')
+    db_2012 = load_database(a_2012, 'Numbers (rotated)')
     # Merge into one dict
     merge = {}
     for (dbname,db) in [ 
             ('db_2006',db_2006), 
             ('db_2008',db_2008), 
-            ('db_2010',db_2010)]:
+            ('db_2010',db_2010),
+            ('db_2012',db_2012)]:
         for x in db:
             country_name = x['name']
             if not country_name in iso_mapping:
