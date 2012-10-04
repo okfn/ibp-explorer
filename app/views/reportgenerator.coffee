@@ -5,15 +5,6 @@ class ReportGenerator extends Backbone.View
     ##################
     ## Public methods
     ##################
-    questionSet: ->
-        el = $('.toggle-box.select')
-        out = []
-        if el.length==0
-            return out
-        for e in el
-            out.push parseInt $(e).attr('id').substr(7)
-        return out
-
     setInitialState: =>
         @$el.find('#group-0').click()
 
@@ -40,6 +31,35 @@ class ReportGenerator extends Backbone.View
     ##################
     ## Private methods
     ##################
+    _updated: =>
+        @questionSet = []
+        el = $('.toggle-box.select')
+        for e in (el or [])
+            @questionSet.push parseInt $(e).attr('id').substr(7)
+        # Inner function
+        calculateScore = (db) =>
+            if @questionSet.length==0 then return 0
+            acc = 0
+            count = 0
+            for x in @questionSet
+                if db[x] >= 0
+                    acc += db[x]
+                    count++
+            if (count==0) then return 0
+            return Math.round( acc / count )
+        # Calculate dataset of countries and scores
+        @dataset = []
+        for country in _EXPLORER_DATASET.country
+            obj = 
+                country: country.name
+                alpha2: country.alpha2
+            for year in [2006,2008,2010,2012]
+                if not (('db_'+year) of country) then continue
+                score = calculateScore country['db_'+year], @questionSet
+                obj[year] = score
+            @dataset.push obj
+        @trigger('update', @dataset, @questionSet)
+
     _select_or_clear: (e) =>
         @_setSubtitle()
         @$el.find('.group-toggler').removeClass 'active'
@@ -48,7 +68,7 @@ class ReportGenerator extends Backbone.View
             $('.toggle-box').addClass 'select'
         else if el.hasClass 'clear'
             $('.toggle-box').removeClass 'select'
-        @trigger 'update'
+        @_updated()
 
     _expand_collapse: (e) =>
         e.preventDefault()
@@ -81,7 +101,7 @@ class ReportGenerator extends Backbone.View
         x = @$el.find('#toggle-boxes')
         x.find('.toggle-box').removeClass 'select'
         x.find(' .'+group).addClass 'select'
-        @trigger 'update'
+        @_updated()
         return false
 
     _clickBoxToggle: (e) =>
@@ -93,7 +113,7 @@ class ReportGenerator extends Backbone.View
             el.addClass 'select'
         @_setSubtitle()
         @$el.find('.group-toggler').removeClass 'active'
-        @trigger 'update'
+        @_updated()
         return false
 
 

@@ -8,6 +8,10 @@ module.exports = class TimelinePage extends Backbone.View
     ##################
     ## Public methods
     ##################
+    initialize: =>
+        reportGenerator.bind 'update', @_updateReport
+        reportGenerator.bind 'resize', @_redrawJsPlumb
+
     renderPage: (target) =>
         # Write to DOM
         @$el.html template_page()
@@ -22,9 +26,7 @@ module.exports = class TimelinePage extends Backbone.View
             label: 
                 enabled: "Rank"
                 disabled: "Score"
-        reportGenerator.bind 'update', @_updateReport
-        reportGenerator.bind 'resize', @_redrawJsPlumb
-        @_updateReport()
+        @_updateReport reportGenerator.dataset
 
     ##################
     ## Private methods
@@ -37,26 +39,13 @@ module.exports = class TimelinePage extends Backbone.View
             $('.timeline-cell-rank').hide()
             $('.timeline-cell-score').show()
 
-    _calculateScore: (db, questionSet) ->
-        if questionSet.length==0 then return 0
-        acc = 0
-        count = 0
-        for x in questionSet
-            if db[x] >= 0
-                acc += db[x]
-                count++
-        return Math.round( acc / count )
-
-    _buildRankingTable: (year, questionSet) =>
+    _buildRankingTable: (year, dataset) =>
         # Basic dataset
         out = []
-        for country in _EXPLORER_DATASET.country
-            if not (('db_'+year) of country) then continue
-            score = @_calculateScore country['db_'+year], questionSet
-            out.push 
-                country: country.name
-                alpha2: country.alpha2
-                score: score
+        for country,obj of dataset
+            if not (year of obj) then continue
+            obj.score = obj[year]
+            out.push obj
         out.sort @_sortFunction
         # Add 'rank' field
         rank = 0
@@ -83,17 +72,18 @@ module.exports = class TimelinePage extends Backbone.View
             return a.country.localeCompare b.country
         return x
 
-    _updateReport: =>
-        questionSet = reportGenerator.questionSet()
+    _updateReport: (dataset) =>
+        target = $('#timeline-columns')
+        if target.length==0 then return
         # PreRender
         html = ''
         for year in [2006,2008,2010,2012]
             html += template_timeline_column
                 year: year
-                data: @_buildRankingTable(year, questionSet)
+                data: @_buildRankingTable(year, dataset)
         # Large DOM rebuild here. Trigger a single reflow.
-        $('#timeline-columns').html html
-        $('#timeline-columns tr').bind 'mouseover', @_mouseoverRanking
+        target.html html
+        target.find('tr').bind 'mouseover', @_mouseoverRanking
         # Pre-select the top-most entrant in the latest results
         if not @mouseoverAlpha2
             @mouseoverAlpha2 = $('#timeline-column-2012 tbody tr:first-child').attr 'data-alpha2'
@@ -109,8 +99,8 @@ module.exports = class TimelinePage extends Backbone.View
 
     _redrawJsPlumb: (alpha2=null) =>
         if alpha2 then @mouseoverAlpha2 = alpha2
-        @$el.find('.hover').removeClass 'hover'
-        els = @$el.find('.timeline-row-'+@mouseoverAlpha2)
+        $('.hover').removeClass 'hover'
+        els = $('.timeline-row-'+@mouseoverAlpha2)
         if not els.length then return
         els.addClass 'hover'
         jsPlumb.deleteEveryEndpoint()
