@@ -118,8 +118,24 @@ module.exports = class ProjectPage extends Backbone.View
             if alpha2 then @mouseoverRanking alpha2
         # Pre-select the top-most entrant in the latest results
         preselect = $('#rankings-2010 tbody tr:first-child').attr('data-alpha2')
-        console.log 'preselect ',preselect
         @mouseoverRanking preselect
+        # Init on-page elements
+        onRankingViewChange = (el,showRankings) ->
+            if showRankings
+                $('.ranking-cell-score').hide()
+                $('.ranking-cell-rank').show()
+            else
+                $('.ranking-cell-rank').hide()
+                $('.ranking-cell-score').show()
+        $('#ranking-toggle-button').toggleButtons
+            onChange: onRankingViewChange
+            width: 160
+            style:
+                disabled: 'primary'
+            label: 
+                enabled: "Ranking"
+                disabled: "Score"
+
 
     renderPage: (target) =>
         renderData = 

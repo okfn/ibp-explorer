@@ -1,54 +1,56 @@
-<div class="row">
-    <div class="span3 grouplist grouplist1">
-        {{#each groupings0}}
-            <h6>{{by}}</h6>
-            <ul>
-              {{#each entries}}
-              <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
-              {{/each}}
-            </ul>
-        {{/each}}
-    </div>
-    <div class="span8">
-        <div class="toggle-boxes">
-        {{#each question}}
-            <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</a>
-        {{/each}}
-        <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-<div class="row" style="display: none;">
-    <div class="span3 offset1 grouplist grouplist2">
-        {{#each groupings1}}
-            <h6>{{by}}</h6>
-            <ul>
-              {{#each entries}}
-              <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
-              {{/each}}
-            </ul>
-        {{/each}}
-    </div>
-    <div class="span3 grouplist grouplist3">
-        {{#each groupings2}}
-            <h6>{{by}}</h6>
-            <ul>
-              {{#each entries}}
-              <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
-              {{/each}}
-            </ul>
-        {{/each}}
-    </div>
-    <div class="span3 grouplist grouplist4">
-        {{#each groupings3}}
-            <h6>{{by}}</h6>
-            <ul>
-              {{#each entries}}
-              <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
-              {{/each}}
-            </ul>
-        {{/each}}
-    </div>
+<div class="reportgenerator">
+  <div class="row">
+      <div class="span3 grouplist grouplist1">
+          {{#each groupings0}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+      <div class="span8">
+          <div class="toggle-boxes">
+          {{#each question}}
+              <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</a>
+          {{/each}}
+          <div class="clearfix"></div>
+          </div>
+      </div>
+  </div>
+  <div class="row" style="display: none;">
+      <div class="span3 offset1 grouplist grouplist2">
+          {{#each groupings1}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+      <div class="span3 grouplist grouplist3">
+          {{#each groupings2}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+      <div class="span3 grouplist grouplist4">
+          {{#each groupings3}}
+              <h6>{{by}}</h6>
+              <ul>
+                {{#each entries}}
+                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+          {{/each}}
+      </div>
+  </div>
 </div>
 <div id="report">
 </div>

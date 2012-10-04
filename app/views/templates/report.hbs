@@ -1,5 +1,14 @@
 {{#with rankings}}
-<div class="span-one-third">
+<div class="report-header">
+    <div class="toggle pull-right">
+        <span class="pull-left text">View:</span>
+        <div class="pull-left" id="ranking-toggle-button">
+            <input type="checkbox" checked="checked">
+        </div>
+    </div>
+    <h2>Rankings</h2>
+</div>
+<div class="report-column">
   <h4>Rankings (2006)</h4>
   <table class="rankings-table" id="rankings-2006">
     <thead>
@@ -20,7 +29,7 @@
     </tbody>
   </table>
 </div>
-<div class="span-one-third">
+<div class="report-column">
   <h4>Rankings (2008)</h4>
   <table class="rankings-table" id="rankings-2008">
     <thead>
@@ -41,7 +50,7 @@
     </tbody>
   </table>
 </div>
-<div class="span-one-third">
+<div class="report-column">
   <h4>Rankings (2010)</h4>
   <table class="rankings-table" id="rankings-2010">
     <thead>

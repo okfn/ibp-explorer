@@ -125,18 +125,18 @@
   vertical-align: top;
 }
 
-#content .clearfix {
+.clearfix {
   *zoom: 1;
 }
 
-#content .clearfix:before,
-#content .clearfix:after {
+.clearfix:before,
+.clearfix:after {
   display: table;
   line-height: 0;
   content: "";
 }
 
-#content .clearfix:after {
+.clearfix:after {
   clear: both;
 }
 
