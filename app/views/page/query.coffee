@@ -8,13 +8,13 @@ module.exports = class ProjectPage extends Backbone.View
         return false
 
     hoverGroupToggle: (e) =>
-        el = $(e.srcElement)
+        el = $(e.delegateTarget)
         group = el.attr('id')
         $('.toggle-boxes .'+group).addClass 'hover'
 
     clickGroupToggle: (e) =>
         e.preventDefault()
-        el = $(e.srcElement)
+        el = $(e.delegateTarget)
         group = el.attr('id')
         $('.toggle-boxes .toggle-box').removeClass 'select'
         $('.toggle-boxes .'+group).addClass 'select'
@@ -23,7 +23,7 @@ module.exports = class ProjectPage extends Backbone.View
 
     clickBoxToggle: (e) =>
         e.preventDefault()
-        el = $(e.srcElement)
+        el = $(e.delegateTarget)
         if el.hasClass 'select'
             el.removeClass 'select'
         else
@@ -83,13 +83,12 @@ module.exports = class ProjectPage extends Backbone.View
             score_2008: getScore country.db_2008
             score_2010: getScore country.db_2010
         countryComparator = (a,b) ->
-            x = b.score - a.score
+            x = b.score - a.score 
             if x==0 
                 if b.alpha2 > a.alpha2 then return 1
                 if b.alpha2 < a.alpha2 then return -1
             return x
         scores = ( getAllScores(x) for x in _EXPLORER_DATASET.country )
-        scores.sort countryComparator
         # Compute rankings
         rankings = {}
         for year in ['2006','2008','2010']
@@ -126,8 +125,9 @@ module.exports = class ProjectPage extends Backbone.View
         renderData = 
             country: _EXPLORER_DATASET.country
             groupings0: _EXPLORER_DATASET.groupings.slice(0,2)
-            groupings1: _EXPLORER_DATASET.groupings.slice(2,4)
-            groupings2: _EXPLORER_DATASET.groupings.slice(4,6)
+            groupings1: _EXPLORER_DATASET.groupings.slice(2,3)
+            groupings2: _EXPLORER_DATASET.groupings.slice(3,4)
+            groupings3: _EXPLORER_DATASET.groupings.slice(4,5)
             question: []
         id = 0
         for qnum, qdata of _EXPLORER_DATASET.question
@@ -160,7 +160,7 @@ module.exports = class ProjectPage extends Backbone.View
                         expandLink.remove()
             }
             el.bind 'destroy', (e) -> el.find('a.expand').remove()
-        $('.group-toggler').bind 'mouseover', @hoverGroupToggle        
+        $('.group-toggler').bind 'mouseover', @hoverGroupToggle
         $('.group-toggler').bind 'click', @clickGroupToggle
         $('.group-toggler').bind 'mouseout', (e) =>
             $('.toggle-boxes .toggle-box').removeClass 'hover'

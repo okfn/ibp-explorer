@@ -19,6 +19,15 @@ Array.prototype.max = function() { return Math.max.apply(null, this) }
 
 Array.prototype.min = function() { return Math.min.apply(null, this) }
 
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function(obj, start) {
+        for (var i = (start || 0), j = this.length; i < j; i++) {
+            if (this[i] === obj) { return i; }
+        }
+        return -1;
+    }
+}
+
 Array.prototype.contains = function(x) { return this.indexOf(x)>=0; }
 
 /* Inbuilt assertion statement */

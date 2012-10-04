@@ -100,6 +100,8 @@ def load_database(filename, sheetname):
 
 
 def parse_int_list(int_list):
+    if int_list is '' or int_list is u'':
+        return []
     if type(int_list) is str:
         int_list = unicode(int_list)
     if type(int_list) is float:

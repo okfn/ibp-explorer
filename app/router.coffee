@@ -6,7 +6,6 @@ QueryPage = require 'views/page/query'
 RawDataPage = require 'views/page/rawdata'
 
 # Function to consistently target the main div
-content = -> $('#explorer')
 # Generator of singleton view pages
 singletons =
     homePage:  -> return @_home = @_home or new HomePage()
@@ -27,8 +26,8 @@ module.exports = class Router extends Backbone.Router
             location = (window.location.hash.slice(1))
             trigger = trigger.split(':')
             if trigger[0]=='route'
-              $('.navbar .nav li').removeClass 'active'
-              active = $('.navbar .nav li a[href="#'+location+'"]')
+              $('ul.nav li').removeClass 'active'
+              active = $('ul.nav li a[href="#'+location+'"]')
               active = $(active.parents('li')[0])
               active.add( active.parents('.dropdown') ).addClass 'active'
 
@@ -36,7 +35,7 @@ module.exports = class Router extends Backbone.Router
         if not (view==@currentView)
             @currentView = view
             $('#content').html template_explorer 'helo'
-            #view.renderPage content()
+            view.renderPage $('#explorer')
 
     home: ->
       @setCurrent singletons.homePage()
@@ -47,13 +46,3 @@ module.exports = class Router extends Backbone.Router
     rawdata: ->
       @setCurrent singletons.rawDataPage()
 
-###
-    project: (projectName='okfn') ->
-        view = singletons.projectPage()
-        if not view==@currentView
-            @currentView = view
-        view.renderPage content(), projectName
-    github: (graphMode='watchers') ->
-        @setCurrent singletons.githubView()
-        singletons.githubView().showGraph graphMode
-###

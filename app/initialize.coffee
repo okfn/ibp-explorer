@@ -2,18 +2,9 @@ Router = require('router')
 
 loadDataset = ->
     assert(_EXPLORER_DATASET!=null, 'Failed to load dataset.')
-    g = _EXPLORER_DATASET.groupings
-    assert(g[0].by=="General", 'Unexpected _EXPLORER_DATASET structure.')
-    # Insert a couple of extra groupings
-    g[0].entries.push
-        title: '(Select all)'
-        qs: [0..125]
-    g[0].entries.push
-        title: '(Clear all)'
-        qs: []
     # Assign an ID to all groupings
     id = 0
-    for x in g
+    for x in _EXPLORER_DATASET.groupings
         for y in x.entries
             y.group_id = id++
 
