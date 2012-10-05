@@ -11,7 +11,8 @@ module.exports = class TimelinePage extends Backbone.View
     ##################
     initialize: =>
         reportGenerator.bind 'update', @_updateReport
-        reportGenerator.bind 'resize', @_redrawJsPlumb
+        reportGenerator.bind 'resizeStart', jsPlumb.deleteEveryEndpoint
+        reportGenerator.bind 'resized', @_redrawJsPlumb
 
     renderPage: (target) =>
         # Write to DOM
