@@ -27,6 +27,10 @@ class ReportGenerator extends Backbone.View
         #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
         @$el.find('.expand-collapse a').bind 'click', @_expand_collapse
         @$el.find('.select-or-clear button').bind 'click', @_select_or_clear
+        @$el.find('.toggle-box').tooltip
+            placement: 'left'
+            delay: 100
+            animatoin: true
 
     ##################
     ## Private methods

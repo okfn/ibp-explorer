@@ -33,7 +33,7 @@
           </div>
           <div id="toggle-boxes">
           {{#each question}}
-              <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}">{{number}}</a>
+            <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}" title="<p class='question-tooltip'>{{text}}</p>">{{number}}</a>
           {{/each}}
           <div class="clearfix"></div>
           </div>
