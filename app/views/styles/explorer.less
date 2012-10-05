@@ -248,12 +248,52 @@ div#content {
         margin: 10px auto 0 auto;
         height: 450px;
     }
+    #rankings-toggles,
     #map-toggles {
         margin: 10px 0;
         text-align: center;
-
         button {
             width: 90px;
+        }
+    }
+
+    #rankings {
+        .country {
+            text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 140px;
+            max-width: 140px;
+        }
+        .score {
+            width: 30px;
+            max-width: 30px;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .flag {
+            width: 20px;
+            max-width: 20px;
+            text-align: center;
+        }
+        .bar {
+            padding: 0 0 0 0;
+        }
+
+        .percentbar {
+            width: 620px;
+            height: 20px; 
+            > * { 
+                height: 20px; 
+                float: left;
+            }
+            background: #f0f;
+            .a { background: #22aa33; }
+            .b { background: #DAC402; }
+            .c { background: #F58024; }
+            .d { background: #B7282E; }
+            .e { background: #aaa; }
         }
     }
 }

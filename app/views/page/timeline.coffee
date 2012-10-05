@@ -1,5 +1,6 @@
 template_page = require 'views/templates/page/timeline'
 template_timeline_column = require 'views/templates/timeline_column'
+util = require 'util'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -46,7 +47,7 @@ module.exports = class TimelinePage extends Backbone.View
             if not (year of obj) then continue
             obj.score = obj[year]
             out.push obj
-        out.sort @_sortFunction
+        out.sort util.sortFunction
         # Add 'rank' field
         rank = 0
         latest = 999
@@ -65,12 +66,6 @@ module.exports = class TimelinePage extends Backbone.View
             if x.score in tag_duplicates
                 x.rank = '= '+x.rank
         return out
-
-    _sortFunction: (a,b) ->
-        x = b.score - a.score 
-        if not x
-            return a.country.localeCompare b.country
-        return x
 
     _updateReport: (dataset) =>
         target = $('#timeline-columns')

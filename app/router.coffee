@@ -2,6 +2,7 @@ template_explorer = require 'views/templates/explorer'
 
 MapPage = require 'views/page/map'
 TimelinePage = require 'views/page/timeline'
+RankingsPage = require 'views/page/rankings'
 RawDataPage = require 'views/page/rawdata'
 
 # Singleton report generator
@@ -12,6 +13,7 @@ reportGenerator = require 'views/reportgenerator'
 singletons =
     mapPage:  -> return @_map = @_map or new MapPage()
     timelinePage:  -> return @_timeline = @_timeline or new TimelinePage()
+    rankingsPage:  -> return @_rankings = @_rankings or new RankingsPage()
     rawDataPage:  -> return @_rawData = @_rawData or new RawDataPage()
 
 module.exports = class Router extends Backbone.Router
@@ -19,6 +21,7 @@ module.exports = class Router extends Backbone.Router
         '': 'map'
         'map' : 'map'
         'timeline' : 'timeline'
+        'rankings' : 'rankings'
         'rawdata' : 'rawdata'
 
     initialize: ->
@@ -48,6 +51,8 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.mapPage()
     timeline: ->
       @setCurrent singletons.timelinePage()
+    rankings: ->
+      @setCurrent singletons.rankingsPage()
     rawdata: ->
       @setCurrent singletons.rawDataPage()
 
