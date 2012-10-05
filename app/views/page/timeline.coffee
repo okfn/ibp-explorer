@@ -107,6 +107,3 @@ module.exports = class TimelinePage extends Backbone.View
                 jsPlumb.connect {source: els[x], target: els[x+1], overlays: jsPlumb._custom_overlay}
             @timeout = null
         , 50)
-
-        
-

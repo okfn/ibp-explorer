@@ -66,13 +66,21 @@ module.exports = class ProjectPage extends Backbone.View
                 d: (@_count db, 0, questionSet)
                 e: (@_count db, -1, questionSet)
             obj.total = obj.a+obj.b+obj.c+obj.d+obj.e
-            obj.pa = ((obj.a*100)/obj.total)
-            obj.pb = ((obj.b*100)/obj.total)
-            obj.pc = ((obj.c*100)/obj.total)
-            obj.pd = ((obj.d*100)/obj.total)
-            obj.pe = ((obj.e*100)/obj.total)
+            obj.a_width = ((obj.a*100)/obj.total)
+            obj.b_width = ((obj.b*100)/obj.total)
+            obj.c_width = ((obj.c*100)/obj.total)
+            obj.d_width = ((obj.d*100)/obj.total)
+            obj.e_width = ((obj.e*100)/obj.total)
+            obj.b_left = obj.a_width
+            obj.c_left = obj.b_width + obj.b_left
+            obj.d_left = obj.c_width + obj.c_left
+            obj.e_left = obj.d_width + obj.d_left
             data.push obj
         data.sort util.sortFunction
         for obj in data
             el = $(template_rankings_row obj).appendTo(target)
+        $('.percentbar').tooltip
+            placement: 'right'
+            delay: 50
+            animatoin: true
 

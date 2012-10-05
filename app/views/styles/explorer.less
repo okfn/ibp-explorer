@@ -279,9 +279,12 @@ div#content {
     #rankings {
         .country {
             text-align: right;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            /* IE hack: put this inside a span */
+            span {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
             width: 140px;
             max-width: 140px;
         }
@@ -303,11 +306,14 @@ div#content {
         .percentbar {
             width: 620px;
             height: 20px; 
+            position: relative;
             > * { 
+                position: absolute;
+                top: 0;
                 height: 20px; 
                 float: left;
             }
-            background: #f0f;
+            background: #aaa;
             .a { background: #22aa33; }
             .b { background: #DAC402; }
             .c { background: #F58024; }
@@ -320,4 +326,27 @@ div#content {
 .question-tooltip {
   padding: 10px 4px;
   text-align: left;
+}
+.percentbar-tooltip {
+  text-align: left;
+  td {
+    padding: 0 0 0 0;
+  }
+  .c1 {
+    font-weight: bold; 
+    text-align: center;
+    width: 20px;
+  }
+  .c2 {
+    text-align: right;
+    width: 20px;
+  }
+  .c3 {
+    text-align: center;
+    width: 10px;
+  }
+  .c4 {
+    width: 20px;
+    text-align: left;
+  }
 }
