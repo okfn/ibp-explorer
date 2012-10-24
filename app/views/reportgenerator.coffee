@@ -41,7 +41,7 @@ class ReportGenerator extends Backbone.View
         for e in (el or [])
             @questionSet.push parseInt $(e).attr('id').substr(7)
         # Inner function
-        calculateScore = (db) =>
+        calculateScore = (db, verbose) =>
             if @questionSet.length==0 then return 0
             acc = 0
             count = 0
@@ -49,7 +49,11 @@ class ReportGenerator extends Backbone.View
                 if db[x] >= 0
                     acc += db[x]
                     count++
+                if verbose
+                    console.log x, db[x], acc, count
             if (count==0) then return 0
+            if verbose
+                console.log 'result', (acc/count), Math.round(acc/count)
             return Math.round( acc / count )
         # Calculate dataset of countries and scores
         @dataset = []
@@ -59,7 +63,7 @@ class ReportGenerator extends Backbone.View
                 alpha2: country.alpha2
             for year in [2006,2008,2010,2012]
                 if not (('db_'+year) of country) then continue
-                score = calculateScore country['db_'+year], @questionSet
+                score = calculateScore country['db_'+year], country.alpha2=='AF' and year==2010
                 obj[year] = score
             @dataset.push obj
         @trigger('update', @dataset, @questionSet)
