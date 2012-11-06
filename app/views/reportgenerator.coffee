@@ -1,6 +1,19 @@
 template = require 'views/templates/reportgenerator'
+debug = true
 
 class ReportGenerator extends Backbone.View
+
+    initialize: =>
+        if debug then @debugReports()
+
+    debugReports: =>
+        obi_questions = _EXPLORER_DATASET.groupings[0].entries[0].qs
+        for country in _EXPLORER_DATASET.country
+            for year in ['db_2006','db_2008','db_2010','db_2012']
+                if year of country
+                    score = @calculateScore country[year], obi_questions
+                    expected = country[year].roundobi
+                    assert expected==score, 'ERROR '+country.name+'.'+year+' failed data integrity test. Expected OBI='+expected+'; I calculated '+score
 
     ##################
     ## Public methods
@@ -32,6 +45,19 @@ class ReportGenerator extends Backbone.View
             delay: 100
             animatoin: true
 
+    calculateScore: (db, questionSet, verbose=false) =>
+        if questionSet.length==0 then return 0
+        acc = 0
+        count = 0
+        for x in questionSet
+            if db[x] >= 0
+                acc += db[x]
+                count++
+        if (count==0) then return 0
+        if verbose
+            console.log 'result', acc,count, (acc/count), Math.round(acc/count), questionSet
+        return Math.round( acc / count )
+
     ##################
     ## Private methods
     ##################
@@ -41,20 +67,6 @@ class ReportGenerator extends Backbone.View
         for e in (el or [])
             @questionSet.push parseInt $(e).attr('id').substr(7)
         # Inner function
-        calculateScore = (db, verbose) =>
-            if @questionSet.length==0 then return 0
-            acc = 0
-            count = 0
-            for x in @questionSet
-                if db[x] >= 0
-                    acc += db[x]
-                    count++
-                if verbose
-                    console.log x, db[x], acc, count
-            if (count==0) then return 0
-            if verbose
-                console.log 'result', (acc/count), Math.round(acc/count)
-            return Math.round( acc / count )
         # Calculate dataset of countries and scores
         @dataset = []
         for country in _EXPLORER_DATASET.country
@@ -63,7 +75,7 @@ class ReportGenerator extends Backbone.View
                 alpha2: country.alpha2
             for year in [2006,2008,2010,2012]
                 if not (('db_'+year) of country) then continue
-                score = calculateScore country['db_'+year], country.alpha2=='AF' and year==2010
+                score = @calculateScore(country['db_'+year], @questionSet)
                 obj[year] = score
             @dataset.push obj
         @trigger('update', @dataset, @questionSet)

@@ -3,7 +3,7 @@
 DEFAULT_ISOFILE = 'country_to_iso3166.json'
 DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xlsx'
 DEFAULT_ANSWERFILE = 'OBI_UNIFIED.xlsx'
-DEFAULT_GROUPINGSFILE = 'OBI_2012_groupings.xlsx'
+DEFAULT_GROUPINGSFILE = 'GroupingsOBSQuestions2012_102112.xlsx'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
 
 if __name__=='__main__':

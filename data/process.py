@@ -22,7 +22,7 @@ def build_dict(iso_file, q_xls, g_xls, a_xls):
     # Generate output
     out['country']  = _read_answers(a_workbook, iso_data)
     out['question'] = _read_questions(q_workbook)
-    out['grouping'] = _read_groupings(g_workbook)
+    out['groupings'] = _read_groupings(g_workbook)
     return out
 
 
@@ -66,6 +66,7 @@ def _read_answers(a_workbook, iso_data):
         # Validate the row content
         validated = {}
         for key,value in row.items():
+            if key is None: continue
             if question_label.match(key) is not None:
                 error_string = '[%s/%s] Invalid value for %s: %s'% (name,year,key,value)
                 # Verify the value
@@ -92,7 +93,7 @@ def _read_questions(q_workbook):
     height = sheet.get_highest_row()
     for n in range(2,height+1):
         questions[n-1] = { 
-          'number': n,
+          'number': n-1,
           'text': _lookup(sheet,2,n),
           'a': _lookup(sheet,3,n),
           'b': _lookup(sheet,4,n),
