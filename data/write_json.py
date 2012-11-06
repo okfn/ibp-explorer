@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 DEFAULT_ISOFILE = 'country_to_iso3166.json'
-DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xls'
-DEFAULT_ANSWERFILE = 'OBI_UNIFIED.xls'
-DEFAULT_GROUPINGSFILE = 'OBI_2012_groupings.xls'
+DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xlsx'
+DEFAULT_ANSWERFILE = 'OBI_UNIFIED.xlsx'
+DEFAULT_GROUPINGSFILE = 'OBI_2012_groupings.xlsx'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
 
 if __name__=='__main__':
@@ -20,12 +20,12 @@ if __name__=='__main__':
 
     arg = parser.parse_args()
     for v in vars(arg).values():
-      if v[-4:]=='xlsx':
+      if v[-4:]=='xls':
          parser.print_usage()
-         print 'Error: XLSX is not supported. Files must be in XLS format.'
+         print 'Error: XLS is not supported. Files must be in XLSX format. (Filename: %s)' % v
          sys.exit(-1)
 
-    data = process.read_unified( arg.isofile, arg.qfile, arg.gfile, arg.afile )
+    data = process.build_dict( arg.isofile, arg.qfile, arg.gfile, arg.afile )
 
     output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(data)
     f = open(arg.ofile,'w') 

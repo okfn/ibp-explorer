@@ -1,197 +1,137 @@
-import xlrd
+from openpyxl import load_workbook
 import json
 import re
+from string import uppercase
 
-def verify_xls_format(*args):
-    for v in args:
-        if v[-4:]=='xlsx':
-            raise ValueError('Error: XLSX is not supported. Files must be in XLS format: %s' % v)
+# ######
+# Public
+# ######
 
-def read_unified(iso_file, q_xls, g_xls, a_xls):
+def build_dict(iso_file, q_xls, g_xls, a_xls):
     # Output to populate
     out = {}
-    # Question dict
-    q_workbook = xlrd.open_workbook(q_xls)
-    sheet = q_workbook.sheet_by_name('Sheet2')
-    out['question'] = {}
-    for n in range(1,sheet.nrows):
-        out['question'][n] = { 
-          'number': n,
-          'text': sheet.cell(n,1).value,
-          'a': sheet.cell(n,2).value,
-          'b': sheet.cell(n,3).value,
-          'c': sheet.cell(n,4).value,
-          'd': sheet.cell(n,5).value,
-          'e': sheet.cell(n,6).value,
-          }
-    # Load all country spreadsheets
-    out['country'] = load_database_unified(a_xls, iso_file)
-
-    # Question groupings
-    g_workbook = xlrd.open_workbook(g_xls)
-    sheet = g_workbook.sheet_by_name('QuestionsGroups')
-    i = 1
-    out['groupings'] = []
-    # Scroll down column B
-    while i < sheet.nrows:
-        title = sheet.row(i)[1].value
-        if title:
-            group = {
-                'by': title,
-                'entries': [],
-            }
-            while i<sheet.nrows-1 and sheet.row(i+1)[1].value:
-                i += 1
-                group['entries'].append({
-                  'title': sheet.row(i)[1].value,
-                  'qs': parse_int_list( sheet.row(i)[2].value ),
-                })
-            out['groupings'].append( group )
-        i += 1
+    # Workbooks to read
+    print 'Reading %s...' % q_xls
+    q_workbook = load_workbook(filename=q_xls)
+    print 'Reading %s...' % g_xls
+    g_workbook = load_workbook(filename=g_xls)
+    print 'Reading %s...' % a_xls
+    a_workbook = load_workbook(filename=a_xls)
+    print 'Reading %s...' % iso_file
+    iso_data = json.load(open(iso_file))
+    # Generate output
+    out['country']  = _read_answers(a_workbook, iso_data)
+    out['question'] = _read_questions(q_workbook)
+    out['grouping'] = _read_groupings(g_workbook)
     return out
 
-def load_database_unified(a_xls, iso_file):
-    # Custom regex
+
+# #########
+# Internals
+# #########
+
+# Handy lookup of excel column names Don't you love comprehensions?
+_COLUMN_NAME = [ (a+b).strip() for a in ' '+uppercase for b in uppercase ]
+def _lookup(sheet,x,y):
+    """Look up an Excel cell in a sheet. Top left corner is (1,1) not (0,0).
+       This avoids remapping rows, as Excel obviously indexes from 1."""
+    cell_name = _COLUMN_NAME[x-1] + str(y)
+    return sheet.cell(cell_name).value
+
+def _read_answers(a_workbook, iso_data):
+    sheet = a_workbook.get_sheet_by_name(name='Sheet1')
+    answers = {}
+    height = sheet.get_highest_row()
+    width = sheet.get_highest_column()
+    # Not unlike CSV Dictreader. Also, I like comprehensions.
+    headers = { x : _lookup(sheet,x,1)
+                for x in range(1,width+1) }
+    rows = []
+    for y in range(2,height+1):
+        row = { headers[x]: _lookup(sheet,x,y)
+                for x in range(1,width+1) } 
+        rows.append(row)
+    # Verify the data
     question_label = re.compile('^q[0-9]+l?$')
-    # Read country mapping
-    iso_mapping = json.load(open(iso_file))
-    workbook = xlrd.open_workbook(a_xls)
-    sheet = workbook.sheet_by_name('Sheet1')
-    out = {}
-    for row_number in range(1, sheet.nrows):
-        name = sheet.cell(row_number,0).value
-        year = sheet.cell(row_number,1).value
+    answers = {}
+    for row in rows:
+        name = row['country']
+        year = row['year']
         # Don't trust spreadsheets
-        assert type(name) is unicode, '[Row %d] Invalid country name %s' % (row_number,unicode(name))
+        assert type(name) is unicode, '[%s/%s] Invalid country name %s' % (name,year,unicode(name))
         name = name.strip()
-        assert name in iso_mapping, '[Row %d] I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (row_number,name,iso_file)
-        assert type(year) is float, '[Row %d] Invalid year %s' % (row_number,unicode(year))
-        year = int(year)
-        assert year in [2006,2008,2010,2012], '[Row %d] Unexpected value of "year": %s' % (row_number,year)
-        alpha2 = iso_mapping[name]
-        out[alpha2] = out.get(alpha2,{ 'name':name, 'alpha2':alpha2 })
-        data = out[alpha2]['db_%d'%year] = {}
-        # Construct output object
-        for col_number in range(2,sheet.ncols):
-            label = sheet.cell(0,col_number).value
-            value = sheet.cell(row_number,col_number).value
-            if question_label.match(label) is not None:
-                error_string = '[Row %d] Invalid value for %s: %s'% (row_number,label,value)
+        assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
+        assert type(year) is int, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
+        assert year in [2006,2008,2010,2012], '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
+        # Validate the row content
+        validated = {}
+        for key,value in row.items():
+            if question_label.match(key) is not None:
+                error_string = '[%s/%s] Invalid value for %s: %s'% (name,year,key,value)
                 # Verify the value
-                if label[-1]=='l':
-                    assert value in ['','a','b','c','d','e'], error_string
+                if key[-1]=='l':
+                    assert value in [None,'a','b','c','d','e'], error_string
                 else:
-                    if type(value) is str and len(value)==0:
+                    if value is None:
                         # Blank becomes -1
-                        value = -1.0
-                    assert type(value) is float, error_string
-                    value = int(round(value))
+                        value = -1
+                    assert type(value) is int, error_string
                     assert value in [100,67,33,0,-1], error_string
-                label = label[1:]
-            data[label] = value
-    return sorted(out.values(),key=lambda x: x['name'])
+                key = key[1:]
+            validated[key] = value
+        # Store an object grouped by country
+        alpha2 = iso_data[name]
+        answers[alpha2] = answers.get(alpha2,{ 'name':name, 'alpha2':alpha2 })
+        answers[alpha2]['db_%d'%year] = validated
+    return sorted(answers.values(),key=lambda x: x['name'])
 
-def read(iso_file, q_xls, g_xls, a_2006, a_2008, a_2010, a_2012):
-    # Read country mapping
-    iso_mapping = json.load(open(iso_file))
-    # Output to populate
-    out = {}
+def _read_questions(q_workbook):
     # Question dict
-    q_workbook = xlrd.open_workbook(q_xls)
-    sheet = q_workbook.sheet_by_name('Sheet2')
-    out['question'] = {}
-    for n in range(1,sheet.nrows):
-        out['question'][n] = { 
+    sheet = q_workbook.get_sheet_by_name(name='Sheet2')
+    questions = {}
+    height = sheet.get_highest_row()
+    for n in range(2,height+1):
+        questions[n-1] = { 
           'number': n,
-          'text': sheet.cell(n,1).value,
-          'a': sheet.cell(n,2).value,
-          'b': sheet.cell(n,3).value,
-          'c': sheet.cell(n,4).value,
-          'd': sheet.cell(n,5).value,
-          'e': sheet.cell(n,6).value,
+          'text': _lookup(sheet,2,n),
+          'a': _lookup(sheet,3,n),
+          'b': _lookup(sheet,4,n),
+          'c': _lookup(sheet,5,n),
+          'd': _lookup(sheet,6,n),
+          'e': _lookup(sheet,7,n),
           }
-    # Load all country spreadsheets
-    db_2006 = load_database(a_2006, 'Individual Question Response')
-    db_2008 = load_database(a_2008, 'Individual Question Response')
-    db_2010 = load_database(a_2010, 'Individual Question Numbers')
-    db_2012 = load_database(a_2012, 'Numbers (rotated)')
-    # Merge into one dict
-    merge = {}
-    for (dbname,db) in [ 
-            ('db_2006',db_2006), 
-            ('db_2008',db_2008), 
-            ('db_2010',db_2010),
-            ('db_2012',db_2012)]:
-        for x in db:
-            country_name = x['name']
-            if not country_name in iso_mapping:
-                raise ValueError('I have no ISO-3116 mapping for country name "%s". Please add one to %s.' % (country_name, iso_file))
-            alpha2 = iso_mapping[country_name]
-            merge[alpha2] = merge.get(alpha2,{})
-            merge[alpha2]['alpha2'] = alpha2
-            merge[alpha2]['name'] = country_name
-            merge[alpha2][dbname] = x['score']
-    out['country'] = sorted(merge.values(),key=lambda x: x['name'])
+    return questions
 
+def _read_groupings(g_workbook):
     # Question groupings
-    g_workbook = xlrd.open_workbook(g_xls)
-    sheet = g_workbook.sheet_by_name('QuestionsGroups')
-    i = 1
-    out['groupings'] = []
+    sheet = g_workbook.get_sheet_by_name(name='QuestionsGroups')
+    out = []
     # Scroll down column B
-    while i < sheet.nrows:
-        title = sheet.row(i)[1].value
+    height = sheet.get_highest_row()
+    y = 2
+    while y <= height:
+        title = _lookup(sheet,2,y)
         if title:
             group = {
                 'by': title,
                 'entries': [],
             }
-            while i<sheet.nrows-1 and sheet.row(i+1)[1].value:
-                i += 1
+            while y<height and _lookup(sheet,2,y+1) is not None:
+                y += 1
                 group['entries'].append({
-                  'title': sheet.row(i)[1].value,
-                  'qs': parse_int_list( sheet.row(i)[2].value ),
+                  'title': _lookup(sheet,2,y),
+                  'qs': _parse_int_list( _lookup(sheet,3,y) ),
                 })
-            out['groupings'].append( group )
-        i += 1
+            out.append( group )
+        y += 1
     return out
 
-def load_database(filename, sheetname):
-    workbook = xlrd.open_workbook(filename)
-    sheet = workbook.sheet_by_name(sheetname)
-    out = []
-    header_row = 0
-    while not (sheet.cell(header_row+1,0).value==1):
-        header_row += 1
-    for col in range(1, sheet.ncols):
-        column = sheet.col_slice(col,header_row) 
-        country_name = column[0].value
-        c = {}
-        out.append(c)
-        c['name'] = country_name.strip()
-        c['score'] = {}
-        for i in range(1,len(column)):
-            raw = column[i].value
-            if raw is '' or raw is u'':
-                c['score'][i] = -1
-            elif type(raw) is float:
-                c['score'][i] = int(round(raw))
-            elif type(raw) in [str,unicode]:
-                raw = str(raw)
-                # Special case found in '08 document:
-                if raw=='b': 
-                    c['score'][i] = 67
-                else: 
-                    raise ValueError('what is this string? %s' % raw)
-    return out
-
-
-def parse_int_list(int_list):
+def _parse_int_list(int_list):
     if int_list is '' or int_list is u'':
         return []
     if type(int_list) is str:
         int_list = unicode(int_list)
-    if type(int_list) is float:
+    if (type(int_list) is float) or (type(int_list) is int):
         int_list = unicode(int(int_list))
     
     out = []
@@ -206,6 +146,7 @@ def parse_int_list(int_list):
     return out
 
 
+# TODO
 def get_regions(groupings_xls):
     wb = xlrd.open_workbook(groupings_xls)
     sheet = wb.sheet_by_name('CountriesRegions')
