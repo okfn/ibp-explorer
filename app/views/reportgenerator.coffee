@@ -14,6 +14,7 @@ class ReportGenerator extends Backbone.View
                     score = @calculateScore country[year], obi_questions
                     expected = country[year].roundobi
                     assert expected==score, 'ERROR '+country.name+'.'+year+' failed data integrity test. Expected OBI='+expected+'; I calculated '+score
+        console.log '[debug] Data integrity check complete.'
 
     ##################
     ## Public methods

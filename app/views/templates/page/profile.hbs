@@ -1,0 +1,19 @@
+
+
+<div class="country-nav-select-outer">
+<h4>Country:&nbsp;&nbsp;
+<select class="country-nav-select">
+<option value="">Select a country...</option>
+{{#each countries}}
+<option value="{{alpha2}}">{{name}}</option>
+{{/each}}
+</select></h4>
+</div>
+<div id="country-profile">
+{{#if empty}}
+  <h2>Select a country...</h2>
+{{else}}
+  <h2>Country profile for {{#with data}}{{name}}{{/with}} ({{alpha2}})</h2>
+  <pre style="font-size: 8px; line-height: 9px;">{{dataJson}}</pre>
+{{/if}}
+</div>

@@ -4,6 +4,7 @@ MapPage = require 'views/page/map'
 TimelinePage = require 'views/page/timeline'
 RankingsPage = require 'views/page/rankings'
 RawDataPage = require 'views/page/rawdata'
+ProfilePage = require 'views/page/profile'
 
 # Singleton report generator
 reportGenerator = require 'views/reportgenerator'
@@ -23,6 +24,8 @@ module.exports = class Router extends Backbone.Router
         'timeline' : 'timeline'
         'rankings' : 'rankings'
         'rawdata' : 'rawdata'
+        'profile' : 'profile'
+        'profile/:country' : 'profile'
 
     initialize: ->
         # Create basic page
@@ -35,8 +38,9 @@ module.exports = class Router extends Backbone.Router
             trigger = trigger.split(':')
             if trigger[0]=='route'
               $('ul.nav li').removeClass 'active'
-              location = location or trigger[1]
-              active = $('ul.nav li a[href$="#'+location+'"]')
+              active = $('ul.nav li a[href$="#'+location+'"]') 
+              if active.length==0
+                active = $('ul.nav li a[href$="#'+trigger[1]+'"]')
               active = $(active.parents('li')[0])
               active.add( active.parents('.dropdown') ).addClass 'active'
 
@@ -55,4 +59,7 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.rankingsPage()
     rawdata: ->
       @setCurrent singletons.rawDataPage()
+    profile: (country='') ->
+      @setCurrent new ProfilePage(country)
+
 
