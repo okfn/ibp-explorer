@@ -303,24 +303,25 @@ div#content {
             padding: 0 0 0 0;
         }
 
-        .percentbar {
-            width: 620px;
-            height: 20px; 
-            position: relative;
-            > * { 
-                position: absolute;
-                top: 0;
-                height: 20px; 
-                float: left;
-            }
-            background: #aaa;
-            .a { background: #22aa33; }
-            .b { background: #DAC402; }
-            .c { background: #F58024; }
-            .d { background: #B7282E; }
-            .e { background: #aaa; }
-        }
     }
+}
+
+.percentbar {
+    width: 620px;
+    height: 20px; 
+    position: relative;
+    > * { 
+        position: absolute;
+        top: 0;
+        height: 20px; 
+        float: left;
+    }
+    background: #aaa;
+    .a { background: #22aa33; }
+    .b { background: #DAC402; }
+    .c { background: #F58024; }
+    .d { background: #B7282E; }
+    .e { background: #aaa; }
 }
 
 .question-tooltip {
@@ -369,7 +370,11 @@ div.country-nav-select-outer {
 }
 div#country-profile {
   margin: 0 10px;
+  border-top: 1px solid #999;
   h2 {
     padding-bottom: 4px;
+  }
+  .percentages {
+    margin-left: 20px;
   }
 }

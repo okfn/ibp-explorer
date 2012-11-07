@@ -82,5 +82,5 @@ module.exports = class ProjectPage extends Backbone.View
         $('.percentbar').tooltip
             placement: 'right'
             delay: 50
-            animatoin: true
+            animation: true
 

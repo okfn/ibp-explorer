@@ -13,7 +13,32 @@
 {{#if empty}}
   <h2>Select a country...</h2>
 {{else}}
-  <h2>Country profile for {{#with data}}{{name}}{{/with}} ({{alpha2}})</h2>
+  <h2>Country profile: {{#with data}}{{name}}{{/with}} ({{alpha2}})</h2>
+  <table class="percentages">
+    {{#each percentages}}
+      <tr>
+        <td>{{year}}</td>
+        <td class="bar">
+          <div class="percentbar" style="width: 720px;" title="<div class='percentbar-tooltip'>
+          <div class='heading'>Survey Scores</div>
+          <table>
+            <tr><td class='c1'>A:</td><td class='c2'>{{a}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+            <tr><td class='c1'>B:</td><td class='c2'>{{b}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+            <tr><td class='c1'>C:</td><td class='c2'>{{c}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+            <tr><td class='c1'>D:</td><td class='c2'>{{d}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+            <tr><td class='c1'>E:</td><td class='c2'>{{e}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+          </table>
+          </div>">
+            <div class="e" style="width: {{e_width}}%"></div>
+            <div class="d" style="width: {{d_width}}%"></div>
+            <div class="c" style="width: {{c_width}}%"></div>
+            <div class="b" style="width: {{b_width}}%"></div>
+            <div class="a" style="width: {{a_width}}%"></div>
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
   <pre style="font-size: 8px; line-height: 9px;">{{dataJson}}</pre>
 {{/if}}
 </div>
