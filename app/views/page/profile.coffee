@@ -1,4 +1,5 @@
 template_page = require 'views/templates/page/profile'
+template_profile_percentages = require 'views/templates/profile_percentages'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -24,12 +25,6 @@ module.exports = class ProfilePage extends Backbone.View
             data: @data
             dataJson: JSON.stringify @data
             empty: @alpha2==""
-            percentages: [
-                @_get_percentages @data.db_2006, '2006'
-                @_get_percentages @data.db_2008, '2008'
-                @_get_percentages @data.db_2010, '2010'
-                @_get_percentages @data.db_2012, '2012'
-            ]
 
         @$el.html template_page renderData
         target.html @$el
@@ -39,20 +34,26 @@ module.exports = class ProfilePage extends Backbone.View
         nav.val @alpha2
         nav.bind('change',@_onNavChange)
         # Add tooltips to nav bars
-        ###
         $('.percentbar').tooltip
             placement: 'right'
             delay: 50
             animation: true
-        ###
 
 
     ##################
     ## Private methods
     ##################
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
+        percentageData = 
+            percentages: [
+                @_get_percentages @data.db_2006, '2006', questionSet
+                @_get_percentages @data.db_2008, '2008', questionSet
+                @_get_percentages @data.db_2010, '2010', questionSet
+                @_get_percentages @data.db_2012, '2012', questionSet
+            ]
+        $('.percentages').html(template_profile_percentages percentageData)
 
-    _onNavChange: (e) =>
+    _onNavChange: (e) ->
         value = $(e.delegateTarget).val()
         if value.length==0
             window.location = '#profile'
@@ -60,28 +61,28 @@ module.exports = class ProfilePage extends Backbone.View
             assert value.length==2,'Invalid country code: '+value
             window.location = '#profile/'+value
 
-    _get_percentages: (data,year) ->
+    _get_percentages: (data,year, questionSet) ->
         if data is undefined
             return {year:year,not_defined:true}
-        TOTAL = 125
         out = 
+            total: questionSet.length
             year: year
-            a_count: 0
-            b_count: 0
-            c_count: 0
-            d_count: 0
-            e_count: 0
-        for i in [1..TOTAL]
+            a: 0
+            b: 0
+            c: 0
+            d: 0
+            e: 0
+        for i in questionSet
             letter = data[i+'l']
             if not letter then letter='e'
             assert letter in ['a','b','c','d','e'] # Ensure that it's a predefined [a,b,c,d,e] key
-            out[letter+'_count']++
-        assert out.a_count+out.b_count+out.c_count+out.d_count+out.e_count==TOTAL,"Integrity problem in profile calculation"
+            out[letter]++
+        assert out.a+out.b+out.c+out.d+out.e==out.total,"Integrity problem in profile calculation"
         # Calculate bar widths. They are superimposed on top of each other, in decreasing width..
-        out.a_width = (out.a_count)*100/TOTAL
-        out.b_width = (out.a_count+out.b_count)*100/TOTAL
-        out.c_width = (out.a_count+out.b_count+out.c_count)*100/TOTAL
-        out.d_width = (out.a_count+out.b_count+out.c_count+out.d_count)*100/TOTAL
+        out.a_width = (out.a)*100/out.total
+        out.b_width = (out.a+out.b)*100/out.total
+        out.c_width = (out.a+out.b+out.c)*100/out.total
+        out.d_width = (out.a+out.b+out.c+out.d)*100/out.total
         out.e_width = 100
         out.json = JSON.stringify out
         return out
