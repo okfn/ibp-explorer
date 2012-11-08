@@ -1,5 +1,6 @@
 template_page = require 'views/templates/page/profile'
 template_profile_percentages = require 'views/templates/profile_percentages'
+template_profile_details = require 'views/templates/profile_details'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -23,7 +24,6 @@ module.exports = class ProfilePage extends Backbone.View
             alpha2: @alpha2
             countries: _EXPLORER_DATASET.country
             data: @data
-            dataJson: JSON.stringify @data
             empty: @alpha2==""
 
         @$el.html template_page renderData
@@ -33,11 +33,6 @@ module.exports = class ProfilePage extends Backbone.View
         nav = @$el.find('.country-nav-select')
         nav.val @alpha2
         nav.bind('change',@_onNavChange)
-        # Add tooltips to nav bars
-        $('.percentbar').tooltip
-            placement: 'right'
-            delay: 50
-            animation: true
 
 
     ##################
@@ -52,6 +47,14 @@ module.exports = class ProfilePage extends Backbone.View
                 @_get_percentages @data.db_2012, '2012', questionSet
             ]
         $('.percentages').html(template_profile_percentages percentageData)
+        # Add tooltips to nav bars
+        $('.percentbar').tooltip
+            placement: 'right'
+            delay: 50
+            animation: true
+        detailsData = 
+            @_get_details @data, questionSet
+        $('.details').html(template_profile_details detailsData)
 
     _onNavChange: (e) ->
         value = $(e.delegateTarget).val()
@@ -60,6 +63,21 @@ module.exports = class ProfilePage extends Backbone.View
         else
             assert value.length==2,'Invalid country code: '+value
             window.location = '#profile/'+value
+
+    _number_to_letter: (dataset, questionNumber) ->
+        """The given letters in the source data arent always there. 
+          'q102l' does not exist while 'q102' does.
+          Therefore it is safer to use this technique to extract a letter..."""
+        if dataset is undefined then return ''
+        value = dataset[questionNumber]
+        assert value in [-1,0,33,67,100], 'Invalid value: '+value
+        return {
+          '-1': 'e'
+          0: 'd'
+          33: 'c'
+          67: 'b'
+          100: 'a'
+        }[value]
 
     _get_percentages: (data,year, questionSet) ->
         if data is undefined
@@ -73,8 +91,7 @@ module.exports = class ProfilePage extends Backbone.View
             d: 0
             e: 0
         for i in questionSet
-            letter = data[i+'l']
-            if not letter then letter='e'
+            letter = @_number_to_letter data, i
             assert letter in ['a','b','c','d','e'] # Ensure that it's a predefined [a,b,c,d,e] key
             out[letter]++
         assert out.a+out.b+out.c+out.d+out.e==out.total,"Integrity problem in profile calculation"
@@ -87,5 +104,16 @@ module.exports = class ProfilePage extends Backbone.View
         out.json = JSON.stringify out
         return out
 
+    _get_details: (data,questionSet) ->
+        out = 
+            questions: []
+        for x in questionSet
+            out.questions.push
+                number: x
+                l2006: @_number_to_letter data.db_2006, x
+                l2008: @_number_to_letter data.db_2008, x
+                l2010: @_number_to_letter data.db_2010, x
+                l2012: @_number_to_letter data.db_2012, x
+        return out
 
 

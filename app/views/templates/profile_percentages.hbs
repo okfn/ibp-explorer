@@ -1,0 +1,27 @@
+{{#each percentages}}
+  <tr>
+    <td>{{year}}</td>
+    <td class="bar">
+      {{#if not_defined}}
+        <div class="percentbar disabled" style="width: 720px;">(Not surveyed)</div>
+      {{else}}
+        <div class="percentbar" style="width: 720px;" title="<div class='percentbar-tooltip'>
+        <div class='heading'>Survey Scores</div>
+        <table>
+          <tr><td class='c1'>A:</td><td class='c2'>{{a}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+          <tr><td class='c1'>B:</td><td class='c2'>{{b}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+          <tr><td class='c1'>C:</td><td class='c2'>{{c}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+          <tr><td class='c1'>D:</td><td class='c2'>{{d}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+          <tr><td class='c1'>E:</td><td class='c2'>{{e}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
+        </table>
+        </div>">
+          <div class="bg-e" style="width: {{e_width}}%"></div>
+          <div class="bg-d" style="width: {{d_width}}%"></div>
+          <div class="bg-c" style="width: {{c_width}}%"></div>
+          <div class="bg-b" style="width: {{b_width}}%"></div>
+          <div class="bg-a" style="width: {{a_width}}%"></div>
+        </div>
+      {{/if}}
+    </td>
+  </tr>
+{{/each}}
