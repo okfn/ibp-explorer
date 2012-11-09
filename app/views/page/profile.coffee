@@ -1,6 +1,7 @@
 template_page = require 'views/templates/page/profile'
 template_profile_percentages = require 'views/templates/profile_percentages'
 template_profile_details = require 'views/templates/profile_details'
+template_question_text = require 'views/templates/question_text'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -25,15 +26,16 @@ module.exports = class ProfilePage extends Backbone.View
             countries: _EXPLORER_DATASET.country
             data: @data
             empty: @alpha2==""
+            main_website_url: @_ibp_website_url @alpha2
 
         @$el.html template_page renderData
         target.html @$el
         @_repaint()
         # Set up nav
         nav = @$el.find('.country-nav-select')
+        nav.chosen()
         nav.val @alpha2
         nav.bind('change',@_onNavChange)
-
 
     ##################
     ## Private methods
@@ -41,10 +43,10 @@ module.exports = class ProfilePage extends Backbone.View
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
         percentageData = 
             percentages: [
-                @_get_percentages @data.db_2006, '2006', questionSet
-                @_get_percentages @data.db_2008, '2008', questionSet
-                @_get_percentages @data.db_2010, '2010', questionSet
-                @_get_percentages @data.db_2012, '2012', questionSet
+                @_get_percentages @data.alpha2, @data.db_2006, '2006', questionSet
+                @_get_percentages @data.alpha2, @data.db_2008, '2008', questionSet
+                @_get_percentages @data.alpha2, @data.db_2010, '2010', questionSet
+                @_get_percentages @data.alpha2, @data.db_2012, '2012', questionSet
             ]
         $('.percentages').html(template_profile_percentages percentageData)
         # Add tooltips to nav bars
@@ -55,6 +57,26 @@ module.exports = class ProfilePage extends Backbone.View
         detailsData = 
             @_get_details @data, questionSet
         $('.details').html(template_profile_details detailsData)
+        # Add question number hover effect
+        @$el.find('tr.question-row').mouseover @_onHoverQuestion
+        @$el.find('tr.question-row:first').mouseover()
+
+    _ibp_website_url: (alpha2) ->
+        # Special cases: Links are inconsistent on the core website
+        if alpha2=='BJ' then alpha2 = 'benin'
+        if alpha2=='QA' or alpha2=='TN' or alpha2=='MM' 
+            # Quatar Tunisia and Myanmar have no page
+            return ''
+        return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country='+alpha2.toLowerCase()
+
+    _onHoverQuestion: (e) ->
+        target = $(e.delegateTarget)
+        number = target.attr('data-question-number')
+        q = _EXPLORER_DATASET.question[number]
+        top = target.position().top - 21
+        $('.question-box').html(template_question_text q).css('top',top)
+        $('tr.question-row').removeClass 'hover'
+        target.addClass 'hover'
 
     _onNavChange: (e) ->
         value = $(e.delegateTarget).val()
@@ -79,7 +101,7 @@ module.exports = class ProfilePage extends Backbone.View
           100: 'a'
         }[value]
 
-    _get_percentages: (data,year, questionSet) ->
+    _get_percentages: (alpha2,data,year,questionSet) ->
         if data is undefined
             return {year:year,not_defined:true}
         out = 
@@ -90,6 +112,9 @@ module.exports = class ProfilePage extends Backbone.View
             c: 0
             d: 0
             e: 0
+        for x in reportGenerator.dataset
+            if x.alpha2==alpha2
+                out.score = x[year]
         for i in questionSet
             letter = @_number_to_letter data, i
             assert letter in ['a','b','c','d','e'] # Ensure that it's a predefined [a,b,c,d,e] key

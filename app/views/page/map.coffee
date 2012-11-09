@@ -38,7 +38,8 @@ module.exports = class ProjectPage extends Backbone.View
                   'stroke-opacity' : '0.5'
                   fill: '#cccccc'
           backgroundColor: '#f0f0f0'
-          onRegionLabelShow: @labelShow
+          onRegionLabelShow: @_labelShow
+          onRegionClick: @_clickCountry
         }
         @mapObject = map.vectorMap('get', 'mapObject')
         $('#map-toggles button').click @_mapToggle
@@ -65,7 +66,7 @@ module.exports = class ProjectPage extends Backbone.View
                     continue
                 @mapData[country.alpha2] = country[@year]
             # Repaint the map
-            @mapObject.series.regions[0].setValues @hackMinValue(@mapData,1)
+            @mapObject.series.regions[0].setValues @_hackMinValue(@mapData,1)
         else
             for x of countries_in_map
                 @mapData[x] = 0
@@ -73,17 +74,23 @@ module.exports = class ProjectPage extends Backbone.View
             @mapObject.series.regions[0].setValues @mapData
 
 
-    hackMinValue: (object, minValue) ->
+    _hackMinValue: (object, minValue) ->
         # Useful. jVectorMap will white out a country with a score of 0%
         out = {}
         for k,v of object
             out[k] = Math.max(minValue,v) 
         return out
 
-    labelShow: (e,el,code) =>
+    _labelShow: (e,@mapLabel,code) =>
       if not (code of @mapData)
-          el.css {'opacity':'0.5'}
+          @mapLabel.css {'opacity':'0.5'}
       else
-          el.css {'opacity':'1.0'}
-          el.html(el.html()+': '+@mapData[code]+'%')
+          @mapLabel.css {'opacity':'1.0'}
+          @mapLabel.html(@mapLabel.html()+': '+@mapData[code]+'%')
+
+    _clickCountry: (event, alpha2) =>
+        if alpha2 of @mapData
+            if @mapLabel.length then @mapLabel.remove()
+            window.location = '#profile/'+alpha2
+
 

@@ -226,6 +226,9 @@ div#content {
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     text-align: right;
+                    a {
+                      color: #000;
+                    }
                 }
                 .timeline-cell-flag {
                     width: @c2;
@@ -279,11 +282,12 @@ div#content {
     #rankings {
         .country {
             text-align: right;
-            /* IE hack: put this inside a span */
-            span {
+            /* IE hack: put this inside a span or other line-level element..*/
+            a {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              color: #000;
             }
             width: 140px;
             max-width: 140px;
@@ -379,6 +383,10 @@ div.country-nav-select-outer {
 div#country-profile {
   margin: 0 10px;
   border-top: 1px solid #999;
+  .main-website-link {
+    float: right;
+    margin-top: 10px;
+  }
   h2 {
     padding-bottom: 4px;
   }
@@ -386,17 +394,62 @@ div#country-profile {
     margin-left: 20px;
   }
   .details {
+    float: left;
     table {
+      margin-top: 0;
       width: auto;
-      td.number { 
-        width: 70px;
-        padding-right: 10px;
-        text-align: right;
+      tr {
+        th {
+          background: #ccc;
+          &.space {
+            background: #fff;
+          }
+        }
+        td.number { 
+          width: 70px;
+          background: #eee;
+          padding-right: 10px;
+          text-align: right;
+          font-weight: bold;
+        }
+        td.letter {
+          width: 40px;
+          text-align: center;
+        }
+        td.space {
+          width: 8px;
+        }
       }
-      td.letter {
-        width: 40px;
-        text-align: center;
+      tr.hover {
+        td.number {
+          background: #ddd;
+        }
+        td.space,
+        td.letter {
+          background: #eee;
+        }
       }
     }
+  }
+  .question-box {
+    position: absolute;
+    left: 300px;
+    top: 0px;
+    background: #eee;
+    width: 500px;
+    padding: 10px;
+    .question-text {
+      background: #ddd;
+      padding: 8px;
+    }
+  }
+}
+
+.question-template {
+  .question-text {
+    margin-bottom: 8px;
+  }
+  .answer {
+    margin-top: 5px;
   }
 }

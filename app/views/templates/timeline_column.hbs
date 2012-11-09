@@ -12,7 +12,7 @@
     <tbody>
     {{#each data}}
       <tr class="timeline-row-{{alpha2}}" data-alpha2="{{alpha2}}">
-        <td class="timeline-cell-name">{{country}}</td>
+        <td class="timeline-cell-name"><a href="#profile/{{alpha2}}">{{country}}</a></td>
         <td class="timeline-cell-flag"><img src="images/flags/{{alpha2}}.GIF"/></td>
         <td class="timeline-cell-score">{{score}} %</td>
         <td class="timeline-cell-rank">{{rank}}</td>
