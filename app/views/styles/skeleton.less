@@ -6,11 +6,12 @@ div#header {
   padding-left: 8px;
   padding-bottom: 6px;
   h1#logo1 {
+    margin-top: 26px;
     float: left;
   }
   h1#logo2 {
     margin: 0;
-    margin-top: 4px;
+    margin-top: 14px;
     float: right;
   }
 }
@@ -64,3 +65,124 @@ ul#utility-nav {
     }
   }
 }
+
+#footer-container {
+  background: #0066A4;
+  height: 20px;
+  padding: 5px 0;
+  ul { 
+    float:left; 
+    margin: 0 0 0 0;
+    list-style-type:none; 
+    font-size: 11px;
+    li { 
+      border-left:1px solid #fff; 
+      float:left; 
+      padding:0 15px; 
+      a { color: #fff; }
+      &:first-child { 
+        border:none; 
+        padding-left:0; 
+      }
+    }
+    &#beta {
+      float: right;
+    }
+  }
+  #copyright {
+    font-size: 11px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+  }
+}
+
+
+/* ------------------ */
+
+#content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 300px;
+}
+
+.year-selector {
+    margin: 10px 0;
+    text-align: center;
+    button {
+        width: 90px;
+    }
+}
+
+.percentbar {
+    width: 620px;
+    height: 20px; 
+    position: relative;
+    > * { 
+        position: absolute;
+        top: 0;
+        height: 20px; 
+        float: left;
+    }
+    &.disabled {
+      background: #aaa;
+      text-align: center;
+      padding-top: 4px;
+      height: 16px;
+      font-size: 10px;
+      color: #fff;
+    }
+    background: #aaa;
+}
+.bg-a { background: #22aa33; }
+.bg-b { background: #DAC402; }
+.bg-c { background: #F58024; }
+.bg-d { background: #B7282E; }
+.bg-e { background: #aaa; }
+
+.question-tooltip {
+  padding: 10px 4px;
+  text-align: left;
+}
+.percentbar-tooltip {
+  text-align: left;
+  .heading {
+    margin-top: 2px;
+    font-weight: bold;
+    margin-bottom: 0;
+    border-bottom: 1px solid #fff;
+    white-space: nowrap;
+  }
+  table {
+    margin-top: 2px;
+  }
+  td {
+    padding: 0 0 0 0;
+  }
+  .c1 {
+    font-weight: bold; 
+    text-align: center;
+    width: 20px;
+  }
+  .c2 {
+    text-align: right;
+    width: 20px;
+  }
+  .c3 {
+    text-align: center;
+    width: 10px;
+  }
+  .c4 {
+    width: 20px;
+    text-align: left;
+  }
+}
+
+.question-template {
+  .question-text {
+    margin-bottom: 8px;
+  }
+  .answer {
+    margin-top: 5px;
+  }
+}
+

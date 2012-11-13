@@ -1,0 +1,103 @@
+.timeline-header {
+    height: 70px;
+    width: 860px;
+    h2 {
+        margin: 30px 0 0 30px;
+        padding-bottom: 0;
+        font-size: 25px;
+    }
+    .timeline-toggle {
+        margin: 38px 0 0 40px;
+        .text { 
+            font-size: 15px; 
+            font-weight: bold; 
+            padding: 5px 10px 0 0;
+        }
+    }
+}
+
+.timeline-column {
+    float: left;
+    padding: 0 22px;
+    &#timeline-column-2006 {
+        padding-left: 4px;
+    }
+    &#timeline-column-2012 {
+        padding-right: 0;
+    }
+
+    h4 {
+        padding-left: 20px;
+        margin-bottom: 2px;
+    }
+
+    table {
+        /* Column widths: */
+        @c1: 116px;
+        @c2: 20px;
+        @c3: 44px;
+
+        background: #f0f0f0;
+        font-size: 11px;
+        border-radius: 5px;
+        width: @c1 + @c2 + @c3;
+        margin-top: 0;
+
+        tr:nth-child(even) {
+            td {
+                background: #f7f7f7;
+            }
+        }
+        tr {
+            th {
+                background: #555;
+                color: #fff;
+                padding: 4px 5px;
+            }
+            .timeline-cell-name {
+                width: @c1 - 11px;
+                max-width: @c1 - 11px;
+                padding-left: 4px;
+                padding-right: 7px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-align: right;
+                a {
+                  color: #000;
+                }
+            }
+            .timeline-cell-flag {
+                width: @c2;
+                max-width: @c2;
+                padding: 0 0 2px 0;
+            }
+            th.timeline-cell-score {
+                text-align: center;
+                display: none;
+            }
+            td.timeline-cell-score {
+                text-align: right;
+                padding-right: 2px;
+                display: none;
+                width: @c3 - 2px;
+                max-width: @c3 - 2px;
+            }
+            th.timeline-cell-rank {
+                text-align: center;
+            }
+            td.timeline-cell-rank {
+                text-align: right;
+                padding-right: 8px;
+                width: @c3 - 8px;
+                max-width: @c3 - 8px;
+            }
+            &.hover {
+                td {
+                    background: #ccc;
+                }
+            }
+        }
+    }
+}
+

@@ -1,5 +1,3 @@
-template_explorer = require 'views/templates/explorer'
-
 MapPage = require 'views/page/map'
 TimelinePage = require 'views/page/timeline'
 RankingsPage = require 'views/page/rankings'
@@ -29,7 +27,6 @@ module.exports = class Router extends Backbone.Router
 
     initialize: ->
         # Create basic page
-        $('#content').html template_explorer 
         reportGenerator.render $('#report-generator')
         reportGenerator.setInitialState()
         # Trigger nav updates

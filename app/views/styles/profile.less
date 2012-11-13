@@ -1,0 +1,70 @@
+div.country-nav-select-outer {
+  margin: 10px 0 0 10px;
+  h4 {
+    vertical-align: middle;
+  }
+}
+div#country-profile {
+  margin: 0 10px;
+  border-top: 1px solid #999;
+  .main-website-link {
+    float: right;
+    margin-top: 10px;
+  }
+  h2 {
+    padding-bottom: 4px;
+  }
+  .percentages {
+    margin-left: 20px;
+  }
+  .details {
+    float: left;
+    table {
+      margin-top: 0;
+      width: auto;
+      tr {
+        th {
+          background: #ccc;
+          &.space {
+            background: #fff;
+          }
+        }
+        td.number { 
+          width: 70px;
+          background: #eee;
+          padding-right: 10px;
+          text-align: right;
+          font-weight: bold;
+        }
+        td.letter {
+          width: 40px;
+          text-align: center;
+        }
+        td.space {
+          width: 8px;
+        }
+      }
+      tr.hover {
+        td.number {
+          background: #ddd;
+        }
+        td.space,
+        td.letter {
+          background: #eee;
+        }
+      }
+    }
+  }
+  .question-box {
+    position: absolute;
+    left: 300px;
+    top: 0px;
+    background: #eee;
+    width: 500px;
+    padding: 10px;
+    .question-text {
+      background: #ddd;
+      padding: 8px;
+    }
+  }
+}
