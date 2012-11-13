@@ -37,10 +37,10 @@ module.exports = class Router extends Backbone.Router
             location = (window.location.hash.slice(1))
             trigger = trigger.split(':')
             if trigger[0]=='route'
-              $('ul.nav li').removeClass 'active'
-              active = $('ul.nav li a[href$="#'+location+'"]') 
+              $('#main-nav li').removeClass 'active'
+              active = $('#main-nav li a[href$="#'+location+'"]') 
               if active.length==0
-                active = $('ul.nav li a[href$="#'+trigger[1]+'"]')
+                active = $('#main-nav li a[href$="#'+trigger[1]+'"]')
               active = $(active.parents('li')[0])
               active.add( active.parents('.dropdown') ).addClass 'active'
 
