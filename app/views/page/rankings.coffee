@@ -13,6 +13,9 @@ IBP_COLORS = [
 ]
 
 module.exports = class ProjectPage extends Backbone.View
+
+    sortByName: false
+
     ##################
     ## Public methods
     ##################
@@ -22,6 +25,8 @@ module.exports = class ProjectPage extends Backbone.View
     renderPage: (target) =>
         @$el.html template_page()
         target.html @$el
+        $('.sortbyname').click @_sortByNameToggle
+        $('.sortbyname[data-sortbyname="'+@sortByName+'"]').addClass 'active'
         $('#rankings-toggles button').click @_rankingsToggle
         $('button[data-year="2010"]').click()
 
@@ -47,8 +52,17 @@ module.exports = class ProjectPage extends Backbone.View
                 return x[year]
         assert false, 'couldnt find country: '+country
 
+    _sortByNameToggle: (e) =>
+        e.preventDefault()
+        target = $(e.delegateTarget)
+        $('.sortbyname').removeClass 'active'
+        target.addClass 'active'
+        @sortByName = target.attr('data-sortbyname')=='true'
+        @_reflow()
+        return false
+
     _reflow: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
-        target = $('#rankings').empty()
+        target = $('#rankings-table tbody').empty()
         if questionSet.length==0 
             target.html '(No questions selected)'
             return
@@ -76,7 +90,10 @@ module.exports = class ProjectPage extends Backbone.View
             obj.d_left = obj.c_width + obj.c_left
             obj.e_left = obj.d_width + obj.d_left
             data.push obj
-        data.sort util.sortFunction
+        if @sortByName
+            data.sort util.sortFunctionByName
+        else
+            data.sort util.sortFunction
         for obj in data
             el = $(template_rankings_row obj).appendTo(target)
         $('.percentbar').tooltip
