@@ -23,6 +23,7 @@ def build_dict(iso_file, q_xls, g_xls, a_xls):
     out['country']  = _read_answers(a_workbook, iso_data)
     out['question'] = _read_questions(q_workbook)
     out['groupings'] = _read_groupings(g_workbook)
+    out['regions'] = _read_regions(g_workbook, iso_data)
     return out
 
 
@@ -127,6 +128,33 @@ def _read_groupings(g_workbook):
         y += 1
     return out
 
+def _read_regions(g_workbook, iso_data):
+    sheet_name = 'CountriesRegions'
+    # Question groupings
+    sheet = g_workbook.get_sheet_by_name(name=sheet_name)
+    out = []
+    # Scroll along row 3
+    x = 1
+    while True:
+        title = _lookup(sheet,x,3)
+        if not title: break
+        region = {
+                'name': title,
+                'region_id': x,
+                'contains': []
+                }
+        # Scroll down the remainder of this column
+        y = 4
+        while True:
+            country_name = _lookup(sheet,x,y)
+            if not country_name: break
+            assert country_name in iso_data, '[Groupings/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (sheet_name,country_name)
+            region['contains'].append(iso_data[country_name])
+            y+=1
+        out.append(region)
+        x += 1
+    return out
+
 def _parse_int_list(int_list):
     if int_list is '' or int_list is u'':
         return []
@@ -144,19 +172,5 @@ def _parse_int_list(int_list):
         else:
             for i in range(int(split[0]), int(split[1])+1):
                 out.append(i)
-    return out
-
-
-# TODO
-def get_regions(groupings_xls):
-    wb = xlrd.open_workbook(groupings_xls)
-    sheet = wb.sheet_by_name('CountriesRegions')
-    header_row = 2
-    out = {}
-    for col_number in range(sheet.ncols):
-        col = sheet.col_slice(col_number,header_row)
-        l = [ col[i].value for i in range(1, len(col)) ]
-        # Strip empty strings and store the list
-        out[ col[0].value ] = filter(bool,l)
     return out
 
