@@ -140,7 +140,6 @@ def _read_regions(g_workbook, iso_data):
         if not title: break
         region = {
                 'name': title,
-                'region_id': x,
                 'contains': []
                 }
         # Scroll down the remainder of this column

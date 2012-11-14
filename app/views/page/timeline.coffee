@@ -28,7 +28,7 @@ module.exports = class TimelinePage extends Backbone.View
             label: 
                 enabled: "Rank"
                 disabled: "Score"
-        @_updateReport reportGenerator.dataset
+        @_updateReport()
 
     ##################
     ## Private methods
@@ -41,11 +41,12 @@ module.exports = class TimelinePage extends Backbone.View
             $('.timeline-cell-rank').hide()
             $('.timeline-cell-score').show()
 
-    _buildRankingTable: (year, dataset) =>
+    _buildRankingTable: (year, dataset, selected_countries) =>
         # Basic dataset
         out = []
         for country,obj of dataset
             if not (year of obj) then continue
+            if not (obj.alpha2 in selected_countries) then continue
             obj.score = obj[year]
             out.push obj
         out.sort util.sortFunction
@@ -68,15 +69,16 @@ module.exports = class TimelinePage extends Backbone.View
                 x.rank = '= '+x.rank
         return out
 
-    _updateReport: (dataset) =>
+    _updateReport: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         target = $('#timeline-columns')
         if target.length==0 then return
         # PreRender
         html = ''
+        selected_countries = _EXPLORER_DATASET.regions[region].contains
         for year in [2006,2008,2010,2012]
             html += template_timeline_column
                 year: year
-                data: @_buildRankingTable(year, dataset)
+                data: @_buildRankingTable(year, dataset, selected_countries)
         # Large DOM rebuild here. Trigger a single reflow.
         target.html html
         target.find('tr').bind 'mouseover', @_mouseoverRanking

@@ -61,14 +61,16 @@ module.exports = class ProjectPage extends Backbone.View
         @_reflow()
         return false
 
-    _reflow: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
+    _reflow: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         target = $('#rankings-table tbody').empty()
         if questionSet.length==0 
             target.html '(No questions selected)'
             return
         data = []
+        selected_countries = _EXPLORER_DATASET.regions[region].contains
         for country in _EXPLORER_DATASET.country
             if not (('db_'+@year) of country) then continue
+            if not (country.alpha2 in selected_countries) then continue
             db = country['db_'+@year]
             obj = 
                 country: country.name

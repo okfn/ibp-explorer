@@ -18,7 +18,7 @@
         padding-left: 7px;
     }
     .select-or-clear {
-        padding-bottom: 8px;
+        margin-top: 8px;
         text-align: center;
     }
     .group-toggler {
@@ -29,9 +29,9 @@
     }
 
     #toggle-boxes {
-        @per_row: 14;
-        width: @per_row*27px;
-        padding-left: 9px;
+        @per_row: 15;
+        width: (@per_row*23px);
+        padding-left: 7px;
         position: relative;
         .toggle-box {
             position: relative;
@@ -43,11 +43,11 @@
             margin-left: -1px;
             margin-top: -1px;
             float: left;
-            width: 25px;
+            width: 23px;
             text-align: center;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            font-size: 11px;
+            padding-top: 2px;
+            padding-bottom: 1px;
+            font-size: 12px;
             letter-spacing: -1px;
             &:hover,
             &.hover {
@@ -65,11 +65,12 @@
 
     .grouplist {
         h6 {
-            line-height: 13px;
+            line-height: 15px;
+            vertical-align: bottom;
             font-size: 11px;
             border-bottom: 1px solid #ccc;
             margin: 6px 0 4px 0;
-            padding: 0 0 2px 5px;
+            padding: 0 5px 2px 5px;
         }
         ul {
             margin-left: 3px;
@@ -77,10 +78,44 @@
             li {
                 line-height: 13px;
                 font-size: 11px;
+                a {
+                    display: block;
+                    &:hover {
+                        background: #eee;
+                    }
+                    padding: 1px 0;
+                }
             }
         }
         a:hover {
             text-decoration: underline;
         }
+        &.col4 {
+            text-align: right;
+            a {
+                padding: 2px 10px;
+                &.active {
+                    background: #ccc !important;
+                }
+            }
+        }
+    }
+    .col1 {
+        float: left;
+        width: 200px;
+        margin-right: 10px;
+    }
+    .col2 {
+        float: left;
+        width: 200px;
+        margin-right: 10px;
+    }
+    .col3 {
+        float: left;
+        width: 350px;
+    }
+    .col4 {
+        float: right;
+        width: 176px;
     }
 }

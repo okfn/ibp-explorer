@@ -1,10 +1,12 @@
 template = require 'views/templates/reportgenerator'
 debug = true
 
+
 class ReportGenerator extends Backbone.View
 
     initialize: =>
         if debug then @debugReports()
+        @region = 0 # Initially our custon "Entire World" collection
 
     debugReports: =>
         obi_questions = _EXPLORER_DATASET.groupings[0].entries[0].qs
@@ -28,12 +30,14 @@ class ReportGenerator extends Backbone.View
             groupings1: _EXPLORER_DATASET.groupings.slice(3,5)
             question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
             country: _EXPLORER_DATASET.country
+            regions: _EXPLORER_DATASET.regions
         # Write to DOM
         @$el.html template renderData
         target.empty().append @$el
 
         @$el.find('.group-toggler').bind 'mouseover', @_hoverGroupToggle
         @$el.find('.group-toggler').bind 'click', @_clickGroupToggle
+        @$el.find('.region-toggler').bind 'click', @_clickRegionToggle
         @$el.find('.group-toggler').bind 'mouseout', (e) =>
             @$el.find('.toggle-box').removeClass 'hover'
         @$el.find('.toggle-box').bind 'click', @_clickBoxToggle
@@ -44,7 +48,10 @@ class ReportGenerator extends Backbone.View
         @$el.find('.toggle-box').tooltip
             placement: 'left'
             delay: 100
-            animatoin: true
+            animation: true
+        @$el.find('#region-'+@region).addClass 'active'
+        # Debug:
+        @$el.find('.more-options').click()
 
     calculateScore: (db, questionSet, verbose=false) =>
         if questionSet.length==0 then return 0
@@ -79,7 +86,7 @@ class ReportGenerator extends Backbone.View
                 score = @calculateScore(country['db_'+year], @questionSet)
                 obj[year] = score
             @dataset.push obj
-        @trigger('update', @dataset, @questionSet)
+        @trigger('update', @dataset, @questionSet, @region)
 
     _select_or_clear: (e) =>
         @_setSubtitle()
@@ -130,6 +137,15 @@ class ReportGenerator extends Backbone.View
         @_updated()
         return false
 
+    _clickRegionToggle: (e) =>
+        e.preventDefault()
+        el = $(e.delegateTarget)
+        @region = parseInt el.attr('id').replace('region-','')
+        @$el.find('.region-toggler').removeClass 'active'
+        el.addClass 'active'
+        @_updated()
+        return false
+
     _clickBoxToggle: (e) =>
         e.preventDefault()
         el = $(e.delegateTarget)
@@ -139,47 +155,7 @@ class ReportGenerator extends Backbone.View
             el.addClass 'select'
         @_setSubtitle()
         @$el.find('.group-toggler').removeClass 'active'
-        @_updated()
+        @trigger('update', @dataset, @questionSet, @region)
         return false
-
-
-    ###
-    _showQuestion: (e) ->
-        el = $(e.delegateTarget)
-        id = el.attr('id')
-        assert id.substr(0,7) is 'toggle-'
-        id = parseInt id.substr(7)
-        q_box = $('#question-view')
-        q_box.html 'question '+id
-        q_box.show()
-
-    _hideQuestion: (e) ->
-        q_box = $('#question-view')
-        q_box.hide()
-    ###
 
 module.exports = new ReportGenerator()
-
-###
-    clickExpand: (e) ->
-        e.preventDefault()
-        $(e.currentTarget).parents('.text').first().trigger 'destroy'
-        return false
-
-# In render():
-        # Bind to DOM
-        $('.question .text').each (i,el) =>
-            el = $(el)
-            el.dotdotdot {
-                height: 60
-                after: 'a.expand'
-                ellipsis: '  '
-                callback: (isTruncated) =>
-                    expandLink = el.find('a.expand')
-                    if isTruncated
-                        expandLink.click @clickExpand
-                    else
-                        expandLink.remove()
-            }
-            el.bind 'destroy', (e) -> el.find('a.expand').remove()
-###

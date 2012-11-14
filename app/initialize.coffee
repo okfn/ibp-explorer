@@ -17,6 +17,16 @@ loadDataset = ->
             for group in category.entries
                 if group.qs.contains qnum
                     qdata.groups.push ('group-'+group.group_id)
+    # Create an 'Entire World' region
+    entire_world = 
+        name: 'Entire World'
+        contains: []
+    for country in _EXPLORER_DATASET.country
+        entire_world.contains.push country.alpha2
+    _EXPLORER_DATASET.regions.unshift entire_world
+    # Attach a region_index to each region
+    for index of _EXPLORER_DATASET.regions
+        _EXPLORER_DATASET.regions[index].region_index = parseInt index
 
 initJsPlumb = ->
     color = '#aaa'

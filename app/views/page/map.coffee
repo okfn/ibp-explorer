@@ -55,31 +55,24 @@ module.exports = class ProjectPage extends Backbone.View
         @year = $(e.delegateTarget).attr('data-year')
         @_repaint()
 
-    _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
+    _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
+        selected_countries = _EXPLORER_DATASET.regions[region].contains
+        # Unpaint the map
         @mapData = {}
+        for x of countries_in_map
+            @mapData[x] = 0
         if reportGenerator.questionSet.length>0
             for country in dataset
                 if not (country.alpha2 of countries_in_map)
                     # This country code isn't an available vector
                     #console.log 'Warning: Cannot map country '+k
                     continue
-                @mapData[country.alpha2] = country[@year]
-            # Repaint the map
-            @mapObject.series.regions[0].setValues @_hackMinValue(@mapData,1)
-        else
-            for x of countries_in_map
-                @mapData[x] = 0
-            # Repaint the map
-            @mapObject.series.regions[0].setValues @mapData
-
-
-    _hackMinValue: (object, minValue) ->
-        # Useful. jVectorMap will white out a country with a score of 0%
-        out = {}
-        for k,v of object
-            out[k] = Math.max(minValue,v) 
-        return out
+                if not (country.alpha2 in selected_countries)
+                    continue
+                @mapData[country.alpha2] = Math.max(1,country[@year])
+        # Repaint the map
+        @mapObject.series.regions[0].setValues @mapData
 
     _labelShow: (e,@mapLabel,code) =>
       if not (code of @mapData)
