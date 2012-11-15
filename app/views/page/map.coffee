@@ -3,12 +3,52 @@ template_page = require 'views/templates/page/map'
 reportGenerator = require 'views/reportgenerator'
 
 MAP_NAME = 'world_mill_en'
-IBP_COLORS = [
+IBP_COLOURS = [
+  '#B8282E'
+  '#F48022',
+  '#DAC300',
+  '#007A78',
+  '#0065A4',
+]
+TRAFFIC_LIGHTS = [
   '#B7282E'
   '#F58024'
   '#DAC402'
   '#22aa33'
 ]
+YELLOW_BLUE = [
+  '#225ea8',
+  '#41b6c4',
+  '#a1dab4',
+  '#ffffcc',
+]
+PURPLE = [
+  '#6A51A3'
+  '#9E9AC8'
+  '#CBC9E2'
+  '#F2F0F7'
+]
+RED = [
+  '#D7301F',
+  '#FC8D59',
+  '#FDCC8A',
+  '#FEF0D9'
+]
+GREEN = [
+  '#002200',
+  '#225500',
+  '#44aa00',
+  '#66cc00'
+]
+GREENRED = [
+  '#aa0000',
+  '#995500',
+  '#44aa00',
+  '#22cc00'
+]
+
+SCHEME = TRAFFIC_LIGHTS
+
 
 module.exports = class ProjectPage extends Backbone.View
     mapData: {}
@@ -27,7 +67,7 @@ module.exports = class ProjectPage extends Backbone.View
           map: MAP_NAME
           series: {
             regions: [{
-                scale: IBP_COLORS
+                scale: SCHEME
             }
             ]
           }
@@ -44,6 +84,15 @@ module.exports = class ProjectPage extends Backbone.View
         @mapObject = map.vectorMap('get', 'mapObject')
         $('#map-toggles button').click @_mapToggle
         $('button[data-year="2010"]').click()
+        ###
+        # Debug gradient (usually a static PNG file)
+        g = $('#map-gradient')
+        s = '-webkit-linear-gradient(top, [C3] 0%,[C2] 33%,[C1] 66%,[C0] 100%)'
+        for x in [0...SCHEME.length]
+          s = s.replace('[C'+x+']', SCHEME[x])
+        g.css('background',s)
+        ###
+
 
     ##################
     ## Private methods
