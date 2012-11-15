@@ -1,7 +1,7 @@
 MapPage = require 'views/page/map'
 TimelinePage = require 'views/page/timeline'
 RankingsPage = require 'views/page/rankings'
-RawDataPage = require 'views/page/rawdata'
+DownloadPage = require 'views/page/download'
 ProfilePage = require 'views/page/profile'
 
 # Singleton report generator
@@ -13,7 +13,7 @@ singletons =
     mapPage:  -> return @_map = @_map or new MapPage()
     timelinePage:  -> return @_timeline = @_timeline or new TimelinePage()
     rankingsPage:  -> return @_rankings = @_rankings or new RankingsPage()
-    rawDataPage:  -> return @_rawData = @_rawData or new RawDataPage()
+    downloadPage:  -> return @_download = @_download or new DownloadPage()
 
 module.exports = class Router extends Backbone.Router
     routes:
@@ -21,7 +21,7 @@ module.exports = class Router extends Backbone.Router
         'map' : 'map'
         'timeline' : 'timeline'
         'rankings' : 'rankings'
-        'rawdata' : 'rawdata'
+        'download' : 'download'
         'profile' : 'profile'
         'profile/:country' : 'profile'
 
@@ -54,8 +54,8 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.timelinePage()
     rankings: ->
       @setCurrent singletons.rankingsPage()
-    rawdata: ->
-      @setCurrent singletons.rawDataPage()
+    download: ->
+      @setCurrent singletons.downloadPage()
     profile: (country='') ->
       @setCurrent new ProfilePage(country)
 

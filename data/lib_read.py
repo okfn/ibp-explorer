@@ -7,24 +7,23 @@ from string import uppercase
 # Public
 # ######
 
-def build_dict(iso_file, q_xls, g_xls, a_xls):
+def read(iso_data, q_xlsx, g_xlsx, a_xlsx):
+    """Read all the input Excel files and produce an enormous data dict."""
     # Output to populate
-    out = {}
+    dataset = {}
     # Workbooks to read
-    print 'Reading %s...' % q_xls
-    q_workbook = load_workbook(filename=q_xls)
-    print 'Reading %s...' % g_xls
-    g_workbook = load_workbook(filename=g_xls)
-    print 'Reading %s...' % a_xls
-    a_workbook = load_workbook(filename=a_xls)
-    print 'Reading %s...' % iso_file
-    iso_data = json.load(open(iso_file))
-    # Generate output
-    out['country']  = _read_answers(a_workbook, iso_data)
-    out['question'] = _read_questions(q_workbook)
-    out['groupings'] = _read_groupings(g_workbook)
-    out['regions'] = _read_regions(g_workbook, iso_data)
-    return out
+    print 'Reading %s...' % q_xlsx
+    q_workbook = load_workbook(filename=q_xlsx)
+    print 'Reading %s...' % g_xlsx
+    g_workbook = load_workbook(filename=g_xlsx)
+    print 'Reading %s...' % a_xlsx
+    a_workbook = load_workbook(filename=a_xlsx)
+    # Generate dataset
+    dataset['country']  = _read_answers(a_workbook, iso_data)
+    dataset['question'] = _read_questions(q_workbook)
+    dataset['groupings'] = _read_groupings(g_workbook)
+    dataset['regions'] = _read_regions(g_workbook, iso_data)
+    return dataset
 
 
 # #########

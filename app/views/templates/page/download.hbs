@@ -1,0 +1,9 @@
+
+<h2>Downloads</h2>
+<p>The raw data encompassing the 2006-2012 surveys is available in multiple formats:</p>
+<table class="table table-bordered" style="width: 300px;"
+    <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
+    {{#each downloads}}
+      <tr><td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td></tr>
+    {{/each}}
+</table>

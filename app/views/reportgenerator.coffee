@@ -51,7 +51,7 @@ class ReportGenerator extends Backbone.View
             animation: true
         @$el.find('#region-'+@region).addClass 'active'
         # Debug:
-        @$el.find('.more-options').click()
+        #@$el.find('.more-options').click()
 
     calculateScore: (db, questionSet, verbose=false) =>
         if questionSet.length==0 then return 0
