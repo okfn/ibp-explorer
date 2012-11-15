@@ -1,0 +1,17 @@
+
+<table>
+  <tr>
+    <th></th>
+    <th>2012</th>
+    <th>2014</th>
+    <th class="space"></th>
+  </tr>
+  {{#each questions}}
+  <tr class="question-row" data-question-number="{{number}}">
+    <td class="number">{{number}}</td>
+    <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
+    <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
+    <td class="space"></td>
+  </tr>
+  {{/each}}
+</table>

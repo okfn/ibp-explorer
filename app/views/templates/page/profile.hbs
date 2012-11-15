@@ -17,6 +17,16 @@
   <h2>Country profile: {{#with data}}{{name}}{{/with}} ({{alpha2}})</h2>
   <table class="percentages">
   </table>
+  <div id="profile-mode">
+    Select mode:
+    <div class="profile-toggle pull-left">
+        <span class="pull-left text">Mode:</span>
+        <div class="pull-left" id="profile-toggle-button">
+            <input type="checkbox" checked="checked">
+        </div>
+    </div>
+
+  </div>
   <div style="position: relative;">
     <div class="details"></div>
     <div class="question-box">

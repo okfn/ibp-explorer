@@ -1,6 +1,7 @@
 template_page = require 'views/templates/page/profile'
 template_profile_percentages = require 'views/templates/profile_percentages'
 template_profile_details = require 'views/templates/profile_details'
+template_profile_details_future = require 'views/templates/profile_details_future'
 template_question_text = require 'views/templates/question_text'
 
 reportGenerator = require 'views/reportgenerator'
@@ -27,7 +28,7 @@ module.exports = class ProfilePage extends Backbone.View
             data: @data
             empty: @alpha2==""
             main_website_url: @_ibp_website_url @alpha2
-
+        @viewPast = true
         @$el.html template_page renderData
         target.html @$el
         @_repaint()
@@ -36,6 +37,16 @@ module.exports = class ProfilePage extends Backbone.View
         nav.chosen()
         nav.val @alpha2
         nav.bind('change',@_onNavChange)
+        # Bind to past/future toggle
+        $('#profile-toggle-button').toggleButtons
+            onChange: @_onToggleMode
+            width: 136
+            style:
+                enabled: 'primary'
+                disabled: 'success'
+            label: 
+                enabled: "Past"
+                disabled: "Future"
 
     ##################
     ## Private methods
@@ -56,10 +67,14 @@ module.exports = class ProfilePage extends Backbone.View
             animation: true
         detailsData = 
             @_get_details @data, questionSet
-        $('.details').html(template_profile_details detailsData)
+        if @viewPast
+            $('.details').html(template_profile_details detailsData)
+        else
+            $('.details').html(template_profile_details_future detailsData)
         # Add question number hover effect
         @$el.find('tr.question-row').mouseover @_onHoverQuestion
         @$el.find('tr.question-row:first').mouseover()
+
 
     _ibp_website_url: (alpha2) ->
         # Special cases: Links are inconsistent on the core website
@@ -140,5 +155,7 @@ module.exports = class ProfilePage extends Backbone.View
                 l2010: @_number_to_letter data.db_2010, x
                 l2012: @_number_to_letter data.db_2012, x
         return out
+    _onToggleMode: (element, @viewPast) =>
+        @_repaint()
 
 
