@@ -8,4 +8,4 @@ cd public
 git commit -a -m "Redeploying"
 
 echo 'Push...'
-git push live gh-pages
+git push 
