@@ -3,14 +3,24 @@
   <tr>
     <th></th>
     <th>2012</th>
-    <th>2014</th>
+    <th>2014?</th>
     <th class="space"></th>
   </tr>
   {{#each questions}}
   <tr class="question-row" data-question-number="{{number}}">
     <td class="number">{{number}}</td>
     <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
-    <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
+    <td class="letter multi">
+      {{#if l2012}}
+        <img src="images/letter/a.png" class="inactive" data-score="100"/>
+        <img src="images/letter/b.png" class="inactive" data-score="67"/>
+        <img src="images/letter/c.png" class="inactive" data-score="33"/>
+        <img src="images/letter/d.png" class="inactive" data-score="0"/>
+        <img src="images/letter/e.png" class="inactive" data-score="-1"/>
+      {{else}}
+        -
+      {{/if}}
+    </td>
     <td class="space"></td>
   </tr>
   {{/each}}

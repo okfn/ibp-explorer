@@ -12,6 +12,7 @@ module.exports = class ProfilePage extends Backbone.View
     ##################
     initialize: (@alpha2) =>
         @data = @lookup @alpha2
+        @db_2014 = $.extend {}, @data.db_2012
         reportGenerator.bind 'update', @_repaint
 
     lookup: (alpha2) ->
@@ -71,10 +72,10 @@ module.exports = class ProfilePage extends Backbone.View
             $('.details').html(template_profile_details detailsData)
         else
             $('.details').html(template_profile_details_future detailsData)
+            $('.letter.multi img').bind 'click', @_onClick2014
         # Add question number hover effect
         @$el.find('tr.question-row').mouseover @_onHoverQuestion
         @$el.find('tr.question-row:first').mouseover()
-
 
     _ibp_website_url: (alpha2) ->
         # Special cases: Links are inconsistent on the core website
@@ -155,7 +156,35 @@ module.exports = class ProfilePage extends Backbone.View
                 l2010: @_number_to_letter data.db_2010, x
                 l2012: @_number_to_letter data.db_2012, x
         return out
+
     _onToggleMode: (element, @viewPast) =>
+        # Populate the DOM
         @_repaint()
+        if not @viewPast
+            for x in $('.question-row')
+                x = $(x)
+                qnum = parseInt(x.attr('data-question-number'))
+                score = @db_2014[qnum]
+                x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
+        @_recalculate2014()
+
+    _onClick2014: (e) =>
+        el = $(e.delegateTarget)
+        tr = el.parents('tr:first')
+        qnum = tr.attr('data-question-number')
+        score = el.attr('data-score')
+        tr.find('img').removeClass('active').addClass('inactive')
+        el.removeClass('inactive').addClass('active')
+        @db_2014[qnum] = parseInt(score)
+        @_recalculate2014()
+
+    _recalculate2014: =>
+        score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
+        console.log 'recalculate 2014',score
+        $('.year-box.year-2014 .bottom').text score
+            
+
+
+
 
 
