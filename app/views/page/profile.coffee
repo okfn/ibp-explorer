@@ -36,7 +36,7 @@ module.exports = class ProfilePage extends Backbone.View
         # Set up nav
         nav = @$el.find('.country-nav-select')
         nav.chosen()
-        nav.val @alpha2
+        nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
         # Bind to past/future toggle
         $('#profile-toggle-button').toggleButtons
@@ -69,13 +69,24 @@ module.exports = class ProfilePage extends Backbone.View
         detailsData = 
             @_get_details @data, questionSet
         if @viewPast
+            $('.past').show()
+            $('.future').hide()
             $('.details').html(template_profile_details detailsData)
         else
+            $('.future').show()
+            $('.past').hide()
             $('.details').html(template_profile_details_future detailsData)
             $('.letter.multi img').bind 'click', @_onClick2014
+            @_repaint2014
         # Add question number hover effect
         @$el.find('tr.question-row').mouseover @_onHoverQuestion
         @$el.find('tr.question-row:first').mouseover()
+        # Fill out scores
+        $('.scores .year-2006 .bottom').text percentageData.percentages[0].score+'%'
+        $('.scores .year-2008 .bottom').text percentageData.percentages[1].score+'%'
+        $('.scores .year-2010 .bottom').text percentageData.percentages[2].score+'%'
+        $('.scores .year-2012 .bottom').text percentageData.percentages[3].score+'%'
+        @_repaint2014()
 
     _ibp_website_url: (alpha2) ->
         # Special cases: Links are inconsistent on the core website
@@ -89,8 +100,13 @@ module.exports = class ProfilePage extends Backbone.View
         target = $(e.delegateTarget)
         number = target.attr('data-question-number')
         q = _EXPLORER_DATASET.question[number]
+        qbox = $('.question-box')
+        qbox.html(template_question_text q)
         top = target.position().top - 21
-        $('.question-box').html(template_question_text q).css('top',top)
+        max_top = $('.details').height() - qbox.height() - 21
+        qbox.css
+            left : $('.details table').width()
+            top: Math.min top, max_top
         $('tr.question-row').removeClass 'hover'
         target.addClass 'hover'
 
@@ -142,7 +158,6 @@ module.exports = class ProfilePage extends Backbone.View
         out.c_width = (out.a+out.b+out.c)*100/out.total
         out.d_width = (out.a+out.b+out.c+out.d)*100/out.total
         out.e_width = 100
-        out.json = JSON.stringify out
         return out
 
     _get_details: (data,questionSet) ->
@@ -166,7 +181,7 @@ module.exports = class ProfilePage extends Backbone.View
                 qnum = parseInt(x.attr('data-question-number'))
                 score = @db_2014[qnum]
                 x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
-        @_recalculate2014()
+        @_repaint2014()
 
     _onClick2014: (e) =>
         el = $(e.delegateTarget)
@@ -176,15 +191,8 @@ module.exports = class ProfilePage extends Backbone.View
         tr.find('img').removeClass('active').addClass('inactive')
         el.removeClass('inactive').addClass('active')
         @db_2014[qnum] = parseInt(score)
-        @_recalculate2014()
+        @_repaint2014()
 
-    _recalculate2014: =>
+    _repaint2014: =>
         score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
-        console.log 'recalculate 2014',score
-        $('.year-box.year-2014 .bottom').text score
-            
-
-
-
-
-
+        $('.scores .year-2014 .bottom').text score+'%'

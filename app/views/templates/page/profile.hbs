@@ -1,47 +1,46 @@
 <div class="country-nav-select-outer">
-<h4>Country:&nbsp;&nbsp;
+<h3>Country:&nbsp;&nbsp;
 <select class="country-nav-select">
 <option value="">Select a country...</option>
 {{#each countries}}
 <option value="{{alpha2}}">{{name}}</option>
 {{/each}}
-</select></h4>
+</select></h3>
 </div>
 <div id="country-profile">
 {{#if empty}}
-  <h2>Select a country...</h2>
+  <h3>Select a country...</h3>
 {{else}}
   {{#if main_website_url}}
     <a class="main-website-link" href="{{main_website_url}}">View {{#with data}}{{name}}{{/with}} on Main Site &raquo;</a>
   {{/if}}
-  <h2>Country profile: {{#with data}}{{name}}{{/with}} ({{alpha2}})</h2>
+  <h3>Country profile: {{#with data}}{{name}}{{/with}} ({{alpha2}})</h3>
   <table class="percentages">
   </table>
   <div id="profile-mode">
-    <div class="pull-right scores">
-      <div class="year-box year-2006">
-        <span class="top">2006</span><span class="bottom">{{score_2006}}</span>
+    <div class="scores">
+      <div class="year-box year-2006 badge">
+        <span class="top">2006</span><span class="bottom"></span>
       </div>
-      <div class="year-box year-2008">
-        <span class="top">2008</span><span class="bottom">{{score_2008}}</span>
+      <div class="year-box year-2008 badge">
+        <span class="top">2008</span><span class="bottom"></span>
       </div>
-      <div class="year-box year-2010">
-        <span class="top">2010</span><span class="bottom">{{score_2010}}</span>
+      <div class="year-box year-2010 badge">
+        <span class="top">2010</span><span class="bottom"></span>
       </div>
-      <div class="year-box year-2012">
-        <span class="top">2012</span><span class="bottom">{{score_2012}}</span>
+      <div class="year-box year-2012 badge">
+        <span class="top">2012</span><span class="bottom"></span>
       </div>
-      <div class="year-box year-2014">
-        <span class="top">2014</span><span class="bottom">{{score_2014}}</span>
+      <div class="year-box year-2014 badge badge-success future">
+        <span class="top">2014</span><span class="bottom"></span>
       </div>
     </div>
-    Select mode:
-    <div class="profile-toggle pull-left">
-        <span class="pull-left text">Mode:</span>
-        <div class="pull-left" id="profile-toggle-button">
-            <input type="checkbox" checked="checked">
-        </div>
+    <h3>Viewing:</h3>
+    <div class="pull-left" id="profile-toggle-button">
+        <input type="checkbox" checked="checked">
     </div>
+    <p class="past">View the results of all surveys below.</p>
+    <p class="future">Click on the letters below to calculate possible outcomes of the 2014 survey.</p>
 
   </div>
   <div style="position: relative;">

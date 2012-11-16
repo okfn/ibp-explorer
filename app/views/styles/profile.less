@@ -1,3 +1,9 @@
+/* Bootstrap hack */
+.badge-success {
+  background: #54A954 !important;
+}
+
+
 div.country-nav-select-outer {
   margin: 10px 0 0 10px;
   h4 {
@@ -15,7 +21,21 @@ div#country-profile {
     padding-bottom: 4px;
   }
   .percentages {
-    margin-left: 20px;
+    .year {
+      text-align: right;
+    }
+    .score {
+      width: 30px;
+      padding: 0 10px;
+      text-align: right;
+      font-weight: bold;
+    }
+    .bar {
+      width: 820px;
+      .percentbar {
+        width: 100%;
+      }
+    }
   }
   .details {
     float: left;
@@ -24,10 +44,15 @@ div#country-profile {
       width: auto;
       tr {
         th {
-          background: #ccc;
+          text-align: center;
+          border-bottom: 1px solid #ccc;
           &.space {
             background: #fff;
+            border-color: transparent;
           }
+        }
+        * {
+          border:none;
         }
         td.number { 
           width: 70px;
@@ -48,8 +73,8 @@ div#country-profile {
               }
             }
             img.active {
-              border: 1px solid #000;
-              border-radius: 2px;
+              border: 1px solid #555;
+              background: #fff;
             }
           }
         }
@@ -73,7 +98,7 @@ div#country-profile {
     left: 300px;
     top: 0px;
     background: #eee;
-    width: 500px;
+    width: 540px;
     padding: 10px;
     .question-text {
       background: #ddd;
@@ -82,16 +107,45 @@ div#country-profile {
   }
 }
 div#profile-mode {
-  background: #fcf;
-  height: 70px;
-  margin: 5px 0;
+  border: 1px solid #000;
+  border-left: none;
+  border-right: none;
+  height: 94px;
+  margin: 15px 0;
   padding: 5px 0;
-  .profile-toggle {
-      margin: 38px 0 0 40px;
-      .text { 
-          font-size: 15px; 
-          font-weight: bold; 
-          padding: 5px 10px 0 0;
+  position: relative;
+  p {
+    position: absolute;
+    left: 0px;
+    top: 71px;
+  }
+  #profile-toggle-button {
+    position: absolute;
+    left: 110px;
+    top: 21px;
+  }
+  .scores {
+    float: left;
+    position: absolute;
+    left: 400px;
+    top: 19px;
+    font-weight: normal;
+    .year-box {
+      padding: 8px;
+      padding-bottom: 5px;
+      float: left;
+      border: 1px solid #999;
+      border-radius: 4px;
+      text-align: center;
+      margin-right: 6px;
+      span {
+        display: block;
       }
+      .top {
+        font-size: 20px;
+        padding-bottom: 4px;
+        font-weight: normal;
+      }
+    }
   }
 }

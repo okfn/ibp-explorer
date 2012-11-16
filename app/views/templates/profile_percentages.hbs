@@ -1,12 +1,12 @@
 {{#each percentages}}
   <tr>
-    <td>{{year}}</td>
-    <td>{{score}}%</td>
+    <td class="year"><span class="badge">{{year}}:</span></td>
+    <td class="score">{{score}}%</td>
     <td class="bar">
       {{#if not_defined}}
-        <div class="percentbar disabled" style="width: 712px;">(Not surveyed)</div>
+        <div class="percentbar disabled">(Not surveyed)</div>
       {{else}}
-        <div class="percentbar" style="width: 712px;" title="<div class='percentbar-tooltip'>
+        <div class="percentbar" title="<div class='percentbar-tooltip'>
         <div class='heading'>Survey Scores</div>
         <table>
           <tr><td class='c1'>A:</td><td class='c2'>{{a}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>

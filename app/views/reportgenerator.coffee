@@ -1,9 +1,7 @@
 template = require 'views/templates/reportgenerator'
 debug = true
 
-
 class ReportGenerator extends Backbone.View
-
     initialize: =>
         if debug then @debugReports()
         @region = 0 # Initially our custon "Entire World" collection
