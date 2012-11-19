@@ -83,7 +83,7 @@ module.exports = class ProjectPage extends Backbone.View
         }
         @mapObject = map.vectorMap('get', 'mapObject')
         $('#map-toggles button').click @_mapToggle
-        $('button[data-year="2010"]').click()
+        $('button[data-year="2012"]').click()
         ###
         # Debug gradient (usually a static PNG file)
         g = $('#map-gradient')
