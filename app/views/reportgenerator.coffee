@@ -153,7 +153,7 @@ class ReportGenerator extends Backbone.View
             el.addClass 'select'
         @_setSubtitle()
         @$el.find('.group-toggler').removeClass 'active'
-        @trigger('update', @dataset, @questionSet, @region)
+        @_updated()
         return false
 
 module.exports = new ReportGenerator()
