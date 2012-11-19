@@ -4,6 +4,7 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    position: relative;
     h1 {
         width: 100%;
         padding: 5px 10px;
@@ -14,14 +15,15 @@
         }
     }
     .expand-collapse {
-        float: right;
-        margin: 9px 30px 0 0;
         font-weight: bold;
         a {
           .plusminus {
             color: #999;
           }
         }
+        position: absolute;
+        top: 9px;
+        right: 30px;
     }
     .inner {
         padding-bottom: 7px;
@@ -43,13 +45,12 @@
         width: (@per_row*23px);
         padding-top: 4px;
         padding-left: 7px;
-        position: relative;
         .toggle-box {
-            position: relative;
             background: #f0f0f0;
             color: #ccc;
             display: block;
             text-decoration: none;
+            position: relative;
             border: 1px solid #ccc;
             margin-left: -1px;
             margin-top: -1px;
