@@ -64,7 +64,7 @@ module.exports = class ProjectPage extends Backbone.View
     _reflow: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         target = $('#rankings-table tbody').empty()
         if questionSet.length==0 
-            target.html '(No questions selected)'
+            target.html '<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>'
             return
         data = []
         selected_countries = _EXPLORER_DATASET.regions[region].contains
