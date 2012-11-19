@@ -199,7 +199,31 @@ module.exports = class ProfilePage extends Backbone.View
         el.removeClass('inactive').addClass('active')
         @db_2014[qnum] = parseInt(score)
         @_repaint2014()
+        @_animationHackScale $('.year-box.year-2014')
 
     _repaint2014: =>
         score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
         $('.scores .year-2014 .bottom').text score+'%'
+
+    _animationHackScale: (element, scale=1.3, time=340) =>
+        """Hacky function to make an element pulse to a new scale and back again.
+          Follows a SIN wave. Looks like a heartbeat. Overwrites the font-size property. Hence hacky."""
+        element = $(element)
+        element.css('font-size',100)
+        element.animate( 
+          { 'font-size': 0 },
+          { 
+            duration: time
+            easing: 'linear'
+            step: (now,fx) => 
+              x = (now*Math.PI)/100 # 0 to PI
+              x = 1 + (Math.sin(x)*(scale-1)) # 1 to SCALE and back again
+              _scale = 'scale('+x+','+x+')'
+              element.css 
+                '-moz-transform':_scale
+                '-o-transform':_scale
+                '-ms-transform':_scale
+                '-webkit-transform':_scale
+                'transform':_scale
+          } 
+        )

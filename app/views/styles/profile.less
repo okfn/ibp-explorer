@@ -42,7 +42,7 @@ div#country-profile {
     float: left;
     table {
       margin-top: 0;
-      width: auto;
+      width: 340px;
       tr {
         th {
           text-align: center;
@@ -56,17 +56,15 @@ div#country-profile {
           border:none;
         }
         td.number { 
-          width: 70px;
+          width: 40px;
           background: #eee;
           padding-right: 10px;
           text-align: right;
           font-weight: bold;
         }
         td.letter {
-          width: 40px;
           text-align: center;
           &.multi {
-            width: 180px;
             background: lighten(#54A954,44%);
             img {
               cursor: pointer;
@@ -123,7 +121,7 @@ div#profile-mode {
   position: relative;
   .explanation {
     position: absolute;
-    left: 44%;
+    left: 350px;
     top: 18px;
   }
   #profile-toggle {
@@ -146,6 +144,9 @@ div#profile-mode {
         font-size: 20px;
         padding-bottom: 4px;
         font-weight: normal;
+      }
+      .bottom {
+        font-size: 12px;
       }
     }
   }
