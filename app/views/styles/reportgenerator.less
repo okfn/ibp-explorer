@@ -1,5 +1,9 @@
 #report-generator {
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     h1 {
         width: 100%;
         padding: 5px 10px;
@@ -10,8 +14,14 @@
         }
     }
     .expand-collapse {
-        margin: 0 0 0 30px;
+        float: right;
+        margin: 9px 30px 0 0;
         font-weight: bold;
+        a {
+          .plusminus {
+            color: #999;
+          }
+        }
     }
     .inner {
         padding-bottom: 7px;
@@ -31,6 +41,7 @@
     #toggle-boxes {
         @per_row: 15;
         width: (@per_row*23px);
+        padding-top: 4px;
         padding-left: 7px;
         position: relative;
         .toggle-box {
@@ -107,7 +118,7 @@
     }
     .col2 {
         float: left;
-        width: 200px;
+        width: 190px;
         margin-right: 10px;
     }
     .col3 {
@@ -116,6 +127,6 @@
     }
     .col4 {
         float: right;
-        width: 176px;
+        width: 166px;
     }
 }

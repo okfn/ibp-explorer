@@ -100,18 +100,21 @@ class ReportGenerator extends Backbone.View
         e.preventDefault()
         inner = @$el.find('.inner')
         if ($(e.delegateTarget).hasClass 'more-options')
+            @trigger 'resizeStart'
             @$el.find('.more-options').hide()
             @$el.find('.less-options').show()
-            inner.show()
+            inner.show().css {height: 'auto'}
             h = inner.height()
             inner.css {height: 0}
-            inner.animate {height:h}, 300, => @trigger 'resized'
-            @trigger 'resizeStart'
+            inner.stop().animate {height:h}, 300, => @trigger 'resized'
         else if ($(e.delegateTarget).hasClass 'less-options')
+            @trigger 'resizeStart'
             @$el.find('.more-options').show()
             @$el.find('.less-options').hide()
-            inner.hide()
-            @trigger 'resized'
+            inner.stop().animate {height:0}, 300, => 
+              inner.hide()
+              inner.css {height:'auto'}
+              @trigger 'resized'
         return false
 
     _setSubtitle: (title='Custom Report') =>
