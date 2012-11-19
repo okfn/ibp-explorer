@@ -19,22 +19,16 @@ module.exports = class TimelinePage extends Backbone.View
         @$el.html template_page()
         target.html @$el
         # Bind to on-page elements
-        $('#timeline-toggle-button').toggleButtons
-            onChange: @_onToggleMode
-            width: 136
-            style:
-                enabled: 'primary'
-                disabled: 'success'
-            label: 
-                enabled: "Rank"
-                disabled: "Score"
+        $('input[name="timeline"]').bind 'change', @_onToggleMode
         @_updateReport()
 
     ##################
     ## Private methods
     ##################
-    _onToggleMode: (el,@showRank=true) =>
-        if @showRank
+    _onToggleMode: (showRank=true) =>
+        value = $('input[name="timeline"]:checked').val()
+        assert value in ['rankings','scores']
+        if value=='rankings'
             $('.timeline-cell-score').hide()
             $('.timeline-cell-rank').show()
         else
@@ -87,12 +81,12 @@ module.exports = class TimelinePage extends Backbone.View
             @mouseoverAlpha2 = $('#timeline-column-2012 tbody tr:first-child').attr 'data-alpha2'
         @_redrawJsPlumb()
         # Show ranks or scores as appropriate
-        @_onToggleMode null,@showRank
+        @_onToggleMode()
 
     _mouseoverRanking: (e) =>
         el = $(e.delegateTarget)
         alpha2 = el.attr('data-alpha2')
-        if alpha2 
+        if alpha2 and not (alpha2==@mouseoverAlpha2)
             @_redrawJsPlumb alpha2
 
     _redrawJsPlumb: (alpha2=null) =>

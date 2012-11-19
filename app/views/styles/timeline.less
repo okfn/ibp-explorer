@@ -1,24 +1,37 @@
 .timeline-header {
-    height: 70px;
-    width: 860px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #000;
+    margin-bottom: 8px;
+    padding: 20px 0;
     h2 {
-        margin: 30px 0 0 30px;
+        position: absolute;
+        left: 30px;
+        top: 0px;
+        margin-bottom: 0;
         padding-bottom: 0;
-        font-size: 25px;
+    }
+    h4 {
+        position: absolute;
+        left: 240px;
+        top: 14px;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
     .timeline-toggle {
-        margin: 38px 0 0 40px;
-        .text { 
-            font-size: 15px; 
-            font-weight: bold; 
-            padding: 5px 10px 0 0;
+        position: absolute;
+        left: 300px;
+        top: 24px;
+        label {
+          margin-bottom: 0;
         }
     }
 }
 
 .timeline-column {
     float: left;
-    padding: 0 22px;
+    padding: 0 28px;
     &#timeline-column-2006 {
         padding-left: 4px;
     }
@@ -27,13 +40,13 @@
     }
 
     h4 {
-        padding-left: 20px;
-        margin-bottom: 2px;
+        text-align: center;
+        margin-bottom: 9px;
     }
 
     table {
         /* Column widths: */
-        @c1: 116px;
+        @c1: 126px;
         @c2: 20px;
         @c3: 44px;
 
