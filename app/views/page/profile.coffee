@@ -52,7 +52,8 @@ module.exports = class ProfilePage extends Backbone.View
                 @_get_percentages @data.alpha2, @data.db_2010, '2010', questionSet
                 @_get_percentages @data.alpha2, @data.db_2012, '2012', questionSet
             ]
-        $('.percentages').html(template_profile_percentages percentageData)
+        # IE hack requires we empty & append rather than use .html()
+        $('.percentages').empty().append($(template_profile_percentages percentageData))
         # Add tooltips to nav bars
         $('.percentbar').tooltip
             placement: 'right'
