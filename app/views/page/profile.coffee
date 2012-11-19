@@ -39,15 +39,7 @@ module.exports = class ProfilePage extends Backbone.View
         nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
         # Bind to past/future toggle
-        $('#profile-toggle-button').toggleButtons
-            onChange: @_onToggleMode
-            width: 136
-            style:
-                enabled: 'primary'
-                disabled: 'success'
-            label: 
-                enabled: "Past"
-                disabled: "Future"
+        $('#profile-toggle input').bind 'change', @_onToggleMode
 
     ##################
     ## Private methods
@@ -78,14 +70,26 @@ module.exports = class ProfilePage extends Backbone.View
             $('.details').html(template_profile_details_future detailsData)
             $('.letter.multi img').bind 'click', @_onClick2014
             @_repaint2014
+            for x in $('.question-row')
+                x = $(x)
+                qnum = parseInt(x.attr('data-question-number'))
+                score = @db_2014[qnum]
+                x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
+        @_repaint2014()
         # Add question number hover effect
         @$el.find('tr.question-row').mouseover @_onHoverQuestion
         @$el.find('tr.question-row:first').mouseover()
         # Fill out scores
-        $('.scores .year-2006 .bottom').text percentageData.percentages[0].score+'%'
-        $('.scores .year-2008 .bottom').text percentageData.percentages[1].score+'%'
-        $('.scores .year-2010 .bottom').text percentageData.percentages[2].score+'%'
-        $('.scores .year-2012 .bottom').text percentageData.percentages[3].score+'%'
+        render_score = (year,score)->
+            if score 
+                $('.scores .year-'+year+' .bottom').text score+'%'
+            else
+                $('.scores .year-'+year).css('opacity','0.2')
+                $('.scores .year-'+year+' .bottom').text '-'
+        render_score 2006,percentageData.percentages[0].score
+        render_score 2008,percentageData.percentages[1].score
+        render_score 2010,percentageData.percentages[2].score
+        render_score 2012,percentageData.percentages[3].score
         @_repaint2014()
 
     _ibp_website_url: (alpha2) ->
@@ -106,7 +110,7 @@ module.exports = class ProfilePage extends Backbone.View
         max_top = $('.details').height() - qbox.height() - 21
         qbox.css
             left : $('.details table').width()
-            top: Math.min top, max_top
+            top: Math.max(0, (Math.min top, max_top))
         $('tr.question-row').removeClass 'hover'
         target.addClass 'hover'
 
@@ -172,16 +176,19 @@ module.exports = class ProfilePage extends Backbone.View
                 l2012: @_number_to_letter data.db_2012, x
         return out
 
-    _onToggleMode: (element, @viewPast) =>
+    _onToggleMode: =>
+        _viewPast = @viewPast
+        @viewPast = not $('#profile-toggle input').is(':checked')
+        animate = not (_viewPast==@viewPast)
         # Populate the DOM
         @_repaint()
+        explanation = $('.explanation')
         if not @viewPast
-            for x in $('.question-row')
-                x = $(x)
-                qnum = parseInt(x.attr('data-question-number'))
-                score = @db_2014[qnum]
-                x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
-        @_repaint2014()
+            explanation.show()
+            if animate
+                $('.future').css('opacity',0).animate({'opacity':1},300)
+        else 
+            explanation.hide()
 
     _onClick2014: (e) =>
         el = $(e.delegateTarget)

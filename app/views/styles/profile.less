@@ -3,13 +3,13 @@
   background: #54A954 !important;
 }
 
-
 div.country-nav-select-outer {
   margin: 10px 0 0 10px;
   h4 {
     vertical-align: middle;
   }
 }
+
 div#country-profile {
   margin: 0 10px;
   border-top: 1px solid #999;
@@ -34,6 +34,7 @@ div#country-profile {
       width: 820px;
       .percentbar {
         width: 100%;
+        line-height: 10px;
       }
     }
   }
@@ -66,6 +67,10 @@ div#country-profile {
           text-align: center;
           &.multi {
             width: 180px;
+            background: lighten(#54A954,44%);
+            img {
+              cursor: pointer;
+            }
             img.inactive {
               opacity: 0.3;
               &:hover {
@@ -89,6 +94,9 @@ div#country-profile {
         td.space,
         td.letter {
           background: #eee;
+          &.multi {
+            background: lighten(#54A954,40%);
+          }
         }
       }
     }
@@ -110,25 +118,18 @@ div#profile-mode {
   border: 1px solid #000;
   border-left: none;
   border-right: none;
-  height: 94px;
   margin: 15px 0;
   padding: 5px 0;
   position: relative;
-  p {
+  .explanation {
     position: absolute;
-    left: 0px;
-    top: 71px;
+    left: 44%;
+    top: 18px;
   }
-  #profile-toggle-button {
-    position: absolute;
-    left: 110px;
-    top: 21px;
+  #profile-toggle {
   }
   .scores {
-    float: left;
-    position: absolute;
-    left: 400px;
-    top: 19px;
+    padding: 10px 0;
     font-weight: normal;
     .year-box {
       padding: 8px;

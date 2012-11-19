@@ -1,5 +1,5 @@
 /* 
- * version: 2
+ * version: 3
  *
  * Monkey patch library to JS standard runtime.
  * Because loads of stuff is broken or missing.

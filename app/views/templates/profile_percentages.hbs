@@ -1,7 +1,7 @@
 {{#each percentages}}
   <tr>
     <td class="year"><span class="badge">{{year}}:</span></td>
-    <td class="score">{{score}}%</td>
+    <td class="score">{{#if not_defined}} {{else}}{{score}}%{{/if}}</td>
     <td class="bar">
       {{#if not_defined}}
         <div class="percentbar disabled">(Not surveyed)</div>
