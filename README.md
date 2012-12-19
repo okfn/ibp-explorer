@@ -1,65 +1,45 @@
-# Brunch with coffee
-This is a simple coffee skeleton for [Brunch](http://brunch.io/).
+# Open Budget Survey Explorer
 
-Main languages are [CoffeeScript](http://coffeescript.org/),
-[Stylus](http://learnboost.github.com/stylus/) and
-[Handlebars](http://handlebarsjs.com/).
+* Live version: http://survey.internationalbudget.org
+* Work-in-progress: http://dev.okfn.org/ibp/iteration3 (username/password required until data is released)
 
-## Getting started
+Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod).
 
-Clone the repo and run `npm install` & `brunch build`.
-See more info on the [official site](http://brunch.io)
+## Setup & Deployment
 
-## Overview
+This is a web application developed using [Brunch](http://brunch.io). To run locally:
 
-    config.coffee
-    README.md
-    /app/
-      /assets/
-        index.html
-        images/
-      /lib/
-      models/
-      styles/
-      views/
-        templates/
-      application.coffee
-      initialize.coffee
-    /test/
-      functional/
-      unit/
-    /vendor/
-      scripts/
-        backbone.js
-        jquery.js
-        console-helper.js
-        underscore.js
-      styles/
-        normalize.css
-        helpers.css
+* Clone this repository. 
+* Install [Node](http://nodejs.org) and [Brunch](http://brunch.io).
+* Run `brunch watch --server` in the root directory of this repo.
+* Point your browser at http://localhost:3333.
 
-* `config.coffee` contains configuration of your app. You can set plugins /
-languages that would be used here.
-* `app/assets` contains images / static files. Contents of the directory would
-be copied to `build/` without change.
-Other `app/` directories could contain files that would be compiled. Languages,
-that compile to JS (coffeescript, roy etc.) or js files and located in app are 
-automatically wrapped in module closure so they can be loaded by 
-`require('module/location')`.
-* `app/models` & `app/views` contain base classes your app should inherit from.
-* `test/` contains feature & unit tests.
-* `vendor/` contains all third-party code. The code wouldn’t be wrapped in
-modules, it would be loaded instantly instead.
+To deploy:
 
-This all will generate `public/` (by default) directory when `brunch build` or `brunch watch` is executed.
+* Get the above working.
+* Kill the `brunch` server.
+* Delete the `./public` folder if one has been created.
+* Run `brunch build --minify`.
+* Deploy the `./public` folder to your web server.
 
-## Other
-Versions of software the skeleton uses:
+## Updating the data
 
-* jQuery 1.7.2
-* Backbone 0.9.2
-* Underscore 1.3.3
-* HTML5Boilerplate 3.0.3
+All the data lives in the `./data` folder, along with a Pythin tool to Extract-Transform-Load it through a complicated data-massage. Outputs are:
 
-The license is [public domain](http://creativecommons.org/publicdomain/zero/1.0/).
-Use it however you want.
+* `./vendor/ibp_dataset.js` which is used by the javascript datatool.
+* `./app/assets/downloads/` which is filled with downloadable files.
+
+To update the data:
+
+* Modify the Excel files in the `./data` folder.
+
+To get those changes processed by the tool:
+
+* Get Python set up on your system.
+* Install [Pip](http://pypi.python.org/pypi/pip), the Python package manager.
+* `pip install openpyxl`
+* `pip install unicodecsv`
+* `pip install xlrd`
+* You're all set up. Run `python etl.py` to update the tool.
+* Run the tool locally to prove it works. 
+* Follow the above deployment instructions to get it ready for a live server.
