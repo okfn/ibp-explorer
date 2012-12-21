@@ -3,6 +3,7 @@ TimelinePage = require 'views/page/timeline'
 RankingsPage = require 'views/page/rankings'
 DownloadPage = require 'views/page/download'
 ProfilePage = require 'views/page/profile'
+AvailabilityPage = require 'views/page/availability'
 
 # Singleton report generator
 reportGenerator = require 'views/reportgenerator'
@@ -13,6 +14,7 @@ singletons =
     mapPage:  -> return @_map = @_map or new MapPage()
     timelinePage:  -> return @_timeline = @_timeline or new TimelinePage()
     rankingsPage:  -> return @_rankings = @_rankings or new RankingsPage()
+    availabilityPage:  -> return @_avail = @_avail or new AvailabilityPage()
     downloadPage:  -> return @_download = @_download or new DownloadPage()
 
 module.exports = class Router extends Backbone.Router
@@ -21,6 +23,7 @@ module.exports = class Router extends Backbone.Router
         'map' : 'map'
         'timeline' : 'timeline'
         'rankings' : 'rankings'
+        'availability' : 'availability'
         'download' : 'download'
         'profile' : 'profile'
         'profile/:country' : 'profile'
@@ -41,10 +44,14 @@ module.exports = class Router extends Backbone.Router
               active = $(active.parents('li')[0])
               active.add( active.parents('.dropdown') ).addClass 'active'
 
-    setCurrent: (view) =>
+    setCurrent: (view, showReportGenerator=true) =>
         if not (view==@currentView)
             @currentView = view
             view.renderPage $('#explorer')
+        if showReportGenerator
+            $('#report-generator').show()
+        else
+            $('#report-generator').hide()
 
     home: ->
       @setCurrent singletons.homePage()
@@ -54,8 +61,10 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.timelinePage()
     rankings: ->
       @setCurrent singletons.rankingsPage()
+    availability: ->
+      @setCurrent singletons.availabilityPage(), showReportGenerator=false
     download: ->
-      @setCurrent singletons.downloadPage()
+      @setCurrent singletons.downloadPage(), showReportGenerator=false
     profile: (country='') ->
       @setCurrent new ProfilePage(country)
 
