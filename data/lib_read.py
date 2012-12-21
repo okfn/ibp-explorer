@@ -158,7 +158,15 @@ def _read_regions(g_workbook, iso_data):
 
 def _read_availability(av_workbook, iso_data):
     sheets = ['2006','2008','2010','2012']
-    column_headers = ['country', 'Pre-Budget Statement', 'Executive\'s Budget Proposal', 'Citizens Budget', 'Enacted Budget', 'In-Year Reports', 'Mid-Year Review', 'Year-End Report', 'Audit Report']
+    column_headers = [('country', 'country'),
+            ('Pre-Budget Statement', 'prebudgetstatement'),
+            ('Executive\'s Budget Proposal', 'executivesbudgetproposal'),
+            ('Citizens Budget', 'citizensbudget'),
+            ('Enacted Budget', 'enactedbudget'),
+            ('In-Year Reports', 'inyearreports'),
+            ('Mid-Year Review', 'midyearreview'),
+            ('Year-End Report', 'yearendreport'),
+            ('Audit Report', 'auditreport')]
     valid = ['PW', 'IU', 'NP', 'HC']
     out = {}
     for sheet_name in sheets:
@@ -166,7 +174,7 @@ def _read_availability(av_workbook, iso_data):
         # Check the sheet is structured the way we expect
         for x in range(1,len(column_headers)+1):
             column_header = _lookup(sheet, x,1) 
-            assert column_header == column_headers[x-1], 'Bad column header on sheet %s: Got "%s" but expected "%s".' % (sheet_name,column_header,column_headers[x-1])
+            assert column_header == column_headers[x-1][0], 'Bad column header on sheet %s: Got "%s" but expected "%s".' % (sheet_name,column_header,column_headers[x-1])
         # Scraped the data into a structured JSON object
         height = sheet.get_highest_row()
         for y in range(2,height+1):
@@ -174,14 +182,16 @@ def _read_availability(av_workbook, iso_data):
             assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
             alpha2 = iso_data[name]
             data = {}
+            data['alpha2'] = alpha2
+            data['name'] = name
             for x in range(2,len(column_headers)+1): # <-- Mind these off-by-ones! x is column number not list index.
                 value = _lookup(sheet,x,y)
                 assert value in valid, 'Invalid value in %s (%s, %s): %s' % (sheet_name,name,column_headers[x-1],value)
-                data[column_headers[x-1]] = value
+                data[column_headers[x-1][1]] = value
             # Write the data into the structured JSON object
             out[alpha2] = out.get(alpha2,{})
-            out[alpha2][int(sheet_name)] = data
-    return out
+            out[alpha2]['db_'+sheet_name] = data
+    return sorted(out.values(), key=lambda x:x.values()[0]['name'])
 
 def _parse_int_list(int_list):
     if int_list is '' or int_list is u'':
