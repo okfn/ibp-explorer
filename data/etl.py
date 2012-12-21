@@ -12,6 +12,7 @@ DEFAULT_ISOFILE = 'country_to_iso3166.json'
 DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xlsx'
 DEFAULT_ANSWERFILE = 'OBI_UNIFIED.xlsx'
 DEFAULT_GROUPINGSFILE = 'GroupingsOBSQuestions2012_102112.xlsx'
+DEFAULT_AVAILABILITYFILE = 'Public Availability All Years.xlsx'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
 DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
 
@@ -20,6 +21,7 @@ if __name__=='__main__':
     parser.add_argument('--iso', dest='isofile', default=DEFAULT_ISOFILE, help="JSON file of country_name to iso-3166 alpha 2 codes")
     parser.add_argument('--questions', dest='qfile', default=DEFAULT_QUESTIONFILE, help="XLS file of 2012 questions")
     parser.add_argument('--groupings', dest='gfile', default=DEFAULT_GROUPINGSFILE, help="XLS file of question groupings")
+    parser.add_argument('--availability', dest='avfile', default=DEFAULT_AVAILABILITYFILE, help="XLS file of 'Public Availability' dataset.")
     parser.add_argument('--answers', dest='afile', default=DEFAULT_ANSWERFILE, help="XLS file of all survey answers")
     parser.add_argument('--output', dest='ofile', default=DEFAULT_OUTPUT, help="Output filename to write")
     parser.add_argument('--downloads', dest='dfolder', default=DEFAULT_DOWNLOADFOLDER, help="Folder to store downloadable DB")
@@ -33,6 +35,6 @@ if __name__=='__main__':
 
     # Get ISO data
     iso_data = json.load(open(arg.isofile))
-    dataset = lib_read.read( iso_data, arg.qfile, arg.gfile, arg.afile )
+    dataset = lib_read.read( iso_data, arg.qfile, arg.gfile, arg.afile, arg.avfile )
     lib_write.write(dataset, iso_data, arg.ofile, arg.dfolder)
 

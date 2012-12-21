@@ -7,7 +7,7 @@ from string import uppercase
 # Public
 # ######
 
-def read(iso_data, q_xlsx, g_xlsx, a_xlsx):
+def read(iso_data, q_xlsx, g_xlsx, a_xlsx, av_xlsx):
     """Read all the input Excel files and produce an enormous data dict."""
     # Output to populate
     dataset = {}
@@ -18,11 +18,14 @@ def read(iso_data, q_xlsx, g_xlsx, a_xlsx):
     g_workbook = load_workbook(filename=g_xlsx)
     print 'Reading %s...' % a_xlsx
     a_workbook = load_workbook(filename=a_xlsx)
+    print 'Reading %s...' % av_xlsx
+    av_workbook = load_workbook(filename=av_xlsx)
     # Generate dataset
     dataset['country']  = _read_answers(a_workbook, iso_data)
     dataset['question'] = _read_questions(q_workbook)
     dataset['groupings'] = _read_groupings(g_workbook)
     dataset['regions'] = _read_regions(g_workbook, iso_data)
+    dataset['availability'] = _read_availability(av_workbook, iso_data)
     return dataset
 
 
@@ -151,6 +154,33 @@ def _read_regions(g_workbook, iso_data):
             y+=1
         out.append(region)
         x += 1
+    return out
+
+def _read_availability(av_workbook, iso_data):
+    sheets = ['2006','2008','2010','2012']
+    column_headers = ['country', 'Pre-Budget Statement', 'Executive\'s Budget Proposal', 'Citizens Budget', 'Enacted Budget', 'In-Year Reports', 'Mid-Year Review', 'Year-End Report', 'Audit Report']
+    valid = ['PW', 'IU', 'NP', 'HC']
+    out = {}
+    for sheet_name in sheets:
+        sheet = av_workbook.get_sheet_by_name(name=sheet_name)
+        # Check the sheet is structured the way we expect
+        for x in range(1,len(column_headers)+1):
+            column_header = _lookup(sheet, x,1) 
+            assert column_header == column_headers[x-1], 'Bad column header on sheet %s: Got "%s" but expected "%s".' % (sheet_name,column_header,column_headers[x-1])
+        # Scraped the data into a structured JSON object
+        height = sheet.get_highest_row()
+        for y in range(2,height+1):
+            name = _lookup(sheet,1,y)
+            assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
+            alpha2 = iso_data[name]
+            data = {}
+            for x in range(2,len(column_headers)+1): # <-- Mind these off-by-ones! x is column number not list index.
+                value = _lookup(sheet,x,y)
+                assert value in valid, 'Invalid value in %s (%s, %s): %s' % (sheet_name,name,column_headers[x-1],value)
+                data[column_headers[x-1]] = value
+            # Write the data into the structured JSON object
+            out[alpha2] = out.get(alpha2,{})
+            out[alpha2][int(sheet_name)] = data
     return out
 
 def _parse_int_list(int_list):
