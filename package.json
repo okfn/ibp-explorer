@@ -1,12 +1,12 @@
 {
-  "author": "Your Name",
-  "name": "package-name",
-  "description": "Package description",
-  "version": "0.0.1",
-  "homepage": "",
+  "author": "Tom Rees",
+  "name": "open-budget-explorer",
+  "description": "Online explorer and reporting tool for the Open Budget Survey results",
+  "version": "1.0.0",
+  "homepage": "http://internationalbudget.org",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "http://github.com/okfn/dpkg-ibp"
   },
   "engines": {
     "node": "~0.6.10"
