@@ -3,52 +3,18 @@ template_page = require 'views/templates/page/map'
 reportGenerator = require 'views/reportgenerator'
 
 MAP_NAME = 'world_mill_en'
-IBP_COLOURS = [
-  '#B8282E'
-  '#F48022',
-  '#DAC300',
-  '#007A78',
-  '#0065A4',
-]
-TRAFFIC_LIGHTS = [
-  '#B7282E'
-  '#F58024'
-  '#DAC402'
-  '#22aa33'
-]
-YELLOW_BLUE = [
-  '#225ea8',
-  '#41b6c4',
-  '#a1dab4',
-  '#ffffcc',
-]
-PURPLE = [
-  '#6A51A3'
-  '#9E9AC8'
-  '#CBC9E2'
-  '#F2F0F7'
-]
-RED = [
-  '#D7301F',
-  '#FC8D59',
-  '#FDCC8A',
-  '#FEF0D9'
-]
-GREEN = [
-  '#002200',
-  '#225500',
-  '#44aa00',
-  '#66cc00'
-]
-GREENRED = [
-  '#aa0000',
-  '#995500',
-  '#44aa00',
-  '#22cc00'
+COLOR_SCHEME = [
+  'B8282E'
+  'F48022'
+  'DAC300'
+  '007A78'
+  '0065A4'
 ]
 
-SCHEME = TRAFFIC_LIGHTS
-
+# Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
+jvm.NumericScale.prototype.getValue = (x) -> 
+    x = (x - (x%20)) / 20
+    return COLOR_SCHEME[x]
 
 module.exports = class ProjectPage extends Backbone.View
     mapData: {}
@@ -63,13 +29,10 @@ module.exports = class ProjectPage extends Backbone.View
         @$el.html template_page()
         target.html @$el
         map = @$el.find('#map')
-        map.vectorMap {
+        x = map.vectorMap {
           map: MAP_NAME
           series: {
-            regions: [{
-                scale: SCHEME
-            }
-            ]
+            regions: [{}]
           }
           regionStyle: 
               initial: 
@@ -82,6 +45,7 @@ module.exports = class ProjectPage extends Backbone.View
           onRegionClick: @_clickCountry
         }
         @mapObject = map.vectorMap('get', 'mapObject')
+
         $('#map-toggles button').click @_mapToggle
         $('button[data-year="2012"]').click()
         ###
@@ -119,7 +83,8 @@ module.exports = class ProjectPage extends Backbone.View
                     continue
                 if not (country.alpha2 in selected_countries)
                     continue
-                @mapData[country.alpha2] = Math.max(1,country[@year])
+                value = country[@year]
+                @mapData[country.alpha2] = Math.max(1,value)
         # Repaint the map
         @mapObject.series.regions[0].setValues @mapData
 
