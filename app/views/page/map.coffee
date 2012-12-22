@@ -18,6 +18,7 @@ jvm.NumericScale.prototype.getValue = (x) ->
 
 module.exports = class ProjectPage extends Backbone.View
     mapData: {}
+    countriesInSurvey: []
 
     ##################
     ## Public methods
@@ -73,6 +74,7 @@ module.exports = class ProjectPage extends Backbone.View
         selected_countries = _EXPLORER_DATASET.regions[region].contains
         # Unpaint the map
         @mapData = {}
+        @countriesInSurvey = []
         for x of countries_in_map
             @mapData[x] = 0
         if reportGenerator.questionSet.length>0
@@ -84,19 +86,20 @@ module.exports = class ProjectPage extends Backbone.View
                 if not (country.alpha2 in selected_countries)
                     continue
                 value = country[@year]
+                @countriesInSurvey.push country.alpha2
                 @mapData[country.alpha2] = Math.max(1,value)
         # Repaint the map
         @mapObject.series.regions[0].setValues @mapData
 
     _labelShow: (e,@mapLabel,code) =>
-      if not (code of @mapData)
+      if not (code in @countriesInSurvey)
           @mapLabel.css {'opacity':'0.5'}
       else
           @mapLabel.css {'opacity':'1.0'}
           @mapLabel.html(@mapLabel.html()+': '+@mapData[code]+'%')
 
     _clickCountry: (event, alpha2) =>
-        if alpha2 of @mapData
+        if alpha2 in @countriesInSurvey
             if @mapLabel.length then @mapLabel.remove()
             window.location = '#profile/'+alpha2
 
