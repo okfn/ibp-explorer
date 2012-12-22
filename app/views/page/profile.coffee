@@ -83,7 +83,7 @@ module.exports = class ProfilePage extends Backbone.View
         # Fill out scores
         render_score = (year,score)->
             if score 
-                $('.scores .year-'+year+' .bottom').text score+'%'
+                $('.scores .year-'+year+' .bottom').text 'Score: '+score
             else
                 $('.scores .year-'+year).css('opacity','0.2')
                 $('.scores .year-'+year+' .bottom').text '-'
@@ -204,7 +204,7 @@ module.exports = class ProfilePage extends Backbone.View
 
     _repaint2014: =>
         score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
-        $('.scores .year-2014 .bottom').text score+'%'
+        $('.scores .year-2014 .bottom').text 'Score: '+score
 
     _animationHackScale: (element, scale=1.3, time=340) =>
         """Hacky function to make an element pulse to a new scale and back again.

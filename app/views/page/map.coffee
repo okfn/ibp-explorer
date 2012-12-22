@@ -96,7 +96,7 @@ module.exports = class ProjectPage extends Backbone.View
           @mapLabel.css {'opacity':'0.5'}
       else
           @mapLabel.css {'opacity':'1.0'}
-          @mapLabel.html(@mapLabel.html()+': '+@mapData[code]+'%')
+          @mapLabel.html(@mapLabel.html()+': '+@mapData[code])
 
     _clickCountry: (event, alpha2) =>
         if alpha2 in @countriesInSurvey
