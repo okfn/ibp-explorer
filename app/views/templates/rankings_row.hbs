@@ -3,16 +3,14 @@
     <td class="flag"><img src="images/flags/{{alpha2}}.GIF"/></td>
     <td class="score">{{score}}</td>
     <td class="bar">
-      <div class="percentbar" title="<div class='percentbar-tooltip'>
-          <div class='heading'>Survey Scores</div>
-          <table>
-            <tr><td class='c1'>A:</td><td class='c2'>{{a}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
-            <tr><td class='c1'>B:</td><td class='c2'>{{b}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
-            <tr><td class='c1'>C:</td><td class='c2'>{{c}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
-            <tr><td class='c1'>D:</td><td class='c2'>{{d}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
-            <tr><td class='c1'>E:</td><td class='c2'>{{e}}</td><td class='c3'>/</td><td class='c4'>{{total}}</td></tr>
-          </table>
-          </div>">
+      <div class="percentbar" title="<table class='percentbar-tooltip'>
+        <tr><th colspan='4'>Share of questions by letter grade:</th></tr>
+        <tr class='row-a'><td class='letter'>A:</td><td class='left'>{{a}}</td><td class='middle'>/</td><td class='right'>{{total}}</td></tr>
+        <tr class='row-b'><td class='letter'>B:</td><td class='left'>{{b}}</td><td class='middle'>/</td><td class='right'>{{total}}</td></tr>
+        <tr class='row-c'><td class='letter'>C:</td><td class='left'>{{c}}</td><td class='middle'>/</td><td class='right'>{{total}}</td></tr>
+        <tr class='row-d'><td class='letter'>D:</td><td class='left'>{{d}}</td><td class='middle'>/</td><td class='right'>{{total}}</td></tr>
+        <tr class='row-e'><td class='letter'>E:</td><td class='left'>{{e}}</td><td class='middle'>/</td><td class='right'>{{total}}</td></tr>
+        </table>">
           <div class="bg-a" style="left: 0%; width: {{a_width}}%"></div>
           <div class="bg-b" style="left: {{b_left}}%; width: {{b_width}}%"></div>
           <div class="bg-c" style="left: {{c_left}}%; width: {{c_width}}%"></div>
