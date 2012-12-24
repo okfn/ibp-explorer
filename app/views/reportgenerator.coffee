@@ -109,6 +109,7 @@ class ReportGenerator extends Backbone.View
         else if (li.hasClass 'less-options')
             @trigger 'resizeStart'
             @$el.find('.inner .group-toggler:first').click()
+            @$el.find('.inner .region-toggler:first').click()
             inner.find('> .more').hide(200)
             inner.find('> .less').show(200)
         return false
