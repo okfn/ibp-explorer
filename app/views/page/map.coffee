@@ -12,9 +12,12 @@ COLOR_SCHEME = [
 ]
 
 # Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
-jvm.NumericScale.prototype.getValue = (x) -> 
+jvm.NumericScale.prototype.getValue = (_x) -> 
+    x = Math.min(_x,99)
     x = (x - (x%20)) / 20
-    return COLOR_SCHEME[x]
+    x = COLOR_SCHEME[x]
+    assert not (x==undefined), 'Could not process '+_x + ' ('+x+')'
+    return x
 
 module.exports = class ProjectPage extends Backbone.View
     mapData: {}

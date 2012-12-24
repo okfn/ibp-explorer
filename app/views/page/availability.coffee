@@ -34,6 +34,5 @@ module.exports = class ProjectPage extends Backbone.View
             key = 'db_'+@year
             if not (key of row) then continue
             tbody.append template_row row[key]
-        console.log @year
         
 

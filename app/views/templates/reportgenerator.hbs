@@ -1,9 +1,13 @@
-<div class="expand-collapse">
-  <a href="#" class="more-options btn">more options <span class="plusminus">&#8650;</span></a>
-  <a href="#" class="less-options btn" style="display:none;">hide options <span class="plusminus">&#8648;</span></a>
-</div>
-<h1><span style="font-weight: normal;">Exploring:</span> <span class="subtitle"></span></h1>
-<div class="inner" style="display: none;">
+<ul class="nav nav-tabs">
+	<li class="less-options active"><a href="#">Open Budget Index</a></li>
+	<li class="more-options"><a href="#">Custom Report</a></li>
+</ul>
+<div class="inner">
+	<div class="less">
+		<p>The <strong>Open Budget Survey</strong> is a comprehensive analysis and survey that evaluates whether governments give the public access to budget information and opportunities to participate in the budget process at the national level. The IBP works with civil society partners in 100 countries to collect the data for the Survey.</p>
+		<p>To easily measure the overall commitment of the countries surveyed to transparency and to allow for comparisons among countries, IBP created the <strong>Open Budget Index (OBI)</strong> from the Survey. The OBI assigns a score to each country based on the information it makes available to the public throughout the budget process.</p>
+	</div>
+	<div class="more" style="display: none;">
       <div class="col1 grouplist">
           {{#each groupings0}}
               <h6>{{by}}</h6>
@@ -45,4 +49,5 @@
           </ul>
       </div>
       <div class="clearfix"></div>
+	</div>
 </div>

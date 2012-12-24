@@ -41,7 +41,7 @@ class ReportGenerator extends Backbone.View
         @$el.find('.toggle-box').bind 'click', @_clickBoxToggle
         #@$el.find('.toggle-box').bind 'mouseover', @_showQuestion
         #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
-        @$el.find('.expand-collapse a').bind 'click', @_expand_collapse
+        @$el.find('.nav a').bind 'click', @_expand_collapse
         @$el.find('.select-or-clear button').bind 'click', @_select_or_clear
         @$el.find('.toggle-box').tooltip
             placement: 'left'
@@ -99,22 +99,18 @@ class ReportGenerator extends Backbone.View
     _expand_collapse: (e) =>
         e.preventDefault()
         inner = @$el.find('.inner')
-        if ($(e.delegateTarget).hasClass 'more-options')
+        li = ($(e.delegateTarget)).parents('li')
+        @$el.find('.nav li').removeClass 'active'
+        li.addClass 'active'
+        if (li.hasClass 'more-options')
             @trigger 'resizeStart'
-            @$el.find('.more-options').hide()
-            @$el.find('.less-options').show()
-            inner.show().css {height: 'auto'}
-            h = inner.height()
-            inner.css {height: 0}
-            inner.stop().animate {height:h}, 300, => @trigger 'resized'
-        else if ($(e.delegateTarget).hasClass 'less-options')
+            inner.find('> .more').show(200)
+            inner.find('> .less').hide(200)
+        else if (li.hasClass 'less-options')
             @trigger 'resizeStart'
-            @$el.find('.more-options').show()
-            @$el.find('.less-options').hide()
-            inner.stop().animate {height:0}, 300, => 
-              inner.hide()
-              inner.css {height:'auto'}
-              @trigger 'resized'
+            @$el.find('.inner .group-toggler:first').click()
+            inner.find('> .more').hide(200)
+            inner.find('> .less').show(200)
         return false
 
     _setSubtitle: (title='Custom Report') =>
