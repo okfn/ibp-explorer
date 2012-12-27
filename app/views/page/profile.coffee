@@ -82,7 +82,8 @@ module.exports = class ProfilePage extends Backbone.View
         @$el.find('tr.question-row:first').mouseover()
         # Fill out scores
         render_score = (year,score)->
-            if score 
+            if not (score is undefined)
+                $('.scores .year-'+year).css('opacity','1.0')
                 $('.scores .year-'+year+' .bottom').text 'Score: '+score
             else
                 $('.scores .year-'+year).css('opacity','0.2')
