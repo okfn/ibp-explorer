@@ -50,6 +50,23 @@ module.exports = class DownloadPage extends Backbone.View
         # Complete
         return out
 
+
+    # Note that this is code duplicated from profile.coffee. 
+    # Forgive me, time is running short and we need this working.
+    # A better fix should be thought up!
+    _number_to_letter: (value) ->
+        """The given letters in the source data arent always there. 
+          'q102l' does not exist while 'q102' does.
+          Therefore it is safer to use this technique to extract a letter..."""
+        assert value in [-1,0,33,67,100], 'Invalid value: '+value
+        return {
+          '-1': 'e'
+          0: 'd'
+          33: 'c'
+          67: 'b'
+          100: 'a'
+        }[value]
+
     _csvAnswers: (dataset,region,questionSet) ->
         out = []
         headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
@@ -71,7 +88,8 @@ module.exports = class DownloadPage extends Backbone.View
                 for q in questionSet
                     row.push tmp[country.alpha2]['db_'+year][q]
                 for q in questionSet
-                    row.push tmp[country.alpha2]['db_'+year][q+'l']
+                    value = tmp[country.alpha2]['db_'+year][q]
+                    row.push @_number_to_letter(value)
                 assert row.length==headers.length
                 @_writeLine out, row
         return out
