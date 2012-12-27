@@ -1,9 +1,21 @@
-
-<h2>Downloads</h2>
-<p>The raw data encompassing the 2006-2012 surveys is available in multiple formats:</p>
-<table class="table table-bordered" style="width: 300px;"
-    <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
-    {{#each downloads}}
-      <tr><td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td></tr>
-    {{/each}}
-</table>
+<div class="pull-left download-data1">
+  <h2>Downloads</h2>
+  <p>The raw data encompassing the 2006-2012 surveys is available in multiple formats:</p>
+  <table class="table table-bordered" style="width: 300px;"
+      <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
+      {{#each downloads}}
+        <tr><td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td></tr>
+      {{/each}}
+  </table>
+</div>
+<div class="pull-left download-data2">
+  <h2>Save Custom Report</h2>
+  <p>The report generated in your brower can be saved to disk as a CSV. Copy the contents of the textbox below, or click "Save To Disk".</p>
+  <p id="downloadify">
+    <b>"Save To Disk" not available. (Requires Flash 10).</b><br/> This file cannot be downloaded automatically: Click on the textbox, then use cut-and-paste to save the contents into a text file on your computer.
+  </p>
+  <textarea id="custom-csv"" readonly>
+    Loading...
+  </textarea>
+</div>
+<div class="clearfix"></div>

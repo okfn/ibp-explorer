@@ -64,7 +64,7 @@ module.exports = class Router extends Backbone.Router
     availability: ->
       @setCurrent singletons.availabilityPage(), showReportGenerator=false
     download: ->
-      @setCurrent singletons.downloadPage(), showReportGenerator=false
+      @setCurrent singletons.downloadPage()
     profile: (country='') ->
       @setCurrent new ProfilePage(country)
 
