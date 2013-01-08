@@ -97,6 +97,8 @@ module.exports = class ProjectPage extends Backbone.View
         else
             data.sort util.sortFunction
         for obj in data
+            if obj.score<0
+                obj.score = 'N/A'
             el = $(template_rankings_row obj).appendTo(target)
         $('.percentbar').tooltip
             placement: 'right'

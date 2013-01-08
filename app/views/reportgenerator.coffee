@@ -59,7 +59,7 @@ class ReportGenerator extends Backbone.View
             if db[x] >= 0
                 acc += db[x]
                 count++
-        if (count==0) then return 0
+        if (count==0) then return -1
         if verbose
             console.log 'result', acc,count, (acc/count), Math.round(acc/count), questionSet
         return Math.round( acc / count )

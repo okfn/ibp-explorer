@@ -59,6 +59,9 @@ module.exports = class TimelinePage extends Backbone.View
             x.rank = rank
         # Append an equals sign where scores are neck-and-neck
         for x in out
+            if x.score < 0
+                x.rank = 'N/A'
+                x.score = 'N/A'
             if x.score in tag_duplicates
                 x.rank = '= '+x.rank
         return out

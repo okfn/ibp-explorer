@@ -80,7 +80,8 @@ module.exports = class ProjectPage extends Backbone.View
         @mapColor = {}
         @countriesInSurvey = []
         for x of countries_in_map
-            @mapData[x] = 0
+            @mapData[x] = -1
+            @mapColor[x] = 0
         if reportGenerator.questionSet.length>0
             for country in dataset
                 if not (country.alpha2 of countries_in_map)
@@ -89,12 +90,20 @@ module.exports = class ProjectPage extends Backbone.View
                     continue
                 if not (country.alpha2 in selected_countries)
                     continue
+                if not (@year of country)
+                    # Was not surveyed this year
+                    continue
                 value = country[@year]
+                if value < 0
+                    # Score is N/A
+                    continue
+                assert value>=-1, 'Bad mapping value: '+value
                 @countriesInSurvey.push country.alpha2
-                @mapData[country.alpha2] = value 
                 # Frustrating hack; jVectorMap greys out a country that scores 0.
                 # Thanks for making life hard, Myanmar.
                 @mapColor[country.alpha2] = Math.max(1,value)
+                # Mapdata is what appears in the textbox
+                @mapData[country.alpha2] = value 
         # Repaint the map
         @mapObject.series.regions[0].setValues @mapColor
 

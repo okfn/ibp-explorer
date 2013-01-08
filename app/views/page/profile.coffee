@@ -153,6 +153,7 @@ module.exports = class ProfilePage extends Backbone.View
         for x in reportGenerator.dataset
             if x.alpha2==alpha2
                 out.score = x[year]
+                if out.score < 0 then out.score = 'N/A'
         for i in questionSet
             letter = @_number_to_letter data, i
             assert letter in ['a','b','c','d','e'] # Ensure that it's a predefined [a,b,c,d,e] key
