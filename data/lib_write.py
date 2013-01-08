@@ -20,11 +20,13 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
     CN_HEADERS, CN_DATA = _countrynames_as_csv(dataset,iso_data)
     R_HEADERS, R_DATA = _regions_as_csv(dataset)
     S_HEADERS, S_DATA = _scores_as_csv(dataset)
+    SM_HEADERS, SM_DATA = _summary_as_csv(dataset)
     # Dump XLSX file
     print 'Writing XLSX file...'
     from openpyxl import Workbook
     wb = Workbook()
     first_sheet = wb.get_active_sheet()
+    _write_sheet(wb,'Summary', SM_HEADERS, SM_DATA)
     _write_sheet(wb,'Questions', Q_HEADERS, Q_DATA)
     _write_sheet(wb,'Scores', S_HEADERS, S_DATA)
     _write_sheet(wb,'Groupings', G_HEADERS, G_DATA)
@@ -42,11 +44,13 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
     csv_r = FILENAME_CSV % 'regions'
     csv_c = FILENAME_CSV % 'countrycodes'
     csv_s = FILENAME_CSV % 'scores'
+    csv_sm = FILENAME_CSV % 'summary'
     _write_csv(csv_q, Q_HEADERS, Q_DATA)
     _write_csv(csv_g, G_HEADERS, G_DATA)
     _write_csv(csv_r, R_HEADERS, R_DATA)
     _write_csv(csv_c, CN_HEADERS, CN_DATA)
     _write_csv(csv_s, S_HEADERS, S_DATA)
+    _write_csv(csv_sm, SM_HEADERS, SM_DATA)
     # Create zip file
     print 'Writing ZIP file...'
     with zipfile.ZipFile(os.path.join(downloadfoldername, FILENAME_CSV_ZIP),'w') as z:
@@ -55,11 +59,13 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
         z.write(csv_r)
         z.write(csv_c)
         z.write(csv_s)
+        z.write(csv_sm)
     os.unlink( csv_q )
     os.unlink( csv_g )
     os.unlink( csv_r )
     os.unlink( csv_c )
     os.unlink( csv_s )
+    os.unlink( csv_sm )
     # Create list of downloads
     downloads = [ 
             {'filename':FILENAME_XLSX, 'format':'Excel' },
@@ -170,4 +176,33 @@ def _scores_as_csv(dataset):
                         }[score]
                 row.append(letter)
             DATA.append(row)
+    return HEADERS, DATA
+
+
+def _summary_as_csv(dataset):
+    q = range(1,125)
+    HEADERS = ['COUNTRY','YEAR','OPEN_BUDGET_INDEX','RANK']
+    DATA = []
+    for year in [2006,2008,2010,2012]:
+        temp = []
+        for country in dataset['country']:
+            db = country.get('db_%d'%year)
+            if not db: continue
+            score = db['roundobi']
+            row = [country['alpha2'],year,score,-1]
+            temp.append(row)
+        # Sort this year's array by score
+        temp = sorted(temp, key=lambda x : x[2], reverse=True)
+        # Add rankings
+        rank = 0
+        latest = -1
+        for i in range(len(temp)):
+            if temp[i][2]!=latest:
+                latest = temp[i][2]
+                rank = i+1
+            temp[i][3] = rank
+        # Fold this year's results into the overall results
+        for x in temp:
+            DATA.append(x)
+    DATA = sorted(DATA, key=lambda x:x[0])
     return HEADERS, DATA
