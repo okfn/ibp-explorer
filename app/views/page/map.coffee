@@ -77,6 +77,7 @@ module.exports = class ProjectPage extends Backbone.View
         selected_countries = _EXPLORER_DATASET.regions[region].contains
         # Unpaint the map
         @mapData = {}
+        @mapColor = {}
         @countriesInSurvey = []
         for x of countries_in_map
             @mapData[x] = 0
@@ -90,9 +91,12 @@ module.exports = class ProjectPage extends Backbone.View
                     continue
                 value = country[@year]
                 @countriesInSurvey.push country.alpha2
-                @mapData[country.alpha2] = Math.max(1,value)
+                @mapData[country.alpha2] = value 
+                # Frustrating hack; jVectorMap greys out a country that scores 0.
+                # Thanks for making life hard, Myanmar.
+                @mapColor[country.alpha2] = Math.max(1,value)
         # Repaint the map
-        @mapObject.series.regions[0].setValues @mapData
+        @mapObject.series.regions[0].setValues @mapColor
 
     _labelShow: (e,@mapLabel,code) =>
       if not (code in @countriesInSurvey)
