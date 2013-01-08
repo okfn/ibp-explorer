@@ -13,6 +13,7 @@ module.exports = class DownloadPage extends Backbone.View
         target.html @$el
         @_repaint()
         @tx().bind( 'click', => @tx().select() )
+        $('input[name="downloadyear"]').bind('change', @changeyear)
         # Create downloadify options
         options = 
             filename: -> 'custom-budget-report.csv'
@@ -27,6 +28,9 @@ module.exports = class DownloadPage extends Backbone.View
             transparent: true
             append: false
         Downloadify.create 'downloadify',options
+    
+    changeyear: (event) =>
+        @_repaint()
 
     _writeLine: (out, x) -> 
         # Simple CSV escaping which rejects strings containing "
@@ -82,7 +86,13 @@ module.exports = class DownloadPage extends Backbone.View
         # Compile a CSV in the browser
         for country in dataset
             if country.alpha2 not in _EXPLORER_DATASET.regions[region].contains then continue
-            for year in ['2006','2008','2010','2012']
+            all_years = ['2006','2008','2010','2012']
+            selected_year = $('input[name="downloadyear"]:checked').val()
+            if not (selected_year in all_years) 
+                selected_year = all_years
+            else
+	            selected_year = [selected_year]
+            for year in selected_year
                 if year not of country then continue
                 row = [country.alpha2, country.country, year, country[year]]
                 for q in questionSet
