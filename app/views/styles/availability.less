@@ -1,6 +1,44 @@
+.rounded-corners (@radius: 3px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.document-availability .col4 {
+  float: right;
+  width: 186px;
+}
+.document-availability .col4 #region {
+  border: solid 1px #CCCCCC;
+  .rounded-corners (5px);
+  padding:10px;
+  margin-top:15px;
+}
+.document-availability .col4 #region h6 {
+  margin-top:0px;
+}
+
+#av-region-toggler {
+  margin:0px;
+  font-size:11px;
+}
+#av-region-toggler li {
+  display:block;
+}
+#av-region-toggler li a {
+  padding: 2px 10px;
+  display:block;
+}
+.av-region-toggler.active {
+  background: none repeat scroll 0 0 #0088CC;
+  .rounded-corners ();
+  color: #FFFFFF;
+}
 
 #availability-key {
-	width: 140px;
+	width: 100%;
 	font-size: 10px;
 	line-height: 12px;
 	border: 1px solid #999;
@@ -15,10 +53,6 @@
 		text-align: center;
 		width: 22px;
 	}
-}
-
-.av-region-toggler.active {
-  color: #ff00ff;
 }
 
 #availability {
