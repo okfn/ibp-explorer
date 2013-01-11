@@ -62,11 +62,29 @@
         width: 50px;
     }
     thead {
+      height:56px;
+      display:block;
+        tr {
+            position:fixed;      
+            background-color:#FFF;
+            }
         td {
             font-size: 11px;
             line-height: 12px;
             text-align: center;
             vertical-align: bottom;
+            padding-top:10px;
+            padding-bottom:10px;
+            &.country {
+                width:129px;
+            }
+            &.flag {
+                width:34px;
+                padding: 0 10px;
+            }
+            &.dot {
+                width:54px;
+            }
         }
     }
     tbody {
@@ -76,6 +94,7 @@
             &.country {
                 font-size: 11px;
                 text-align: right;
+                width:125px;
                 a {
                     color: #000;
                 }
@@ -83,6 +102,7 @@
             &.flag {
                 padding: 0 10px;
                 vertical-align: middle;
+                width:30px;
             }
         }
     }
