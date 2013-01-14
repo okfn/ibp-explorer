@@ -1,3 +1,20 @@
+.rounded-corners (@radius: 3px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -ms-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+.country-rankings .hint {
+    float:right;
+    font-size:11px;
+    border: solid 1px #CCCCCC;
+    .rounded-corners (5px);
+    padding:4px;
+    .caret {
+        vertical-align:middle;
+    }
+}
 #rankings-table {
     .country {
         text-align: right;
