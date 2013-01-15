@@ -4,6 +4,7 @@ RankingsPage = require 'views/page/rankings'
 DownloadPage = require 'views/page/download'
 ProfilePage = require 'views/page/profile'
 AvailabilityPage = require 'views/page/availability'
+SplashPage = require 'views/page/splash'
 
 # Singleton report generator
 reportGenerator = require 'views/reportgenerator'
@@ -16,10 +17,12 @@ singletons =
     rankingsPage:  -> return @_rankings = @_rankings or new RankingsPage()
     availabilityPage:  -> return @_avail = @_avail or new AvailabilityPage()
     downloadPage:  -> return @_download = @_download or new DownloadPage()
+    splashPage:  -> return @_splash = @_splash or new SplashPage()
 
 module.exports = class Router extends Backbone.Router
     routes:
-        '': 'map'
+        '': 'home'
+        'home': 'home'
         'map' : 'map'
         'timeline' : 'timeline'
         'rankings' : 'rankings'
@@ -54,7 +57,7 @@ module.exports = class Router extends Backbone.Router
             $('#report-generator').hide()
 
     home: ->
-      @setCurrent singletons.homePage()
+      @setCurrent singletons.splashPage(), showReportGenerator=false
     map: ->
       @setCurrent singletons.mapPage()
     timeline: ->
