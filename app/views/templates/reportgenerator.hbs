@@ -1,53 +1,54 @@
-<ul class="nav nav-tabs">
-	<li class="less-options active"><a href="#">Open Budget Index</a></li>
-	<li class="more-options"><a href="#">Custom Report</a></li>
-</ul>
-<div class="inner">
-	<div class="less">
-		<p>The Open Budget Survey is a comprehensive analysis and survey that evaluates whether governments give the public access to budget information and opportunities to participate in the budget process at the national level. The Survey also assesses the capacity and independence of formal oversight institutions. The IBP works with civil society partners in 100 countries to collect the data for the Survey.</p>
-		<p>To easily measure the overall commitment of the countries surveyed to transparency and to allow for comparisons among countries, IBP created the <strong>Open Budget Index (OBI)</strong> from the Survey. The OBI assigns a score to each country based on the information it makes available to the public throughout the budget process.</p>	
-	</div>
-	<div class="more" style="display: none;">
-      <div class="col1 grouplist">
-          {{#each groupings0}}
-              <h6>{{by}}</h6>
-              <ul>
-                {{#each entries}}
-                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Custom Report
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="accordion-inner">
+          <div class="col1 grouplist">
+                {{#each groupings0}}
+                    <h6>{{by}}</h6>
+                    <ul>
+                      {{#each entries}}
+                      <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                      {{/each}}
+                    </ul>
                 {{/each}}
-              </ul>
-          {{/each}}
-      </div>
-      <div class="col2 grouplist">
-          {{#each groupings1}}
-              <h6>{{by}}</h6>
-              <ul>
-                {{#each entries}}
-                <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+            </div>
+            <div class="col2 grouplist">
+                {{#each groupings1}}
+                    <h6>{{by}}</h6>
+                    <ul>
+                      {{#each entries}}
+                      <li><a href="#" class="group-toggler" id="group-{{group_id}}">{{title}}</a></li>
+                      {{/each}}
+                    </ul>
                 {{/each}}
-              </ul>
-          {{/each}}
+            </div>
+            <div class="col3">
+                <div id="toggle-boxes">
+                {{#each question}}
+                  <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}" title="<p class='question-tooltip'>{{text}}</p>">{{number}}</a>
+                {{/each}}
+                <div class="clearfix"></div>
+                <div class="select-or-clear">
+                    <button class="btn btn-primary btn-small select">Select All</button>
+                    <button class="btn btn-small clear">Clear All</button>
+                </div>
+                </div>
+            </div>
+            <div class="col4 grouplist">
+                <h6><img src="images/world.png"/> Region</h6>
+                <ul>
+                  {{#each regions}}
+                  <li><a href="#" class="region-toggler" id="region-{{region_index}}">{{name}}</a></li>
+                  {{/each}}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
       </div>
-      <div class="col3">
-          <div id="toggle-boxes">
-          {{#each question}}
-            <a href="#" class="toggle-box {{#each groups}}{{this}} {{/each}}" id="toggle-{{number}}" title="<p class='question-tooltip'>{{text}}</p>">{{number}}</a>
-          {{/each}}
-          <div class="clearfix"></div>
-          <div class="select-or-clear">
-              <button class="btn btn-primary btn-small select">Select All</button>
-              <button class="btn btn-small clear">Clear All</button>
-          </div>
-          </div>
-      </div>
-      <div class="col4 grouplist">
-          <h6><img src="images/world.png"/> Region</h6>
-          <ul>
-            {{#each regions}}
-            <li><a href="#" class="region-toggler" id="region-{{region_index}}">{{name}}</a></li>
-            {{/each}}
-          </ul>
-      </div>
-      <div class="clearfix"></div>
-	</div>
+    </div>
+  </div>
 </div>
