@@ -44,9 +44,10 @@ module.exports = class ProjectPage extends Backbone.View
                   'stroke-width' : '1.0'
                   'stroke-opacity' : '0.5'
                   fill: '#cccccc'
-          backgroundColor: '#f0f0f0'
+          backgroundColor: '#ffffff'
           onRegionLabelShow: @_labelShow
           onRegionClick: @_clickCountry
+          zoomOnScroll: false
         }
         @mapObject = map.vectorMap('get', 'mapObject')
 
