@@ -48,6 +48,9 @@ class ReportGenerator extends Backbone.View
             delay: 100
             animation: true
         @$el.find('#region-'+@region).addClass 'active'
+        # Bind to the accordion
+        @$el.find('#accordion2').on('show',-> $('.customize-link').html('&laquo; Hide options') )
+        @$el.find('#accordion2').on('hide',-> $('.customize-link').html('Customize Report &raquo;') )
         # Debug:
         #@$el.find('.more-options').click()
 
