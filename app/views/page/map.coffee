@@ -13,7 +13,7 @@ COLOR_SCHEME = [
 
 # Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
 jvm.NumericScale.prototype.getValue = (_x) -> 
-    x = Math.min(_x,99)
+    x = Math.min(_x-1,99) # Glitch fix: It's x<=20, not x<20
     x = (x - (x%20)) / 20
     x = COLOR_SCHEME[x]
     assert not (x==undefined), 'Could not process '+_x + ' ('+x+')'
