@@ -12,8 +12,9 @@ class ReportGenerator extends Backbone.View
             for year in ['db_2006','db_2008','db_2010','db_2012']
                 if year of country
                     score = @calculateScore country[year], obi_questions
-                    expected = country[year].roundobi
-                    assert expected==score, 'ERROR '+country.name+'.'+year+' failed data integrity test. Expected OBI='+expected+'; I calculated '+score
+                    expected = country[year].obi
+                    if not (Math.round(expected*100) == Math.round(score*100))
+                        console.warn 'Warning '+country.name+'.'+year+' failed data integrity test. Expected OBI='+expected+'; I calculated '+score
         console.log '[debug] Data integrity check complete.'
 
     ##################
@@ -65,7 +66,7 @@ class ReportGenerator extends Backbone.View
         if (count==0) then return -1
         if verbose
             console.log 'result', acc,count, (acc/count), Math.round(acc/count), questionSet
-        return Math.round( acc / count )
+        return acc / count 
 
     ##################
     ## Private methods
@@ -77,7 +78,7 @@ class ReportGenerator extends Backbone.View
             @questionSet.push parseInt $(e).attr('id').substr(7)
         # Inner function
         # Calculate dataset of countries and scores
-        @dataset = []
+        @dataset_unrounded = []
         for country in _EXPLORER_DATASET.country
             obj = 
                 country: country.name
@@ -86,8 +87,15 @@ class ReportGenerator extends Backbone.View
                 if not (('db_'+year) of country) then continue
                 score = @calculateScore(country['db_'+year], @questionSet)
                 obj[year] = score
+            @dataset_unrounded.push obj
+        @dataset = []
+        for x in @dataset_unrounded
+            obj = $.extend( {}, x )
+            for year in [2006,2008,2010,2012]
+                if not (year of obj) then continue
+                obj[year] = Math.round(obj[year])
             @dataset.push obj
-        @trigger('update', @dataset, @questionSet, @region)
+        @trigger('update', @dataset, @questionSet, @region, @dataset_unrounded)
 
     _select_or_clear: (e) =>
         @_setSubtitle()

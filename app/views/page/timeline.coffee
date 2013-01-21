@@ -64,9 +64,11 @@ module.exports = class TimelinePage extends Backbone.View
                 x.score = 'N/A'
             if x.score in tag_duplicates
                 x.rank = '= '+x.rank
+            # Round off the raw score we've used here
+            x.score = Math.round(x.score)
         return out
 
-    _updateReport: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
+    _updateReport: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region, dataset_unrounded=reportGenerator.dataset_unrounded) =>
         target = $('#timeline-columns')
         if target.length==0 then return
         # PreRender
@@ -75,7 +77,7 @@ module.exports = class TimelinePage extends Backbone.View
         for year in [2006,2008,2010,2012]
             html += template_timeline_column
                 year: year
-                data: @_buildRankingTable(year, dataset, selected_countries)
+                data: @_buildRankingTable(year, dataset_unrounded, selected_countries)
         # Large DOM rebuild here. Trigger a single reflow.
         target.html html
         target.find('tr').bind 'mouseover', @_mouseoverRanking
