@@ -123,7 +123,7 @@ def _write_csv(filename, headers, data):
 
 def _regions_as_csv(dataset):
     # Create Regions sheet
-    HEADERS = ['REGION_NAME','COUNTRY']
+    HEADERS = ['REGION_NAME','COUNTRY_CODE']
     DATA = []
     for region in dataset['regions']:
         for country in region['contains']:
@@ -132,7 +132,7 @@ def _regions_as_csv(dataset):
 
 def _countrynames_as_csv(dataset,iso_data):
     countrypairs = sorted( { y:x for x,y in iso_data.items() }.items(), key=lambda x:x[0] )
-    HEADERS = ['ISO3116','COUNTRY_NAME']
+    HEADERS = ['COUNTRY_CODE','COUNTRY_NAME']
     DATA = [ list(x) for x in countrypairs ]
     return HEADERS, DATA
 
@@ -154,9 +154,9 @@ def _questions_as_csv(dataset):
 
 def _scores_as_csv(dataset):
     q = range(1,125)
-    HEADERS = ['COUNTRY','YEAR']
-    for x in q: HEADERS.append(str(x))
-    for x in q: HEADERS.append(str(x)+'l')
+    HEADERS = ['COUNTRY_CODE','YEAR']
+    for x in q: HEADERS.append('Q '+str(x))
+    for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
     DATA = []
     for country in dataset['country']:
         for year in [2006,2008,2010,2012]:
