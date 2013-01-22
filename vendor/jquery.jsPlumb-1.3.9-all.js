@@ -7460,7 +7460,9 @@ between this method and jsPlumb.reset).
 		// but someone commented saying they didn't need it, and it seems jsPlumb doesnt need it either.
 		// var iev = document.documentMode;
 		//if (!iev || iev < 8)
+    if (document.namespaces) {
 			document.namespaces.add("jsplumb", "urn:schemas-microsoft-com:vml");
+    }
 		//else
 		//	document.namespaces.add("jsplumb", "urn:schemas-microsoft-com:vml", "#default#VML");
 	}
