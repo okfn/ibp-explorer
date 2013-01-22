@@ -1510,9 +1510,11 @@ window.require.define({"views/reportgenerator": function(exports, require, modul
         });
         this.$el.find('#region-' + this.region).addClass('active');
         this.$el.find('#accordion2').on('show', function() {
+          _this.trigger('resizeStart');
           return $('.customize-link').html('&laquo; Hide options');
         });
         return this.$el.find('#accordion2').on('hide', function() {
+          _this.trigger('resizeStart');
           return $('.customize-link').html('Customize Report &raquo;');
         });
       };
