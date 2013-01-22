@@ -206,6 +206,7 @@ module.exports = class ProfilePage extends Backbone.View
 
     _repaint2014: =>
         score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
+        score = Math.round(score)
         $('.scores .year-2014 .bottom').text 'Score: '+score
 
     _animationHackScale: (element, scale=1.3, time=340) =>
