@@ -1,5 +1,5 @@
 template = require 'views/templates/reportgenerator'
-debug = true
+debug = false
 
 class ReportGenerator extends Backbone.View
     initialize: =>
