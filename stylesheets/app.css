@@ -6950,7 +6950,9 @@ div#profile-mode .scores .year-box .bottom {
 }
 #report-generator .customize-link {
   display: block;
-  float: right;
+  position: absolute;
+  right: 20px;
+  top: 8px;
 }
 #report-generator .nav {
   margin-bottom: 0;
