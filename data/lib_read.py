@@ -104,6 +104,12 @@ def _read_questions(q_workbook):
           'd': _lookup(sheet,6,n),
           'e': _lookup(sheet,7,n),
           }
+    # Fix '(Please comment)' text appearing in most answers
+    regex = r'\s?\(Please comment\)'
+    for q in questions.values():
+        for key in ['a','b','c','d','e']:
+            if q[key] is None: continue
+            q[key] = re.sub( regex,'',q[key], flags=re.IGNORECASE )
     return questions
 
 def _read_groupings(g_workbook):
