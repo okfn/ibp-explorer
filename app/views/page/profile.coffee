@@ -252,9 +252,18 @@ module.exports = class ProfilePage extends Backbone.View
             out.questions.push(obj)
         return out
 
-    _onToggleMode: =>
+    _onToggleMode: (e) =>
+        e.preventDefault()
+        if $('#profile-toggle').hasClass('inactive')
+            $('#profile-toggle').removeClass('inactive')
+            $('#profile-toggle').addClass('active')
+            $('#profile-toggle').html('Hide 2014 Calculator »')
+        else if $('#profile-toggle').hasClass('active')
+            $('#profile-toggle').removeClass('active')
+            $('#profile-toggle').addClass('inactive')
+            $('#profile-toggle').html('Show 2014 Calculator »')
         _viewPast = @viewPast
-        @viewPast = not $('#profile-toggle input').is(':checked')
+        @viewPast = not $('#profile-toggle').hasClass('active')
         animate = not (_viewPast==@viewPast)
         # Populate the DOM
         @_repaint()
