@@ -96,14 +96,14 @@ def _write_sheet(wb,sheet_name,headers,data):
     # Dump CSV-style headers and data into an XLSX sheet
     sheet = wb.create_sheet()
     sheet.title = sheet_name
-    y = 0
+    y = 1
     for x in range(len(headers)):
-        sheet.cell(row=y,column=x).value = headers[x]
+        sheet.cell(row=y,column=x+1).value = headers[x]
     total = len(data)
     for row in data:
         y += 1
         for x in range(len(row)):
-            sheet.cell(row=y,column=x).value = row[x]
+            sheet.cell(row=y,column=x+1).value = row[x]
 
 def _write_csv(filename, headers, data):
     with open(filename,'w') as f:
