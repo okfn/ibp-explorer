@@ -2,6 +2,7 @@ from openpyxl import load_workbook
 import json
 import re
 from string import uppercase
+from settings import *
 
 # ######
 # Public
@@ -42,7 +43,7 @@ def _lookup(sheet,x,y):
     return sheet.cell(cell_name).value
 
 def _read_answers(a_workbook, iso_data):
-    sheet = a_workbook.get_sheet_by_name(name='Sheet1')
+    sheet = a_workbook.get_sheet_by_name(name=ANSWERFILE_SHEETNAME)
     answers = {}
     height = sheet.get_highest_row()
     width = sheet.get_highest_column()
@@ -65,7 +66,7 @@ def _read_answers(a_workbook, iso_data):
         name = name.strip()
         assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
         assert type(year) is int, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
-        assert year in [2006,2008,2010,2012], '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
+        assert year in YEARS, '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
         # Validate the row content
         validated = {}
         for key,value in row.items():
@@ -91,7 +92,7 @@ def _read_answers(a_workbook, iso_data):
 
 def _read_questions(q_workbook):
     # Question dict
-    sheet = q_workbook.get_sheet_by_name(name='Sheet2')
+    sheet = q_workbook.get_sheet_by_name(name=QUESTIONFILE_SHEETNAME)
     questions = {}
     height = sheet.get_highest_row()
     for n in range(2,height+1):
@@ -114,7 +115,7 @@ def _read_questions(q_workbook):
 
 def _read_groupings(g_workbook):
     # Question groupings
-    sheet = g_workbook.get_sheet_by_name(name='QuestionsGroups')
+    sheet = g_workbook.get_sheet_by_name(name=GROUPINGSFILE_QUESTIONS_SHEETNAME)
     out = []
     # Scroll down column B
     height = sheet.get_highest_row()
@@ -137,7 +138,7 @@ def _read_groupings(g_workbook):
     return out
 
 def _read_regions(g_workbook, iso_data):
-    sheet_name = 'CountriesRegions'
+    sheet_name = GROUPINGSFILE_COUNTRIES_SHEETNAME
     # Question groupings
     sheet = g_workbook.get_sheet_by_name(name=sheet_name)
     out = []
@@ -163,7 +164,7 @@ def _read_regions(g_workbook, iso_data):
     return out
 
 def _read_availability(av_workbook, iso_data):
-    sheets = ['2006','2008','2010','2012']
+    sheets = AVAILABILITYFILE_SHEETNAMES
     column_headers = [('country', 'country'),
             ('Pre-Budget Statement', 'prebudgetstatement'),
             ('Executive\'s Budget Proposal', 'executivesbudgetproposal'),

@@ -4,11 +4,7 @@ import os
 import json
 import csv
 import zipfile
-
-FILENAME_XLSX = 'ibp_data.xlsx'
-FILENAME_CSV = 'ibp_data_%s.csv'
-FILENAME_CSV_ZIP = 'ibp_data_csv.zip'
-FILENAME_JSON = 'ibp_data.json'
+from settings import *
 
 def write(dataset, iso_data, jsonfilename, downloadfoldername):
     # Populate the downloads folder
@@ -159,7 +155,7 @@ def _scores_as_csv(dataset):
     for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
     DATA = []
     for country in dataset['country']:
-        for year in [2006,2008,2010,2012]:
+        for year in YEARS:
             db = country.get('db_%d'%year)
             if not db: continue
             row = [country['alpha2'],year]
@@ -183,7 +179,7 @@ def _summary_as_csv(dataset):
     q = range(1,125)
     HEADERS = ['COUNTRY','YEAR','OPEN_BUDGET_INDEX','RANK']
     DATA = []
-    for year in [2006,2008,2010,2012]:
+    for year in YEARS:
         temp = []
         for country in dataset['country']:
             db = country.get('db_%d'%year)

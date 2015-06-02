@@ -7,14 +7,7 @@ import sys
 # Custom pipeline
 import lib_read
 import lib_write
-
-DEFAULT_ISOFILE = 'country_to_iso3166.json'
-DEFAULT_QUESTIONFILE = 'OBS2012_QuestionsNumbers+Text.xlsx'
-DEFAULT_ANSWERFILE = 'OBI_UNIFIED.xlsx'
-DEFAULT_GROUPINGSFILE = 'GroupingsOBSQuestions2012_102112.xlsx'
-DEFAULT_AVAILABILITYFILE = 'Public Availability All Years.xlsx'
-DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
-DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
+from settings import *
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='IBP Extract-Transform-Load pipeline.')
