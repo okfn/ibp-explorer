@@ -9,7 +9,7 @@ class ReportGenerator extends Backbone.View
     debugReports: =>
         obi_questions = _EXPLORER_DATASET.groupings[0].entries[0].qs
         for country in _EXPLORER_DATASET.country
-            for year in ['db_2006','db_2008','db_2010','db_2012']
+            for year in ['db_2006','db_2008','db_2010','db_2012','db_2015']
                 if year of country
                     score = @calculateScore country[year], obi_questions
                     expected = country[year].obi
@@ -83,7 +83,7 @@ class ReportGenerator extends Backbone.View
             obj = 
                 country: country.name
                 alpha2: country.alpha2
-            for year in [2006,2008,2010,2012]
+            for year in [2006,2008,2010,2012,2015]
                 if not (('db_'+year) of country) then continue
                 score = @calculateScore(country['db_'+year], @questionSet)
                 obj[year] = score
@@ -91,7 +91,7 @@ class ReportGenerator extends Backbone.View
         @dataset = []
         for x in @dataset_unrounded
             obj = $.extend( {}, x )
-            for year in [2006,2008,2010,2012]
+            for year in [2006,2008,2010,2012,2015]
                 if not (year of obj) then continue
                 obj[year] = Math.round(obj[year])
             @dataset.push obj
