@@ -28,7 +28,7 @@ module.exports = class ProjectPage extends Backbone.View
         $('.sortbyname').click @_sortByNameToggle
         $('.sortbyname[data-sortbyname="'+@sortByName+'"]').addClass 'active'
         $('#rankings-toggles button').click @_rankingsToggle
-        $('button[data-year="2012"]').click()
+        $('button[data-year="2015"]').click()
 
     ##################
     ## Private methods
