@@ -257,11 +257,11 @@ module.exports = class ProfilePage extends Backbone.View
         if $('#profile-toggle').hasClass('inactive')
             $('#profile-toggle').removeClass('inactive')
             $('#profile-toggle').addClass('active')
-            $('#profile-toggle').html('Hide 2014 Calculator »')
+            $('#profile-toggle').html('Hide 2015 Calculator »')
         else if $('#profile-toggle').hasClass('active')
             $('#profile-toggle').removeClass('active')
             $('#profile-toggle').addClass('inactive')
-            $('#profile-toggle').html('Show 2014 Calculator »')
+            $('#profile-toggle').html('Show 2015 Calculator »')
         _viewPast = @viewPast
         @viewPast = not $('#profile-toggle').hasClass('active')
         animate = not (_viewPast==@viewPast)
