@@ -1,5 +1,6 @@
 template_page = require 'views/templates/page/timeline'
 template_timeline_column = require 'views/templates/timeline_column'
+template_timeline_column_abbr = require 'views/templates/timeline_column_abbr'
 util = require 'util'
 
 reportGenerator = require 'views/reportgenerator'
@@ -74,16 +75,22 @@ module.exports = class TimelinePage extends Backbone.View
         # PreRender
         html = ''
         selected_countries = _EXPLORER_DATASET.regions[region].contains
-        for year in [2006,2008,2010,2012]
-            html += template_timeline_column
+        html += template_timeline_column
+            year: 2006
+            data: @_buildRankingTable(2006, dataset_unrounded, selected_countries)
+        for year in [2008,2010,2012]
+            html += template_timeline_column_abbr
                 year: year
                 data: @_buildRankingTable(year, dataset_unrounded, selected_countries)
+        html += template_timeline_column
+            year: 2015
+            data: @_buildRankingTable(2015, dataset_unrounded, selected_countries)
         # Large DOM rebuild here. Trigger a single reflow.
         target.html html
         target.find('tr').bind 'mouseover', @_mouseoverRanking
         # Pre-select the top-most entrant in the latest results
         if not @mouseoverAlpha2
-            @mouseoverAlpha2 = $('#timeline-column-2012 tbody tr:first-child').attr 'data-alpha2'
+            @mouseoverAlpha2 = $('#timeline-column-2015 tbody tr:first-child').attr 'data-alpha2'
         @_redrawJsPlumb()
         # Show ranks or scores as appropriate
         @_onToggleMode()

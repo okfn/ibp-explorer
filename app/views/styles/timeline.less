@@ -31,11 +31,11 @@
 
 .timeline-column {
     float: left;
-    padding: 0 28px;
+    padding: 0 22px;
     &#timeline-column-2006 {
-        padding-left: 4px;
+        padding-left: 3px;
     }
-    &#timeline-column-2012 {
+    &#timeline-column-2015 {
         padding-right: 0;
     }
 
@@ -47,6 +47,7 @@
     table {
         /* Column widths: */
         @c1: 126px;
+        @c1abbr: 60px;
         @c2: 20px;
         @c3: 44px;
 
@@ -55,7 +56,6 @@
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
-        width: @c1 + @c2 + @c3;
         margin-top: 0;
 
         tr:nth-child(even) {
@@ -80,6 +80,10 @@
                 text-align: right;
                 a {
                   color: #000;
+                }
+                &.abbr {
+                    width: @c1abbr - 11px;
+                    max-width: @c1abbr - 11px;
                 }
             }
             .timeline-cell-flag {
