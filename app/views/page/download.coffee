@@ -86,7 +86,7 @@ module.exports = class DownloadPage extends Backbone.View
         # Compile a CSV in the browser
         for country in dataset
             if country.alpha2 not in _EXPLORER_DATASET.regions[region].contains then continue
-            all_years = ['2006','2008','2010','2012']
+            all_years = ['2006','2008','2010','2012','2015']
             selected_year = $('input[name="downloadyear"]:checked').val()
             if not (selected_year in all_years) 
                 selected_year = all_years
