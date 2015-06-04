@@ -12,7 +12,7 @@ module.exports = class ProfilePage extends Backbone.View
     ##################
     initialize: (@alpha2) =>
         @data = @lookup @alpha2
-        @db_2014 = $.extend {}, @data.db_2012
+        @db_2017 = $.extend {}, @data.db_2015
         reportGenerator.bind 'update', @_repaint
 
     lookup: (alpha2) ->
@@ -51,6 +51,7 @@ module.exports = class ProfilePage extends Backbone.View
                 @_get_percentages @data.alpha2, @data.db_2008, '2008', questionSet
                 @_get_percentages @data.alpha2, @data.db_2010, '2010', questionSet
                 @_get_percentages @data.alpha2, @data.db_2012, '2012', questionSet
+                @_get_percentages @data.alpha2, @data.db_2015, '2015', questionSet
             ]
         # IE hack requires we empty & append rather than use .html()
         $('.percentages').empty().append($(template_profile_percentages percentageData))
@@ -74,7 +75,7 @@ module.exports = class ProfilePage extends Backbone.View
             for x in $('.question-row')
                 x = $(x)
                 qnum = parseInt(x.attr('data-question-number'))
-                score = @db_2014[qnum]
+                score = @db_2017[qnum]
                 x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
         @_repaint2014()
         # Add question number hover effect
@@ -92,6 +93,7 @@ module.exports = class ProfilePage extends Backbone.View
         render_score 2008,percentageData.percentages[1].score
         render_score 2010,percentageData.percentages[2].score
         render_score 2012,percentageData.percentages[3].score
+        render_score 2015,percentageData.percentages[4].score
         @_repaint2014()
 
     _ibp_website_url: (alpha2) ->
@@ -177,6 +179,7 @@ module.exports = class ProfilePage extends Backbone.View
                 l2008: @_number_to_letter data.db_2008, x
                 l2010: @_number_to_letter data.db_2010, x
                 l2012: @_number_to_letter data.db_2012, x
+                l2015: @_number_to_letter data.db_2015, x
         return out
 
     _onToggleMode: =>
@@ -200,14 +203,14 @@ module.exports = class ProfilePage extends Backbone.View
         score = el.attr('data-score')
         tr.find('img').removeClass('active').addClass('inactive')
         el.removeClass('inactive').addClass('active')
-        @db_2014[qnum] = parseInt(score)
+        @db_2017[qnum] = parseInt(score)
         @_repaint2014()
-        @_animationHackScale $('.year-box.year-2014')
+        @_animationHackScale $('.year-box.year-2017')
 
     _repaint2014: =>
-        score = reportGenerator.calculateScore @db_2014, reportGenerator.questionSet
+        score = reportGenerator.calculateScore @db_2017, reportGenerator.questionSet
         score = Math.round(score)
-        $('.scores .year-2014 .bottom').text 'Score: '+score
+        $('.scores .year-2017 .bottom').text 'Score: '+score
 
     _animationHackScale: (element, scale=1.3, time=340) =>
         """Hacky function to make an element pulse to a new scale and back again.
