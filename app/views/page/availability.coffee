@@ -17,7 +17,7 @@ module.exports = class ProjectPage extends Backbone.View
         @$el.html template_page()
         target.html @$el
         $('#year-toggles button').click @_yearToggle
-        $('button[data-year="2012"]').click()
+        $('button[data-year="2015"]').click()
         $('.av-region-toggler').click(@clickregion)
 
 
