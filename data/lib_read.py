@@ -174,7 +174,7 @@ def _read_availability(av_workbook, iso_data):
             ('Mid-Year Review', 'midyearreview'),
             ('Year-End Report', 'yearendreport'),
             ('Audit Report', 'auditreport')]
-    valid = ['PW', 'IU', 'NP', 'HC']
+    valid = ['PW', 'IU', 'NP', 'HC', 'SC']
     out = {}
     for sheet_name in sheets:
         sheet = av_workbook.get_sheet_by_name(name=sheet_name)
