@@ -56,7 +56,7 @@ def _read_answers(a_workbook, iso_data):
                 for x in range(1,width+1) } 
         rows.append(row)
     # Verify the data
-    question_label = re.compile('^q[0-9]+l?$')
+    question_label = re.compile('^((q[0-9]+l?)|(t3[a-z]{2,3}))$')
     answers = {}
     for row in rows:
         name = row['country']
@@ -97,7 +97,7 @@ def _read_questions(q_workbook):
     height = sheet.get_highest_row()
     for n in range(2,height+1):
         questions[n-1] = { 
-          'number': n-1,
+          'number': _lookup(sheet,1,n),
           'text': _lookup(sheet,2,n),
           'a': _lookup(sheet,3,n),
           'b': _lookup(sheet,4,n),
@@ -213,9 +213,9 @@ def _parse_int_list(int_list):
         split = s.split('-')
         assert len(split)<3, 'Invalid range: %s' % s
         if len(split)==1:
-            out.append(int(split[0]))
+            out.append(split[0])
         else:
             for i in range(int(split[0]), int(split[1])+1):
-                out.append(i)
+                out.append(str(i))
     return out
 
