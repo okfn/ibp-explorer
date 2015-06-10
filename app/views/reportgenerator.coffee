@@ -75,7 +75,7 @@ class ReportGenerator extends Backbone.View
         @questionSet = []
         el = $('.toggle-box.select')
         for e in (el or [])
-            @questionSet.push parseInt $(e).attr('id').substr(7)
+            @questionSet.push $(e).attr('id').substr(7)
         # Inner function
         # Calculate dataset of countries and scores
         @dataset_unrounded = []
