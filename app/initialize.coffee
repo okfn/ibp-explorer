@@ -10,7 +10,6 @@ loadDataset = ->
     # Assign group IDs to all questions
     id = 0
     for qnum, qdata of _EXPLORER_DATASET.question
-        qnum = parseInt(qnum)
         qdata.groups = []
         # Tag the question with a list of parent groups
         for category in _EXPLORER_DATASET.groupings
