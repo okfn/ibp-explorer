@@ -56,7 +56,7 @@ def _read_answers(a_workbook, iso_data):
                 for x in range(1,width+1) } 
         rows.append(row)
     # Verify the data
-    question_label = re.compile('^((q[0-9]+l?)|(t3[a-z]{2,3}))$')
+    question_label = re.compile('^((q[0-9]+l?)|(t3[a-z]{2,3}l?))$')
     answers = {}
     for row in rows:
         name = row['country']
@@ -82,7 +82,10 @@ def _read_answers(a_workbook, iso_data):
                         value = -1
                     assert type(value) is int, error_string
                     assert value in [100,67,33,0,-1], error_string
-                key = key[1:]
+                if re.search('^q[0-9]+l?$', key):
+                    key = key[1:]
+                elif re.search('^t3[a-z]{2,3}l?$', key):
+                    key = key[2:]
             validated[key] = value
         # Store an object grouped by country
         alpha2 = iso_data[name]
