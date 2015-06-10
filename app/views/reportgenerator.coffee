@@ -25,8 +25,8 @@ class ReportGenerator extends Backbone.View
 
     render: (target) =>
         renderData = 
-            groupings0: _EXPLORER_DATASET.groupings.slice(0,3)
-            groupings1: _EXPLORER_DATASET.groupings.slice(3,5)
+            groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
+            groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
             question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
             country: _EXPLORER_DATASET.country
             regions: _EXPLORER_DATASET.regions
