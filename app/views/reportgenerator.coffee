@@ -5,6 +5,7 @@ class ReportGenerator extends Backbone.View
     initialize: =>
         if debug then @debugReports()
         @region = 0 # Initially our custon "Entire World" collection
+        @year = '2015'
 
     debugReports: =>
         obi_questions = _EXPLORER_DATASET.groupings[0].entries[0].qs
@@ -24,12 +25,22 @@ class ReportGenerator extends Backbone.View
         @$el.find('#group-0').click()
 
     render: (target) =>
-        renderData = 
-            groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
-            groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
-            question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
-            country: _EXPLORER_DATASET.country
-            regions: _EXPLORER_DATASET.regions
+        if @year != '2015'
+            renderData = 
+                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,3)
+                groupings1: _EXPLORER_DATASET.groupings_old.slice(3,5)
+                question: ( _EXPLORER_DATASET.question_old[x] for x of _EXPLORER_DATASET.question_old )
+                country: _EXPLORER_DATASET.country_old
+                regions: _EXPLORER_DATASET.regions_old
+            @years = [2006,2008,2010,2012]
+        else
+            renderData = 
+                groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
+                groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
+                question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
+                country: _EXPLORER_DATASET.country
+                regions: _EXPLORER_DATASET.regions
+            @years = [2006,2008,2010,2012,2015]
         # Write to DOM
         @$el.html template renderData
         target.empty().append @$el
@@ -68,6 +79,50 @@ class ReportGenerator extends Backbone.View
             console.log 'result', acc,count, (acc/count), Math.round(acc/count), questionSet
         return acc / count 
 
+    update: (selectedYear, collapsed) =>
+        if selectedYear != '2015'
+            renderData = 
+                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,3)
+                groupings1: _EXPLORER_DATASET.groupings_old.slice(3,5)
+                question: ( _EXPLORER_DATASET.question_old[x] for x of _EXPLORER_DATASET.question_old )
+                country: _EXPLORER_DATASET.country_old
+                regions: _EXPLORER_DATASET.regions_old
+            @years = [2006,2008,2010,2012]
+        else
+            renderData = 
+                groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
+                groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
+                question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
+                country: _EXPLORER_DATASET.country
+                regions: _EXPLORER_DATASET.regions
+            @years = [2006,2008,2010,2012,2015]
+        @$el.html template renderData
+
+        @region = 0
+        @$el.find('.group-toggler').bind 'mouseover', @_hoverGroupToggle
+        @$el.find('.group-toggler').bind 'click', @_clickGroupToggle
+        @$el.find('.region-toggler').bind 'click', @_clickRegionToggle
+        @$el.find('.group-toggler').bind 'mouseout', (e) =>
+            @$el.find('.toggle-box').removeClass 'hover'
+        @$el.find('.toggle-box').bind 'click', @_clickBoxToggle
+        #@$el.find('.toggle-box').bind 'mouseover', @_showQuestion
+        #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
+        @$el.find('.nav a').bind 'click', @_expand_collapse
+        @$el.find('.select-or-clear button').bind 'click', @_select_or_clear
+        @$el.find('.toggle-box').tooltip
+            placement: 'left'
+            delay: 100
+            animation: true
+        @$el.find('#region-'+@region).addClass 'active'
+        # Bind to the accordion
+        @$el.find('#accordion2').on('show',=> @trigger('resizeStart'); $('.customize-link').html('&laquo; Hide options') )
+        @$el.find('#accordion2').on('hide',=> @trigger('resizeStart'); $('.customize-link').html('Customize Report &raquo;') )
+        @$el.find('#group-0').click()
+        if collapsed
+            $('#collapseOne').addClass 'in'
+            $('#accordion2 .accordion-toggle').addClass 'collapsed'
+            $('.customize-link').html('&laquo; Hide options')
+
     ##################
     ## Private methods
     ##################
@@ -79,11 +134,15 @@ class ReportGenerator extends Backbone.View
         # Inner function
         # Calculate dataset of countries and scores
         @dataset_unrounded = []
-        for country in _EXPLORER_DATASET.country
+        if @year != '2015'
+            countries = _EXPLORER_DATASET.country_old
+        else
+            countries = _EXPLORER_DATASET.country
+        for country in countries
             obj = 
                 country: country.name
                 alpha2: country.alpha2
-            for year in [2006,2008,2010,2012,2015]
+            for year in @years
                 if not (('db_'+year) of country) then continue
                 score = @calculateScore(country['db_'+year], @questionSet)
                 obj[year] = score
@@ -91,7 +150,7 @@ class ReportGenerator extends Backbone.View
         @dataset = []
         for x in @dataset_unrounded
             obj = $.extend( {}, x )
-            for year in [2006,2008,2010,2012,2015]
+            for year in @years
                 if not (year of obj) then continue
                 obj[year] = Math.round(obj[year])
             @dataset.push obj
