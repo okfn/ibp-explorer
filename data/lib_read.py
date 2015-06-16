@@ -91,7 +91,7 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
                 if re.search('^q[0-9]+l?$', key):
                     key = key[1:]
                 elif re.search('^t3[a-z]{2,3}l?$', key):
-                    key = key[2:]
+                    key = key
             validated[key] = value
         # Store an object grouped by country
         alpha2 = iso_data[name]
