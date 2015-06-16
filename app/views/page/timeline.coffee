@@ -16,6 +16,10 @@ module.exports = class TimelinePage extends Backbone.View
         reportGenerator.bind 'resized', @_redrawJsPlumb
 
     renderPage: (target) =>
+        collapsed = false
+        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            collapsed = true
+        reportGenerator.update('2015', collapsed)
         # Write to DOM
         @$el.html template_page()
         target.html @$el
