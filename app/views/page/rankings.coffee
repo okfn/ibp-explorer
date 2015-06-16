@@ -35,9 +35,17 @@ module.exports = class ProjectPage extends Backbone.View
     ##################
     _rankingsToggle: (e) =>
         target = $(e.delegateTarget)
+        lastYear = $('#rankings-toggles button.active').attr('data-year')
+        currentYear = target.attr('data-year')
+        newReport = (lastYear == '2015' || currentYear == '2015')
         $('#rankings-toggles button').removeClass 'active'
         target.addClass 'active'
         @year = $(e.delegateTarget).attr('data-year')
+        if newReport
+            collapsed = false
+            if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+                collapsed = true
+            reportGenerator.update(@year, collapsed)
         @_reflow()
 
     _count: (array,search,questionSet) ->
@@ -62,13 +70,19 @@ module.exports = class ProjectPage extends Backbone.View
         return false
 
     _reflow: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
+        if @year != '2015'
+            datasetRegions = _EXPLORER_DATASET.regions_old
+            datasetCountry = _EXPLORER_DATASET.country_old
+        else
+            datasetRegions = _EXPLORER_DATASET.regions
+            datasetCountry = _EXPLORER_DATASET.country
         target = $('#rankings-table tbody').empty()
         if questionSet.length==0 
             target.html '<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>'
             return
         data = []
-        selected_countries = _EXPLORER_DATASET.regions[region].contains
-        for country in _EXPLORER_DATASET.country
+        selected_countries = datasetRegions[region].contains
+        for country in datasetCountry
             if not (('db_'+@year) of country) then continue
             if not (country.alpha2 in selected_countries) then continue
             db = country['db_'+@year]
