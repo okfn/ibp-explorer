@@ -107,7 +107,12 @@ module.exports = class ProfilePage extends Backbone.View
     _onHoverQuestion: (e) ->
         target = $(e.delegateTarget)
         number = target.attr('data-question-number')
-        q = _EXPLORER_DATASET.question[number]
+        t3q = {t3pbs: '134', t3ebp: '135', t3eb: '136', t3iyr: '137', t3myr: '138', t3yer: '139', t3ar: '140'}
+        if number of t3q
+            nb = t3q[number]
+            q = _EXPLORER_DATASET.question[nb]
+        else
+            q = _EXPLORER_DATASET.question[number]
         qbox = $('.question-box')
         qbox.html(template_question_text q)
         top = target.position().top - 21
