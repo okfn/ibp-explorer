@@ -23,6 +23,10 @@ module.exports = class ProfilePage extends Backbone.View
         assert false, alpha2+' is not a valid country code.'
         
     renderPage: (target) =>
+        collapsed = false
+        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            collapsed = true
+        reportGenerator.update('2015', collapsed)
         renderData =
             alpha2: @alpha2
             countries: _EXPLORER_DATASET.country
