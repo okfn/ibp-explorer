@@ -68,14 +68,26 @@ module.exports = class ProjectPage extends Backbone.View
     ##################
     _mapToggle: (e) =>
         target = $(e.delegateTarget)
+        lastYear = $('#map-toggles button.active').attr('data-year')
+        currentYear = target.attr('data-year')
+        newReport = (lastYear == '2015' || currentYear == '2015')
         $('#map-toggles button').removeClass 'active'
         target.addClass 'active'
         @year = $(e.delegateTarget).attr('data-year')
+        if newReport
+            collapsed = false
+            if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+                collapsed = true
+            reportGenerator.update(@year, collapsed)
         @_repaint()
 
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
+        if @year != '2015'
+            datasetRegions = _EXPLORER_DATASET.regions_old
+        else
+            datasetRegions = _EXPLORER_DATASET.regions
         countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
-        selected_countries = _EXPLORER_DATASET.regions[region].contains
+        selected_countries = datasetRegions[region].contains
         # Unpaint the map
         @mapData = {}
         @mapColor = {}
