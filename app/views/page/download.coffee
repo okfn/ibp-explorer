@@ -9,6 +9,10 @@ module.exports = class DownloadPage extends Backbone.View
     tx: -> $('#custom-csv')
 
     renderPage: (target) =>
+        collapsed = false
+        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            collapsed = true
+        reportGenerator.update('2015', collapsed)
         @$el.html template_page _EXPLORER_DATASET
         target.html @$el
         @_repaint()
