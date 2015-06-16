@@ -4,7 +4,12 @@ import os
 import json
 import csv
 import zipfile
-from settings import *
+
+FILENAME_XLSX = 'ibp_data.xlsx'
+FILENAME_CSV = 'ibp_data_%s.csv'
+FILENAME_CSV_ZIP = 'ibp_data_csv.zip'
+FILENAME_JSON = 'ibp_data.json'
+YEARS = [2006,2008,2010,2012,2015]
 
 def write(dataset, iso_data, jsonfilename, downloadfoldername):
     # Populate the downloads folder

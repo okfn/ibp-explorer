@@ -7,27 +7,45 @@ import sys
 # Custom pipeline
 import lib_read
 import lib_write
-from settings import *
+
+DEFAULT_ISOFILE = 'country_to_iso3166.json'
+DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
+DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
 
 if __name__=='__main__':
-    parser = argparse.ArgumentParser(description='IBP Extract-Transform-Load pipeline.')
-    parser.add_argument('--iso', dest='isofile', default=DEFAULT_ISOFILE, help="JSON file of country_name to iso-3166 alpha 2 codes")
-    parser.add_argument('--questions', dest='qfile', default=DEFAULT_QUESTIONFILE, help="XLS file of 2012 questions")
-    parser.add_argument('--groupings', dest='gfile', default=DEFAULT_GROUPINGSFILE, help="XLS file of question groupings")
-    parser.add_argument('--availability', dest='avfile', default=DEFAULT_AVAILABILITYFILE, help="XLS file of 'Public Availability' dataset.")
-    parser.add_argument('--answers', dest='afile', default=DEFAULT_ANSWERFILE, help="XLS file of all survey answers")
-    parser.add_argument('--output', dest='ofile', default=DEFAULT_OUTPUT, help="Output filename to write")
-    parser.add_argument('--downloads', dest='dfolder', default=DEFAULT_DOWNLOADFOLDER, help="Folder to store downloadable DB")
-
-    arg = parser.parse_args()
-    for v in vars(arg).values():
-      if v[-4:]=='xls':
-         parser.print_usage()
-         print 'Error: XLS is not supported. Files must be in XLSX format. (Filename: %s)' % v
-         sys.exit(-1)
-
     # Get ISO data
-    iso_data = json.load(open(arg.isofile))
-    dataset = lib_read.read( iso_data, arg.qfile, arg.gfile, arg.afile, arg.avfile )
-    lib_write.write(dataset, iso_data, arg.ofile, arg.dfolder)
+    iso_data = json.load(open(DEFAULT_ISOFILE))
+    
+    # Pre-2015 survey data
+    datafiles = {}
+    datafiles['q_xlsx'] = 'OBS2012_QuestionsNumbers+Text.xlsx'
+    datafiles['q_xlsx_sheet'] = 'Sheet2'
+    datafiles['a_xlsx'] = 'OBI_UNIFIED.xlsx'
+    datafiles['a_xlsx_sheet'] = 'Sheet1'
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2012_102112.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
+    datafiles['av_xlsx'] = 'Public Availability All Years.xlsx'
+    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012']
+    datafiles['years'] = [2006,2008,2010,2012]
 
+    old_dataset = lib_read.read( iso_data, datafiles, True )
+
+    # 2015 survey data
+    datafiles = {}
+    datafiles['q_xlsx'] = 'OBS2015_QuestionsNumbers+Text.xlsx'
+    datafiles['q_xlsx_sheet'] = 'Sheet1'
+    datafiles['a_xlsx'] = 'OBI 2006-2015 Timeseries.xlsx'
+    datafiles['a_xlsx_sheet'] = 'Sheet1'
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
+    datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
+    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012','2015']
+    datafiles['years'] = [2006,2008,2010,2012,2015]
+
+    dataset = lib_read.read( iso_data, datafiles, False )
+    dataset.update(old_dataset)
+
+    # Write output js file and files to download
+    lib_write.write(dataset, iso_data, DEFAULT_OUTPUT, DEFAULT_DOWNLOADFOLDER)

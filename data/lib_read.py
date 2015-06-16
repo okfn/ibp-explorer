@@ -2,31 +2,37 @@ from openpyxl import load_workbook
 import json
 import re
 from string import uppercase
-from settings import *
 
 # ######
 # Public
 # ######
 
-def read(iso_data, q_xlsx, g_xlsx, a_xlsx, av_xlsx):
+def read(iso_data, datafiles, old):
     """Read all the input Excel files and produce an enormous data dict."""
     # Output to populate
     dataset = {}
     # Workbooks to read
-    print 'Reading %s...' % q_xlsx
-    q_workbook = load_workbook(filename=q_xlsx)
-    print 'Reading %s...' % g_xlsx
-    g_workbook = load_workbook(filename=g_xlsx)
-    print 'Reading %s...' % a_xlsx
-    a_workbook = load_workbook(filename=a_xlsx)
-    print 'Reading %s...' % av_xlsx
-    av_workbook = load_workbook(filename=av_xlsx)
+    print 'Reading %s...' % datafiles['q_xlsx']
+    q_workbook = load_workbook(filename=datafiles['q_xlsx'])
+    print 'Reading %s...' % datafiles['g_xlsx']
+    g_workbook = load_workbook(filename=datafiles['g_xlsx'])
+    print 'Reading %s...' % datafiles['a_xlsx']
+    a_workbook = load_workbook(filename=datafiles['a_xlsx'])
+    print 'Reading %s...' % datafiles['av_xlsx']
+    av_workbook = load_workbook(filename=datafiles['av_xlsx'])
     # Generate dataset
-    dataset['country']  = _read_answers(a_workbook, iso_data)
-    dataset['question'] = _read_questions(q_workbook)
-    dataset['groupings'] = _read_groupings(g_workbook)
-    dataset['regions'] = _read_regions(g_workbook, iso_data)
-    dataset['availability'] = _read_availability(av_workbook, iso_data)
+    if old:
+        dataset['country_old']  = _read_answers(a_workbook, iso_data, datafiles['a_xlsx_sheet'], datafiles['years'])
+        dataset['question_old'] = _read_questions(q_workbook, datafiles['q_xlsx_sheet'])
+        dataset['groupings_old'] = _read_groupings(g_workbook, datafiles['g_xlsx_qsheet'])
+        dataset['regions_old'] = _read_regions(g_workbook, iso_data, datafiles['g_xlsx_csheet'])
+        dataset['availability_old'] = _read_availability(av_workbook, iso_data, datafiles['av_xlsx_sheets'])
+    else:
+        dataset['country']  = _read_answers(a_workbook, iso_data, datafiles['a_xlsx_sheet'], datafiles['years'])
+        dataset['question'] = _read_questions(q_workbook, datafiles['q_xlsx_sheet'])
+        dataset['groupings'] = _read_groupings(g_workbook, datafiles['g_xlsx_qsheet'])
+        dataset['regions'] = _read_regions(g_workbook, iso_data, datafiles['g_xlsx_csheet'])
+        dataset['availability'] = _read_availability(av_workbook, iso_data, datafiles['av_xlsx_sheets'])
     return dataset
 
 
@@ -42,8 +48,8 @@ def _lookup(sheet,x,y):
     cell_name = _COLUMN_NAME[x-1] + str(y)
     return sheet.cell(cell_name).value
 
-def _read_answers(a_workbook, iso_data):
-    sheet = a_workbook.get_sheet_by_name(name=ANSWERFILE_SHEETNAME)
+def _read_answers(a_workbook, iso_data, sheet_name, years):
+    sheet = a_workbook.get_sheet_by_name(name=sheet_name)
     answers = {}
     height = sheet.get_highest_row()
     width = sheet.get_highest_column()
@@ -66,7 +72,7 @@ def _read_answers(a_workbook, iso_data):
         name = name.strip()
         assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
         assert type(year) is int, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
-        assert year in YEARS, '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
+        assert year in years, '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
         # Validate the row content
         validated = {}
         for key,value in row.items():
@@ -93,9 +99,9 @@ def _read_answers(a_workbook, iso_data):
         answers[alpha2]['db_%d'%year] = validated
     return sorted(answers.values(),key=lambda x: x['name'])
 
-def _read_questions(q_workbook):
+def _read_questions(q_workbook, sheet_name):
     # Question dict
-    sheet = q_workbook.get_sheet_by_name(name=QUESTIONFILE_SHEETNAME)
+    sheet = q_workbook.get_sheet_by_name(name=sheet_name)
     questions = {}
     height = sheet.get_highest_row()
     for n in range(2,height+1):
@@ -116,9 +122,9 @@ def _read_questions(q_workbook):
             q[key] = re.sub( regex,'',q[key], flags=re.IGNORECASE )
     return questions
 
-def _read_groupings(g_workbook):
+def _read_groupings(g_workbook, sheet_name):
     # Question groupings
-    sheet = g_workbook.get_sheet_by_name(name=GROUPINGSFILE_QUESTIONS_SHEETNAME)
+    sheet = g_workbook.get_sheet_by_name(name=sheet_name)
     out = []
     # Scroll down column B
     height = sheet.get_highest_row()
@@ -140,8 +146,7 @@ def _read_groupings(g_workbook):
         y += 1
     return out
 
-def _read_regions(g_workbook, iso_data):
-    sheet_name = GROUPINGSFILE_COUNTRIES_SHEETNAME
+def _read_regions(g_workbook, iso_data, sheet_name):
     # Question groupings
     sheet = g_workbook.get_sheet_by_name(name=sheet_name)
     out = []
@@ -166,8 +171,7 @@ def _read_regions(g_workbook, iso_data):
         x += 1
     return out
 
-def _read_availability(av_workbook, iso_data):
-    sheets = AVAILABILITYFILE_SHEETNAMES
+def _read_availability(av_workbook, iso_data, sheets):
     column_headers = [('country', 'country'),
             ('Pre-Budget Statement', 'prebudgetstatement'),
             ('Executive\'s Budget Proposal', 'executivesbudgetproposal'),
