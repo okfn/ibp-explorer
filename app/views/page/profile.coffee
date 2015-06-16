@@ -74,7 +74,7 @@ module.exports = class ProfilePage extends Backbone.View
             @_repaint2014
             for x in $('.question-row')
                 x = $(x)
-                qnum = parseInt(x.attr('data-question-number'))
+                qnum = x.attr('data-question-number')
                 score = @db_2017[qnum]
                 x.find('img[data-score="'+score+'"]').removeClass('inactive').addClass('active')
         @_repaint2014()
