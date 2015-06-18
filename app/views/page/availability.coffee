@@ -14,6 +14,7 @@ module.exports = class ProjectPage extends Backbone.View
         
 
     renderPage: (target) =>
+        reportGenerator.update('2015', false)
         @$el.html template_page()
         target.html @$el
         $('#year-toggles button').click @_yearToggle
@@ -26,9 +27,14 @@ module.exports = class ProjectPage extends Backbone.View
     ##################
     _yearToggle: (e) =>
         target = $(e.delegateTarget)
+        lastYear = $('#year-toggles button.active').attr('data-year')
+        currentYear = target.attr('data-year')
+        newReport = (lastYear == '2015' || currentYear == '2015')
         $('#year-toggles button').removeClass 'active'
         target.addClass 'active'
         @year = $(e.delegateTarget).attr('data-year')
+        if newReport
+            reportGenerator.update(@year, false)
         @_repaint()
 
     _findScore: (dataset,country,year) ->
@@ -40,8 +46,14 @@ module.exports = class ProjectPage extends Backbone.View
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         tbody = $('#availability tbody')
         tbody.empty()
-        countriesIncluded = _EXPLORER_DATASET.regions[ @regionId ].contains
-        for row in _EXPLORER_DATASET.availability
+        if @year != '2015'
+            datasetRegions = _EXPLORER_DATASET.regions_old
+            datasetAv = _EXPLORER_DATASET.availability_old
+        else
+            datasetRegions = _EXPLORER_DATASET.regions
+            datasetAv = _EXPLORER_DATASET.availability
+        countriesIncluded = datasetRegions[ @regionId ].contains
+        for row in datasetAv
             key = 'db_'+@year
             if not (key of row) then continue
             if not (row[key].alpha2 in countriesIncluded) then continue
