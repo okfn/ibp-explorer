@@ -99,7 +99,6 @@ class ReportGenerator extends Backbone.View
             @years = [2006,2008,2010,2012,2015]
         @$el.html template renderData
 
-        @region = 0
         @$el.find('.group-toggler').bind 'mouseover', @_hoverGroupToggle
         @$el.find('.group-toggler').bind 'click', @_clickGroupToggle
         @$el.find('.region-toggler').bind 'click', @_clickRegionToggle
