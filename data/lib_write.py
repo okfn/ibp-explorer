@@ -189,7 +189,7 @@ def _summary_as_csv(dataset):
         for country in dataset['country']:
             db = country.get('db_%d'%year)
             if not db: continue
-            score = db['roundobi']
+            score = db.get('roundobi')
             row = [country['alpha2'],year,score,-1]
             temp.append(row)
         # Sort this year's array by score

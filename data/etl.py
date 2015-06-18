@@ -35,7 +35,7 @@ if __name__=='__main__':
     datafiles = {}
     datafiles['q_xlsx'] = 'OBS2015_QuestionsNumbers+Text.xlsx'
     datafiles['q_xlsx_sheet'] = 'Sheet1'
-    datafiles['a_xlsx'] = 'OBI 2006-2015 Timeseries.xlsx'
+    datafiles['a_xlsx'] = 'OBI 2015.xlsx'
     datafiles['a_xlsx_sheet'] = 'Sheet1'
     datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
     datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
