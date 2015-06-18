@@ -80,6 +80,7 @@ class ReportGenerator extends Backbone.View
         return acc / count 
 
     update: (selectedYear, collapsed) =>
+        @year = selectedYear
         if selectedYear != '2015'
             renderData = 
                 groupings0: _EXPLORER_DATASET.groupings_old.slice(0,3)
