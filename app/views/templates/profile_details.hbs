@@ -2,22 +2,29 @@
 <table class="table table-condensed">
   <tr>
     <th></th>
-    <th><span class="badge">2006</span></th>
-    <th><span class="badge">2008</span></th>
-    <th><span class="badge">2010</span></th>
-    <th><span class="badge">2012</span></th>
-    <th><span class="badge">2015</span></th>
+    {{#each years}}
+      <th><span class="badge">{{this}}</span></th>
+    {{/each}}
     <th class="space"></th>
   </tr>
-  {{#each questions}}
-  <tr class="question-row" data-question-number="{{number}}">
-    <td class="number">{{number}}</td>
-    <td class="letter">{{#if l2006}}<img src="images/letter/{{l2006}}.png"/>{{else}}-{{/if}}</td>
-    <td class="letter">{{#if l2008}}<img src="images/letter/{{l2008}}.png"/>{{else}}-{{/if}}</td>
-    <td class="letter">{{#if l2010}}<img src="images/letter/{{l2010}}.png"/>{{else}}-{{/if}}</td>
-    <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
-    <td class="letter">{{#if l2015}}<img src="images/letter/{{l2015}}.png"/>{{else}}-{{/if}}</td>
-    <td class="space"></td>
-  </tr>
-  {{/each}}
+  {{#if last}}
+    {{#each questions}}
+    <tr class="question-row" data-question-number="{{number}}">
+      <td class="number">{{number}}</td>
+      <td class="letter">{{#if l2015}}<img src="images/letter/{{l2015}}.png"/>{{else}}-{{/if}}</td>
+      <td class="space"></td>
+    </tr>
+    {{/each}}
+  {{else}}
+    {{#each questions}}
+    <tr class="question-row" data-question-number="{{number}}">
+      <td class="number">{{number}}</td>
+      <td class="letter">{{#if l2006}}<img src="images/letter/{{l2006}}.png"/>{{else}}-{{/if}}</td>
+      <td class="letter">{{#if l2008}}<img src="images/letter/{{l2008}}.png"/>{{else}}-{{/if}}</td>
+      <td class="letter">{{#if l2010}}<img src="images/letter/{{l2010}}.png"/>{{else}}-{{/if}}</td>
+      <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
+      <td class="space"></td>
+    </tr>
+    {{/each}}
+  {{/if}}
 </table>

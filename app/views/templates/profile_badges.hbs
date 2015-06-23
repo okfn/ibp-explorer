@@ -1,0 +1,22 @@
+<div class="scores">
+  {{#each years}}
+    <div class="year-box year-{{this}} badge">
+      <span class="top">{{this}}</span><span class="bottom"></span>
+    </div>
+  {{/each}}
+  {{#if last}}
+    <div class="year-box year-2017 badge badge-success future">
+      <span class="top">2017</span><span class="bottom"></span>
+    </div>
+  {{/if}}
+  <div class="clearfix"></div>
+</div>
+<br/>
+{{#if last}}
+<div>
+  <label class="checkbox" id="profile-toggle">
+      <input type="checkbox"> Show 2017 Calculator...
+  </label>
+</div>
+<p class="explanation future">Click on the letters below to calculate the possible outcome of the 2017 survey.<br/>Changing the value of a question automatically updates the score.</p>
+{{/if}}

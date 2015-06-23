@@ -3,6 +3,7 @@ template_profile_percentages = require 'views/templates/profile_percentages'
 template_profile_details = require 'views/templates/profile_details'
 template_profile_details_future = require 'views/templates/profile_details_future'
 template_question_text = require 'views/templates/question_text'
+template_profile_badges = require 'views/templates/profile_badges'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -11,13 +12,19 @@ module.exports = class ProfilePage extends Backbone.View
     ## Public methods
     ##################
     initialize: (@alpha2) =>
+        @year = '2015'
         @data = @lookup @alpha2
         @db_2017 = $.extend {}, @data.db_2015
         reportGenerator.bind 'update', @_repaint
+        @years = [2015]
 
     lookup: (alpha2) ->
         """Look up a country object by alpha2 code"""
-        for x in _EXPLORER_DATASET.country
+        if @year != '2015'
+            datasetCountry = _EXPLORER_DATASET.country_old
+        else
+            datasetCountry = _EXPLORER_DATASET.country
+        for x in datasetCountry
             if x.alpha2==alpha2 then return x
         if alpha2=="" then return {}
         assert false, alpha2+' is not a valid country code.'
@@ -33,6 +40,7 @@ module.exports = class ProfilePage extends Backbone.View
             data: @data
             empty: @alpha2==""
             main_website_url: @_ibp_website_url @alpha2
+            years: @years
         @viewPast = true
         @$el.html template_page renderData
         target.html @$el
@@ -42,21 +50,50 @@ module.exports = class ProfilePage extends Backbone.View
         nav.chosen()
         nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
-        # Bind to past/future toggle
-        $('#profile-toggle input').bind 'change', @_onToggleMode
+        $('#year-toggles button').click @_yearToggle
+        $('button[data-year="2015"]').click()
 
     ##################
     ## Private methods
     ##################
+    _yearToggle: (e) =>
+        target = $(e.delegateTarget)
+        $('#year-toggles button').removeClass 'active'
+        target.addClass 'active'
+        @year = $(e.delegateTarget).attr('data-year')
+        if @year == '2015'
+            @years = [2015]
+            badges =
+                years: @years
+                last: true
+        else
+            @years = [2006,2008,2010,2012]
+            badges =
+                years: @years
+                last: false
+        $('#profile-mode').empty().append($(template_profile_badges badges))
+        $('#profile-toggle input').bind 'change', @_onToggleMode
+        @data = @lookup @alpha2
+        collapsed = false
+        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            collapsed = true
+        reportGenerator.update(@year, collapsed)
+        @_onToggleMode()
+
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet) =>
-        percentageData = 
-            percentages: [
-                @_get_percentages @data.alpha2, @data.db_2006, '2006', questionSet
-                @_get_percentages @data.alpha2, @data.db_2008, '2008', questionSet
-                @_get_percentages @data.alpha2, @data.db_2010, '2010', questionSet
-                @_get_percentages @data.alpha2, @data.db_2012, '2012', questionSet
-                @_get_percentages @data.alpha2, @data.db_2015, '2015', questionSet
-            ]
+        if @year != '2015'
+            percentageData = 
+                percentages: [
+                    @_get_percentages @data.alpha2, @data.db_2006, '2006', questionSet
+                    @_get_percentages @data.alpha2, @data.db_2008, '2008', questionSet
+                    @_get_percentages @data.alpha2, @data.db_2010, '2010', questionSet
+                    @_get_percentages @data.alpha2, @data.db_2012, '2012', questionSet
+                ]
+        else
+            percentageData = 
+                percentages: [
+                    @_get_percentages @data.alpha2, @data.db_2015, '2015', questionSet
+                ]
         # IE hack requires we empty & append rather than use .html()
         $('.percentages').empty().append($(template_profile_percentages percentageData))
         # Add tooltips to nav bars
@@ -93,11 +130,13 @@ module.exports = class ProfilePage extends Backbone.View
             else
                 $('.scores .year-'+year).css('opacity','0.2')
                 $('.scores .year-'+year+' .bottom').text '-'
-        render_score 2006,percentageData.percentages[0].score
-        render_score 2008,percentageData.percentages[1].score
-        render_score 2010,percentageData.percentages[2].score
-        render_score 2012,percentageData.percentages[3].score
-        render_score 2015,percentageData.percentages[4].score
+        if @year != '2015'
+            render_score 2006,percentageData.percentages[0].score
+            render_score 2008,percentageData.percentages[1].score
+            render_score 2010,percentageData.percentages[2].score
+            render_score 2012,percentageData.percentages[3].score
+        else
+            render_score 2015,percentageData.percentages[0].score
         @_repaint2014()
 
     _ibp_website_url: (alpha2) ->
@@ -110,13 +149,17 @@ module.exports = class ProfilePage extends Backbone.View
 
     _onHoverQuestion: (e) ->
         target = $(e.delegateTarget)
+        if $('#year-toggles button.active').attr('data-year') == '2015'
+            datasetQuestion = _EXPLORER_DATASET.question
+        else
+            datasetQuestion = _EXPLORER_DATASET.question_old
         number = target.attr('data-question-number')
         t3q = {t3pbs: '134', t3ebp: '135', t3eb: '136', t3iyr: '137', t3myr: '138', t3yer: '139', t3ar: '140'}
         if number of t3q
             nb = t3q[number]
-            q = _EXPLORER_DATASET.question[nb]
+            q = datasetQuestion[nb]
         else
-            q = _EXPLORER_DATASET.question[number]
+            q = datasetQuestion[number]
         qbox = $('.question-box')
         qbox.html(template_question_text q)
         top = target.position().top - 21
@@ -181,14 +224,19 @@ module.exports = class ProfilePage extends Backbone.View
     _get_details: (data,questionSet) ->
         out = 
             questions: []
+            years: @years
+        if @years[0] == 2015
+            out.last = true
+        else
+            out.last = false
         for x in questionSet
-            out.questions.push
+            obj =
                 number: x
-                l2006: @_number_to_letter data.db_2006, x
-                l2008: @_number_to_letter data.db_2008, x
-                l2010: @_number_to_letter data.db_2010, x
-                l2012: @_number_to_letter data.db_2012, x
-                l2015: @_number_to_letter data.db_2015, x
+            for y in @years
+                year_key = 'l' + y
+                db_key = 'db_' + y
+                obj[year_key] = @_number_to_letter data[db_key], x
+            out.questions.push(obj)
         return out
 
     _onToggleMode: =>
