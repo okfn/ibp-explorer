@@ -50,7 +50,7 @@ module.exports = class ProfilePage extends Backbone.View
         nav.chosen()
         nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
-        $('#year-toggles button').click @_yearToggle
+        $('#datasheet-toggles button').click @_yearToggle
         $('button[data-year="2015"]').click()
 
     ##################
@@ -58,7 +58,7 @@ module.exports = class ProfilePage extends Backbone.View
     ##################
     _yearToggle: (e) =>
         target = $(e.delegateTarget)
-        $('#year-toggles button').removeClass 'active'
+        $('#datasheet-toggles button').removeClass 'active'
         target.addClass 'active'
         @year = $(e.delegateTarget).attr('data-year')
         if @year == '2015'
@@ -149,7 +149,7 @@ module.exports = class ProfilePage extends Backbone.View
 
     _onHoverQuestion: (e) ->
         target = $(e.delegateTarget)
-        if $('#year-toggles button.active').attr('data-year') == '2015'
+        if $('#datasheet-toggles button.active').attr('data-year') == '2015'
             datasetQuestion = _EXPLORER_DATASET.question
         else
             datasetQuestion = _EXPLORER_DATASET.question_old
