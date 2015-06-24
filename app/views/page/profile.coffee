@@ -78,7 +78,12 @@ module.exports = class ProfilePage extends Backbone.View
         $('#profile-mode').empty().append($(template_profile_badges badges))
         if @year == '2015'
             $('#profile-toggle input').bind 'change', @_onToggleMode
-        @data = @lookup @alpha2
+        if @year == '2006' and @alpha2 == 'HU'
+            @data =
+                alpha2: 'HU'
+                name: 'Hungary'
+        else
+            @data = @lookup @alpha2
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
