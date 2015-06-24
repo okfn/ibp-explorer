@@ -33,7 +33,8 @@ module.exports = class ProfilePage extends Backbone.View
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
-        reportGenerator.update('2015', collapsed)
+        @year = $('#datasheet-toggles button.active').attr('data-year') || '2015'
+        reportGenerator.update(@year, collapsed)
         renderData =
             alpha2: @alpha2
             countries: _EXPLORER_DATASET.country
@@ -51,7 +52,10 @@ module.exports = class ProfilePage extends Backbone.View
         nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
         $('#datasheet-toggles button').click @_yearToggle
-        $('button[data-year="2015"]').click()
+        if @year == '2015'
+            $('button[data-year="2015"]').click()
+        else
+            $('button[data-year="2006"]').click()
 
     ##################
     ## Private methods
@@ -72,7 +76,8 @@ module.exports = class ProfilePage extends Backbone.View
                 years: @years
                 last: false
         $('#profile-mode').empty().append($(template_profile_badges badges))
-        $('#profile-toggle input').bind 'change', @_onToggleMode
+        if @year == '2015'
+            $('#profile-toggle input').bind 'change', @_onToggleMode
         @data = @lookup @alpha2
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
@@ -183,8 +188,11 @@ module.exports = class ProfilePage extends Backbone.View
           'q102l' does not exist while 'q102' does.
           Therefore it is safer to use this technique to extract a letter..."""
         if dataset is undefined then return ''
-        value = dataset[questionNumber]
-        assert value in [-1,0,33,67,100], 'Invalid value: '+value
+        if questionNumber of dataset
+            value = dataset[questionNumber]
+            assert value in [-1,0,33,67,100], 'Invalid value: '+value
+        else
+            value = '-1'
         return {
           '-1': 'e'
           0: 'd'
