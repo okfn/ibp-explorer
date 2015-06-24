@@ -58,7 +58,7 @@ module.exports = class ProjectPage extends Backbone.View
         for x in dataset
             if x.alpha2==country
                 return x[year]
-        assert false, 'couldnt find country: '+country
+        #assert false, 'couldnt find country: '+country
 
     _sortByNameToggle: (e) =>
         e.preventDefault()
