@@ -81,7 +81,10 @@ module.exports = class ProjectPage extends Backbone.View
             target.html '<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>'
             return
         data = []
-        selected_countries = datasetRegions[region].contains
+        selected_countries = []
+        for reg in region
+            for contained in datasetRegions[reg].contains
+                selected_countries.push(contained)
         for country in datasetCountry
             if not (('db_'+@year) of country) then continue
             if not (country.alpha2 in selected_countries) then continue
