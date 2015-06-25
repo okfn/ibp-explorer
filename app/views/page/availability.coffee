@@ -5,7 +5,7 @@ reportGenerator = require 'views/reportgenerator'
 
 module.exports = class ProjectPage extends Backbone.View
 
-    regionId: 0
+    regionId: [0]
 
     ##################
     ## Public methods
@@ -52,7 +52,10 @@ module.exports = class ProjectPage extends Backbone.View
         else
             datasetRegions = _EXPLORER_DATASET.regions
             datasetAv = _EXPLORER_DATASET.availability
-        countriesIncluded = datasetRegions[ @regionId ].contains
+        countriesIncluded = []
+        for reg in @regionId
+            for contained in datasetRegions[reg].contains
+                countriesIncluded.push(contained)
         for row in datasetAv
             key = 'db_'+@year
             if not (key of row) then continue
@@ -61,14 +64,30 @@ module.exports = class ProjectPage extends Backbone.View
             obj.score = @_findScore dataset,row[key].alpha2,@year
             tbody.append template_row obj
         
-     clickregion: (e) =>
-         e.preventDefault()
-         target = $(e.delegateTarget)
-         id = target.attr('id')
-         id_num = parseInt(id.substr('7'))
-         @regionId = id_num
-         @_repaint()
-         $('.av-region-toggler').removeClass('active')
-         target.addClass('active')
-         return false
-
+    clickregion: (e) =>
+        e.preventDefault()
+        target = $(e.delegateTarget)
+        selected = parseInt target.attr('id').replace('region-','')
+        if selected == 0
+           @regionId = [0]
+           @$el.find('.av-region-toggler').removeClass 'active'
+           target.addClass 'active'
+        else
+            if target.hasClass 'active'
+                target.removeClass 'active'
+                index = @regionId.indexOf(selected)
+                if index >= 0
+                    @regionId.splice(index, 1)
+                if @regionId.length == 0
+                    @regionId.push(0)
+                    @$el.find('#region-0.av-region-toggler').addClass 'active'
+            else
+                if @$el.find('#region-0.av-region-toggler').hasClass 'active'
+                    @$el.find('#region-0.av-region-toggler').removeClass 'active'
+                    index = @regionId.indexOf(0)
+                    if index >= 0
+                        @regionId.splice(index, 1)
+                @regionId.push(selected)
+                target.addClass 'active'
+        @_repaint()
+        return false
