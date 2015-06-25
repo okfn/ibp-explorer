@@ -196,12 +196,27 @@ class ReportGenerator extends Backbone.View
         e.preventDefault()
         el = $(e.delegateTarget)
         group = el.attr('id')
-        @$el.find('.group-toggler').removeClass 'active'
-        el.addClass 'active'
-        @_setSubtitle el.text()
         x = @$el.find('#toggle-boxes')
-        x.find('.toggle-box').removeClass 'select'
-        x.find(' .'+group).addClass 'select'
+        if not @$el.find('.group-toggler').hasClass 'active'
+            x.find('.toggle-box').removeClass 'select'
+        else
+            activeUl = @$el.find('.group-toggler.active').parents('ul:first')
+        if el.hasClass 'active'
+            el.removeClass 'active'
+            x.find(' .'+group).removeClass 'select'
+        else
+            if activeUl and not activeUl.is(el.parents('ul:first'))
+                activeUl.find('.group-toggler.active').each ->
+                    gp = $(@).attr('id')
+                    x.find(' .'+gp).removeClass 'select'
+                    $(@).removeClass 'active'
+            el.addClass 'active'
+            x.find(' .'+group).addClass 'select'
+        selected = @$el.find('.group-toggler.active')
+        if selected.length == 1
+            @_setSubtitle selected.text()
+        else
+            @_setSubtitle()
         @_updated()
         return false
 
