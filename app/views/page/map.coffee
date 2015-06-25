@@ -87,7 +87,10 @@ module.exports = class ProjectPage extends Backbone.View
         else
             datasetRegions = _EXPLORER_DATASET.regions
         countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
-        selected_countries = datasetRegions[region].contains
+        selected_countries = []
+        for reg in region
+            for contained in datasetRegions[reg].contains
+                selected_countries.push(contained)
         # Unpaint the map
         @mapData = {}
         @mapColor = {}
