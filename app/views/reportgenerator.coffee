@@ -4,7 +4,7 @@ debug = false
 class ReportGenerator extends Backbone.View
     initialize: =>
         if debug then @debugReports()
-        @region = 0 # Initially our custon "Entire World" collection
+        @region = [0] # Initially our custon "Entire World" collection
         @year = '2015'
 
     debugReports: =>
@@ -59,7 +59,8 @@ class ReportGenerator extends Backbone.View
             placement: 'left'
             delay: 100
             animation: true
-        @$el.find('#region-'+@region).addClass 'active'
+        for reg in @region
+            @$el.find('#region-'+reg).addClass 'active'
         # Bind to the accordion
         @$el.find('#accordion2').on('show',=> @trigger('resizeStart'); $('.customize-link').html('&laquo; Hide options') )
         @$el.find('#accordion2').on('hide',=> @trigger('resizeStart'); $('.customize-link').html('Customize Report &raquo;') )
@@ -113,7 +114,8 @@ class ReportGenerator extends Backbone.View
             placement: 'left'
             delay: 100
             animation: true
-        @$el.find('#region-'+@region).addClass 'active'
+        for reg in @region
+            @$el.find('#region-'+reg).addClass 'active'
         # Bind to the accordion
         @$el.find('#accordion2').on('show',=> @trigger('resizeStart'); $('.customize-link').html('&laquo; Hide options') )
         @$el.find('#accordion2').on('hide',=> @trigger('resizeStart'); $('.customize-link').html('Customize Report &raquo;') )
@@ -223,9 +225,28 @@ class ReportGenerator extends Backbone.View
     _clickRegionToggle: (e) =>
         e.preventDefault()
         el = $(e.delegateTarget)
-        @region = parseInt el.attr('id').replace('region-','')
-        @$el.find('.region-toggler').removeClass 'active'
-        el.addClass 'active'
+        selected = parseInt el.attr('id').replace('region-','')
+        if selected == 0
+            @region = [0]
+            @$el.find('.region-toggler').removeClass 'active'
+            el.addClass 'active'
+        else
+            if el.hasClass 'active'
+                el.removeClass 'active'
+                index = @region.indexOf(selected)
+                if index >= 0
+                    @region.splice(index, 1)
+                if @region.length == 0
+                    @region.push(0)
+                    @$el.find('#region-0').addClass 'active'
+            else
+                if @$el.find('#region-0').hasClass 'active'
+                    @$el.find('#region-0').removeClass 'active'
+                    index = @region.indexOf(0)
+                    if index >= 0
+                        @region.splice(index, 1)
+                @region.push(selected)
+                el.addClass 'active'
         @_updated()
         return false
 
