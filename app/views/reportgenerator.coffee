@@ -80,7 +80,7 @@ class ReportGenerator extends Backbone.View
             console.log 'result', acc,count, (acc/count), Math.round(acc/count), questionSet
         return acc / count 
 
-    update: (selectedYear, collapsed) =>
+    update: (selectedYear, collapsed, entireWorld=false) =>
         @year = selectedYear
         if selectedYear != '2015'
             renderData = 
@@ -114,8 +114,11 @@ class ReportGenerator extends Backbone.View
             placement: 'left'
             delay: 100
             animation: true
-        for reg in @region
-            @$el.find('#region-'+reg).addClass 'active'
+        if entireWorld
+            @$el.find('#region-0').click()
+        else
+            for reg in @region
+                @$el.find('#region-'+reg).addClass 'active'
         # Bind to the accordion
         @$el.find('#accordion2').on('show',=> @trigger('resizeStart'); $('.customize-link').html('&laquo; Hide options') )
         @$el.find('#accordion2').on('hide',=> @trigger('resizeStart'); $('.customize-link').html('Customize Report &raquo;') )

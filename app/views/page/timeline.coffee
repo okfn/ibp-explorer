@@ -17,7 +17,7 @@ module.exports = class TimelinePage extends Backbone.View
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
-        reportGenerator.update('2015', collapsed)
+        reportGenerator.update('2015', collapsed, true)
         # Write to DOM
         @$el.html template_page()
         target.html @$el
@@ -29,13 +29,12 @@ module.exports = class TimelinePage extends Backbone.View
     ## Private methods
     ##################
     _initializeReport: =>
-        @$el.find('#region-0').click()
-        reportGenerator.update('2015', false)
+        reportGenerator.update('2015', false, true)
         lastReport =
             dataset: reportGenerator.dataset
             region: reportGenerator.region
             dataset_unrounded: reportGenerator.dataset_unrounded
-        reportGenerator.update('2006', false)
+        reportGenerator.update('2006', false, true)
         oldReport =
             dataset: reportGenerator.dataset
             dataset_unrounded: reportGenerator.dataset_unrounded
