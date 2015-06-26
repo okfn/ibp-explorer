@@ -11,9 +11,7 @@ module.exports = class TimelinePage extends Backbone.View
     ## Public methods
     ##################
     initialize: =>
-        reportGenerator.bind 'update', @_updateReport
-        reportGenerator.bind 'resizeStart', jsPlumb.deleteEveryEndpoint
-        reportGenerator.bind 'resized', @_redrawJsPlumb
+        @_initializeReport()
 
     renderPage: (target) =>
         collapsed = false
@@ -30,6 +28,54 @@ module.exports = class TimelinePage extends Backbone.View
     ##################
     ## Private methods
     ##################
+    _initializeReport: =>
+        @$el.find('#region-0').click()
+        reportGenerator.update('2015', false)
+        lastReport =
+            dataset: reportGenerator.dataset
+            region: reportGenerator.region
+            dataset_unrounded: reportGenerator.dataset_unrounded
+        reportGenerator.update('2006', false)
+        oldReport =
+            dataset: reportGenerator.dataset
+            dataset_unrounded: reportGenerator.dataset_unrounded
+        @timelineReport =
+            dataset: []
+            region: lastReport.region
+            dataset_unrounded: []
+        for country_last in lastReport.dataset_unrounded
+            for country_old in oldReport.dataset_unrounded
+                if country_last.alpha2 == country_old.alpha2
+                    obj =
+                        alpha2: country_last.alpha2
+                        country: country_last.country
+                    if '2006' of country_old
+                        obj['2006'] = country_old['2006']
+                    if '2008' of country_old
+                        obj['2008'] = country_old['2008']
+                    if '2010' of country_old
+                        obj['2010'] = country_old['2010']
+                    if '2012' of country_old
+                        obj['2012'] = country_old['2012']
+                    obj['2015'] = country_last['2015']
+                    @timelineReport.dataset_unrounded.push(obj)
+        for country_last in lastReport.dataset
+            for country_old in oldReport.dataset
+                if country_last.alpha2 == country_old.alpha2
+                    obj =
+                        alpha2: country_last.alpha2
+                        country: country_last.country
+                    if '2006' of country_old
+                        obj['2006'] = country_old['2006']
+                    if '2008' of country_old
+                        obj['2008'] = country_old['2008']
+                    if '2010' of country_old
+                        obj['2010'] = country_old['2010']
+                    if '2012' of country_old
+                        obj['2012'] = country_old['2012']
+                    obj['2015'] = country_last['2015']
+                    @timelineReport.dataset.push(obj)
+
     _onToggleMode: (showRank=true) =>
         value = $('input[name="timeline"]:checked').val()
         assert value in ['rankings','scores']
@@ -73,7 +119,7 @@ module.exports = class TimelinePage extends Backbone.View
             x.score = Math.round(x.score)
         return out
 
-    _updateReport: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region, dataset_unrounded=reportGenerator.dataset_unrounded) =>
+    _updateReport: (dataset=@timelineReport.dataset, region=@timelineReport.region, dataset_unrounded=@timelineReport.dataset_unrounded) =>
         target = $('#timeline-columns')
         if target.length==0 then return
         # PreRender
