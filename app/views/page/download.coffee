@@ -12,7 +12,8 @@ module.exports = class DownloadPage extends Backbone.View
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
-        reportGenerator.update('2015', collapsed)
+        @year = '2015'
+        reportGenerator.update(@year, collapsed)
         @$el.html template_page _EXPLORER_DATASET
         target.html @$el
         @_repaint()
@@ -33,7 +34,19 @@ module.exports = class DownloadPage extends Backbone.View
             append: false
         Downloadify.create 'downloadify',options
     
-    changeyear: (event) =>
+    changeyear: (e) =>
+        target = $(e.delegateTarget)
+        lastYear = @year
+        currentYear = target.attr('value')
+        newReport = (lastYear == '2015' || currentYear == '2015')
+        @year = target.attr('value')
+        if @year == 'all'
+            @year = '2006'
+        if newReport
+            collapsed = false
+            if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+                collapsed = true
+            reportGenerator.update(@year, collapsed)
         @_repaint()
 
     _writeLine: (out, x) -> 
@@ -76,6 +89,14 @@ module.exports = class DownloadPage extends Backbone.View
         }[value]
 
     _csvAnswers: (dataset,region,questionSet) ->
+        if @year != '2015'
+            datasetRegions = _EXPLORER_DATASET.regions_old
+            datasetCountry = _EXPLORER_DATASET.country_old
+            all_years = ['2006','2008','2010','2012']
+        else
+            datasetRegions = _EXPLORER_DATASET.regions
+            datasetCountry = _EXPLORER_DATASET.country
+            all_years = ['2015']
         out = []
         headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
         for x in questionSet
@@ -85,16 +106,15 @@ module.exports = class DownloadPage extends Backbone.View
         @_writeLine out, headers
         # Quickly lookup country data
         tmp = {}
-        for x in _EXPLORER_DATASET.country
+        for x in datasetCountry
             tmp[x.alpha2] = x
         # Compile a CSV in the browser
         selected_countries = []
         for reg in region
-            for contained in _EXPLORER_DATASET.regions[reg].contains
+            for contained in datasetRegions[reg].contains
                 selected_countries.push(contained)
         for country in dataset
             if country.alpha2 not in selected_countries then continue
-            all_years = ['2006','2008','2010','2012','2015']
             selected_year = $('input[name="downloadyear"]:checked').val()
             if not (selected_year in all_years) 
                 selected_year = all_years
