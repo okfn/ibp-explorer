@@ -61,7 +61,7 @@ module.exports = class Router extends Backbone.Router
     map: ->
       @setCurrent singletons.mapPage()
     timeline: ->
-      @setCurrent singletons.timelinePage()
+      @setCurrent singletons.timelinePage(), showReportGenerator=false
     rankings: ->
       @setCurrent singletons.rankingsPage()
     availability: ->
