@@ -5,23 +5,38 @@ import json
 import csv
 import zipfile
 
-FILENAME_XLSX = 'ibp_data.xlsx'
-FILENAME_CSV = 'ibp_data_%s.csv'
-FILENAME_CSV_ZIP = 'ibp_data_csv.zip'
-FILENAME_JSON = 'ibp_data.json'
-YEARS = [2006,2008,2010,2012,2015]
 
-def write(dataset, iso_data, jsonfilename, downloadfoldername):
+def write_js(dataset, jsonfilename):
+    with open(jsonfilename,'w') as jsonfile:
+        output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(dataset)
+        print >>jsonfile, output_js
+    print 'wrote %s' % jsonfilename
+
+def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     # Populate the downloads folder
     # -----------------------------
+    if years[0] == 2015:
+        keys = {}
+        keys['question'] = 'question'
+        keys['country'] = 'country'
+        keys['groupings'] = 'groupings'
+        keys['regions'] = 'regions'
+        keys['availability'] = 'availability'
+    else:
+        keys = {}
+        keys['question'] = 'question_old'
+        keys['country'] = 'country_old'
+        keys['groupings'] = 'groupings_old'
+        keys['regions'] = 'regions_old'
+        keys['availability'] = 'availability_old'
     # Import all data
     print 'Importing all data...'
-    Q_HEADERS, Q_DATA = _questions_as_csv(dataset)
-    G_HEADERS, G_DATA = _groupings_as_csv(dataset)
+    Q_HEADERS, Q_DATA = _questions_as_csv(dataset, keys['question'])
+    G_HEADERS, G_DATA = _groupings_as_csv(dataset, keys['groupings'])
     CN_HEADERS, CN_DATA = _countrynames_as_csv(dataset,iso_data)
-    R_HEADERS, R_DATA = _regions_as_csv(dataset)
-    S_HEADERS, S_DATA = _scores_as_csv(dataset)
-    SM_HEADERS, SM_DATA = _summary_as_csv(dataset)
+    R_HEADERS, R_DATA = _regions_as_csv(dataset, keys['regions'])
+    S_HEADERS, S_DATA = _scores_as_csv(dataset, years, keys['country'])
+    SM_HEADERS, SM_DATA = _summary_as_csv(dataset, years, keys['country'], keys['question'])
     # Dump XLSX file
     print 'Writing XLSX file...'
     from openpyxl import Workbook
@@ -34,18 +49,18 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
     _write_sheet(wb,'Regions', R_HEADERS, R_DATA)
     _write_sheet(wb,'CountryCodes', CN_HEADERS, CN_DATA)
     wb.remove_sheet(first_sheet)
-    wb.save( os.path.join(downloadfoldername,FILENAME_XLSX) )
+    wb.save( os.path.join(downloadfoldername,files['xlsx']) )
     # Dump JSON file
-    with open(os.path.join(downloadfoldername,FILENAME_JSON),'w') as jsonfile:
+    with open(os.path.join(downloadfoldername,files['json']),'w') as jsonfile:
         json.dump(dataset,jsonfile)
     # Dump CSV files
     print 'Writing CSV file...'
-    csv_q = FILENAME_CSV % 'questions'
-    csv_g = FILENAME_CSV % 'groupings'
-    csv_r = FILENAME_CSV % 'regions'
-    csv_c = FILENAME_CSV % 'countrycodes'
-    csv_s = FILENAME_CSV % 'scores'
-    csv_sm = FILENAME_CSV % 'summary'
+    csv_q = files['csv'] % 'questions'
+    csv_g = files['csv'] % 'groupings'
+    csv_r = files['csv'] % 'regions'
+    csv_c = files['csv'] % 'countrycodes'
+    csv_s = files['csv'] % 'scores'
+    csv_sm = files['csv'] % 'summary'
     _write_csv(csv_q, Q_HEADERS, Q_DATA)
     _write_csv(csv_g, G_HEADERS, G_DATA)
     _write_csv(csv_r, R_HEADERS, R_DATA)
@@ -54,7 +69,7 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
     _write_csv(csv_sm, SM_HEADERS, SM_DATA)
     # Create zip file
     print 'Writing ZIP file...'
-    with zipfile.ZipFile(os.path.join(downloadfoldername, FILENAME_CSV_ZIP),'w') as z:
+    with zipfile.ZipFile(os.path.join(downloadfoldername, files['csv_zip']),'w') as z:
         z.write(csv_q)
         z.write(csv_g)
         z.write(csv_r)
@@ -69,23 +84,20 @@ def write(dataset, iso_data, jsonfilename, downloadfoldername):
     os.unlink( csv_sm )
     # Create list of downloads
     downloads = [ 
-            {'filename':FILENAME_XLSX, 'format':'Excel' },
-            {'filename':FILENAME_CSV_ZIP, 'format':'CSV' },
-            {'filename':FILENAME_JSON, 'format':'JSON' },
+            {'filename':files['xlsx'], 'format':'Excel' },
+            {'filename':files['csv_zip'], 'format':'CSV' },
+            {'filename':files['json'], 'format':'JSON' },
             ]
     # Mapping of filenames
     for x in downloads:
         filename = os.path.join(downloadfoldername,x['filename'])
         raw_size = os.path.getsize(filename)
         x['size'] = _format_kilobytes(raw_size)
-    # Write the JSONP file
-    # --------------------
-    dataset['downloads'] = downloads
-    with open(jsonfilename,'w') as jsonfile:
-        output_js = 'window._EXPLORER_DATASET = %s;' % json.dumps(dataset)
-        print >>jsonfile, output_js
-    print 'wrote %s' % jsonfilename
-
+    if years[0] == 2015:
+        dataset['downloads'] = downloads
+    else:
+        dataset['downloads_old'] = downloads
+    return dataset
 
 
 ##################
@@ -122,11 +134,11 @@ def _write_csv(filename, headers, data):
 ### Data Extractors
 ###################
 
-def _regions_as_csv(dataset):
+def _regions_as_csv(dataset, regions):
     # Create Regions sheet
     HEADERS = ['REGION_NAME','COUNTRY_CODE']
     DATA = []
-    for region in dataset['regions']:
+    for region in dataset[regions]:
         for country in region['contains']:
             DATA.append( [region['name'],country] )
     return HEADERS, DATA
@@ -137,37 +149,65 @@ def _countrynames_as_csv(dataset,iso_data):
     DATA = [ list(x) for x in countrypairs ]
     return HEADERS, DATA
 
-def _groupings_as_csv(dataset):
+def _groupings_as_csv(dataset, groupings):
     HEADERS = ['CATEGORY','GROUP','QUESTION']
     DATA = []
-    for category in dataset['groupings']:
+    t3q = {'134': 't3pbs', '135': 't3ebp', '136': 't3eb', '137': 't3iyr', '138': 't3myr', '139': 't3yer', '140': 't3ar'}
+    for category in dataset[groupings]:
         for entry in category['entries']:
             for question in entry['qs']:
-                DATA.append( [category['by'],entry['title'],question] )
+                if question in t3q:
+                    q = t3q[question]
+                else:
+                    q = question
+                DATA.append( [category['by'],entry['title'],q] )
     return HEADERS, DATA
 
-def _questions_as_csv(dataset):
+def _questions_as_csv(dataset, questions):
     HEADERS = ['NUMBER','TEXT','A','B','C','D','E']
     DATA = []
-    for x in sorted( dataset['question'].values(), key=lambda x:x['number']):
+    for x in sorted( dataset[questions].values(), key=lambda x:x['number']):
         DATA.append( [ x['number'],x['text'],x['a'],x['b'],x['c'],x['d'],x['e'] ]  )
     return HEADERS, DATA
 
-def _scores_as_csv(dataset):
-    q = range(1,125)
-    HEADERS = ['COUNTRY_CODE','YEAR']
-    for x in q: HEADERS.append('Q '+str(x))
-    for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
+def _scores_as_csv(dataset, years, countries):
+    if years[0] == 2015:
+        q = range(1,140)
+        HEADERS = ['COUNTRY_CODE','YEAR']
+        t3q = {134: 't3pbs', 135: 't3ebp', 136: 't3eb', 137: 't3iyr', 138: 't3myr', 139: 't3yer', 140: 't3ar'}
+        for x in q:
+            if x >= 134:
+                HEADERS.append(t3q[x])
+            else:
+                HEADERS.append('Q '+str(x))
+        for x in q:
+            if x >= 134:
+                HEADERS.append(t3q[x] + ' (LETTER)')
+            else:
+                HEADERS.append('Q '+str(x)+' (LETTER)')
+    else:
+        q = range(1,125)
+        HEADERS = ['COUNTRY_CODE','YEAR']
+        for x in q: HEADERS.append('Q '+str(x))
+        for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
     DATA = []
-    for country in dataset['country']:
-        for year in YEARS:
+    for country in dataset[countries]:
+        for year in years:
             db = country.get('db_%d'%year)
             if not db: continue
             row = [country['alpha2'],year]
             for x in q:
-                row.append( db[str(x)] )
+                if x >= 134:
+                    qkey = t3q[x]
+                    row.append( db[qkey] )
+                else:
+                    row.append( db[str(x)] )
             for x in q:
-                score = db[str(x)] 
+                if x >= 134:
+                    qkey = t3q[x]
+                    score = db[qkey]
+                else:
+                    score = db[str(x)]
                 letter = {
                         0:'d',
                         -1: 'e',
@@ -179,14 +219,13 @@ def _scores_as_csv(dataset):
             DATA.append(row)
     return HEADERS, DATA
 
-
-def _summary_as_csv(dataset):
+def _summary_as_csv(dataset, years, countries, questions):
     q = range(1,125)
     HEADERS = ['COUNTRY','YEAR','OPEN_BUDGET_INDEX','RANK']
     DATA = []
-    for year in YEARS:
+    for year in years:
         temp = []
-        for country in dataset['country']:
+        for country in dataset[countries]:
             db = country.get('db_%d'%year)
             if not db: continue
             score = db.get('roundobi')
