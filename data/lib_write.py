@@ -37,6 +37,8 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     R_HEADERS, R_DATA = _regions_as_csv(dataset, keys['regions'])
     S_HEADERS, S_DATA = _scores_as_csv(dataset, years, keys['country'])
     SM_HEADERS, SM_DATA = _summary_as_csv(dataset, years, keys['country'], keys['question'])
+    if years[0] == 2015:
+        P_HEADERS, P_DATA = participation_as_csv(dataset)
     # Dump XLSX file
     print 'Writing XLSX file...'
     from openpyxl import Workbook
@@ -46,6 +48,8 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     _write_sheet(wb,'Questions', Q_HEADERS, Q_DATA)
     _write_sheet(wb,'Scores', S_HEADERS, S_DATA)
     _write_sheet(wb,'Groupings', G_HEADERS, G_DATA)
+    if years[0] == 2015:
+        _write_sheet(wb,'PublicParticipation', P_HEADERS, P_DATA)
     _write_sheet(wb,'Regions', R_HEADERS, R_DATA)
     _write_sheet(wb,'CountryCodes', CN_HEADERS, CN_DATA)
     wb.remove_sheet(first_sheet)
@@ -61,6 +65,9 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     csv_c = files['csv'] % 'countrycodes'
     csv_s = files['csv'] % 'scores'
     csv_sm = files['csv'] % 'summary'
+    if years[0] == 2015:
+        csv_p = files['csv'] % 'public_participation'
+        _write_csv(csv_p, P_HEADERS, P_DATA)
     _write_csv(csv_q, Q_HEADERS, Q_DATA)
     _write_csv(csv_g, G_HEADERS, G_DATA)
     _write_csv(csv_r, R_HEADERS, R_DATA)
@@ -76,12 +83,16 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
         z.write(csv_c)
         z.write(csv_s)
         z.write(csv_sm)
+        if years[0] == 2015:
+            z.write(csv_p)
     os.unlink( csv_q )
     os.unlink( csv_g )
     os.unlink( csv_r )
     os.unlink( csv_c )
     os.unlink( csv_s )
     os.unlink( csv_sm )
+    if years[0] == 2015:
+        os.unlink( csv_p )
     # Create list of downloads
     downloads = [ 
             {'filename':files['xlsx'], 'format':'Excel' },
@@ -244,5 +255,17 @@ def _summary_as_csv(dataset, years, countries, questions):
         # Fold this year's results into the overall results
         for x in temp:
             DATA.append(x)
+    DATA = sorted(DATA, key=lambda x:x[0])
+    return HEADERS, DATA
+
+def participation_as_csv(dataset):
+    q = range(119,134)
+    HEADERS = ['COUNTRY', 'YEAR', 'QUESTION', 'SCORE', 'LETTER', 'COMMENTS']
+    DATA = []
+    for country in dataset['public_participation']:
+        for x in q:
+            question = country[str(x)]
+            row = [country['alpha2'], 2015, str(x), float(question['score']), question['letter'], question['comments']]
+            DATA.append(row)
     DATA = sorted(DATA, key=lambda x:x[0])
     return HEADERS, DATA
