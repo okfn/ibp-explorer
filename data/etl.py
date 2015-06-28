@@ -55,6 +55,8 @@ if __name__=='__main__':
     datafiles['g_xlsx_csheet'] = 'CountriesRegions'
     datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
     datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012','2015']
+    datafiles['pp_xlsx'] = 'public participation.xlsx'
+    datafiles['pp_xlsx_sheet'] = 'Sheet1'
     datafiles['years'] = [2015]
 
     dataset = lib_read.read( iso_data, datafiles, False )

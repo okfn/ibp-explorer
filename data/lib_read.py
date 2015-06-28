@@ -28,11 +28,14 @@ def read(iso_data, datafiles, old):
         dataset['regions_old'] = _read_regions(g_workbook, iso_data, datafiles['g_xlsx_csheet'])
         dataset['availability_old'] = _read_availability(av_workbook, iso_data, datafiles['av_xlsx_sheets'])
     else:
+        print 'Reading %s...' % datafiles['pp_xlsx']
+        pp_workbook = load_workbook(filename=datafiles['pp_xlsx'])
         dataset['country']  = _read_answers(a_workbook, iso_data, datafiles['a_xlsx_sheet'], datafiles['years'])
         dataset['question'] = _read_questions(q_workbook, datafiles['q_xlsx_sheet'])
         dataset['groupings'] = _read_groupings(g_workbook, datafiles['g_xlsx_qsheet'])
         dataset['regions'] = _read_regions(g_workbook, iso_data, datafiles['g_xlsx_csheet'])
         dataset['availability'] = _read_availability(av_workbook, iso_data, datafiles['av_xlsx_sheets'])
+        dataset['public_participation'] = _read_participation(pp_workbook, iso_data, datafiles['pp_xlsx_sheet'])
     return dataset
 
 
@@ -206,6 +209,40 @@ def _read_availability(av_workbook, iso_data, sheets):
             out[alpha2] = out.get(alpha2,{})
             out[alpha2]['db_'+sheet_name] = data
     return sorted(out.values(), key=lambda x:x.values()[0]['name'])
+
+def _read_participation(pp_workbook, iso_data, sheet_name):
+    sheet = pp_workbook.get_sheet_by_name(name=sheet_name)
+    participation = []
+    vtypes = {'Score': 'score', 'Letter': 'letter', 'Comments and Citations in support of the response': 'comments'}
+    height = sheet.get_highest_row()
+    width = sheet.get_highest_column()
+
+    headers = { x : (_lookup(sheet,x,1), _lookup(sheet,x,2))
+                for x in range(1,width+1) }
+    for y in range(3,height+1):
+        name = _lookup(sheet,1,y).strip()
+        assert name in iso_data, '[%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,name)
+        alpha2 = iso_data[name]
+        data = {}
+        data['alpha2'] = alpha2
+        data['name'] = name
+        for x in range(2,width+1):
+            value = _lookup(sheet,x,y)
+            if not value:
+                value = ''
+            value = value.strip()
+            question = headers[x][0].strip()
+            vtype = headers[x][1].strip()
+            vkey = vtypes[vtype]
+            if vkey == 'letter':
+                value = value.replace('.','')
+            if question in data:
+                data[question][vkey] = value
+            else:
+                data[question] = {}
+                data[question][vkey] = value
+        participation.append(data)
+    return participation
 
 def _parse_int_list(int_list):
     if int_list is '' or int_list is u'':
