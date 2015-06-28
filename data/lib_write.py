@@ -183,7 +183,7 @@ def _questions_as_csv(dataset, questions):
 
 def _scores_as_csv(dataset, years, countries):
     if years[0] == 2015:
-        q = range(1,140)
+        q = range(1,141)
         HEADERS = ['COUNTRY_CODE','YEAR']
         t3q = {134: 't3pbs', 135: 't3ebp', 136: 't3eb', 137: 't3iyr', 138: 't3myr', 139: 't3yer', 140: 't3ar'}
         for x in q:
@@ -197,7 +197,7 @@ def _scores_as_csv(dataset, years, countries):
             else:
                 HEADERS.append('Q '+str(x)+' (LETTER)')
     else:
-        q = range(1,125)
+        q = range(1,126)
         HEADERS = ['COUNTRY_CODE','YEAR']
         for x in q: HEADERS.append('Q '+str(x))
         for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
