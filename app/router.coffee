@@ -5,6 +5,7 @@ DownloadPage = require 'views/page/download'
 ProfilePage = require 'views/page/profile'
 AvailabilityPage = require 'views/page/availability'
 SplashPage = require 'views/page/splash'
+ParticipationPage = require 'views/page/participation'
 
 # Singleton report generator
 reportGenerator = require 'views/reportgenerator'
@@ -18,6 +19,7 @@ singletons =
     availabilityPage:  -> return @_avail = @_avail or new AvailabilityPage()
     downloadPage:  -> return @_download = @_download or new DownloadPage()
     splashPage:  -> return @_splash = @_splash or new SplashPage()
+    participationPage:  -> return @_participation = @_participation or new ParticipationPage()
 
 module.exports = class Router extends Backbone.Router
     routes:
@@ -28,6 +30,7 @@ module.exports = class Router extends Backbone.Router
         'rankings' : 'rankings'
         'availability' : 'availability'
         'download' : 'download'
+        'participation' : 'participation'
         'profile' : 'profile'
         'profile/:country' : 'profile'
 
@@ -68,6 +71,8 @@ module.exports = class Router extends Backbone.Router
       @setCurrent singletons.availabilityPage(), showReportGenerator=false
     download: ->
       @setCurrent singletons.downloadPage()
+    participation: ->
+      @setCurrent singletons.participationPage(), showReportGenerator=false
     profile: (country='') ->
       @setCurrent new ProfilePage(country)
 
