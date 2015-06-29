@@ -1,0 +1,112 @@
+#participation-table {
+    width: 100%;
+    .country {
+        text-align: right;
+        /* IE hack: put this inside a span or other line-level element..*/
+        a {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #000;
+        }
+        width: 140px;
+        max-width: 140px;
+    }
+    .flag {
+        width: 40px;
+        max-width: 40px;
+        text-align: center;
+    }
+    th {
+        text-align: center;
+        padding: 4px 0 4px 0;
+        .sortbyname {
+            display: block;
+            padding: 2px;
+            background: #eee;
+            border: 1px solid #ccc;
+            color: #000;
+            .caret { margin-top: 9px; opacity: 1.0; }
+            &.active {
+                color: #777;
+                .text { text-decoration: underline; }
+                .caret { opacity: 0.4; }
+            }
+            &:hover {
+                text-decoration: none;
+                .text { text-decoration: underline; }
+            }
+        }
+    }
+    td.letter {
+        text-align: center;
+        padding: 4px 5px 4px 5px;
+        img {
+            cursor: pointer;
+        }
+        &.inactive {
+            opacity: 0.3;
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+        &.active {
+            background: #eee;
+        }
+        &.selected {
+            &.active {
+                background: #eee;
+            }
+            &.inactive {
+                background: lighten(#54A954,40%);
+                opacity: 1;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    tr:hover {
+        background: rgba(238,238,238,0.4);
+    }
+    .table-header:hover {
+        background: none;
+    }
+    .comments-box {
+        padding: 0px;
+        .comments-template {
+            padding: 0;
+            border-top: 6px solid #eee;
+            .question,
+            .comments {
+                display: inline-block;
+                width: 448px;
+                vertical-align: top;
+                background: #eee;
+                padding: 5px 10px 10px 10px;
+                margin-bottom: 5px;
+                .question-text,
+                .comments-text {
+                    background: #ddd;
+                    padding: 8px;
+                    margin-bottom: 8px;
+                }
+                .answer {
+                    margin-top: 5px;
+                }
+                p {
+                    white-space: pre;
+                    white-space: pre-wrap;
+                    white-space: pre-line;
+                    white-space: -pre-wrap;
+                    white-space: -o-pre-wrap;
+                    white-space: -moz-pre-wrap;
+                    word-wrap: break-word;
+                }
+            }
+        }
+        &:hover{
+            background: none;
+        }
+    }
+}

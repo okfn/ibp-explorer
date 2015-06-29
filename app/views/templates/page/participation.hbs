@@ -1,0 +1,26 @@
+<div class="public-participation">
+    <h2>Public Participation in the Budget Process (2015)</h2>
+    </div>
+    <div class="country-nav-select-outer">
+        <h4>Find:&nbsp;&nbsp;
+        <select class="country-nav-select">
+            <option value="">Select a country...</option>
+            {{#each countries}}
+            <option value="{{alpha2}}">{{country}}</option>
+            {{/each}}
+        </select>
+        </h4>
+    </div>
+    <table id="participation-table">
+        <thead>
+            <tr class="table-header">
+                <th class="col1" colspan="2"><a href="#" class="sortbyname" data-sort="name"><span class="text">Name</span> <span class="caret"></span></a></th>
+                {{#each questions}}
+                <th class="col2"><a href="#" class="sortbyname" data-sort="{{this}}"><span class="text">{{this}}</span> <span class="caret"></span></a></th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
