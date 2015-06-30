@@ -1,3 +1,8 @@
+{{#if last}}
+<div>
+  <a id="profile-toggle" class="inactive" href="#">Show 2017 Calculator »</a>
+</div>
+{{/if}}
 <div class="scores">
   {{#each years}}
     <div class="year-box year-{{this}} badge">
@@ -14,9 +19,6 @@
 <br/>
 {{#if last}}
 <div>
-  <label class="checkbox" id="profile-toggle">
-      <input type="checkbox"> Show 2017 Calculator...
-  </label>
+  <p class="explanation future">Click on the letters below to calculate the possible outcome of the 2017 survey.<br/>Changing the value of a question automatically updates the score.</p>
 </div>
-<p class="explanation future">Click on the letters below to calculate the possible outcome of the 2017 survey.<br/>Changing the value of a question automatically updates the score.</p>
 {{/if}}
