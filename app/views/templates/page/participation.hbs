@@ -16,7 +16,11 @@
             <tr class="table-header">
                 <th class="col1" colspan="2"><a href="#" class="sortbyname" data-sort="name"><span class="text">Name</span> <span class="caret"></span></a></th>
                 {{#each questions}}
-                <th class="col2"><a href="#" class="sortbyname" data-sort="{{this}}"><span class="text">{{this}}</span> <span class="caret"></span></a></th>
+                <th class="col2" title="<table class='participation-tooltip'>
+                    <tr><th><b>Question {{number}}</b></th></tr>
+                    <tr><td>{{text}}</td></tr>
+                </table>">
+                <a href="#" class="sortbyname" data-sort="{{number}}"><span class="text">{{number}}</span> <span class="caret"></span></a></th>
                 {{/each}}
             </tr>
         </thead>

@@ -19,6 +19,9 @@ module.exports = class ProjectPage extends Backbone.View
             countries: @_getCountry()
         @$el.html template_page @renderData
         target.html @$el
+        $('th.col2').tooltip
+            delay: 50
+            animation: true
         @_reflow()
         $('.sortbyname').click @_sortByColumn
         $('.sortbyname[data-sort="'+@sortBy+'"]').click()
@@ -34,7 +37,8 @@ module.exports = class ProjectPage extends Backbone.View
     _getQuestions: =>
         questions = []
         for q in [119...134]
-            questions.push(q)
+            data = _EXPLORER_DATASET.question[q+'']
+            questions.push(data)
         return questions
 
     _getCountry: =>
