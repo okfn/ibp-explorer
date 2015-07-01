@@ -55,6 +55,7 @@ class ReportGenerator extends Backbone.View
         #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
         @$el.find('.nav a').bind 'click', @_expand_collapse
         @$el.find('.select-or-clear button').bind 'click', @_select_or_clear
+        @$el.find('.download-csv').bind 'click', @_download
         @$el.find('.toggle-box').tooltip
             placement: 'left'
             delay: 100
@@ -110,6 +111,7 @@ class ReportGenerator extends Backbone.View
         #@$el.find('.toggle-box').bind 'mouseout', @_hideQuestion
         @$el.find('.nav a').bind 'click', @_expand_collapse
         @$el.find('.select-or-clear button').bind 'click', @_select_or_clear
+        @$el.find('.download-csv').bind 'click', @_download
         @$el.find('.toggle-box').tooltip
             placement: 'left'
             delay: 100
@@ -264,5 +266,82 @@ class ReportGenerator extends Backbone.View
         @$el.find('.group-toggler').removeClass 'active'
         @_updated()
         return false
+
+    _writeLine: (out, x) => 
+        # Simple CSV escaping which rejects strings containing "
+        for index in [0...x.length]
+            element = x[index] or ''
+            assert not ('"' in element), 'Cannot encode string: '+element
+            if ',' in element
+                x[index] = '"' + element + '"'
+        out.push x.join(',')
+
+    _number_to_letter: (value) =>
+        """The given letters in the source data arent always there. 
+          'q102l' does not exist while 'q102' does.
+          Therefore it is safer to use this technique to extract a letter..."""
+        assert value in [-1,0,33,67,100], 'Invalid value: '+value
+        return {
+          '-1': 'e'
+          0: 'd'
+          33: 'c'
+          67: 'b'
+          100: 'a'
+        }[value]
+
+    _csvAnswers: (dataset,region,questionSet) =>
+        if @year != '2015'
+            datasetRegions = _EXPLORER_DATASET.regions_old
+            datasetCountry = _EXPLORER_DATASET.country_old
+            all_years = ['2006','2008','2010','2012']
+        else
+            datasetRegions = _EXPLORER_DATASET.regions
+            datasetCountry = _EXPLORER_DATASET.country
+            all_years = ['2015']
+        out = []
+        headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
+        for x in questionSet
+            headers.push x.toString()
+        for x in questionSet
+            headers.push x+'l'
+        @_writeLine out, headers
+        # Quickly lookup country data
+        tmp = {}
+        for x in datasetCountry
+            tmp[x.alpha2] = x
+        # Compile a CSV in the browser
+        selected_countries = []
+        for reg in region
+            for contained in datasetRegions[reg].contains
+                selected_countries.push(contained)
+        for country in dataset
+            if country.alpha2 not in selected_countries then continue
+            selected_year = $('.year-selector button.active').attr('data-year') || $('input[name="downloadyear"]:checked').val()
+            if $('#datasheet-toggles button.active').attr('data-year') == '2006'
+                selected_year = 'all'
+            if not (selected_year in all_years) 
+                selected_year = all_years
+            else
+                selected_year = [selected_year]
+            for year in selected_year
+                if year not of country then continue
+                row = [country.alpha2, country.country, year, country[year]]
+                for q in questionSet
+                    row.push tmp[country.alpha2]['db_'+year][q]
+                for q in questionSet
+                    value = tmp[country.alpha2]['db_'+year][q]
+                    row.push @_number_to_letter(value)
+                assert row.length==headers.length
+                @_writeLine out, row
+        return out
+
+    _download: (e) =>
+        csv = (@_csvAnswers @dataset, @region, @questionSet).join('\n')
+        csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv)
+        $('.download-csv').attr({
+            'download': 'custom-budget-report.csv',
+            'href': csvData,
+            'target': '_blank'
+        })
 
 module.exports = new ReportGenerator()
