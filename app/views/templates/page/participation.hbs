@@ -14,7 +14,10 @@
     <table id="participation-table">
         <thead>
             <tr class="table-header">
-                <th class="col1" colspan="2"><a href="#" class="sortbyname" data-sort="name"><span class="text">Name</span> <span class="caret"></span></a></th>
+                <th class="col1" colspan="2" rowspan="2"><a href="#" class="sortbyname" data-sort="name"><span class="text">Country</span> <span class="caret"></span></a></th>
+                <th class="help-header" colspan="15"><span class="text">Questions</span></th>
+            </tr>
+            <tr class="table-header">
                 {{#each questions}}
                 <th class="col2" title="<table class='participation-tooltip'>
                     <tr><th><b>Question {{number}}</b></th></tr>
