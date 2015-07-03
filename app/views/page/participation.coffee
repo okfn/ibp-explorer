@@ -131,7 +131,9 @@ module.exports = class ProjectPage extends Backbone.View
     _onNavChange: (e) =>
         value = $(e.delegateTarget).val()
         if value.length==2
+            $('#'+value).css('background-color', 'rgba(84, 169, 84, 0.2)')
             $('html, body').animate({
                 scrollTop: $('#'+value).offset().top
-            }, 1);
+            }, 500)
+            $('#'+value).animate({backgroundColor: 'rgba(255, 255, 255, 0.2)'}, 4000)
             $(e.delegateTarget).val('').trigger('liszt:updated')
