@@ -30,6 +30,7 @@ module.exports = class ProjectPage extends Backbone.View
         reportGenerator.bind 'update', @_repaint
 
     renderPage: (target) =>
+        $(window).scrollTop(0)
         @$el.html template_page()
         target.html @$el
         map = @$el.find('#map')

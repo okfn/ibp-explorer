@@ -18,6 +18,7 @@ module.exports = class TimelinePage extends Backbone.View
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
         reportGenerator.update('2015', collapsed, true)
+        $(window).scrollTop(0)
         # Write to DOM
         @$el.html template_page()
         target.html @$el

@@ -35,6 +35,7 @@ module.exports = class ProfilePage extends Backbone.View
             collapsed = true
         @year = $('#datasheet-toggles button.active').attr('data-year') || '2015'
         reportGenerator.update(@year, collapsed)
+        $(window).scrollTop(0)
         renderData =
             alpha2: @alpha2
             countries: _EXPLORER_DATASET.country

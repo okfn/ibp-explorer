@@ -23,6 +23,7 @@ module.exports = class ProjectPage extends Backbone.View
         reportGenerator.bind 'update', @_reflow
 
     renderPage: (target) =>
+        $(window).scrollTop(0)
         @$el.html template_page()
         target.html @$el
         $('.sortbyname').click @_sortByNameToggle
