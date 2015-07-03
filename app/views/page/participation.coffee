@@ -93,40 +93,61 @@ module.exports = class ProjectPage extends Backbone.View
         tbody.append template_row @renderData
         $('#participation-table .letter').click @_onClickQuestion
 
+    _boxHeight: (country) =>
+        # set question and comments boxes height
+        qtheight = $('.comments-box.' + country + ' .question .question-text').height()
+        ctheight = $('.comments-box.' + country + ' .comments .comments-text').height()
+        if qtheight > ctheight
+            $('.comments-box.' + country + ' .comments .comments-text').height(qtheight)
+        else
+            $('.comments-box.' + country + ' .question .question-text').height(ctheight)
+        qheight = $('.comments-box.' + country + ' .question').height()
+        cheight = $('.comments-box.' + country + ' .comments').height()
+        if qheight > cheight
+            $('.comments-box.' + country + ' .comments').height(qheight)
+        else
+            $('.comments-box.' + country + ' .question').height(cheight)
+
+    _completeAnswer: (country, number) =>
+        q = _EXPLORER_DATASET.question[number]
+        countries = @_getCountry()
+        for obj in countries
+            if obj['alpha2'] == country
+                for elt in obj['question']
+                    if elt['number'] == number
+                        q['comments'] = elt['comments']
+        return q
+
     _onClickQuestion: (e) =>
         target = $(e.delegateTarget)
         number = target.attr('data-question-number')
         country = target.parent('tr').attr('id')
-        q = _EXPLORER_DATASET.question[number]
-        @$el.find('.comments-box.' + country).empty()
         cbox = $('.comments-box.' + country)
-        if target.hasClass 'active'
-            target.removeClass 'active'
-            target.addClass 'inactive'
-            @$el.find('.comments-box.' + country).empty()
+        if @sortBy == number
+            if target.hasClass 'active'
+                target.removeClass 'active'
+                target.addClass 'inactive'
+                cbox.empty()
+            else
+                target.removeClass 'inactive'
+                target.addClass 'active'
+                q = @_completeAnswer(country, number)
+                cbox.append(template_comments q)
+                @_boxHeight(country)
         else
-            @$el.find('tr[id='+country+'] td.letter.active').removeClass('active').addClass('inactive')
+            $('.comments-box').empty()
+            @$el.find('td.letter.active').removeClass('active').addClass('inactive')
+            $('.sortbyname[data-sort="' + number + '"]').click()
+            $('html, body').animate({
+                scrollTop: $('#'+country).offset().top
+            }, 500)
+            target = $('tr[id="'+country+'"] td[data-question-number="'+number+'"]')
             target.removeClass 'inactive'
             target.addClass 'active'
-            countries = @_getCountry()
-            for obj in countries
-                if obj['alpha2'] == country
-                    for elt in obj['question']
-                        if elt['number'] == number
-                            q['comments'] = elt['comments']
+            q = @_completeAnswer(country, number)
+            cbox = $('.comments-box.' + country)
             cbox.append(template_comments q)
-            qtheight = $('.comments-box.' + country + ' .question .question-text').height()
-            ctheight = $('.comments-box.' + country + ' .comments .comments-text').height()
-            if qtheight > ctheight
-                $('.comments-box.' + country + ' .comments .comments-text').height(qtheight)
-            else
-                $('.comments-box.' + country + ' .question .question-text').height(ctheight)
-            qheight = $('.comments-box.' + country + ' .question').height()
-            cheight = $('.comments-box.' + country + ' .comments').height()
-            if qheight > cheight
-                $('.comments-box.' + country + ' .comments').height(qheight)
-            else
-                $('.comments-box.' + country + ' .question').height(cheight)
+            @_boxHeight(country)
 
     _onNavChange: (e) =>
         value = $(e.delegateTarget).val()
