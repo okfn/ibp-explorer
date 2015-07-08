@@ -142,7 +142,7 @@ def _read_groupings(g_workbook, sheet_name):
             while y<height and _lookup(sheet,2,y+1) is not None:
                 y += 1
                 group['entries'].append({
-                  'title': str(_lookup(sheet,1,y)) + '. ' + _lookup(sheet,2,y),
+                  'title': _lookup(sheet,2,y),
                   'qs': _parse_int_list( _lookup(sheet,3,y) ),
                 })
             out.append( group )
