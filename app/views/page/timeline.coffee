@@ -128,10 +128,7 @@ module.exports = class TimelinePage extends Backbone.View
         for reg in region
             for contained in _EXPLORER_DATASET.regions[reg].contains
                 selected_countries.push(contained)
-        html += template_timeline_column
-            year: 2006
-            data: @_buildRankingTable(2006, dataset_unrounded, selected_countries)
-        for year in [2008,2010,2012]
+        for year in [2006,2008,2010,2012]
             html += template_timeline_column_abbr
                 year: year
                 data: @_buildRankingTable(year, dataset_unrounded, selected_countries)
