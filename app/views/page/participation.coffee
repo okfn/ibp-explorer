@@ -14,6 +14,7 @@ module.exports = class ProjectPage extends Backbone.View
         @participation = _EXPLORER_DATASET.public_participation
 
     renderPage: (target) =>
+        $(window).scrollTop(0)
         @renderData =
             questions: @_getQuestions()
             countries: @_getCountry()
