@@ -5,7 +5,7 @@ util = require 'util'
 
 module.exports = class ProjectPage extends Backbone.View
 
-    sortBy: '119'
+    sortBy: '114'
 
     ##################
     ## Public methods
@@ -37,20 +37,24 @@ module.exports = class ProjectPage extends Backbone.View
     ##################
     _getQuestions: =>
         questions = []
-        for q in [119...134]
+        allQ = [114]
+        allQ.push(n) for n in [119...134]
+        for q in allQ
             data = _EXPLORER_DATASET.question[q+'']
             questions.push(data)
         return questions
 
     _getCountry: =>
         countries = []
+        allQ = [114]
+        allQ.push(n) for n in [119...134]
         for ctry in @participation
             data =
                 alpha2: ctry.alpha2
                 country: ctry.name
                 question: []
             obj = {}
-            for q in [119...134]
+            for q in allQ
                 obj =
                     number: q+''
                     score: ctry[q+'']['score']
