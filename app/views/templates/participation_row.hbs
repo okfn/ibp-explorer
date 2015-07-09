@@ -2,6 +2,7 @@
     <tr id="{{alpha2}}" data-country="{{country}}">
         <td class="country"><a href="#profile/{{alpha2}}">{{country}}</a></td>
         <td class="flag"><img src="images/flags/{{alpha2}}.GIF"/></td>
+        <td class="score">{{score}}</td>
         {{#each question}}
         <td class="letter inactive" data-question-number="{{number}}">{{#if letter}}<img src="images/letter/{{this.letter}}.png"/>{{else}}-{{/if}}</td>
         {{/each}}

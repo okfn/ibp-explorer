@@ -44,6 +44,16 @@ module.exports = class ProjectPage extends Backbone.View
             questions.push(data)
         return questions
 
+    _calculateScore: (country) =>
+        acc = 0
+        count = 0
+        for x in country['question']
+            if parseFloat(x['score']) >= 0
+                acc += parseFloat(x['score'])
+                count++
+        if (count==0) then return -1
+        return Math.round(acc/count)
+
     _getCountry: =>
         countries = []
         allQ = [114]
@@ -61,6 +71,7 @@ module.exports = class ProjectPage extends Backbone.View
                     letter: ctry[q+'']['letter']
                     comments: ctry[q+'']['comments']
                 data.question.push(obj)
+            data.score = @_calculateScore(data)
             countries.push(data)
         return countries
 
@@ -71,7 +82,7 @@ module.exports = class ProjectPage extends Backbone.View
         target.addClass 'active'
         @sortBy = target.attr('data-sort')
         @_reflow()
-        if @sortBy != 'name'
+        if @sortBy != 'name' and @sortBy != 'score'
             @$el.find('td[data-question-number="'+@sortBy+'"].letter').addClass('selected')
         return false
 
@@ -93,6 +104,8 @@ module.exports = class ProjectPage extends Backbone.View
         data = @renderData['countries']
         if @sortBy == 'name'
             data.sort util.sortFunctionByName
+        else if @sortBy == 'score'
+            data.sort util.sortFunction
         else
             data.sort @_sorted
         tbody.append template_row @renderData
