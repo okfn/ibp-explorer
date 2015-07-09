@@ -5,11 +5,25 @@
     </div>
     <div class="country-nav-select-outer">
         <h4>
-        <select class="country-nav-select">
+        <select id="select-country" class="country-nav-select">
             <option value="">Find a country...</option>
             {{#each countries}}
             <option value="{{alpha2}}">{{country}}</option>
             {{/each}}
+        </select>
+        </h4>
+        <h4>
+        <select id="select-region" class="country-nav-select">
+            <option value="">Select a region...</option>
+            <option value="region-0">Entire World</option>
+            <option value="region-1">East Asia &amp; Pacific</option>
+            <option value="region-2">Eastern Europe</option>
+            <option value="region-3">Central Asia</option>
+            <option value="region-4">Latin America &amp; Caribbean</option>
+            <option value="region-5">Middle East &amp; North Africa</option>
+            <option value="region-6">South Asia</option>
+            <option value="region-7">Sub-Saharan Africa</option>
+            <option value="region-8">Western Europe &amp; the U.S.</option>
         </select>
         </h4>
         <p class="participation-links">

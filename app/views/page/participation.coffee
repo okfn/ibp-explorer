@@ -15,6 +15,10 @@ module.exports = class ProjectPage extends Backbone.View
 
     renderPage: (target) =>
         $(window).scrollTop(0)
+        @region = '0'
+        @countriesIncluded = []
+        for contained in _EXPLORER_DATASET.regions[parseInt(@region)].contains
+            @countriesIncluded.push(contained)
         @renderData =
             questions: @_getQuestions()
             countries: @_getCountry()
@@ -27,10 +31,14 @@ module.exports = class ProjectPage extends Backbone.View
         $('.sortbyname').click @_sortByColumn
         $('.sortbyname[data-sort="'+@sortBy+'"]').click()
         $('tr[data-country]:first td[data-question-number="'+@sortBy+'"]').click()
-        nav = @$el.find('.country-nav-select')
+        nav = @$el.find('#select-country')
         nav.chosen()
         nav.val(@alpha2).trigger('liszt:updated')
         nav.bind('change',@_onNavChange)
+        navReg = @$el.find('#select-region')
+        navReg.chosen()
+        navReg.val('').trigger('liszt:updated')
+        navReg.bind('change',@_onRegChange)
 
     ##################
     ## Private methods
@@ -59,20 +67,21 @@ module.exports = class ProjectPage extends Backbone.View
         allQ = [114]
         allQ.push(n) for n in [119...134]
         for ctry in @participation
-            data =
-                alpha2: ctry.alpha2
-                country: ctry.name
-                question: []
-            obj = {}
-            for q in allQ
-                obj =
-                    number: q+''
-                    score: ctry[q+'']['score']
-                    letter: ctry[q+'']['letter']
-                    comments: ctry[q+'']['comments']
-                data.question.push(obj)
-            data.score = @_calculateScore(data)
-            countries.push(data)
+            if ctry.alpha2 in @countriesIncluded
+                data =
+                    alpha2: ctry.alpha2
+                    country: ctry.name
+                    question: []
+                obj = {}
+                for q in allQ
+                    obj =
+                        number: q+''
+                        score: ctry[q+'']['score']
+                        letter: ctry[q+'']['letter']
+                        comments: ctry[q+'']['comments']
+                    data.question.push(obj)
+                data.score = @_calculateScore(data)
+                countries.push(data)
         return countries
 
     _sortByColumn: (e) =>
@@ -176,3 +185,30 @@ module.exports = class ProjectPage extends Backbone.View
             }, 500)
             $('#'+value).animate({backgroundColor: 'rgba(255, 255, 255, 0.2)'}, 4000)
             $(e.delegateTarget).val('').trigger('liszt:updated')
+
+    _onRegChange: (e) =>
+        value = $(e.delegateTarget).val().replace('region-','')
+        @region = value
+        if not @region
+            @region = '0'
+        @countriesIncluded = []
+        for contained in _EXPLORER_DATASET.regions[parseInt(@region)].contains
+            @countriesIncluded.push(contained)
+        @renderData =
+            questions: @_getQuestions()
+            countries: @_getCountry()
+        @$el.html template_page @renderData
+        $('th.col2').tooltip
+            delay: 50
+            animation: true
+        @_reflow()
+        $('.sortbyname').click @_sortByColumn
+        $('.sortbyname[data-sort="'+@sortBy+'"]').click()
+        nav = @$el.find('#select-country')
+        nav.chosen()
+        nav.val(@alpha2).trigger('liszt:updated')
+        nav.bind('change',@_onNavChange)
+        navReg = @$el.find('#select-region')
+        navReg.chosen()
+        navReg.val('region-' + @region).trigger('liszt:updated')
+        navReg.bind('change',@_onRegChange)
