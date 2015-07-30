@@ -30,7 +30,6 @@ module.exports = class ProjectPage extends Backbone.View
         @_reflow()
         $('.sortbyname').click @_sortByColumn
         $('.sortbyname[data-sort="'+@sortBy+'"]').click()
-        $('tr[data-country]:first td[data-question-number="'+@sortBy+'"]').click()
         nav = @$el.find('#select-country')
         nav.chosen()
         nav.val(@alpha2).trigger('liszt:updated')
