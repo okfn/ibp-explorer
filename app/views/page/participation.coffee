@@ -5,7 +5,7 @@ util = require 'util'
 
 module.exports = class ProjectPage extends Backbone.View
 
-    sortBy: '114'
+    sortBy: 'name'
 
     ##################
     ## Public methods
