@@ -27,8 +27,9 @@ class ReportGenerator extends Backbone.View
     render: (target) =>
         if @year != '2015'
             renderData = 
-                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,3)
-                groupings1: _EXPLORER_DATASET.groupings_old.slice(3,5)
+                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,1)
+                groupings1: _EXPLORER_DATASET.groupings_old.slice(1,3)
+                groupings2: _EXPLORER_DATASET.groupings_old.slice(3,5)
                 question: ( _EXPLORER_DATASET.question_old[x] for x of _EXPLORER_DATASET.question_old )
                 country: _EXPLORER_DATASET.country_old
                 regions: _EXPLORER_DATASET.regions_old
@@ -36,7 +37,8 @@ class ReportGenerator extends Backbone.View
         else
             renderData = 
                 groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
-                groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
+                groupings1: _EXPLORER_DATASET.groupings.slice(1,2)
+                groupings2: _EXPLORER_DATASET.groupings.slice(2,3)
                 question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
                 country: _EXPLORER_DATASET.country
                 regions: _EXPLORER_DATASET.regions
@@ -85,8 +87,9 @@ class ReportGenerator extends Backbone.View
         @year = selectedYear
         if selectedYear != '2015'
             renderData = 
-                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,3)
-                groupings1: _EXPLORER_DATASET.groupings_old.slice(3,5)
+                groupings0: _EXPLORER_DATASET.groupings_old.slice(0,1)
+                groupings1: _EXPLORER_DATASET.groupings_old.slice(1,3)
+                groupings2: _EXPLORER_DATASET.groupings_old.slice(3,5)
                 question: ( _EXPLORER_DATASET.question_old[x] for x of _EXPLORER_DATASET.question_old )
                 country: _EXPLORER_DATASET.country_old
                 regions: _EXPLORER_DATASET.regions_old
@@ -94,7 +97,8 @@ class ReportGenerator extends Backbone.View
         else
             renderData = 
                 groupings0: _EXPLORER_DATASET.groupings.slice(0,1)
-                groupings1: _EXPLORER_DATASET.groupings.slice(1,3)
+                groupings1: _EXPLORER_DATASET.groupings.slice(1,2)
+                groupings2: _EXPLORER_DATASET.groupings.slice(2,3)
                 question: ( _EXPLORER_DATASET.question[x] for x of _EXPLORER_DATASET.question )
                 country: _EXPLORER_DATASET.country
                 regions: _EXPLORER_DATASET.regions
