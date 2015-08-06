@@ -21,10 +21,52 @@
 }
 .download-data1 {
   width: 440px;
+  display: inline-block;
+  vertical-align: top;
 }
 .download-data2 {
   width: 440px;
   margin-left: 20px;
   padding-left: 20px;
-  border-left: 1px dashed #ccc;
+  display: inline-block;
+  vertical-align: top;
+}
+
+div.dl-nav-select-outer {
+  margin: 10px 0 0 10px;
+  h4 {
+    vertical-align: middle;
+  }
+}
+
+#dl-mode {
+  table {
+    border-top: 0;
+    .first-row {
+      th {
+        border-top: 1px solid #ddd;
+      }
+      th.blank {
+        border: none;
+      }
+    }
+    th.blank {
+      border: none;
+    }
+  }
+  table.comp {
+    border: none;
+    td, th {
+      border: none;
+      vertical-align: middle;
+    }
+  }
+}
+
+.dl-years {
+  text-align: center;
+  .dl-years-info {
+    padding-right: 10px;
+    vertical-align: bottom;
+  }
 }

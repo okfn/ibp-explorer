@@ -1,0 +1,106 @@
+{{#if fd}}
+  <table class="table table-bordered">
+      <tr class="first-row"><th class="blank" style="width: 300px;"></th><th colspan="2" style="text-align: center;">2006-2012</th><th colspan="2" style="text-align: center;">2015</th></tr>
+      <tr><th class="blank"></th><th style="text-align: right;">Format</th><th>Filename</th><th style="text-align: right;">Format</th><th>Filename</th></tr>
+      <tr>
+        <td rowspan="3"><strong>FULL DATASETS</strong><br />encompassing all surveys are available in multiple formats.</td>
+      {{#each excel}}
+        <td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td>
+      {{/each}}
+      </tr>
+      <tr>
+      {{#each csv}}
+        <td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td>
+      {{/each}}
+      </tr>
+      <tr>
+      {{#each json}}
+        <td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td>
+      {{/each}}
+      </tr>
+  </table>
+{{/if}}
+
+{{#if sf}}
+  <table class="table table-bordered">
+      <tr class="first-row"><th class="blank" style="width: 300px;"></th><th colspan="2" style="text-align: center;">2006-2012</th><th colspan="2" style="text-align: center;">2015</th></tr>
+      <tr><th class="blank"></th><th style="text-align: right;">Format</th><th>Filename</th><th style="text-align: right;">Format</th><th>Filename</th></tr>
+      <tr>
+        <td rowspan="3"><strong>STATISTICAL FILES</strong><br />complement the datasets and have been prepared for researchers.</td>
+        <td style="text-align: right;">Excel</td><td><a href="downloads/OBI 2006-2012 ALL for web.xlsx">Full Excel Source</a> (649kb)</td>
+        <td style="text-align: right;">Excel</td><td><a href="#">Full Excel Source</a> ()</td>
+      </tr>
+      <tr>
+        <td style="text-align: right;">PDF</td><td><a href="downloads/OBI 2006-2012 dataset codebook.pdf">Dataset Codebook</a> (343kb)</td>
+        <td style="text-align: right;">PDF</td><td><a href="#">Dataset Codebook</a> ()</td>
+      </tr>
+      <tr>
+        <td style="text-align: right;">STATA</td><td><a href="downloads/OBI 2006-2012 dataset for web.dta">STATA package</a> (408kb)</td>
+        <td style="text-align: right;">STATA</td><td><a href="#">STATA package</a> ()</td>
+      </tr>
+  </table>
+{{/if}}
+
+{{#if cq}}
+  <table class="table table-bordered comp">
+      <tr>
+        <td style="width: 450px;"><strong>FULLY COMPARABLE QUESTIONS</strong><br />accross <strong>all</strong> survey rounds (2006-2015) are available here.</td>
+        <td><a href="#">Excel</a> ()</td>
+        <td><a href="#">CSV</a> ()</td>
+        <td><a href="#">JSON</a> ()</td>
+      </tr>
+  </table>
+{{/if}}
+
+{{#if cr}}
+<div>
+  <div class="download-data1">
+    <p><strong>CUSTOM REPORTS</strong> can be saved!<br />
+    The report generated in your browser can be saved as a CSV. Click on "Save To Disk" below, or in the "Customize Report" box, or
+    copy the contents of the textbox here:</p>
+  </div>
+  <div class="download-data2">
+    <p class="dl-years"><span class="dl-years-info">Select year:</span>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2006">
+        2006
+    </label>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2008">
+        2008
+    </label>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2010">
+        2010
+    </label>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2012">
+        2012
+    </label>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2015" checked>
+        2015
+    </label>
+    </p>
+    <p class="dl-years"><span class="dl-years-info">or</span>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="all">
+        2006-2012
+    </label>
+    <label class="radio inline">
+      <input type="radio" name="downloadyear" value="2015">
+        2015
+    </label>
+    </p>
+
+    <p id="downloadify">
+      <b>"Save To Disk" not available. (Requires Flash 10).</b><br/> This file cannot be downloaded automatically: Click on the textbox, then use cut-and-paste to save the contents into a text file on your computer.
+    </p>
+    <textarea id="custom-csv"" readonly>
+      Loading...
+    </textarea>
+  </div>
+</div>
+{{/if}}
+
+<div class="clearfix"></div>

@@ -1,4 +1,5 @@
 template_page = require 'views/templates/page/download'
+template_files = require 'views/templates/download_files'
 
 reportGenerator = require 'views/reportgenerator'
 
@@ -6,33 +7,19 @@ module.exports = class DownloadPage extends Backbone.View
     initialize: =>
         reportGenerator.bind 'update', @_repaint
 
-    tx: -> $('#custom-csv')
-
     renderPage: (target) =>
         collapsed = false
         if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
             collapsed = true
         @year = '2015'
         reportGenerator.update(@year, collapsed)
-        @$el.html template_page _EXPLORER_DATASET
+        @$el.html template_page
         target.html @$el
-        @_repaint()
-        @tx().bind( 'click', => @tx().select() )
-        $('input[name="downloadyear"]').bind('change', @changeyear)
-        # Create downloadify options
-        options = 
-            filename: -> 'custom-budget-report.csv'
-            data: => $('#custom-csv').val()
-            onComplete: -> alert('Your File Has Been Saved!')
-            onCancel: -> null
-            onError: -> null
-            swf: 'downloadify.swf'
-            downloadImage: 'images/download.png'
-            width: 100
-            height: 30
-            transparent: true
-            append: false
-        Downloadify.create 'downloadify',options
+        # Set up nav
+        nav = @$el.find('.dl-nav-select')
+        nav.chosen()
+        nav.val('').trigger('liszt:updated')
+        nav.bind('change',@_onNavChange)
     
     changeyear: (e) =>
         target = $(e.delegateTarget)
@@ -134,4 +121,60 @@ module.exports = class DownloadPage extends Backbone.View
 
     _repaint: (dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) =>
         #@tx().html (@_csvQuestions questionSet).join('\n')
-        @tx().html (@_csvAnswers dataset,region,questionSet).join('\n')
+        $('#custom-csv').html (@_csvAnswers dataset,region,questionSet).join('\n')
+
+    _onNavChange: (e) =>
+        value = $(e.delegateTarget).val()
+        download = $('#dl-mode')
+        download.empty()
+        if value == 'fd'
+            renderFiles =
+                fd: true
+                sf: false
+                cq: false
+                cr: false
+                excel : [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads[0]]
+                csv : [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads[1]]
+                json : [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads[2]]
+        else if value == 'sf'
+            renderFiles =
+                fd: false
+                sf: true
+                cq: false
+                cr: false
+        else if value == 'cq'
+            renderFiles =
+                fd: false
+                sf: false
+                cq: true
+                cr: false
+        else if value == 'cr'
+            renderFiles =
+                fd: false
+                sf: false
+                cq: false
+                cr: true
+        else
+            renderFiles =
+                fd: false
+                sf: false
+                cq: false
+                cr: false
+        download.append template_files renderFiles
+        if value == 'cr'
+            $('#custom-csv').bind( 'click', => $('#custom-csv').select() )
+            $('input[name="downloadyear"]').bind('change', @changeyear)
+            @_repaint()
+            options = 
+                filename: -> 'custom-budget-report.csv'
+                data: => $('#custom-csv').val()
+                onComplete: -> alert('Your File Has Been Saved!')
+                onCancel: -> null
+                onError: -> alert('Error')
+                swf: 'downloadify.swf'
+                downloadImage: 'images/download.png'
+                width: 100
+                height: 30
+                transparent: true
+                append: false
+            Downloadify.create 'downloadify',options

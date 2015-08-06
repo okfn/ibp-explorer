@@ -1,69 +1,20 @@
-<div class="pull-left download-data1">
-  <h2>Download the Entire Dataset</h2>
-  <p>The entire datasets encompassing the 2006-2012 surveys and the 2015 survey are available in multiple formats:</p>
-  <p><strong>2015 survey:</strong></p>
-  <table class="table table-bordered" style="width: 330px;">
-      <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
-      {{#each downloads}}
-        <tr><td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td></tr>
-      {{/each}}
-  </table>
-  <p><strong>2006-2012 surveys:</strong></p>
-  <table class="table table-bordered" style="width: 330px;">
-      <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
-      {{#each downloads_old}}
-        <tr><td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td></tr>
-      {{/each}}
-  </table>
-  <p>Further statistical files have been prepared for researchers:</p>
-  <p><strong>2015 survey:</strong></p>
-  <table class="table table-bordered" style="width: 330px;"
-      <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
-      <tr><td style="text-align: right;">Excel</td><td><a href="#">Full Excel Source 2015</a> ()</td></tr>
-      <tr><td style="text-align: right;">PDF</td><td><a href="#">Dataset Codebook 2015</a> ()</td></tr>
-      <tr><td style="text-align: right;">STATA</td><td><a href="#">STATA package 2015</a> ()</td></tr>
-  </table>
-  <p><strong>2006-2012 surveys:</strong></p>
-  <table class="table table-bordered" style="width: 330px;"
-      <tr><th style="text-align: right;">Format</th><th>Filename</th></tr>
-      <tr><td style="text-align: right;">Excel</td><td><a href="downloads/OBI 2006-2012 ALL for web.xlsx">Full Excel Source 2006-2012</a> (649kb)</td></tr>
-      <tr><td style="text-align: right;">PDF</td><td><a href="downloads/OBI 2006-2012 dataset codebook.pdf">Dataset Codebook 2006-2012</a> (343kb)</td></tr>
-      <tr><td style="text-align: right;">STATA</td><td><a href="downloads/OBI 2006-2012 dataset for web.dta">STATA package 2006-2012</a> (408kb)</td></tr>
-  </table>
+<div>
+  <h2>Download Data</h2>
 </div>
-<div class="pull-left download-data2">
-  <h2>Save Custom Report</h2>
-  <p>The report generated in your browser can be saved to disk as a CSV. Copy the contents of the textbox below, or click "Save To Disk".</p>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="all">
-      2006-2012
-  </label>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="2006">
-      2006
-  </label>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="2008">
-      2008
-  </label>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="2010">
-      2010
-  </label>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="2012">
-      2012
-  </label>
-  <label class="radio inline">
-    <input type="radio" name="downloadyear" value="2015" checked>
-      2015
-  </label>
 
-  <p id="downloadify">
-    <b>"Save To Disk" not available. (Requires Flash 10).</b><br/> This file cannot be downloaded automatically: Click on the textbox, then use cut-and-paste to save the contents into a text file on your computer.
-  </p>
-  <textarea id="custom-csv"" readonly>
-    Loading...
-  </textarea>
+<div class="dl-nav-select-outer">
+<h3>Download:&nbsp;&nbsp;
+<select class="dl-nav-select">
+<option value="">Choose one...</option>
+<option value="fd">Full datasets</option>
+<option value="sf">Statistical files</option>
+<option value="cq">Comparable questions</option>
+<option value="cr">Custom reports</option>
+</select></h3>
+</div>
+
+<div id="dl-selection">
+  <div id="dl-mode">
+  </div>
 </div>
 <div class="clearfix"></div>
