@@ -12,6 +12,12 @@ DEFAULT_ISOFILE = 'country_to_iso3166.json'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
 DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
 
+DOWNLOADS_COMPARABLE = {}
+DOWNLOADS_COMPARABLE['xlsx'] = 'ibp_data_comparable.xlsx'
+DOWNLOADS_COMPARABLE['csv'] = 'ibp_data_%s_comparable.csv'
+DOWNLOADS_COMPARABLE['csv_zip'] = 'ibp_data_csv_comparable.zip'
+DOWNLOADS_COMPARABLE['json'] = 'ibp_data_comparable.json'
+
 DOWNLOADS_2015 = {}
 DOWNLOADS_2015['xlsx'] = 'ibp_data_2015.xlsx'
 DOWNLOADS_2015['csv'] = 'ibp_data_%s_2015.csv'
@@ -27,7 +33,23 @@ DOWNLOADS_PRE_2015['json'] = 'ibp_data_2006-2012.json'
 if __name__=='__main__':
     # Get ISO data
     iso_data = json.load(open(DEFAULT_ISOFILE))
-    
+
+    # Comparable survey data
+    datafiles = {}
+    datafiles['q_xlsx'] = 'OBS2015_QuestionsNumbers+Text.xlsx'
+    datafiles['q_xlsx_sheet'] = 'Sheet1'
+    datafiles['a_xlsx'] = 'Comparable_OBS_Timeseries.xlsx'
+    datafiles['a_xlsx_sheet'] = 'COBI 2006-2015 data'
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
+    datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
+    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012','2015']
+    datafiles['years'] = [2006,2008,2010,2012,2015]
+
+    comparable_dataset = lib_read.read( iso_data, datafiles, True )
+    comparable_dataset = lib_write.write_downloads(comparable_dataset, iso_data, DEFAULT_DOWNLOADFOLDER, DOWNLOADS_COMPARABLE, datafiles['years'])
+
     # Pre-2015 survey data
     datafiles = {}
     datafiles['q_xlsx'] = 'OBS2012_QuestionsNumbers+Text.xlsx'

@@ -197,8 +197,8 @@ def _scores_as_csv(dataset, years, countries):
             else:
                 HEADERS.append('Q '+str(x)+' (LETTER)')
     else:
-        q = range(1,126)
         HEADERS = ['COUNTRY_CODE','YEAR']
+        q = sorted([int(d) for d in dataset[countries][0].get('db_%d'%years[-1]).keys() if unicode.isdigit(d)])
         for x in q: HEADERS.append('Q '+str(x))
         for x in q: HEADERS.append('Q '+str(x)+' (LETTER)')
     DATA = []
