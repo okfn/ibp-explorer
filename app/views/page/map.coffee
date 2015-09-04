@@ -38,6 +38,7 @@ module.exports = class ProjectPage extends Backbone.View
           map: MAP_NAME
           series: {
             regions: [{}]
+            markers: [{}]
           }
           regionStyle: 
               initial: 
@@ -49,6 +50,18 @@ module.exports = class ProjectPage extends Backbone.View
           onRegionLabelShow: @_labelShow
           onRegionClick: @_clickCountry
           zoomOnScroll: false
+          markerStyle:
+            initial:
+              fill: '#cccccc'
+              stroke: 'none'
+              'stroke-width' : '1.0'
+              'stroke-opacity' : '0.5'
+            hover:
+              stroke: 'none'
+              'fill-opacity' : '0.8'
+          markers: []
+          onMarkerLabelShow: @_labelShow
+          onMarkerClick: @_clickCountry
         }
         @mapObject = map.vectorMap('get', 'mapObject')
 
@@ -101,7 +114,7 @@ module.exports = class ProjectPage extends Backbone.View
             @mapColor[x] = 0
         if reportGenerator.questionSet.length>0
             for country in dataset
-                if not (country.alpha2 of countries_in_map)
+                if not (country.alpha2 of countries_in_map) and country.alpha2 != 'ST'
                     # This country code isn't an available vector
                     #console.log 'Warning: Cannot map country '+k
                     continue
@@ -123,10 +136,17 @@ module.exports = class ProjectPage extends Backbone.View
                 @mapData[country.alpha2] = value 
         # Repaint the map
         @mapObject.series.regions[0].setValues @mapColor
+        stcolor = (stcolor - (stcolor%20)) / 20
+        stcolor = COLOR_SCHEME[stcolor]
+        @mapObject.removeAllMarkers
+        @mapObject.addMarker(0, {latLng: [0.33, 6.73], name: 'São Tomé e Príncipe'}, [@mapColor['ST']])
 
     _labelShow: (e,@mapLabel,code) =>
-      if not (code in @countriesInSurvey)
+      if (not (code in @countriesInSurvey) and code != '0') or (code == '0' and @year == '2006')
           @mapLabel.css {'opacity':'0.5'}
+      else if code == '0' and @year != '2006'
+          @mapLabel.css {'opacity':'1.0'}
+          @mapLabel.html(@mapLabel.html()+': '+@mapData['ST'])
       else
           @mapLabel.css {'opacity':'1.0'}
           @mapLabel.html(@mapLabel.html()+': '+@mapData[code])
@@ -135,5 +155,8 @@ module.exports = class ProjectPage extends Backbone.View
         if alpha2 in @countriesInSurvey
             if @mapLabel.length then @mapLabel.remove()
             window.location = '#profile/'+alpha2
+        if alpha2 == '0' and 'ST' in @countriesInSurvey
+          if @mapLabel.length then @mapLabel.remove()
+          window.location = '#profile/ST'
 
 
