@@ -1,6 +1,14 @@
 #report-generator {
   margin-bottom: 20px;
   position: relative;
+  background-color: #fff;
+  font-size: 15px;
+  .accordion-group {
+    border: none;
+    .accordion-toggle {
+      padding: 10px 15px;
+    }
+  }
   .pre-subtitle {
   }
   .subtitle {
@@ -50,7 +58,7 @@
     @per_row: 15;
     width: (@per_row*23px);
     padding-top: 4px;
-    padding-left: 7px;
+    padding-left: 37px;
     .toggle-box {
       background: #f0f0f0;
       color: #ccc;
@@ -62,6 +70,7 @@
       margin-top: -1px;
       float: left;
       width: 23px;
+      height: 20px;
       text-align: center;
       padding-top: 2px;
       padding-bottom: 1px;
@@ -69,7 +78,7 @@
       letter-spacing: -1px;
       &:hover,
       &.hover {
-        background: #fdd !important;
+        background: rgba(255, 122, 34, 0.4) !important;
         color: #888;
           }
           &.select {
@@ -85,7 +94,7 @@
     h6 {
       line-height: 15px;
       vertical-align: bottom;
-      font-size: 11px;
+      font-size: 12px;
       border-bottom: 1px solid #ccc;
       margin: 6px 0 4px 0;
       padding: 0 5px 2px 5px;
@@ -95,12 +104,9 @@
       list-style-type: none;
       li {
         line-height: 13px;
-        font-size: 11px;
+        font-size: 12px;
         a {
           display: block;
-          -webkit-border-radius: 3px;
-          -moz-border-radius: 3px;
-          border-radius: 3px;
           padding: 1px 0 1px 4px;
           margin-bottom: 1px;
           &:hover {
@@ -120,9 +126,6 @@
           &.active {
             background: #0088CC;
             color: #fff;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
           }
         }
         .report-download {
@@ -149,20 +152,25 @@
   }
   .col1 {
     float: left;
-    width: 380px;
+    width: 400px;
     margin-right: 10px;
     .col11, .col12 {
       float: left;
-      width: 180px;
       margin-right: 10px;
+    }
+    .col11 {
+      width: 180px;
+    }
+    .col12 {
+      width: 200px;
     }
   }
   .col3 {
     float: left;
-    width: 350px;
+    width: 370px;
   }
   .col4 {
     float: right;
-    width: 166px;
+    width: 176px;
   }
 }
