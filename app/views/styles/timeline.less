@@ -1,3 +1,9 @@
+#content {
+    .clearfix {
+        background-color: #fff;
+    }
+}
+
 .timeline-header {
     height: 50px;
     position: relative;
@@ -11,6 +17,9 @@
         top: 0px;
         margin-bottom: 0;
         padding-bottom: 0;
+        font-family: "Roboto Condensed", Arial, sans-serif;
+        text-transform: uppercase;
+        font-size: 36px;
     }
     h4 {
         position: absolute;
@@ -31,7 +40,7 @@
 
 .timeline-column {
     float: left;
-    padding: 0 30px;
+    padding: 0 35px 30px 35px;
     &#timeline-column-2006 {
         padding-left: 3px;
     }
@@ -47,15 +56,12 @@
     table {
         /* Column widths: */
         @c1: 126px;
-        @c1abbr: 60px;
+        @c1abbr: 70px;
         @c2: 20px;
         @c3: 44px;
 
         background: #f0f0f0;
-        font-size: 11px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
+        font-size: 12px;
         margin-top: 0;
 
         tr:nth-child(even) {
@@ -67,7 +73,11 @@
             th {
                 background: #555;
                 color: #fff;
-                padding: 4px 5px;
+                padding: 6px 5px;
+            }
+            td {
+                padding-top: 5px;
+                padding-bottom: 5px;
             }
             .timeline-cell-name {
                 width: @c1 - 11px;
