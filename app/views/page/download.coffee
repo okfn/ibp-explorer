@@ -9,7 +9,7 @@ module.exports = class DownloadPage extends Backbone.View
 
     renderPage: (target) =>
         collapsed = false
-        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+        if $('#accordion2 .accordion-body').hasClass 'in'
             collapsed = true
         @year = '2015'
         reportGenerator.update(@year, collapsed)
@@ -31,7 +31,7 @@ module.exports = class DownloadPage extends Backbone.View
             @year = '2006'
         if newReport
             collapsed = false
-            if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            if $('#accordion2 .accordion-body').hasClass 'in'
                 collapsed = true
             reportGenerator.update(@year, collapsed)
         @_repaint()

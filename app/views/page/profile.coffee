@@ -31,7 +31,7 @@ module.exports = class ProfilePage extends Backbone.View
         
     renderPage: (target) =>
         collapsed = false
-        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+        if $('#accordion2 .accordion-body').hasClass 'in'
             collapsed = true
         @year = $('#datasheet-toggles button.active').attr('data-year') || '2015'
         reportGenerator.update(@year, collapsed)
@@ -86,7 +86,7 @@ module.exports = class ProfilePage extends Backbone.View
         else
             @data = @lookup @alpha2
         collapsed = false
-        if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+        if $('#accordion2 .accordion-body').hasClass 'in'
             collapsed = true
         reportGenerator.update(@year, collapsed)
         @_onToggleMode()

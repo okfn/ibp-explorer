@@ -90,7 +90,7 @@ module.exports = class ProjectPage extends Backbone.View
         @year = $(e.delegateTarget).attr('data-year')
         if newReport
             collapsed = false
-            if $('#accordion2 .accordion-toggle').hasClass 'collapsed'
+            if $('#accordion2 .accordion-body').hasClass 'in'
                 collapsed = true
             reportGenerator.update(@year, collapsed)
         @_repaint()
