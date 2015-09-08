@@ -1,9 +1,8 @@
 # Open Budget Survey Explorer
 
 * Live version: http://survey.internationalbudget.org
-* Work-in-progress: http://dev.okfn.org/ibp/iteration3 (username/password required until data is released)
 
-Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod).
+Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand) and [Tryggvi Björgvinsson](http://github.com/trickvi).
 
 ## Setup & Deployment
 
