@@ -44,8 +44,10 @@ module.exports = class TimelinePage extends Backbone.View
             region: lastReport.region
             dataset_unrounded: []
         for country_last in lastReport.dataset_unrounded
+            country_found = false
             for country_old in oldReport.dataset_unrounded
                 if country_last.alpha2 == country_old.alpha2
+                    country_found = true
                     obj =
                         alpha2: country_last.alpha2
                         country: country_last.country
@@ -59,9 +61,17 @@ module.exports = class TimelinePage extends Backbone.View
                         obj['2012'] = country_old['2012']
                     obj['2015'] = country_last['2015']
                     @timelineReport.dataset_unrounded.push(obj)
+            if not country_found
+                obj =
+                    alpha2: country_last.alpha2
+                    country: country_last.country
+                obj['2015'] = country_last['2015']
+                @timelineReport.dataset_unrounded.push(obj)
         for country_last in lastReport.dataset
+            country_found = false
             for country_old in oldReport.dataset
                 if country_last.alpha2 == country_old.alpha2
+                    country_found = true
                     obj =
                         alpha2: country_last.alpha2
                         country: country_last.country
@@ -75,6 +85,12 @@ module.exports = class TimelinePage extends Backbone.View
                         obj['2012'] = country_old['2012']
                     obj['2015'] = country_last['2015']
                     @timelineReport.dataset.push(obj)
+            if not country_found
+                obj =
+                    alpha2: country_last.alpha2
+                    country: country_last.country
+                obj['2015'] = country_last['2015']
+                @timelineReport.dataset.push(obj)
 
     _onToggleMode: (showRank=true) =>
         value = $('input[name="timeline"]:checked').val()
