@@ -3,7 +3,7 @@
       <tr class="first-row"><th class="blank" style="width: 300px;"></th><th colspan="2" style="text-align: center;">2006-2012</th><th colspan="2" style="text-align: center;">2015</th></tr>
       <tr><th class="blank"></th><th style="text-align: right;">Format</th><th>Filename</th><th style="text-align: right;">Format</th><th>Filename</th></tr>
       <tr>
-        <td rowspan="3"><strong>FULL DATASETS</strong><br />encompassing all surveys are available in multiple formats.</td>
+        <td rowspan="3"><strong>FULL DATASETS</strong><br />encompassing all Open Budget Surveys published by the International Budget Partnership, are available in multiple formats.</td>
       {{#each excel}}
         <td style="text-align: right;">{{format}}</td><td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td>
       {{/each}}
@@ -26,7 +26,7 @@
       <tr class="first-row"><th class="blank" style="width: 300px;"></th><th colspan="2" style="text-align: center;">2006-2012</th><th colspan="2" style="text-align: center;">2015</th></tr>
       <tr><th class="blank"></th><th style="text-align: right;">Format</th><th>Filename</th><th style="text-align: right;">Format</th><th>Filename</th></tr>
       <tr>
-        <td rowspan="3"><strong>STATISTICAL FILES</strong><br />complement the datasets and have been prepared for researchers.</td>
+        <td rowspan="3"><strong>STATISTICAL FILES</strong><br />complement the datasets, and have been prepared and made available for researchers here.</td>
         <td style="text-align: right;">Excel</td><td><a href="downloads/OBI 2006-2012 ALL for web.xlsx">Full Excel Source</a> (649kb)</td>
         <td style="text-align: right;">Excel</td><td><a href="downloads/OBI 2006-2015 ALL for web.xlsx">Full Excel Source</a> (736kb)</td>
       </tr>
@@ -44,7 +44,7 @@
 {{#if cq}}
   <table class="table table-bordered comp">
       <tr>
-        <td style="width: 450px;"><strong>FULLY COMPARABLE QUESTIONS</strong><br />accross <strong>all</strong> survey rounds (2006-2015) are available here.</td>
+        <td style="width: 450px;">A subset of 84 <strong>FULLY COMPARABLE QUESTIONS</strong><br />accross <strong>all</strong> rounds of the Open Budget Survey (2006-2015),<br />is available here.</td>
         <td><a href="downloads/ibp_data_comparable.xlsx">Excel</a> (180kb)</td>
         <td><a href="downloads/ibp_data_csv_comparable.zip">CSV</a> (244kb)</td>
         <td><a href="downloads/ibp_data_comparable.json">JSON</a> (612kb)</td>
@@ -55,11 +55,14 @@
 {{#if cr}}
 <div>
   <div class="download-data1">
-    <p><strong>CUSTOM REPORTS</strong> can be saved!<br />
-    The report generated in your browser can be saved as a CSV. Click on "Save To Disk" below, or in the "Customize Report" box, or
-    copy the contents of the textbox here:</p>
-  </div>
-  <div class="download-data2">
+    <p><strong>CUSTOM REPORTS CAN BE SAVED!</strong></p>
+
+    <p>The customized reports generated in your browser, by selecting year and
+    questions/subsections of the Survey (see the “Customize Report” above),
+    can be saved as CSVs.</p>
+
+    <p><strong>How?</strong> Select the Survey year or period, and click on "Save To Disk" below. You can also click in the "Customize Report" textbox on the right hand side of this page, or copy/paste the contents of the textbox.</p>
+
     <p class="dl-years"><span class="dl-years-info">Select year:</span>
     <label class="radio inline">
       <input type="radio" name="downloadyear" value="2006">
@@ -96,6 +99,9 @@
     <p id="downloadify">
       <b>"Save To Disk" not available. (Requires Flash 10).</b><br/> This file cannot be downloaded automatically: Click on the textbox, then use cut-and-paste to save the contents into a text file on your computer.
     </p>
+  </div>
+  <div class="download-data2">
+    <p><small>This preview is based on the specific data (survey subsections, questions, world regions) selected in the “Customize report” section above.</small></p>
     <textarea id="custom-csv"" readonly>
       Loading...
     </textarea>
