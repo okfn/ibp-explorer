@@ -71,11 +71,11 @@ class ProjectPage extends Backbone.View {
   }
 
   _findScore(dataset, country, year) {
+    // TODO: refactor
     const score = _.find(dataset, (x) => {
       return x.alpha2 === country
     })
-    return score[year] ||
-           assert(false, 'couldn\'t find score for country: ' + country)
+    return score[year] || false
   }
 
   _sortByNameToggle(e) {
