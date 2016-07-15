@@ -1,6 +1,7 @@
-Router = require('router')
+#Router = require('router')
+Initialize = require('initialize.js')
 
-loadDataset = ->
+'''loadDataset = ->
     assert(_EXPLORER_DATASET!=null, 'Failed to load dataset.')
     # 2015 survey dataset
     # Assign an ID to all groupings
@@ -18,7 +19,7 @@ loadDataset = ->
                 if group.qs.contains qnum
                     qdata.groups.push ('group-'+group.group_id)
     # Create an 'Entire World' region
-    entire_world = 
+    entire_world =
         name: 'Entire World'
         contains: []
     for country in _EXPLORER_DATASET.country
@@ -44,7 +45,7 @@ loadDataset = ->
                 if group.qs.contains qnum
                     qdata.groups.push ('group-'+group.group_id)
     # Create an 'Entire World' region
-    entire_world = 
+    entire_world =
         name: 'Entire World'
         contains: []
     for country in _EXPLORER_DATASET.country_old
@@ -71,4 +72,4 @@ $ ->
     initJsPlumb()
     loadDataset()
     router = new Router()
-    Backbone.history.start()
+    Backbone.history.start()'''
