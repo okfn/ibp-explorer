@@ -1,4 +1,6 @@
-import template from 'views/templates/reportgenerator'
+import Backbone from 'backbone'
+
+import template from './templates/reportgenerator.hbs'
 const debug = false
 
 class ReportGenerator extends Backbone.View {

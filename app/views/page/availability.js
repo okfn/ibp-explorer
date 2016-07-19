@@ -1,7 +1,10 @@
-import template_page from 'views/templates/page/availability'
-import template_row from 'views/templates/availability_row'
+import Backbone from 'backbone'
+import _ from 'underscore'
 
-import reportGenerator from 'views/reportgenerator.js'
+import template_page from '../templates/page/availability.hbs'
+import template_row from '../templates/availability_row.hbs'
+import reportGenerator from '../reportgenerator.js'
+
 
 class ProjectPage extends Backbone.View {
 

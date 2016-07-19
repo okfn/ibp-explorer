@@ -1,9 +1,13 @@
-import template_page from 'views/templates/page/rankings'
-import template_rankings_row from 'views/templates/rankings_row'
-import template_rankings_tooltip from 'views/templates/rankings_tooltip'
-import * as util from 'util.js'
+import { View } from 'backbone'
+import _ from 'underscore'
+import $ from 'jquery'
 
-import reportGenerator from 'views/reportgenerator.js'
+import template_page from '../templates/page/rankings.hbs'
+import template_rankings_row from '../templates/rankings_row.hbs'
+import template_rankings_tooltip from '../templates/rankings_tooltip.hbs'
+import * as util from '../../util.js'
+
+import reportGenerator from '../reportgenerator.js'
 
 const IBP_COLORS = [
   '#B7282E',
@@ -12,7 +16,7 @@ const IBP_COLORS = [
   '#22aa33'
 ]
 
-class ProjectPage extends Backbone.View {
+class ProjectPage extends View {
 
   constructor() {
     super({
@@ -125,7 +129,7 @@ class ProjectPage extends Backbone.View {
       obj = {
         country: country.name,
         alpha2: country.alpha2,
-        score: this._findScore(dataset, country.alpha2, this.year),
+        score: this._findScore(dataset, country.alpha2, this.year) || '',
         a: this._count(db, 100, questionSet),
         b: this._count(db, 67, questionSet),
         c: this._count(db, 33, questionSet),
