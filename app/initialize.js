@@ -1,5 +1,11 @@
-'use strict'
-import Router from 'router.js'
+import $ from 'jquery'
+import _ from 'underscore'
+import Backbone from 'backbone'
+
+import OBSRouter from './router.js'
+
+import './assets/index.html'
+import './views/styles/main.less'
 
 const loadDataset = function () {
   assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.');
@@ -60,8 +66,8 @@ const loadDataset = function () {
   })
   // Create an 'Entire World' region
   entire_world = {
-    name: 'Entire World',
-    contains: []
+    name: 'Entire World'
+    , contains: []
   }
   _.forEach(_EXPLORER_DATASET.country_old, (country) => {
     entire_world.contains.push(country.alpha2)
@@ -71,41 +77,41 @@ const loadDataset = function () {
   _.forEach(_EXPLORER_DATASET.regions_old, (element, index) => {
     element.region_index = parseInt(index)
   })
-};
+}
 
 const initJsPlumb = function() {
   let color = '#aaa'
   jsPlumb.importDefaults({
-    Anchors: ['RightMiddle', 'LeftMiddle'],
-    PaintStyle: {
-      strokeStyle: color,
-      lineWidth: 2
-    },
-    Endpoint: 'Blank',
-    EndpointStyle: {
-      radius: 9,
-      fillStyle: color
-    },
-    Connector: [
-      "Bezier", {
+    Anchors: ['RightMiddle', 'LeftMiddle']
+    , PaintStyle: {
+      strokeStyle: color
+      , lineWidth: 2
+    }
+    , Endpoint: 'Blank'
+    , EndpointStyle: {
+      radius: 9
+      , fillStyle: color
+    }
+    , Connector: [
+      'Bezier', {
         curviness: 30
       }
     ]
   })
   let arrowCommon = {
-    foldback: 0.8,
-    fillStyle: color,
-    width: 9,
-    length: 10
+    foldback: 0.8
+    , fillStyle: color
+    , width: 9
+    , length: 10
   }
   jsPlumb._custom_overlay = [
-    [ "Arrow", { location: 0.5 }, arrowCommon]
+    ['Arrow', { location: 0.5 }, arrowCommon]
   ]
-};
+}
 
 $(function() {
-  initJsPlumb();
-  loadDataset();
-  let router = new Router();
-  Backbone.history.start();
-});
+  initJsPlumb()
+  loadDataset()
+  const router = new OBSRouter()
+  Backbone.history.start()
+})
