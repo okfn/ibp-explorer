@@ -29,7 +29,6 @@ module.exports = {
       , 'console-helper': 'scripts/console-helper.js'
       , 'jquery.color': 'scripts/jquery.color-2.1.2.js' // npm contains 1.5.1
       , 'vendor-css': 'styles/main.css'
-      , 'bootstrap-css': 'styles/bootstrap.css'
       , 'bootstrap-js': 'scripts/bootstrap.min.js'
       , monkeypatches: 'scripts/monkeypatches.js'
       , downloadify: 'scripts/Downloadify/downloadify.min.js'
