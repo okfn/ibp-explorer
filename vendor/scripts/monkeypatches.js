@@ -32,12 +32,12 @@ Array.prototype.contains = function(x) { return this.indexOf(x)>=0; }
 
 /* Inbuilt assertion statement */
 
-function AssertException(message) { this.message = message; }
+module.exports = AssertException = function AssertException(message) { this.message = message; }
 AssertException.prototype.toString = function () {
   return 'AssertException: ' + this.message;
 }
 
-function assert(exp, message) {
+module.exports = assert = function assert(exp, message) {
   if (!exp) {
     throw new AssertException(message);
   }
