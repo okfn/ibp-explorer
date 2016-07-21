@@ -9,7 +9,8 @@
     "url": "http://github.com/okfn/dpkg-ibp"
   },
   "engines": {
-    "node": "~0.6.10"
+    "node": "~6.3.0",
+    "npm": "3.10.5"
   },
   "scripts": {
     "start": "webpack-dev-server --inline --config webpack.config.development.js",
