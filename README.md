@@ -9,17 +9,17 @@ Developed in collaboration between the [International Budget Partnership](http:/
 This is a web application developed using [Brunch](http://brunch.io). To run locally:
 
 * Clone this repository. 
-* Install [Node](http://nodejs.org) and [Brunch](http://brunch.io).
-* Run `brunch watch --server` in the root directory of this repo.
-* Point your browser at http://localhost:3333.
+* Install [Node.js](http://nodejs.org).
+* Run `npm install` in the root directory of this repo to install dependencies.
+* Run `npm run start` to compile the app and run a webpack-dev-server web server
+* Point your browser at http://localhost:8080.
 
 To deploy:
 
 * Get the above working.
-* Kill the `brunch` server.
-* Delete the `./public` folder if one has been created.
-* Run `brunch build --minify`.
-* Deploy the `./public` folder to your web server.
+* Kill the `webpack-dev-server`.
+* Run `npm run build:production`.
+* Deploy `./_build` folder to your web server.
 
 ## Updating the data
 
