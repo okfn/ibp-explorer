@@ -1,15 +1,4 @@
-var
-  hasProp = {}.hasOwnProperty,
-  indexOf = [].indexOf || function (item) {
-      for (var i = 0, l = this.length; i < l; i++) {
-        if (i in this && this[i] === item) return i;
-      }
-      return -1;
-    };
-
-import Backbone from 'backbone'
 import _ from 'underscore'
-
 import template_page from '../templates/page/download.hbs'
 import template_files from '../templates/download_files.hbs'
 import reportGenerator from '../reportgenerator.js'
@@ -17,16 +6,16 @@ import reportGenerator from '../reportgenerator.js'
 class DownloadPage extends Backbone.View {
 
   initialize() {
-    this._onNavChange = _.bind(this._onNavChange, this);
-    this._repaint = _.bind(this._repaint, this);
-    this.changeyear = _.bind(this.changeyear, this);
-    this.renderPage = _.bind(this.renderPage, this);
-    this.initialize = _.bind(this.initialize, this);
-    reportGenerator.bind('update', this._repaint);
-  };
+    this._onNavChange = _.bind(this._onNavChange, this)
+    this._repaint = _.bind(this._repaint, this)
+    this.changeyear = _.bind(this.changeyear, this)
+    this.renderPage = _.bind(this.renderPage, this)
+    this.initialize = _.bind(this.initialize, this)
+    reportGenerator.bind('update', this._repaint)
+  }
 
   renderPage(target) {
-    let collapsed = false;
+    let collapsed = false
     if ($('#accordion2 .accordion-body').hasClass('in')) {
       collapsed = true
     }
@@ -47,7 +36,7 @@ class DownloadPage extends Backbone.View {
     const newReport = lastYear === '2015' || currentYear === '2015'
     this.year = target.attr('value')
     if (this.year === 'all') {
-      this.year = '2006';
+      this.year = '2006'
     }
     if (newReport) {
       let collapsed = false
@@ -59,17 +48,15 @@ class DownloadPage extends Backbone.View {
     this._repaint()
   }
 
-  //TODO: port
   _writeLine(out, x) {
-    let element, i, index, ref;
-    for (index = i = 0, ref = x.length; 0 <= ref ? i < ref : i > ref; index = 0 <= ref ? ++i : --i) {
-      element = x[index] || '';
-      assert(!(indexOf.call(element, '"') >= 0), 'Cannot encode string: ' + element);
-      if (indexOf.call(element, ',') >= 0) {
-        x[index] = '"' + element + '"';
+    _.forEach(_.range(x.length), (index) => {
+      let element = x[index] || ''
+      assert(!_.contains(element, '"'), 'Cannot encode string: ' + element)
+      if (_.contains(element, ',')) {
+        x[index] = '"' + element + '"'
       }
-    }
-    return out.push(x.join(','));
+    })
+    return out.push(x.join(','))
   }
 
   _csvQuestions(questionSet) {
@@ -81,7 +68,7 @@ class DownloadPage extends Backbone.View {
     // Content
     const q = _EXPLORER_DATASET.question
     _.forEach(questionSet, (x) => {
-      this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e]);
+      this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e])
     })
     return out
   }
@@ -90,7 +77,7 @@ class DownloadPage extends Backbone.View {
     //The given letters in the source data arent always there.
     // 'q102l' does not exist while 'q102' does.
     // Therefore it is safer to use this technique to extract a letter...
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value);
+    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
     return {
       '-1': 'e',
       0: 'd',
@@ -161,7 +148,7 @@ class DownloadPage extends Backbone.View {
   }
 
   _repaint(dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) {
-    $('#custom-csv').html((this._csvAnswers(dataset, region, questionSet)).join('\n'));
+    $('#custom-csv').html((this._csvAnswers(dataset, region, questionSet)).join('\n'))
   }
 
   _onNavChange(e) {
@@ -178,60 +165,60 @@ class DownloadPage extends Backbone.View {
         excel: [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads[0]],
         csv: [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads[1]],
         json: [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads[2]]
-      };
+      }
     } else if (value === 'sf') {
       renderFiles = {
         fd: false,
         sf: true,
         cq: false,
         cr: false
-      };
+      }
     } else if (value === 'cq') {
       renderFiles = {
         fd: false,
         sf: false,
         cq: true,
         cr: false
-      };
+      }
     } else if (value === 'cr') {
       renderFiles = {
         fd: false,
         sf: false,
         cq: false,
         cr: true
-      };
+      }
     } else {
       renderFiles = {
         fd: false,
         sf: false,
         cq: false,
         cr: false
-      };
+      }
     }
-    download.append(template_files(renderFiles));
+    download.append(template_files(renderFiles))
     if (value === 'cr') {
       $('#custom-csv').bind('click', (function (_this) {
         return function () {
-          return $('#custom-csv').select();
-        };
-      })(this));
-      $('input[name="downloadyear"]').bind('change', this.changeyear);
+          return $('#custom-csv').select()
+        }
+      })(this))
+      $('input[name="downloadyear"]').bind('change', this.changeyear)
       this._repaint()
       let options = {
         filename() {
           return 'custom-budget-report.csv'
         },
         data() {
-            return $('#custom-csv').val();
+            return $('#custom-csv').val()
         },
         onComplete() {
-          return alert('Your File Has Been Saved!');
+          return alert('Your File Has Been Saved!')
         },
         onCancel() {
-          return null;
+          return null
         },
         onError() {
-          return alert('Error');
+          return alert('Error')
         },
         swf: 'downloadify.swf',
         downloadImage: 'images/download.png',
@@ -240,7 +227,7 @@ class DownloadPage extends Backbone.View {
         transparent: true,
         append: false
       }
-      return Downloadify.create('downloadify', options);
+      Downloadify.create('downloadify', options)
     }
   }
 }

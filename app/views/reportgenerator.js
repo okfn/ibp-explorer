@@ -1,3 +1,4 @@
+import _ from 'underscore'
 import Backbone from 'backbone'
 
 import template from './templates/reportgenerator.hbs'
@@ -7,27 +8,27 @@ class ReportGenerator extends Backbone.View {
 
   initialize() {
     if (debug) {
-      this.debugReports();
+      this.debugReports()
     }
-    this.region = [0]; // Initially our custom 'Entire World' collection
-    this.year = '2015';
-    this._download = _.bind(this._download, this);
-    this._csvAnswers = _.bind(this._csvAnswers, this);
-    this._number_to_letter = _.bind(this._number_to_letter, this);
-    this._writeLine = _.bind(this._writeLine, this);
-    this._clickBoxToggle = _.bind(this._clickBoxToggle, this);
-    this._clickRegionToggle = _.bind(this._clickRegionToggle, this);
-    this._clickGroupToggle = _.bind(this._clickGroupToggle, this);
-    this._setSubtitle = _.bind(this._setSubtitle, this);
-    this._expand_collapse = _.bind(this._expand_collapse, this);
-    this._select_or_clear = _.bind(this._select_or_clear, this);
-    this._updated = _.bind(this._updated, this);
-    this.update = _.bind(this.update, this);
-    this.calculateScore = _.bind(this.calculateScore, this);
-    this.render = _.bind(this.render, this);
-    this.setInitialState = _.bind(this.setInitialState, this);
-    this.debugReports = _.bind(this.debugReports, this);
-    this.initialize = _.bind(this.initialize, this);
+    this.region = [0] // Initially our custom 'Entire World' collection
+    this.year = '2015'
+    this._download = _.bind(this._download, this)
+    this._csvAnswers = _.bind(this._csvAnswers, this)
+    this._number_to_letter = _.bind(this._number_to_letter, this)
+    this._writeLine = _.bind(this._writeLine, this)
+    this._clickBoxToggle = _.bind(this._clickBoxToggle, this)
+    this._clickRegionToggle = _.bind(this._clickRegionToggle, this)
+    this._clickGroupToggle = _.bind(this._clickGroupToggle, this)
+    this._setSubtitle = _.bind(this._setSubtitle, this)
+    this._expand_collapse = _.bind(this._expand_collapse, this)
+    this._select_or_clear = _.bind(this._select_or_clear, this)
+    this._updated = _.bind(this._updated, this)
+    this.update = _.bind(this.update, this)
+    this.calculateScore = _.bind(this.calculateScore, this)
+    this.render = _.bind(this.render, this)
+    this.setInitialState = _.bind(this.setInitialState, this)
+    this.debugReports = _.bind(this.debugReports, this)
+    this.initialize = _.bind(this.initialize, this)
   }
 
   debugReports() {
@@ -89,15 +90,15 @@ class ReportGenerator extends Backbone.View {
     this.$el.find('.group-toggler').bind('mouseout', (e) => {
       this.$el.find('.toggle-box').removeClass('hover')
     })
-    this.$el.find('.toggle-box').bind('click', this._clickBoxToggle);
-    this.$el.find('.nav a').bind('click', this._expand_collapse);
+    this.$el.find('.toggle-box').bind('click', this._clickBoxToggle)
+    this.$el.find('.nav a').bind('click', this._expand_collapse)
     this.$el.find('.select-or-clear button').bind('click', this._select_or_clear);
-    this.$el.find('.download-csv').bind('click', this._download);
+    this.$el.find('.download-csv').bind('click', this._download)
     this.$el.find('.toggle-box').tooltip({
       placement: 'left',
       delay: 100,
       animation: true
-    });
+    })
     _.forEach(this.region, (reg) => {
       this.$el.find('#region-' + reg).addClass('active')
     })
@@ -124,7 +125,8 @@ class ReportGenerator extends Backbone.View {
     })
     if (count === 0) return -1
     if (verbose) {
-      console.log('result', acc, count, (acc / count), Math.round(acc / count), questionSet)
+      console.log('result', acc, count, (acc / count),
+                  Math.round(acc / count), questionSet)
     }
     return acc / count
   }
@@ -166,17 +168,17 @@ class ReportGenerator extends Backbone.View {
     this.$el.find('.group-toggler').bind('mouseout', (e) => {
       this.$el.find('.toggle-box').removeClass('hover')
     })
-    this.$el.find('.toggle-box').bind('click', this._clickBoxToggle);
+    this.$el.find('.toggle-box').bind('click', this._clickBoxToggle)
     //@$el.find('.toggle-box').bind('mouseover', this._showQuestion)
     //@$el.find('.toggle-box').bind('mouseout', this._hideQuestion)
-    this.$el.find('.nav a').bind('click', this._expand_collapse);
-    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear);
-    this.$el.find('.download-csv').bind('click', this._download);
+    this.$el.find('.nav a').bind('click', this._expand_collapse)
+    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear)
+    this.$el.find('.download-csv').bind('click', this._download)
     this.$el.find('.toggle-box').tooltip({
       placement: 'left',
       delay: 100,
       animation: true
-    });
+    })
     if (entireWorld) {
       this.$el.find('#region-0').click()
     } else {
@@ -303,8 +305,8 @@ class ReportGenerator extends Backbone.View {
       el.removeClass('active')
       x.find(' .' + group).removeClass('select')
     } else {
-      if (activeUl && !(activeUl.is(el.parents('ul:first')))) {
-        activeUl.find('.group-toggler.active').each(() => {
+      if (activeUl && !activeUl.is(el.parents('ul:first'))) {
+        activeUl.find('.group-toggler.active').each(function() {
           let gp = $(this).attr('id')
           x.find(' .' + gp).removeClass('select')
           $(this).removeClass('active')
@@ -334,7 +336,7 @@ class ReportGenerator extends Backbone.View {
     } else {
       if (el.hasClass('active')) {
         el.removeClass('active')
-        const index = this.region.indexOf(selected)
+        const index = _.indexOf(this.region, selected)
         if (index >= 0) {
           this.region.splice(index, 1)
         }
@@ -345,7 +347,7 @@ class ReportGenerator extends Backbone.View {
       } else {
         if (this.$el.find('#region-0').hasClass('active')) {
           this.$el.find('#region-0').removeClass('active')
-          const index = this.region.indexOf(0)
+          const index = _.indexOf(this.region, 0)
           if (index >= 0) {
             this.region.splice(index, 1)
           }
@@ -376,7 +378,7 @@ class ReportGenerator extends Backbone.View {
     // Simple CSV escaping which rejects strings containing "
     _.forEach(x, (obj, index) => {
       let element = obj || ''
-      assert(!(indexOf.call(element, '"') >= 0), 'Cannot encode string: ' + element);
+      assert(!(_.contains(element, '"')), 'Cannot encode string: ' + element)
       if (_.contains(element, ',')) {
         x[index] = '"' + element + '"'
       }
@@ -389,7 +391,7 @@ class ReportGenerator extends Backbone.View {
     /*The given letters in the source data arent always there.
      'q102l' does not exist while 'q102' does.
      Therefore it is safer to use this technique to extract a letter...*/
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value);
+    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
     return {
       '-1': 'e',
       0: 'd',
@@ -434,7 +436,7 @@ class ReportGenerator extends Backbone.View {
     })
     _.forEach(dataset, (country) => {
       // Maybe has?
-      if (!_.contains(selected_countries, country.alpha2)) return;
+      if (!_.contains(selected_countries, country.alpha2)) return
       let selected_year = $('.year-selector button.active').attr('data-year') || $('input[name="downloadyear"]:checked').val()
       if ($('#datasheet-toggles button.active').attr('data-year') == '2006') {
         selected_year = 'all'
@@ -445,7 +447,7 @@ class ReportGenerator extends Backbone.View {
         selected_year = [selected_year]
       }
       _.forEach(selected_year, (year) => {
-        if (!_.contains(country, year)) return;
+        if (!_.contains(country, year)) return
         let row = [country.alpha2, country.country, year, country[year]]
         _.forEach(questionSet, (q) => {
           row.push(tmp[country.alpha2]['db_'+year][q])
@@ -462,7 +464,7 @@ class ReportGenerator extends Backbone.View {
   }
 
   _download(e) {
-    const csv = (this._csvAnswers(this.dataset, this.region, this.questionSet)).join('\n');
+    const csv = (this._csvAnswers(this.dataset, this.region, this.questionSet)).join('\n')
     const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv)
     $('.download-csv').attr({
       'download': 'custom-budget-report.csv',

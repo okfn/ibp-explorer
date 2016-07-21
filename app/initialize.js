@@ -1,6 +1,6 @@
-import $ from 'jquery'
+'use strict'
+
 import _ from 'underscore'
-import Backbone from 'backbone'
 
 import OBSRouter from './router.js'
 
@@ -8,7 +8,7 @@ import './assets/index.html'
 import './views/styles/main.less'
 
 const loadDataset = function () {
-  assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.');
+  assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.')
   // 2015 survey dataset
   // Assign an ID to all groupings
   let id = 0
@@ -23,7 +23,7 @@ const loadDataset = function () {
     // Tag the question with a list of parent groups
     _.forEach(_EXPLORER_DATASET.groupings, (category) => {
       _.forEach(category.entries, (group) => {
-        if (group.qs.contains(qnum)) {
+        if (_.contains(group.qs, qnum)) {
           qdata.groups.push('group-'+group.group_id)
         }
       })
@@ -58,7 +58,7 @@ const loadDataset = function () {
     // Tag the question with a list of parent groups
     _.forEach(_EXPLORER_DATASET.groupings_old, (category) => {
       _.forEach(category.entries, (group) => {
-        if (group.qs.contains(qnum)) {
+        if (_.contains(group.qs, qnum)) {
           qdata.groups.push('group-'+group.group_id)
         }
       })

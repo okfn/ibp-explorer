@@ -18,21 +18,15 @@ const IBP_COLORS = [
 
 class ProjectPage extends View {
 
-  constructor() {
-    super({
-      // Class properties
-      sortByName: false
-    })
-  }
-
   initialize() {
     // TODO: find better workaround
-    this._reflow = _.bind(this._reflow, this);
-    this._sortByNameToggle = _.bind(this._sortByNameToggle, this);
-    this._rankingsToggle = _.bind(this._rankingsToggle, this);
-    this.renderPage = _.bind(this.renderPage, this);
-    this.initialize = _.bind(this.initialize, this);
-    reportGenerator.bind('update', this._reflow);
+    this.sortByName = false
+    this._reflow = _.bind(this._reflow, this)
+    this._sortByNameToggle = _.bind(this._sortByNameToggle, this)
+    this._rankingsToggle = _.bind(this._rankingsToggle, this)
+    this.renderPage = _.bind(this.renderPage, this)
+    this.initialize = _.bind(this.initialize, this)
+    reportGenerator.bind('update', this._reflow)
   }
 
   renderPage(target) {
@@ -40,7 +34,7 @@ class ProjectPage extends View {
     this.$el.html(template_page())
     target.html(this.$el)
     $('.sortbyname').click(this._sortByNameToggle)
-    $('.sortbyname[data-sortbyname="' + this.options.sortByName + '"]').addClass('active')
+    $('.sortbyname[data-sortbyname="' + this.sortByName + '"]').addClass('active')
     $('#rankings-toggles button').click(this._rankingsToggle)
     $('button[data-year="2015"]').click()
   }
@@ -55,9 +49,9 @@ class ProjectPage extends View {
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
     if (newReport) {
-      let collapsed = false;
+      let collapsed = false
       if ($('#accordion2 .accordion-body').hasClass('in')) {
-        collapsed = true;
+        collapsed = true
       }
       reportGenerator.update(this.year, collapsed)
     }
@@ -75,7 +69,6 @@ class ProjectPage extends View {
   }
 
   _findScore(dataset, country, year) {
-    // TODO: refactor
     const score = _.find(dataset, (x) => {
       return x.alpha2 === country
     })
@@ -83,11 +76,11 @@ class ProjectPage extends View {
   }
 
   _sortByNameToggle(e) {
-    e.preventDefault();
+    e.preventDefault()
     let target = $(e.delegateTarget)
     $('.sortbyname').removeClass('active')
     target.addClass('active')
-    this.options.sortByName = target.attr('data-sortbyname') === 'true'
+    this.sortByName = target.attr('data-sortbyname') === 'true'
     this._reflow()
     return false
   }
@@ -103,9 +96,9 @@ class ProjectPage extends View {
       datasetRegions = _EXPLORER_DATASET.regions
       datasetCountry = _EXPLORER_DATASET.country
     }
-    let target = $('#rankings-table tbody').empty();
+    let target = $('#rankings-table tbody').empty()
     if (questionSet.length === 0) {
-      target.html('<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>');
+      target.html('<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>')
       return
     }
     let data = []
@@ -119,13 +112,13 @@ class ProjectPage extends View {
 
     _.forEach(datasetCountry, (country) => {
       if (!(_.has(country, 'db_' + this.year))) {
-        return;
+        return
       }
       if (!(_.contains(selected_countries, country.alpha2))) {
-        return;
+        return
       }
 
-      const db = country['db_' + this.year];
+      const db = country['db_' + this.year]
       obj = {
         country: country.name,
         alpha2: country.alpha2,
@@ -136,23 +129,23 @@ class ProjectPage extends View {
         d: this._count(db, 0, questionSet),
         e: this._count(db, -1, questionSet)
       }
-      obj.total = obj.a + obj.b + obj.c + obj.d + obj.e;
-      obj.a_width = (obj.a * 100) / obj.total;
-      obj.b_width = (obj.b * 100) / obj.total;
-      obj.c_width = (obj.c * 100) / obj.total;
-      obj.d_width = (obj.d * 100) / obj.total;
-      obj.e_width = (obj.e * 100) / obj.total;
-      obj.b_left = obj.a_width;
-      obj.c_left = obj.b_width + obj.b_left;
-      obj.d_left = obj.c_width + obj.c_left;
-      obj.e_left = obj.d_width + obj.d_left;
-      data.push(obj);
+      obj.total = obj.a + obj.b + obj.c + obj.d + obj.e
+      obj.a_width = (obj.a * 100) / obj.total
+      obj.b_width = (obj.b * 100) / obj.total
+      obj.c_width = (obj.c * 100) / obj.total
+      obj.d_width = (obj.d * 100) / obj.total
+      obj.e_width = (obj.e * 100) / obj.total
+      obj.b_left = obj.a_width
+      obj.c_left = obj.b_width + obj.b_left
+      obj.d_left = obj.c_width + obj.c_left
+      obj.e_left = obj.d_width + obj.d_left
+      data.push(obj)
     })
 
-    if (this.options.sortByName) {
-      data.sort(util.sortFunctionByName);
+    if (this.sortByName) {
+      data.sort(util.sortFunctionByName)
     } else {
-      data.sort(util.sortFunction);
+      data.sort(util.sortFunction)
     }
     _.forEach(data, (obj) => {
       if (obj.score < 0) {
@@ -165,7 +158,7 @@ class ProjectPage extends View {
       placement: 'right',
       delay: 50,
       animation: true
-    });
+    })
   }
 }
 

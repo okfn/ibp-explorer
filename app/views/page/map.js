@@ -2,8 +2,7 @@
 
 import { View } from 'backbone'
 import _ from 'underscore'
-import $ from 'jquery'
-
+import jvm from 'exports?jvm!jvm'
 import template_page from '../templates/page/map.hbs'
 import reportGenerator from '../reportgenerator.js'
 
@@ -15,7 +14,6 @@ const COLOR_SCHEME = [
   '007A78',
   '0065A4'
 ]
-
 // Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
 jvm.NumericScale.prototype.getValue = (_x) => {
   let x = Math.min(_x - 1, 99)

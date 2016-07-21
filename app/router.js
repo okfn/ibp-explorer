@@ -1,8 +1,5 @@
 'use strict'
 
-import { Router } from 'backbone'
-import $ from 'jquery'
-
 import MapPage from './views/page/map.js'
 import TimelinePage from './views/page/timeline.js'
 import RankingsPage from './views/page/rankings.js'
@@ -41,7 +38,7 @@ const singletons = {
   }
 }
 
-class OBSRouter extends Router {
+class OBSRouter extends Backbone.Router {
 
   get routes() {
     return {

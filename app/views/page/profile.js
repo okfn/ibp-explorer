@@ -1,8 +1,6 @@
 'use strict'
 
-import { View } from 'backbone'
 import _ from 'underscore'
-import $ from 'jquery'
 
 import template_page from '../templates/page/profile.hbs'
 import template_profile_percentages from '../templates/profile_percentages.hbs'
@@ -13,9 +11,9 @@ import template_profile_badges from '../templates/profile_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
 
-class ProfilePage extends View {
+class ProfilePage extends Backbone.View {
 
-  initialize(alpha21) {
+  initialize(alpha2) {
     this._animationHackScale = _.bind(this._animationHackScale, this)
     this._repaint2014 = _.bind(this._repaint2014, this)
     this._onClick2014 = _.bind(this._onClick2014, this)
@@ -24,7 +22,7 @@ class ProfilePage extends View {
     this._yearToggle = _.bind(this._yearToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
-    this.alpha2 = alpha21
+    this.alpha2 = alpha2 || ''
     this.year = '2015'
     this.data = this.lookup(this.alpha2)
     this.db_2017 = $.extend({}, this.data.db_2015)
