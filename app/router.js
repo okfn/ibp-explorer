@@ -52,6 +52,7 @@ class OBSRouter extends Backbone.Router {
       , participation: 'participation'
       , profile: 'profile'
       , 'profile/:country': 'profile'
+      , 'profile/:country?*params': 'profile'
     }
   }
 
@@ -119,8 +120,8 @@ class OBSRouter extends Backbone.Router {
     this.setCurrent(singletons.participationPage(), showReportGenerator)
   }
 
-  profile(country = '') {
-    this.setCurrent(new ProfilePage(country))
+  profile(country = '', params = '') {
+    this.setCurrent(new ProfilePage(country, params))
   }
 }
 
