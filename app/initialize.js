@@ -112,6 +112,6 @@ const initJsPlumb = function() {
 $(function() {
   initJsPlumb()
   loadDataset()
-  const router = new OBSRouter()
+  window.router = new OBSRouter()
   Backbone.history.start()
 })
