@@ -13,10 +13,10 @@ import reportGenerator from '../reportgenerator.js'
 
 class ProfilePage extends Backbone.View {
 
-  initialize(alpha2) {
+  initialize(alpha2, params) {
     this._animationHackScale = _.bind(this._animationHackScale, this)
     this._repaint2014 = _.bind(this._repaint2014, this)
-    this._onClick2014 = _.bind(this._onClick2014, this)
+    this._onClickAnswer = _.bind(this._onClickAnswer, this)
     this._onToggleMode = _.bind(this._onToggleMode, this)
     this._repaint = _.bind(this._repaint, this)
     this._yearToggle = _.bind(this._yearToggle, this)
@@ -25,9 +25,50 @@ class ProfilePage extends Backbone.View {
     this.alpha2 = alpha2 || ''
     this.year = '2015'
     this.data = this.lookup(this.alpha2)
-    this.db_2017 = $.extend({}, this.data.db_2015)
+    this.params = this._decodeParams(params)
+    this.db_2017 = $.extend({}, this.data.db_2015, this.params)
     reportGenerator.bind('update', this._repaint)
     this.years = [2015]
+  }
+
+  _decodeParams(queryString) {
+    let params = {}, tmpObj
+    if (queryString) {
+      _.each(
+        _.map(decodeURI(queryString).split(/&/g), function (el, i) {
+          const aux = el.split('=')
+          let val
+          tmpObj = {}
+          if (aux.length >= 1) {
+            if (aux.length === 2) {
+              if (_.contains(['100', '67', '33', '0', '-1'], aux[1])) {
+                val = parseInt(aux[1]);
+              } else {
+                return
+              }
+            }
+            tmpObj[aux[0]] = val;
+          }
+          return tmpObj
+        }),
+        function (tmpObj) {
+          if (tmpObj) {
+            _.extend(params, tmpObj);
+          }
+        }
+      );
+    }
+    return params;
+  }
+
+  _encodeParams(paramsObj) {
+    let paramsStr = ''
+    _.forEach(paramsObj, (val, key) => {
+      if (val) {
+        paramsStr = `${paramsStr}${key}=${val}&`
+      }
+    })
+    return paramsStr.slice(0, -1)
   }
 
   lookup(alpha2) {
@@ -54,7 +95,8 @@ class ProfilePage extends Backbone.View {
     if ($('#accordion2 .accordion-body').hasClass('in')) {
       collapsed = true
     }
-    this.year = $('#datasheet-toggles button.active').attr('data-year') || '2015'
+    this.year =
+      $('#datasheet-toggles button.active').attr('data-year') || '2015'
     reportGenerator.update(this.year, collapsed)
     $(window).scrollTop(0)
     const renderData = {
@@ -123,24 +165,34 @@ class ProfilePage extends Backbone.View {
     this._onToggleMode()
   }
 
-  _repaint(dataset = reportGenerator.dataset, questionSet = reportGenerator.questionSet) {
-    var j, len, qnum, ref, render_score, score, x;
+  _repaint(dataset = reportGenerator.dataset,
+           questionSet = reportGenerator.questionSet) {
+    var render_score, score
     let percentageData
     if (this.year !== '2015') {
       percentageData = {
-        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2006, '2006', questionSet), this._get_percentages(this.data.alpha2, this.data.db_2008, '2008', questionSet), this._get_percentages(this.data.alpha2, this.data.db_2010, '2010', questionSet), this._get_percentages(this.data.alpha2, this.data.db_2012, '2012', questionSet)]
+        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2006,
+                                            '2006', questionSet),
+                      this._get_percentages(this.data.alpha2, this.data.db_2008,
+                                            '2008', questionSet),
+                      this._get_percentages(this.data.alpha2, this.data.db_2010,
+                                            '2010', questionSet),
+                      this._get_percentages(this.data.alpha2, this.data.db_2012,
+                                            '2012', questionSet)]
       };
     } else {
       percentageData = {
-        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2015, '2015', questionSet)]
+        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2015,
+                                            '2015', questionSet)]
       };
     }
-    $('.percentages').empty().append($(template_profile_percentages(percentageData)))
+    $('.percentages').empty()
+      .append($(template_profile_percentages(percentageData)))
     $('.percentbar').tooltip({
-      placement: 'right',
-      delay: 50,
-      animation: true
-    })
+                               placement: 'right',
+                               delay: 50,
+                               animation: true
+                             })
     const detailsData = this._get_details(this.data, questionSet)
     if (this.viewPast) {
       $('.past').show()
@@ -148,15 +200,17 @@ class ProfilePage extends Backbone.View {
       $('.details').html(template_profile_details(detailsData))
     } else {
       $('.future').show()
+      //Prorably not needed
       $('.past').hide()
       $('.details').html(template_profile_details_future(detailsData))
-      $('.letter.multi img').bind('click', this._onClick2014)
+      $('.letter.multi img').bind('click', this._onClickAnswer)
       this._repaint2014
       _.forEach($('.question-row'), (x) => {
         x = $(x)
         const qnum = x.attr('data-question-number')
         score = this.db_2017[qnum]
-        x.find('img[data-score="' + score + '"]').removeClass('inactive').addClass('active')
+        x.find('img[data-score="' + score + '"]').removeClass('inactive')
+          .addClass('active')
       })
     }
     this._repaint2014()
@@ -193,7 +247,8 @@ class ProfilePage extends Backbone.View {
     if (alpha2 === 'QA' || alpha2 === 'TN' || alpha2 === 'MM') {
       return '';
     }
-    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' + alpha2.toLowerCase()
+    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' +
+           alpha2.toLowerCase()
   }
 
   _onHoverQuestion(e) {
@@ -215,7 +270,7 @@ class ProfilePage extends Backbone.View {
       t3ar: '140'
     };
     let nb, q
-    if (_.contains(t3q, number)) {
+    if (_.has(t3q, number)) {
       nb = t3q[number];
       q = datasetQuestion[nb];
     } else {
@@ -226,9 +281,9 @@ class ProfilePage extends Backbone.View {
     const top = target.position().top - 21
     const max_top = $('.details').height() - qbox.height() - 21
     qbox.css({
-      left: $('.details table').width(),
-      top: Math.max(0, Math.min(top, max_top))
-    })
+               left: $('.details table').width(),
+               top: Math.max(0, Math.min(top, max_top))
+             })
     $('tr.question-row').removeClass('hover')
     target.addClass('hover')
   }
@@ -253,7 +308,8 @@ class ProfilePage extends Backbone.View {
     let value
     if (_.has(dataset, questionNumber)) {
       value = dataset[questionNumber]
-      assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
+      assert(value === (-1) || value === 0 || value === 33 || value === 67 ||
+             value === 100, 'Invalid value: ' + value)
     } else {
       value = '-1'
     }
@@ -292,11 +348,15 @@ class ProfilePage extends Backbone.View {
     })
     _.forEach(questionSet, (i) => {
       const letter = this._number_to_letter(data, i)
-      assert(letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' || letter === 'e')
+      assert(
+        letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' ||
+        letter === 'e')
       out[letter]++
     })
-    assert(out.a + out.b + out.c + out.d + out.e === out.total, "Integrity problem in profile calculation");
-    //Calculate bar widths. They are superimposed on top of each other, in decreasing width..
+    assert(out.a + out.b + out.c + out.d + out.e === out.total,
+           "Integrity problem in profile calculation");
+    //Calculate bar widths. They are superimposed on top of each other, in
+    // decreasing width..
     out.a_width = out.a * 100 / out.total
     out.b_width = (out.a + out.b) * 100 / out.total
     out.c_width = (out.a + out.b + out.c) * 100 / out.total
@@ -330,15 +390,17 @@ class ProfilePage extends Backbone.View {
   }
 
   _onToggleMode(e) {
-    if (e) {
-      e.preventDefault()
+    if (!_.isEmpty(this.params) || e) {
+      if (e) e.preventDefault()
       if ($('#profile-toggle').hasClass('inactive')) {
         $('#profile-toggle').removeClass('inactive')
         $('#profile-toggle').addClass('active')
+        $('#profile-mode').addClass('profile-mode-expanded')
         $('#profile-toggle').html('« Hide 2017 Calculator')
       } else if ($('#profile-toggle').hasClass('active')) {
         $('#profile-toggle').removeClass('active')
         $('#profile-toggle').addClass('inactive')
+        $('#profile-mode').removeClass('profile-mode-expanded')
         $('#profile-toggle').html('Show 2017 Calculator »')
       }
     }
@@ -352,15 +414,15 @@ class ProfilePage extends Backbone.View {
       explanation.show();
       if (animate) {
         $('.future').css('opacity', 0).animate({
-          'opacity': 1
-        }, 300);
+                                                 'opacity': 1
+                                               }, 300);
       }
     } else {
       explanation.hide();
     }
   }
 
-  _onClick2014(e) {
+  _onClickAnswer(e) {
     const el = $(e.delegateTarget)
     const tr = el.parents('tr:first')
     const qnum = tr.attr('data-question-number')
@@ -368,14 +430,18 @@ class ProfilePage extends Backbone.View {
     tr.find('img').removeClass('active').addClass('inactive')
     el.removeClass('inactive').addClass('active')
     this.db_2017[qnum] = parseInt(score)
+    this.params = _.extend(this.params, { [qnum]: score })
     this._repaint2014()
     this._animationHackScale($('.year-box.year-2017'))
+    router.navigate(
+      `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
   }
 
   _repaint2014() {
-    let score = reportGenerator.calculateScore(this.db_2017, reportGenerator.questionSet)
+    let score = reportGenerator.calculateScore(this.db_2017,
+                                               reportGenerator.questionSet)
     score = Math.round(score)
-    return $('.scores .year-2017 .bottom').text('Score: ' + score)
+    $('.scores .year-2017 .bottom').text('Score: ' + score)
   }
 
   _animationHackScale(element, scale = 1.3, time = 340) {
@@ -384,24 +450,24 @@ class ProfilePage extends Backbone.View {
     element = $(element)
     element.css('font-size', 100);
     element.animate({
-      'font-size': 0
-    }, {
-      duration: time,
-      easing: 'linear',
-      step: function (now, fx) {
-          var _scale, x;
-          x = (now * Math.PI) / 100;
-          x = 1 + (Math.sin(x) * (scale - 1));
-          _scale = 'scale(' + x + ',' + x + ')';
-          return element.css({
-            '-moz-transform': _scale,
-            '-o-transform': _scale,
-            '-ms-transform': _scale,
-            '-webkit-transform': _scale,
-            'transform': _scale
-          });
-        }
-      })
+                      'font-size': 0
+                    }, {
+                      duration: time,
+                      easing: 'linear',
+                      step: function (now, fx) {
+                        var _scale, x;
+                        x = (now * Math.PI) / 100;
+                        x = 1 + (Math.sin(x) * (scale - 1));
+                        _scale = 'scale(' + x + ',' + x + ')';
+                        return element.css({
+                                             '-moz-transform': _scale,
+                                             '-o-transform': _scale,
+                                             '-ms-transform': _scale,
+                                             '-webkit-transform': _scale,
+                                             'transform': _scale
+                                           });
+                      }
+                    })
   }
 }
 

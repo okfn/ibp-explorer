@@ -5,7 +5,7 @@
 
 .surveys-information {
   margin-bottom: 22px;
-  margin-right: 10px; 
+  margin-right: 10px;
   margin-left: 10px;
   font-size: 16px;
 }
@@ -74,9 +74,9 @@ div#country-profile {
           }
         }
         * {
-          border:none;
+          border: none;
         }
-        td.number { 
+        td.number {
           width: 40px;
           background: #eee;
           padding-right: 10px;
@@ -86,14 +86,14 @@ div#country-profile {
         td.letter {
           text-align: center;
           &.multi {
-            background: lighten(#54A954,44%);
+            background: lighten(#54A954, 44%);
             img {
               cursor: pointer;
             }
             img.inactive {
               opacity: 0.3;
               &:hover {
-              opacity: 0.7;
+                opacity: 0.7;
               }
             }
             img.active {
@@ -114,7 +114,7 @@ div#country-profile {
         td.letter {
           background: #eee;
           &.multi {
-            background: lighten(#54A954,40%);
+            background: lighten(#54A954, 40%);
           }
         }
       }
@@ -133,6 +133,7 @@ div#country-profile {
     }
   }
 }
+
 div#profile-mode {
   border: 1px solid #000;
   border-left: none;
@@ -140,13 +141,22 @@ div#profile-mode {
   margin: 15px 0;
   padding: 10px 0;
   position: relative;
+  height: 49px;
   .explanation {
     position: absolute;
-    left: 178px;
+    left: 126px;
     top: 12px;
     font-size: 13px;
     line-height: 18px;
     margin: 5px 0 0 0;
+    ul.share-buttons {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0px 0px 0px;
+    }
+    ul.share-buttons li {
+      display: inline;
+    }
   }
   #profile-toggle {
     float: right;
@@ -157,13 +167,13 @@ div#profile-mode {
       padding: 8px;
       width: 60px;
       padding-bottom: 5px;
-      float: left;
+      //float: left;
       border: 1px solid #999;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
       border-radius: 4px;
       text-align: center;
-      margin-right: 6px;
+      margin: 0px 6px 26px;
       span {
         display: block;
       }
@@ -177,4 +187,8 @@ div#profile-mode {
       }
     }
   }
+}
+
+.profile-mode-expanded {
+  height: 122px !important;
 }
