@@ -52,11 +52,11 @@ class ProjectPage extends View {
     $('.sortbyname[data-sort="' + this.sortBy + '"]').click()
     let nav = this.$el.find('#select-country')
     nav.chosen()
-    nav.val(this.alpha2).trigger('liszt:updated')
+    nav.val(this.alpha2).trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
     let navReg = this.$el.find('#select-region')
     navReg.chosen()
-    navReg.val('').trigger('liszt:updated')
+    navReg.val('').trigger('chosen:updated')
     navReg.bind('change', this._onRegChange)
   }
 
@@ -269,11 +269,11 @@ class ProjectPage extends View {
     $('.sortbyname[data-sort="' + this.sortBy + '"]').click()
     let nav = this.$el.find('#select-country')
     nav.chosen()
-    nav.val(this.alpha2).trigger('liszt:updated')
+    nav.val(this.alpha2).trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
     let navReg = this.$el.find('#select-region')
     navReg.chosen()
-    navReg.val('region-' + this.region).trigger('liszt:updated')
+    navReg.val('region-' + this.region).trigger('chosen:updated')
     navReg.bind('change', this._onRegChange)
   }
 }

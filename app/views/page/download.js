@@ -25,7 +25,7 @@ class DownloadPage extends Backbone.View {
     target.html(this.$el)
     let nav = this.$el.find('.dl-nav-select')
     nav.chosen()
-    nav.val('').trigger('liszt:updated')
+    nav.val('').trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
   }
 

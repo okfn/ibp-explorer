@@ -114,7 +114,7 @@ class ProfilePage extends Backbone.View {
     // Set up nav
     let nav = this.$el.find('.country-nav-select')
     nav.chosen()
-    nav.val(this.alpha2).trigger('liszt:updated')
+    nav.val(this.alpha2).trigger('chosen:updated')
     nav.bind('change', this._onNavChange);
     $('#datasheet-toggles button').click(this._yearToggle);
     if (this.year === '2015') {
