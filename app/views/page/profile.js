@@ -6,6 +6,7 @@ import template_page from '../templates/page/profile.hbs'
 import template_profile_percentages from '../templates/profile_percentages.hbs'
 import template_profile_details from '../templates/profile_details.hbs'
 import template_profile_details_future from '../templates/profile_details_future.hbs'
+import template_profile_details_future_print from '../templates/profile_details_future_print.hbs'
 import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
@@ -20,6 +21,7 @@ class ProfilePage extends Backbone.View {
     this._onToggleMode = _.bind(this._onToggleMode, this)
     this._repaint = _.bind(this._repaint, this)
     this._yearToggle = _.bind(this._yearToggle, this)
+    this._onClickPrint = _.bind(this._onClickPrint, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
@@ -397,6 +399,8 @@ class ProfilePage extends Backbone.View {
         $('#profile-toggle').addClass('active')
         $('#profile-mode').addClass('profile-mode-expanded')
         $('#profile-toggle').html('« Hide 2017 Calculator')
+        $('#print-answered').click(this._onClickPrint)
+        $('#print-plain').click(this._onClickPrint)
       } else if ($('#profile-toggle').hasClass('active')) {
         $('#profile-toggle').removeClass('active')
         $('#profile-toggle').addClass('inactive')
@@ -437,6 +441,39 @@ class ProfilePage extends Backbone.View {
       `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
   }
 
+  _onClickPrint(e, questionSet = reportGenerator.questionSet) {
+    e.preventDefault()
+    const target = e.delegateTarget
+    let detailsData = this._get_details(this.data, questionSet)
+    let datasetQuestion
+    if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
+      datasetQuestion = _EXPLORER_DATASET.question
+    } else {
+      datasetQuestion = _EXPLORER_DATASET.question_old
+    }
+    _.map(detailsData.questions, (val, key) => {
+      return val['question'] = datasetQuestion[key + 1]
+    })
+    $('.details').html(template_profile_details_future_print(detailsData))
+    if (target.id === 'print-answered') {
+      _.forEach($('.question-row-print'), (x) => {
+        x = $(x)
+        const qnum = x.attr('data-question-number')
+        let score = this.db_2017[qnum]
+        x.find('div[data-score="' + score + '"]').addClass('active-print')
+      })
+    }
+    _.forEach($('.question-row'), (x) => {
+      x = $(x)
+      const qnum = x.attr('data-question-number')
+      let score = this.db_2017[qnum]
+      x.find('img[data-score="' + score + '"]').removeClass('inactive')
+        .addClass('active')
+    })
+    window.print()
+    this._repaint()
+  }
+
   _repaint2014() {
     let score = reportGenerator.calculateScore(this.db_2017,
                                                reportGenerator.questionSet)
@@ -472,5 +509,3 @@ class ProfilePage extends Backbone.View {
 }
 
 export default ProfilePage
-
-
