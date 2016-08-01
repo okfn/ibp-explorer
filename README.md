@@ -21,6 +21,11 @@ To deploy:
 * Run `npm run build:production`.
 * Deploy `./_build` folder to your web server.
 
+To test:
+
+* Run webpack-dev-server with `npm run start`
+* Run `npm run test`
+
 ## Updating the data
 
 All the data lives in the `./data` folder, along with a Pythin tool to Extract-Transform-Load it through a complicated data-massage. Outputs are:
