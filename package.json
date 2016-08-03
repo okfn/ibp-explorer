@@ -53,7 +53,7 @@
     "jsdom-global": "2.0.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "mocha": "0.14.0",
+    "mocha": "^3.0.0",
     "request": "^2.74.0",
     "resolve-url-loader": "^1.6.0",
     "style-loader": "^0.13.1",
