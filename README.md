@@ -1,5 +1,8 @@
 # Open Budget Survey Explorer
 
+[![Travis Build Status](https://travis-ci.org/okfn/open-budget-survey.svg?branch=master)](https://travis-ci.org/okfn/open-budget-survey)
+[![Coveralls](http://img.shields.io/coveralls/okfn/open-budget-survey.svg?branch=master)](https://coveralls.io/r/okfn/open-budget-survey?branch=master)
+
 * Live version: http://survey.internationalbudget.org
 
 Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand) and [Tryggvi Björgvinsson](http://github.com/trickvi).
