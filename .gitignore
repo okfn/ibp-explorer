@@ -3,3 +3,4 @@ _build/*
 *.py[cod]
 .idea/*
 node_modules/*
+coverage/
