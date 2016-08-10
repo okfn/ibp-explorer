@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+   - "6.3.0"
+before_script:
+   - npm install
+   - npm start &
+   - sleep 5
+script:
+   - npm test
+   - npm run coverage

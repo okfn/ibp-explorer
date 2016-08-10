@@ -1,5 +1,8 @@
 # Open Budget Survey Explorer
 
+[![Travis Build Status](https://travis-ci.org/okfn/open-budget-survey.svg?branch=master)](https://travis-ci.org/okfn/open-budget-survey)
+[![Coverage Status](https://coveralls.io/repos/github/okfn/open-budget-survey/badge.svg?branch=master)](https://coveralls.io/github/okfn/open-budget-survey?branch=master)
+
 * Live version: http://survey.internationalbudget.org
 
 Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand) and [Tryggvi Björgvinsson](http://github.com/trickvi).
@@ -20,6 +23,11 @@ To deploy:
 * Kill the `webpack-dev-server`.
 * Run `npm run build:production`.
 * Deploy `./_build` folder to your web server.
+
+To test:
+
+* Run webpack-dev-server with `npm run start`
+* Run `npm run test`
 
 ## Updating the data
 

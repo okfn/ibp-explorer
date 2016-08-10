@@ -1,6 +1,6 @@
 public/*
-test/*
 _build/*
 *.py[cod]
 .idea/*
 node_modules/*
+coverage/
