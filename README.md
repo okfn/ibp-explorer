@@ -1,7 +1,8 @@
 # Open Budget Survey Explorer
 
-[![Travis Build Status](https://travis-ci.org/okfn/open-budget-survey.svg?branch=master)](https://travis-ci.org/okfn/open-budget-survey)
+[![Build Status](https://travis-ci.org/okfn/open-budget-survey.svg?branch=master)](https://travis-ci.org/okfn/open-budget-survey)
 [![Coverage Status](https://coveralls.io/repos/github/okfn/open-budget-survey/badge.svg?branch=master)](https://coveralls.io/github/okfn/open-budget-survey?branch=master)
+[![Issues](https://img.shields.io/badge/issue-tracker-orange.svg)](https://github.com/okfn/open-budget-survey/issues)
 
 * Live version: http://survey.internationalbudget.org
 
