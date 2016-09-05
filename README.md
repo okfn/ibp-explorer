@@ -25,6 +25,10 @@ To deploy:
 * Run `npm run build:production`.
 * Deploy `./_build` folder to your web server.
 
+Environment variables:
+
+* TRACKER_URL - needed for the "Document Availability" page which is iframe-ed open-budgeg-survey-tracker.
+
 To test:
 
 * Run webpack-dev-server with `npm run start`
