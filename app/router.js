@@ -6,6 +6,7 @@ import RankingsPage from './views/page/rankings.js'
 import DownloadPage from './views/page/download.js'
 import ProfilePage from './views/page/profile.js'
 import AvailabilityPage from './views/page/availability.js'
+import AvailabilityHistPage from './views/page/availabilityHistorical.js'
 import SplashPage from './views/page/splash.js'
 import ParticipationPage from './views/page/participation.js'
 
@@ -26,6 +27,9 @@ const singletons = {
   }
   , availabilityPage() {
     return this._avail = this._avail || new AvailabilityPage()
+  }
+  , availabilityHistPage() {
+    return this._availHist = this._availHist || new AvailabilityHistPage()
   }
   , downloadPage() {
     return this._download = this._download || new DownloadPage()
@@ -48,6 +52,7 @@ class OBSRouter extends Backbone.Router {
       , timeline: 'timeline'
       , rankings: 'rankings'
       , availability: 'availability'
+      , 'availability-historical': 'availabilityHistorical'
       , download: 'download'
       , participation: 'participation'
       , profile: 'profile'
@@ -109,6 +114,11 @@ class OBSRouter extends Backbone.Router {
   availability() {
     const showReportGenerator = false
     this.setCurrent(singletons.availabilityPage(), showReportGenerator)
+  }
+
+  availabilityHistorical() {
+    const showReportGenerator = false
+    this.setCurrent(singletons.availabilityHistPage(), showReportGenerator)
   }
 
   download() {
