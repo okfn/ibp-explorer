@@ -457,14 +457,14 @@ class ProfilePage extends Backbone.View {
     })
     if (target.id === 'print-plain') {
       $('.details').html(template_profile_details_future_print({data: detailsData}))
-      $('#print-header').text('Survey Questions and Answers')
+      $('#country-header').text('Survey Questions and Answers')
     }
     if (target.id === 'print-answered') {
       $('.details').html(template_profile_details_future_print({data: detailsData, year: 2017}))
       if (window.location.toString().split('?')[2]) {
-        $('#print-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
+        $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
       } else {
-        $('#print-header').text(printHeader + ': ACTUAL RESULTS')
+        $('#country-header').text(printHeader + ': ACTUAL RESULTS')
       }
       _.forEach($('.question-row-print'), (x) => {
         x = $(x)
