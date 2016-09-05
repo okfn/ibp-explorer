@@ -122,6 +122,19 @@ ul#utility-nav {
             background: #0087d1;
           }
       }
+      .dropdown {
+        position: relative;
+        .dropdown-content {
+          display: none;
+          position: absolute;
+        }
+        .dropdown-content a {
+          display: block;
+        }
+      }
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
     }
   }
 }
