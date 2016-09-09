@@ -444,7 +444,7 @@ class ProfilePage extends Backbone.View {
   _onClickPrint(e, questionSet = reportGenerator.questionSet) {
     e.preventDefault()
     const target = e.delegateTarget
-    const printHeader = printHeader || $('#print-header').text()
+    const printHeader = printHeader || $('#country-header').text()
     let detailsData = this._get_details(this.data, questionSet)
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
@@ -481,7 +481,7 @@ class ProfilePage extends Backbone.View {
         .addClass('active')
     })
     window.print()
-    $('#print-header').text(printHeader)
+    $('#country-header').text(printHeader)
     this._repaint()
   }
 
