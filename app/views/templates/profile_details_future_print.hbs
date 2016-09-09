@@ -3,9 +3,9 @@
         <th></th>
         <th>Question</th>
         <th class="space"></th>
-        <th>Answers</th>
+        <th>{{year}}Answers</th>
     </tr>
-    {{#each questions}}
+    {{#each data.questions}}
         <tr class="question-row-print" data-question-number="{{question.number}}">
             <td class="number-print">{{question.number}}</td>
             <td class="question-print">{{question.text}}</td>
@@ -30,7 +30,7 @@
         <th><span class="badge badge-success">2017</span></th>
         <th class="space"></th>
     </tr>
-    {{#each questions}}
+    {{#each data.questions}}
         <tr class="question-row" data-question-number="{{number}}">
             <td class="number">{{number}}</td>
             <td class="letter">{{#if l2015}}<img src="images/letter/{{l2015}}.png"/>{{else}}-{{/if}}</td>
