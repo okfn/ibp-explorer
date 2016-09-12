@@ -461,7 +461,7 @@ class ProfilePage extends Backbone.View {
     }
     if (target.id === 'print-answered') {
       $('.details').html(template_profile_details_future_print({data: detailsData, year: 2017}))
-      if (window.location.toString().split('?')[2]) {
+      if (window.location.toString().split('?')[1]) {
         $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
       } else {
         $('#country-header').text(printHeader + ': ACTUAL RESULTS')
@@ -470,6 +470,11 @@ class ProfilePage extends Backbone.View {
         x = $(x)
         const qnum = x.attr('data-question-number')
         let score = this.db_2017[qnum]
+        let previous_answer = this._number_to_letter(this.data.db_2015, qnum)
+        if (previous_answer) {
+          previous_answer = previous_answer.toUpperCase()
+          x.find('.previous-year').html(`Answer was ${previous_answer} in 2015`)
+        }
         x.find('div[data-score="' + score + '"]').addClass('active-print')
       })
     }
