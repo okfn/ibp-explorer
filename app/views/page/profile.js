@@ -444,6 +444,7 @@ class ProfilePage extends Backbone.View {
   _onClickPrint(e, questionSet = reportGenerator.questionSet) {
     e.preventDefault()
     const target = e.delegateTarget
+    const printHeader = printHeader || $('#country-header').text()
     let detailsData = this._get_details(this.data, questionSet)
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
@@ -454,12 +455,26 @@ class ProfilePage extends Backbone.View {
     _.map(detailsData.questions, (val, key) => {
       return val['question'] = datasetQuestion[key + 1]
     })
-    $('.details').html(template_profile_details_future_print(detailsData))
+    if (target.id === 'print-plain') {
+      $('.details').html(template_profile_details_future_print({data: detailsData}))
+      $('#country-header').text('Survey Questions and Answers')
+    }
     if (target.id === 'print-answered') {
+      $('.details').html(template_profile_details_future_print({data: detailsData, year: 2017}))
+      if (window.location.toString().split('?')[1]) {
+        $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
+      } else {
+        $('#country-header').text(printHeader + ': ACTUAL RESULTS')
+      }
       _.forEach($('.question-row-print'), (x) => {
         x = $(x)
         const qnum = x.attr('data-question-number')
         let score = this.db_2017[qnum]
+        let previous_answer = this._number_to_letter(this.data.db_2015, qnum)
+        if (previous_answer) {
+          previous_answer = previous_answer.toUpperCase()
+          x.find('.previous-year').html(`Answer was ${previous_answer} in 2015`)
+        }
         x.find('div[data-score="' + score + '"]').addClass('active-print')
       })
     }
@@ -471,6 +486,7 @@ class ProfilePage extends Backbone.View {
         .addClass('active')
     })
     window.print()
+    $('#country-header').text(printHeader)
     this._repaint()
   }
 
