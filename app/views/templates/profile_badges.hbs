@@ -4,11 +4,19 @@
     </div>
 {{/if}}
 <div class="scores">
-    {{#each years}}
-        <div class="year-box year-{{this}} badge">
-            <span class="top">{{this}}</span><span class="bottom"></span>
-        </div>
-    {{/each}}
+    {{#if last}}
+        {{#each years}}
+            <div class="year-box year-{{this}} badge">
+                <span class="top">{{this}}</span><span class="bottom"></span>
+            </div>
+        {{/each}}
+    {{else}}
+        {{#each years}}
+            <div class="year-box past year-{{this}} badge">
+                <span class="top">{{this}}</span><span class="bottom"></span>
+            </div>
+        {{/each}}
+    {{/if}}
     {{#if last}}
         <div class="year-box year-2017 badge badge-success future">
             <span class="top">2017</span><span class="bottom"></span>
