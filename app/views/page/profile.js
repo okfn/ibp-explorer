@@ -7,6 +7,7 @@ import template_profile_percentages from '../templates/profile_percentages.hbs'
 import template_profile_details from '../templates/profile_details.hbs'
 import template_profile_details_future from '../templates/profile_details_future.hbs'
 import template_profile_details_future_print from '../templates/profile_details_future_print.hbs'
+import template_profile_details_future_print_table from '../templates/profile_details_future_print_table.hbs'
 import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
@@ -401,6 +402,7 @@ class ProfilePage extends Backbone.View {
         $('#profile-toggle').html('« Hide 2017 Calculator')
         $('#print-answered').click(this._onClickPrint)
         $('#print-plain').click(this._onClickPrint)
+        $('#print-table').click(this._onClickPrint)
       } else if ($('#profile-toggle').hasClass('active')) {
         $('#profile-toggle').removeClass('active')
         $('#profile-toggle').addClass('inactive')
@@ -477,6 +479,24 @@ class ProfilePage extends Backbone.View {
         }
         x.find('div[data-score="' + score + '"]').addClass('active-print')
       })
+    }
+    if (target.id === 'print-table') {
+      console.log(detailsData)
+      console.log(this.db_2017)
+      let score2017 = reportGenerator.calculateScore(this.db_2017,
+                                                 reportGenerator.questionSet)
+      let score2015 = reportGenerator.calculateScore(this.data.db_2015,
+                                                  reportGenerator.questionSet)
+      _.forEach(detailsData.questions, (question) => {
+        question['l2017'] = this._number_to_letter(this.db_2017,
+                                                   question['number'])
+      })
+      $('.details').html(template_profile_details_future_print_table({
+        data: detailsData,
+        score2017: Math.round(score2017),
+        score2015: Math.round(score2015),
+        year: 2017
+                                                                     }))
     }
     _.forEach($('.question-row'), (x) => {
       x = $(x)
