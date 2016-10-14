@@ -453,7 +453,10 @@ class ProfilePage extends Backbone.View {
       datasetQuestion = _EXPLORER_DATASET.question_old
     }
     _.map(detailsData.questions, (val, key) => {
-      return val['question'] = datasetQuestion[key + 1]
+      const question = _.find(datasetQuestion, (question) => {
+        return String(question['number']) === val['number']
+      })
+      return val['question'] = question
     })
     if (target.id === 'print-plain') {
       $('.details').html(template_profile_details_future_print({data: detailsData}))
