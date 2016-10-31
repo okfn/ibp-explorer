@@ -9,6 +9,7 @@ import AvailabilityPage from './views/page/availability.js'
 import AvailabilityHistPage from './views/page/availabilityHistorical.js'
 import SplashPage from './views/page/splash.js'
 import ParticipationPage from './views/page/participation.js'
+import SearchPage from './views/page/search.js'
 
 // Singleton report generator
 import reportGenerator from './views/reportgenerator.js'
@@ -40,6 +41,9 @@ const singletons = {
   , participationPage() {
     return this._participation = this._participation || new ParticipationPage()
   }
+  , searchPage() {
+    return this._search = this._search || new SearchPage()
+  }
 }
 
 class OBSRouter extends Backbone.Router {
@@ -58,6 +62,7 @@ class OBSRouter extends Backbone.Router {
       , profile: 'profile'
       , 'profile/:country': 'profile'
       , 'profile/:country?*params': 'profile'
+      , search: 'search'
     }
   }
 
@@ -132,6 +137,11 @@ class OBSRouter extends Backbone.Router {
 
   profile(country = '', params = '') {
     this.setCurrent(new ProfilePage(country, params))
+  }
+
+  search() {
+    const showReportGenerator = false
+    this.setCurrent(singletons.searchPage(), showReportGenerator)
   }
 }
 
