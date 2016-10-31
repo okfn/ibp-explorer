@@ -1,12 +1,12 @@
 # Open Budget Survey Explorer
 
-[![Build Status](https://travis-ci.org/okfn/open-budget-survey.svg?branch=master)](https://travis-ci.org/okfn/open-budget-survey)
-[![Coverage Status](https://coveralls.io/repos/github/okfn/open-budget-survey/badge.svg?branch=master)](https://coveralls.io/github/okfn/open-budget-survey?branch=master)
-[![Issues](https://img.shields.io/badge/issue-tracker-orange.svg)](https://github.com/okfn/open-budget-survey/issues)
+[![Build Status](https://travis-ci.org/okfn/ibp-explorer.svg?branch=master)](https://travis-ci.org/okfn/ibp-explorer)
+[![Coverage Status](https://coveralls.io/repos/github/okfn/ibp-explorer/badge.svg?branch=master)](https://coveralls.io/github/okfn/ibp-explorer?branch=master)
+[![Issues](https://img.shields.io/badge/issue-tracker-orange.svg)](https://github.com/okfn/ibp-explorer/issues)
 
 * Live version: http://survey.internationalbudget.org
 
-Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand) and [Tryggvi Björgvinsson](http://github.com/trickvi).
+Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand), [Tryggvi Björgvinsson](http://github.com/trickvi), and [Damjan Velickovski](https://github.com/dumyan).
 
 ## Setup & Deployment
 
