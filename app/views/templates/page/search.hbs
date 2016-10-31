@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="span12">
+        <h2>Browse budget documents library</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <h4 class="search-subheader">Use this search tool to find and download budget documents that are publicly available in all the countries included in the various rounds of the Open Budget Survey</h4>
+    </div>
+</div>
+
+<div class="search-controls">
+    <div class="row">
+        <div class="span90px">
+            <h3>Country:</h3>
+        </div>
+        <div class="span3">
+            <h3><select id="country" class="chosenify">
+                <option value="">Select country...</option>
+                {{#each countries}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select></h3>
+        </div>
+        <div class="span1">
+            <h3>Type:</h3>
+        </div>
+        <div class="span3">
+            <h3><select id="type" class="chosenify">
+                <option value="">Select type...</option>
+                {{#each document_types}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span90px">
+            <h3>Year:</h3>
+        </div>
+        <div class="span3">
+            <h3><select id="year" class="chosenify">
+                <option value="">Select year...</option>
+                {{#each years}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select></h3>
+        </div>
+        <div class="span1">
+            <h3>State:</h3>
+        </div>
+        <div class="span3">
+            <h3><select id="state" class="chosenify">
+                <option value="">Select state...</option>
+                {{#each states}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select></h3>
+        </div>
+        <div class="span4">
+            <h5 id="search-reset">Reset filters</h5>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <div id="results-container"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <div id="pagination"></div>
+    </div>
+</div>

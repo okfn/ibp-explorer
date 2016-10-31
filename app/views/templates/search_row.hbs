@@ -1,0 +1,57 @@
+{{#each documents}}
+    <div class="row">
+        <div class="span12">
+            <div class="search-results">
+                <div class="row">
+                    <div class="span12 result-title">{{title}}</div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <img src="images/flags/{{countryCode}}.GIF">
+                        <div class="result-meta">{{country}}</div>
+                        {{#if_eq state "Publicly available"}}
+                            <img src="images/dot/HC.png"/>
+                        {{else}}
+                            <img src="images/dot/PL.png"/>
+                        {{/if_eq}}
+                        <div class="result-meta">{{state}}</div>
+                        Document Type:
+                        <div class="result-meta">{{type}}</div>
+                        FY:
+                        <div class="result-meta">{{year}}</div>
+                    </div>
+                </div>
+
+                <div class="result-body">
+                    <div class="row">
+                        <div class="span12">
+                            {{#if groupParentId}}
+                                <a target="_blank" href="https://drive.google.com/drive/folders/{{groupParentId}}">
+                                    <h5>View document folder »</h5>
+                                </a>
+                            {{else}}
+                                {{#if uploads}}
+                                    {{#each uploads}}
+                                        {{#if driveId}}
+                                            <a target="_blank" href="https://drive.google.com/file/d/{{driveId}}">
+                                                <h5>View document »</h5>
+                                            </a>
+                                        {{/if}}
+                                    {{/each}}
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="row">
+        <div class="span12">
+            <div class="search-results">
+                <h3 id="no-results">No results found.</h3>
+            </div>
+        </div>
+    </div>
+{{/each}}

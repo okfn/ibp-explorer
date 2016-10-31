@@ -13,8 +13,8 @@ module.exports = {
     app: './app/initialize.js'
     , vendor: ['jquery', 'underscore', 'backbone', 'chosen', 'downloadify'
       , 'bootstrap-js', 'jsPlumb', 'exports?jvm!jvm', 'jvm-world-mill'
-      , 'jvm-css', 'jsPlumb', 'ibpDataset', 'console-helper'
-      , 'jquery.color', 'vendor-css', 'monkeypatches']
+      , 'jvm-css', 'jsPlumb', 'ibpDataset', 'searchDataset', 'console-helper'
+      , 'jquery.color', 'vendor-css', 'monkeypatches', 'whatwg-fetch', 'handlebars']
   }
   , resolve: {
     root: __dirname
@@ -25,6 +25,7 @@ module.exports = {
       , 'jvm-css': 'jvectormap-dev/jquery-jvectormap-1.0.css'
       , jsPlumb: 'jquery.jsPlumb-1.3.9-all.js'
       , ibpDataset: 'ibp_dataset.js'
+      , searchDataset: 'search_dataset.js'
       , chosen: 'chosen.jquery.min.js'
       , 'console-helper': 'scripts/console-helper.js'
       , 'jquery.color': 'scripts/jquery.color-2.1.2.js' // npm contains 1.5.1
@@ -32,6 +33,7 @@ module.exports = {
       , 'bootstrap-js': 'scripts/bootstrap.min.js'
       , monkeypatches: 'scripts/monkeypatches.js'
       , downloadify: 'scripts/Downloadify/downloadify.min.js'
+      , 'handlebars': 'handlebars/runtime.js'
     }
   }
   , output: {
@@ -100,14 +102,12 @@ module.exports = {
       jQuery: 'jquery'
       , $: 'jquery'
       , 'window.jQuery': 'jquery'
+      , 'Handlebars': 'handlebars'
     })
     , new CopyWebpackPlugin([
       { from: './app/assets/images', to: 'images' }
       , { from: './app/assets/downloads', to: 'downloads' }
       , { from: './app/assets/downloadify.swf', to: './' }
     ])
-    , new webpack.DefinePlugin({
-      TRACKER_URL: JSON.stringify(process.env.TRACKER_URL)
-    })
   ]
 }
