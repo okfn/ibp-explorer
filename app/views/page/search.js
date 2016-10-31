@@ -1,7 +1,6 @@
 import { View } from 'backbone'
 import _ from 'underscore'
 import pagination from '../../../vendor/scripts/pagination.min'
-import linkify from 'linkifyjs'
 
 import template_page from '../templates/page/search.hbs'
 import template_search_row from '../templates/search_row.hbs'
