@@ -1,13 +1,19 @@
 import Backbone from 'backbone'
 
+
 import template_page from '../templates/page/availability.hbs'
 
 class ProjectPage extends Backbone.View {
 
   renderPage(target) {
-    this.$el.html(template_page({ tracker_url: TRACKER_URL + '/embed' }))
-    target.html(this.$el)
-    this._resizeCrossDomainIframe('trackerIFrame', TRACKER_URL);
+    fetch('/tracker_url').then((res) => {
+      return res.json()
+    }).then((body) => {
+      const TRACKER_URL = body.message
+      target.html(template_page({ tracker_url: TRACKER_URL + '/embed' }))
+      this._resizeCrossDomainIframe('trackerIFrame', TRACKER_URL);
+      console.log($('#explorer').children().length)
+    })
   }
 
   // Private methods
