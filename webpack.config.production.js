@@ -109,10 +109,7 @@ module.exports = {
       , { from: './app/assets/downloads', to: 'downloads' }
       , { from: './app/assets/downloadify.swf', to: './' }
     ])
-    , new webpack.DefinePlugin({
-      TRACKER_URL: JSON.stringify(process.env.TRACKER_URL)
-    })
-    , new webpack.optimize.OccurenceOrderPlugin()
+   , new webpack.optimize.OccurenceOrderPlugin()
     , new webpack.optimize.UglifyJsPlugin({
       compressor: {
         screw_ie8: false

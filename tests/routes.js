@@ -1,6 +1,6 @@
 'use strict'
 
-import _ from 'lodash'
+import _ from 'underscore'
 import jsdom from 'jsdom'
 import jQuery from 'jquery'
 import {expect} from 'chai'
@@ -22,9 +22,11 @@ const routes = [
   , '#timeline'
   , '#rankings'
   , '#profile'
-  , '#availability'
+  // TODO fix testing when using fetch and iframe
+  //, '#availability'
   , '#participation'
   , '#download'
+  , '#search'
 ]
 
 describe('Test route', function () {
@@ -42,7 +44,7 @@ describe('Test route', function () {
           done()
         }
         catch(e) {
-          done(new Error('No content populated for route'))
+          done(new Error(`No content populated for route ${route}`))
         }
       }
       jsdom.env(config)

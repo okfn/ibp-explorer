@@ -15,19 +15,24 @@ This is a web application developed using [Brunch](http://brunch.io). To run loc
 * Clone this repository. 
 * Install [Node.js](http://nodejs.org).
 * Run `npm install` in the root directory of this repo to install dependencies.
-* Run `npm run start` to compile the app and run a webpack-dev-server web server
+* Run `npm run build:dev` to bundle the front-end. This also watches for changes in the code and automatically re-bundles the code. Leave this running if you need the auto re-bundling.
+* Set the environment variables (you can also set them inline with `npm run start` if you don't want to export them):
+  * `PORT` if you want to change the dafult port of the server which is 8080
+  * `TRACKER_URL` currently the tracker is implemented in an iframe. Use full URL, for example `http://localhost:3000`
+* Run `npm run start` to start the node server.
 * Point your browser at http://localhost:8080.
 
 To deploy:
 
 * Get the above working.
-* Kill the `webpack-dev-server`.
-* Run `npm run build:production`.
-* Deploy `./_build` folder to your web server.
+* Kill `npm run start` and `npm run build:dev`.
+* Set production `PORT` and `TRACKER_URL`.
+* Run `npm run build:production`. This will build minified version of the front-end and run the node server.
 
 Environment variables:
 
-* TRACKER_URL - needed for the "Document Availability" page which is iframe-ed open-budgeg-survey-tracker.
+* `PORT` - port on which the server will listen.
+* `TRACKER_URL` - needed for the "Document Availability" page which is iframe-ed open-budgeg-survey-tracker.
 
 To test:
 

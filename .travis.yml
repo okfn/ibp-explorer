@@ -3,6 +3,7 @@ node_js:
    - "6.3.0"
 before_script:
    - npm install
+   - npm run build:production
    - npm start &
    - sleep 5
 script:
