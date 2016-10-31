@@ -484,8 +484,6 @@ class ProfilePage extends Backbone.View {
       })
     }
     if (target.id === 'print-table') {
-      console.log(detailsData)
-      console.log(this.db_2017)
       let score2017 = reportGenerator.calculateScore(this.db_2017,
                                                  reportGenerator.questionSet)
       let score2015 = reportGenerator.calculateScore(this.data.db_2015,
