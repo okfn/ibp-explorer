@@ -401,7 +401,6 @@ class ProfilePage extends Backbone.View {
         $('#profile-mode').addClass('profile-mode-expanded')
         $('#profile-toggle').html('« Hide 2017 Calculator')
         $('#print-answered').click(this._onClickPrint)
-        $('#print-plain').click(this._onClickPrint)
         $('#print-table').click(this._onClickPrint)
       } else if ($('#profile-toggle').hasClass('active')) {
         $('#profile-toggle').removeClass('active')
@@ -460,10 +459,6 @@ class ProfilePage extends Backbone.View {
       })
       return val['question'] = question
     })
-    if (target.id === 'print-plain') {
-      $('.details').html(template_profile_details_future_print({data: detailsData}))
-      $('#country-header').text('Survey Questions and Answers')
-    }
     if (target.id === 'print-answered') {
       $('.details').html(template_profile_details_future_print({data: detailsData, year: 2017}))
       if (window.location.toString().split('?')[1]) {
