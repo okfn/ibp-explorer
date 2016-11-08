@@ -1,0 +1,159 @@
+{% extends "layout_embed.html" %}
+{% import "helpers.html" as h %}
+
+{% block page_title %}{{ gettext("Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-offset-8 col-md-4"  style="margin-bottom: 5px">
+      <a href="" target="_parent" class="btn btn-primary col-md-12">Browse budget documents library</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-8 col-md-4" style="margin-bottom: 20px">
+      <a href="https://drive.google.com/drive/folders/0ByA9wmvBrAnZN3ZrdzNzcS1JZzg" target="_blank" class="btn btn-primary col-md-12">View budget documents library in full</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10" style="padding-left: 0px">
+      <div class="panel panel-default">
+        <div id="heading" class="panel-heading">
+          <div class="text-right"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+            <strong>{{ gettext("Key") }}:</strong>
+            <span class="item">
+              <span class="badge state state-available"><span>{{ gettext("Publicly available") }}</span></span>
+              {{ gettext("Publicly available") }}
+            </span>
+            <span class="item">
+              <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
+              {{ gettext("Internal use only") }}
+            </span>
+            <span class="item">
+              <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
+              {{ gettext("Not produced") }} / {{ gettext("Published late") }}
+            </span>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table id="overview-table" class="table table-hover">
+            <colgroup>
+              <col width="22%">
+              <col width="2%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+            </colgroup>
+            <thead class="header">
+              <tr>
+                <th>{{ gettext("Country") }}</th>
+                <th class="text-center" data-toggle="popover" data-placement="bottom" data-content="{{ gettext("The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.") }}"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+                  {{ gettext("Open Budget Index") }}
+                </th>
+                {% for doc in docs %}
+                  <th class="text-center" data-toggle="popover" data-placement="bottom" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
+                    {{ gettext(doc.title) }}
+                  </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for country in countries %}
+                {% set code = country.code|lower %}
+                <tr>
+                  <td><a href="/availability/status/{{ country.country }}/embed">{{ gettext(country.country) }}</a></td>
+                  {% if country.obi_scores.length > 0 %}
+                    <td class="text-center" data-toggle="popover" data-content="From {{ country.obi_scores|last.year }}">
+                      {{ country.obi_scores|last.score }}
+                    </td>
+                  {% else %}
+                    <td></td>
+                  {% endif %}
+                  {% for doc in docs %}
+		    {% set cell = undefined %}
+                  {% if country.documents != {} %}
+		    {% for year in country.documents|reverse %}
+                      {% if not cell %}
+                        {% if doc.title in country.documents[year] %}
+                          {% set cell = country.documents[year][doc.title]|first %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                    {% if cell %}
+                      {% set parentId = "" %}
+                      {% if cell.uploads %}
+                        {% for upload in cell.uploads %}
+                          {% if upload.parentId %}
+                            {% set parentId = upload.parentId %}
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                      <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, cell) }}">
+                        {% if parentId %}
+                          <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
+                        {% endif %}
+                        <span class="badge state state-{{ cell.state|replace(' ', '-') }}">
+                          <span>{{ h.state(cell.state) }}</span>
+                        </span>
+                        {% if parentId %}
+                          </a>
+                        {% endif %}
+                      </td>
+                    {% else %}
+                      <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, doc) }}">
+                        <span class="badge state state-not-produced">
+                          <span>{{ h.state("not produced") }}</span>
+                        </span>
+                      </td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2" style="padding: 0px">
+      <div id="more-links" class="panel panel-default">
+        <div class="panel-heading">
+          {{ gettext("What is the Open Budget Survey?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("What are the OBS Document Availability Updates?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("A biannual update of the first section of the Open Budget Survey, which looks at whether the eight key budget documents are made available to the public. Twice a year this page will provide fresh data on whether national governments in countries included in the Open Budget Survey publish each of the eight key budget documents on time as per international standards.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("Where can I get the data?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext('You can download our data as <a href="/data.csv">a csv file</a>.') }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("How do the OBS Document Availability Updates relate to the Open Budget Index score?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Updates monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Updates allow for tracking a country's progress on meeting basic international standards for the publication of budget documents.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("Why do we need to know about government budgets?") }}</h4>
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.") }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

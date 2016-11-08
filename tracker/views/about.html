@@ -1,0 +1,39 @@
+{% extends "layout_embed.html" %}
+
+{% block page_title %}{{ gettext("About - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+  <div class="col-md-4">
+    <h2>{{ gettext("What is the Open Budget Survey?") }}</h2>
+    <p>{{ gettext("The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.") }}</p>
+    <p>{{ gettext("Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.") }}</p>
+    <h2>{{ gettext("Open Budget Survey Data") }}</h2>
+    <p>{{ gettext('To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href="http://survey.internationalbudget.org">Open Budget Survey Data Explorer</a>.') }}</p>
+  </div>
+
+  <div class="col-md-4">
+    <h2>{{ gettext("What is the OBS Tracker?") }}</h2>
+    <p>{{ gettext("A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.") }}</p>
+    <p>{{ gettext("The data for the Survey and Tracker are collected by independent civil society researchers in each country.") }}</p>
+    <h2>{{ gettext("How does a country’s Tracker results relate to its Open Budget Index score?") }}</h2>
+    <p>{{ gettext("A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.") }}</p>
+  </div>
+
+  <div class="col-md-4">
+    <h2>{{ gettext("Why do we need to know about government budgets?") }}</h2>
+    <p>{{ gettext("Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.") }}</p>
+
+    <h2>{{ gettext("More detailed information") }}</h2>
+    <ul>
+      <li><a href="http://internationalbudget.org/what-we-do/open-budget-survey/">{{ gettext("Open Budget Survey") }}</a></li>
+      <li><a href="http://internationalbudget.org/what-we-do/open-budget-survey/country-info/">{{ gettext("Country Info landing page") }}</a></li>
+      <li><a href="https://docs.google.com/folderview?pli=1&id=0ByA9wmvBrAnZN3ZrdzNzcS1JZzg">{{ gettext("Budget Library (Google docs)") }}</a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}

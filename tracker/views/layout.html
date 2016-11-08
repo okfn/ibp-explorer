@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+
+    <title>{% block page_title %}{% endblock %}</title>
+
+    {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to do budget analysis and budget advocacy with practical tools and resources. Read articles on public finance, social audits, and budget oversight issues; find civil society organizations doing budget work; and access international comparative data on public participation in government budgets, citizens budgets, and budget transparency and accountability.">
+    {% endblock %}
+
+    {% block head %}
+    <link rel="stylesheet" href="{{ asset('/styles/vendor.css') }}">
+    <link rel="stylesheet" href="/vendor.css">
+    <link rel="stylesheet" href="{{ asset('/styles/app.css') }}">
+    <link rel="stylesheet" href="/app.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" id="blm_googleFonts-css" href="http://fonts.googleapis.com/css?family=Roboto+Condensed%3A700&amp;ver=4.2.2" type="text/css" media="all">
+    {% endblock %}
+
+    {% block extrahead %}{% endblock%}
+
+    {% block tracking %}
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-11687423-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+    {% endblock %}
+</head>
+<body>
+<div id="header-container" class="container">
+    <div id="header">
+        <h1 id="logo1">
+            <a href="#" title="Open Budget Index: Data Explorer"><img src="images/data-explorer-logo.png" alt="Open Budget Index: Data Explorer"></a>
+        </h1>
+        <h1 id="logo2">
+            <a href="http://internationalbudget.org/" title="International Budget Partnership"><img src="images/ibp-logo-inverted.png" class="printLogo" alt="International Budget Project | Open Budgets. Transform Lives."></a>
+        </h1>
+    </div>
+</div>
+<div id="main-nav">
+    <div class="container">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#map">Map</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#rankings">Rankings</a></li>
+            <li><a href="#profile">Country<br />Datasheet</a></li>
+            <li>
+                <div class="dropdown">
+                    <a href="#availability">Document Availability</a>
+                    <div class="dropdown-content">
+                        <a href="#availability-historical">Historical Results</a>
+                    </div>
+                </div>
+            <li><a href="#participation">Public<br />Participation</a></li>
+            <li><a href="#download">Download<br />Data</a></li>
+            <li class="pull-right"><a href="http://internationalbudget.org/opening-budgets/open-budget-initiative/open-budget-survey/">IBP Website &raquo;</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container site-main">
+    <hr class="top" />
+    <div id="content">
+        <div id="report-generator">
+        </div>
+        <div id="explorer">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="clearfix">
+        </div>
+    </div>
+</div>
+<div id="footer-container">
+    <div id="footer">
+        <div id="footer-first">
+            <h4 class="widget-title">Join Our International Network</h4>
+            <div class="textwidget"><p>Connect with organizations working to improve government budget systems, policies and outcomes!</p>
+                <p><a class="footer-button" href="http://internationalbudget.org/budget-work-by-country/join-our-network/">Join</a>
+                    <a class="footer-button" href="http://internationalbudget.org/budget-work-by-country/findgroup/">Find Groups</a></p>
+            </div>
+        </div>
+        <div id="footer-second">
+            <img src="http://internationalbudget.org/wp-content/themes/ibp/images/worldmap_footer.png" alt="World Map">
+        </div>
+    </div>
+    <div class="container">
+        <p id="copyright">&copy; 2010–2011 International Budget Partnership. All rights reserved. | Website by <a href="http://okfn.org/services/" target="_blank" id="okfn">
+            <img src="../images/ok-logo.png" alt="Open Knowledge"></a></p>
+        <ul id="beta">
+            <li><a href="http://internationalbudget.org/who-we-are/">About IBP</a></li>
+            <li><a href="http://internationalbudget.org/pressarchive/">Press Room</a></li>
+            <li><a href="http://internationalbudget.org/contact-us/">Contact</a></li>
+            <li><a href="http://internationalbudget.org/library/copyright/">Copyright</a></li>
+        </ul>
+    </div>
+</div><!-- /##footer-container -->
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33874954-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+</body>
+</html>

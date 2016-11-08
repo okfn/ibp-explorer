@@ -1,0 +1,141 @@
+{% extends "layout_embed.html" %}
+{% import "helpers.html" as h %}
+
+{% block page_title %}{{ country.country + gettext(" - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-9">
+      <h1>{{ gettext(country.country) }}</h1>
+      {%- if country.message %}
+      <div class="alert alert-danger">{{ gettext(country.message) }}</div>
+      {% endif %}
+      <h2>{{ gettext("Open Budget Index") }} <small><a href="/availability/about"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></small></h2>
+      {% if country.obi_scores %}
+      <div class="table-responsive">
+	<table class="table">
+	  <thead>
+	    <tr>
+	      {% for score in country.obi_scores %}
+	      <th scope="row">{{ date_format(Date.parse(score.year), 'YYYY') }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      {% for score in country.obi_scores %}
+	      <td>{{ score.score }}</td>
+	      {% endfor %}
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+      {% else %}
+      <p class="text-muted">{{ gettext('N/A -- This country was not included in the Open Budget Survey') }}</p>
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      <div class="row top30">
+	<a href="{{ country.library }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      </div>
+      <div class="row top5">
+	<a href="/availability/status/{{ country.country }}/embed" class="btn btn-primary col-md-12">{{ gettext("View current status") }}</a>
+      </div>
+    </div>
+  </div>
+
+  <h2>{{ gettext("Historical Information") }}</h2>
+  <div class="panel panel-default">
+    <div id="heading" class="panel-heading">
+      <div class="text-right"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+        <strong>{{ gettext("Key") }}:</strong>
+        <span class="item">
+          <span class="badge state state-available"><span>{{ gettext("Publicly available") }}</span></span>
+          {{ gettext("Publicly available") }}
+        </span>
+        <span class="item">
+          <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
+          {{ gettext("Internal use only") }}
+        </span>
+        <span class="item">
+          <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
+          {{ gettext("Not produced") }} / {{ gettext("Published late") }}
+        </span>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <colgroup>
+        <col width="16%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+      </colgroup>
+      <thead>
+        <th></th>
+	{% set obi_latest = country.obi.availability|sort|last %}
+        {% for doc in docs %}
+        <th class="text-center" scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>{{ gettext(doc.title) }}</th>
+        {% endfor %}
+      </thead>
+      <tbody>
+	{% for snapshot_obj in country.snapshots %}
+        {% set snapshot = snapshot_obj.snapshot %}
+	<tr>
+          <th>{{ date_format(Date.parse(snapshot_obj.date), 'MMM YYYY')|capitalize }}</th>
+	  {% for doc in docs %}
+            {% set cell = undefined %}
+            {% for year in snapshot|reverse %}
+              {% if not cell %}
+                {% if doc.title in snapshot[year] %}
+                  {% set cell = snapshot[year][doc.title]|first %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            <td class="text-center">
+            {% if cell %}
+	    <div {% if cell.comments %}class="comment-cell"{% endif %}>
+              <span class="badge state state-{{ cell.state|replace(' ', '-') }}" data-toggle="popover" data-placement="top" data-content="{{ h.tooltip(country, cell) }}">
+                <span>{{ h.state(cell.state) }}</span>
+              </span>
+	      {% if cell.comments %}
+	      <span data-toggle="popover" data-placement="top" data-content="{{ cell.comments }}" class="text-info glyphicon glyphicon-comment"></span>
+	      {% endif %}
+            {% else %}
+              <span class="badge state state-not-produced" data-placement="top" data-toggle="popover" data-content="{{ h.tooltip(country, doc) }}">
+		<span>{{ h.state("not produced") }}</span>
+              </span>
+            </div>
+            {% endif %}
+            </td>
+          {% endfor %}
+          </tr>
+        {% endfor %}
+	  <tr class="info">
+	    <th>OBS{% if obi_latest %} {{ date_format(Date.parse(obi_latest), 'YYYY') }}{% endif %}</th>
+	    {% for doc in docs %}
+	    <td class="text-center">
+	      {% if obi_latest %}
+	      {% set state = country.obi.availability[obi_latest][doc.title] %}
+              <span class="badge state state-{{ state|replace(' ', '-') }}" data-placement="top" data-toggle="popover" data-content="{{ h.state(state) }}">
+                <span>{{ h.state(state) }}</span>
+              </span>
+	      {% else %}
+              <span class="badge state state-untracked" data-placement="top" data-toggle="popover" data-content="{{ gettext('Not tracked') }}">
+                <span>{{ gettext("Not tracked") }}</span>
+              </span>
+	      {% endif %}
+	    </td>
+	    {% endfor %}
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

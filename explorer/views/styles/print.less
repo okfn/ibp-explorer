@@ -1,0 +1,70 @@
+@media print {
+  hr.top,
+  #main-nav,
+  #report-generator,
+  #datasheet-toggles,
+  .country-nav-select-outer,
+  .main-website-link,
+  .percentages,
+  .share-buttons,
+  #profile-toggle,
+  .explanation,
+  .question-box,
+  #question-table,
+  .all-countries {
+    display: none !important;
+  }
+
+  #question-table-print {
+    display: block;
+  }
+
+  #content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .year-box {
+    float: left;
+  }
+
+  .profile-mode-expanded {
+    display: none;
+  }
+
+  .print-table {
+    margin-bottom: 0px;
+  }
+
+  .capitalLetter {
+    text-transform: capitalize;
+  }
+}
+
+.number-print {
+  width: 5%;
+}
+
+.question-print {
+  width: 33%;
+  padding-bottom: 15px;
+}
+
+.answer-print {
+  display: block;
+  padding-bottom: 15px;
+}
+
+#question-table-print td {
+  padding-top: 15px;
+}
+
+.active-print {
+  color: #333333;
+  text-decoration: underline;
+}

@@ -1,0 +1,88 @@
+{% extends "layout_embed.html" %}
+
+{% block page_title %}{{ gettext("Press - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block extrahead %}
+<link rel="profile" href="http://microformats.org/profile/hcard">
+{% endblock%}
+
+{% block content %}
+
+<div class="row">
+
+  <div class="col-md-8">
+    <h2>{{ gettext("Press Releases") }}</h2>
+    <ul>
+      <li>
+	<a href="{{ asset('/pdfs/obstracker_press_release_post_'+lang+'.pdf') }}">{{ date_format(Date.parse('11 September 2014'), 'LL')|capitalize }}</a>
+      </li>
+    </ul>
+
+    <h2>{{ gettext("OBS Tracker in the News") }}</h2>
+    <ul>
+      <li>{{ date_format(Date.parse('March 17, 2015'), 'LL')|capitalize }}: <a href="http://internationalbudget.org/wp-content/uploads/Haki-Elimu-Tanzania-OBS-Tracker-brief.pdf">Uwazi katika Bajeti Yetu: Je, tunasonga mbele au Kurudi Nyuma?</a></li>
+      <li>{{ date_format(Date.parse('March 16, 2015'), 'LL')|capitalize }}: <a href="http://www.spyghana.com/send-ghana-calls-on-csos-to-build-capacity-to-enhance-good-governance/">SEND Ghana Calls On CSOs To Build Capacity To Enhance Good Governance</a></li>
+      <li>{{ date_format(Date.parse('March 15, 2015'), 'LL')|capitalize }}: <a href="http://www.ghananewsagency.org/economics/send-ghana-empowers-civil-society-for-budget-transparency-87024">SEND-Ghana empowers civil society for budget transparency</a></li>
+      <li>{{ date_format(Date.parse('March 11, 2015'), 'LL')|capitalize }}: <a href="http://www.ghananewsagency.org/economics/send-ghana-empowers-civil-society-for-budget-transparency-87024">Absence of pre-budget statement limits citizens from engaging in budget formulation exercise</a></li>
+      <li>{{ date_format(Date.parse('March 10, 2015'), 'LL')|capitalize }}: <a href="https://obs.ellak.gr/?p=259">Μελέτη για την Διαφάνεια και Ανοιχτότητα του Προϋπολογισμού στην Ελλάδα</a></li>
+      <li>{{ date_format(Date.parse('March 10, 2015'), 'LL')|capitalize }}: <a href="http://cea.org.mk/documents/moneytracking.pdf">Are you tracking YOUR money?</a></li>
+      <li>{{ date_format(Date.parse('March 7, 2015'), 'LL')|capitalize }}: <a href="http://www.spyghana.com/budget-transparency-accountability-workshop-held/">Budget transparency &amp; accountability workshop held</a></li>
+      <li>{{ date_format(Date.parse('March 6, 2015'), 'LL')|capitalize }}: <a href="http://www.protagon.gr/?i=protagon.el.oikonomia&amp;id=39870">Πού πηγαίνουν οι φόροι μας</a></li>
+      <li>{{ date_format(Date.parse('February 24, 2015'), 'LL')|capitalize }}: <a href="http://www.premiumtimesng.com/news/top-news/177419-three-months-after-nigerian-govt-yet-to-release-official-budget-details.html">Three months after, Nigerian govt yet to release official budget details</a></li>
+      <li>{{ date_format(Date.parse('February 12, 2015'), 'LL')|capitalize }}: <a href="http://news.ccf.org.fj/fiji-is-on-the-right-path-towards-budget-transparency/">Fiji is on the right path towards budget transparency</a></li>
+      <li>{{ date_format(Date.parse('February 10, 2015'), 'LL')|capitalize }}: <a href="http://www.portfolio.hu/gazdasag/magyarorszag_macedoniaval_egy_szinten.3.210018.html">Magyarország Macedóniával egy szinten</a></li>
+      <li>{{ date_format(Date.parse('February 2, 2015'), 'LL')|capitalize }}: <a href="https://www.devex.com/news/a-new-tool-in-the-fight-for-fiscal-transparency-85411">A new tool in the fight for fiscal transparency</a></li>
+      <li>{{ date_format(Date.parse('January 26, 2015'), 'LL')|capitalize }}: <a href="http://www.mizzima.com/opinion/commentary/item/17208-fast-progress-possible-on-open-budgets">Fast progress possible on open budgets</a></li>
+      <li>{{ date_format(Date.parse('January 25, 2015'), 'LL')|capitalize }}: <a href="http://okfn.gr/2015/01/%CF%80%CF%8C%CF%83%CE%BF-%CE%B1%CE%BD%CE%BF%CE%B9%CF%87%CF%84%CF%8C%CF%82-%CE%B5%CE%AF%CE%BD%CE%B1%CE%B9-%CE%BF-%CF%80%CF%81%CE%BF%CF%8B%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CE%BC%CF%8C%CF%82/">Πόσο “Ανοιχτός” είναι ο Προϋπολογισμός της χώρας σου</a></li>
+      <li>{{ date_format(Date.parse('January 22, 2015'), 'LL')|capitalize }}: <a href="http://blog-pfm.imf.org/pfmblog/2015/01/the-obs-tracker-a-new-tool-for-continuous-monitoring-of-budget-transparency-.html">The OBS Tracker: A new Tool for Continuous Monitoring of Budget Transparency</a></li>
+      <li>{{ date_format(Date.parse('December 11, 2014'), 'LL')|capitalize }}: <a href="http://www.almasryalyoum.com/videos/details/10479">افتتاح موقع مرصد الموازنة المفتوحة</a></li>
+      <li>{{ date_format(Date.parse('December 8, 2014'), 'LL')|capitalize }}: <a href="http://businessdayonline.com/2014/12/nigeria-lags-behind-ghana-kenya-mali-in-budget-information-dissemination/#.VIsDlTHF9rI">Nigeria lags behind Ghana, Kenya, Mali in budget information dissemination</a></li>
+      <li>{{ date_format(Date.parse('November 22, 2014'), 'LL')|capitalize }}: <a href="http://www.ippmedia.com/frontend/index.php?l=74448">Govt Fails to Release Budget Reports</a></li>
+      <li>{{ date_format(Date.parse('November 22, 2014'), 'LL')|capitalize }}: <a href="http://www.mwananchi.co.tz/habari/Kitaifa/Tanzania-sasa-yasakamwa-kwa-rushwa/-/1597296/2531460/-/t654p4z/-/index.html">Tanzania sasa yasakamwa kwa rushwa</a></li>
+      <li>{{ date_format(Date.parse('November 22, 2014'), 'LL')|capitalize }}: <a href="http://www.dailynews.co.tz/index.php/local-news/38540-need-to-establish-public-money-expenditure-network">Need to Establish Public Money Expenditure Network</a></li>
+      <li>{{ date_format(Date.parse('November 22, 2014'), 'LL')|capitalize }}: <a href="http://internationalbudget.org/wp-content/uploads/Dar-fails-on-budget-feedback.jpg">Dar fails on budget feedback</a></li>
+      <li>{{ date_format(Date.parse('November 18, 2014'), 'LL')|capitalize }}: <a href="http://blog.okfn.org/2014/11/18/the-heartbeat-of-budget-transparency/">The Heartbeat of Budget Transparency</a></li>
+      <li>{{ date_format(Date.parse('November 2014'), 'LL')|capitalize }}: <a href="http://internationalbudget.org/wp-content/uploads/Budget-de-l---etat-Le-gouvernement-invit------plus-de-transparence.jpg">Budget de l’etat: Le gouvernement invité à plus de transparence</a></li>
+      <li>{{ date_format(Date.parse('November 14, 2014'), 'LL')|capitalize }}: <a href="http://hakielimu.org/news_detail.php?news=2158">Open Budget Survey Tracker</a></li>
+      <li>{{ date_format(Date.parse('November 12, 2014'), 'LL')|capitalize }}: <a href="http://www.spyghana.com/absence-ghanas-pre-budget-statement-worrying/">Absence of Ghana’s Pre-Budget Statement Worrying</a></li>
+      <li>{{ date_format(Date.parse('November 9, 2014'), 'LL')|capitalize }}: <a href="http://internationalbudget.org/wp-content/uploads/Budget-de-l---etat-Le-gouvernement-invit------plus-de-transparence.jpg">Budget de l’etat: Le gouvernement invité à plus de transparence</a></li>
+      <li>{{ date_format(Date.parse('November 9, 2014'), 'LL')|capitalize }}: <a href="http://internationalbudget.org/wp-content/uploads/Accessibilit---du-budget----la-population-La-C--te-d---Ivoire----la-tra--ne.jpg">Accessibilité du budget à la population: La Côte d’Ivoire à la traîne</a></li>
+      <li>{{ date_format(Date.parse('November 3, 2014'), 'LL')|capitalize }}: <a href="http://nigerianpilot.com/cso-calls-for-open-budgeting-to-foster-devt/">CSO calls for open budgeting to foster devt</a></li>
+      <li>{{ date_format(Date.parse('October 30, 2014'), 'LL')|capitalize }}: <a href="http://hoy.com.do/videos/todos/30-10-14unouno">Entrevista al presidente de la Fundación Solidaridad, Juan Castillo</a></li>
+      <li>{{ date_format(Date.parse('October 30, 2014'), 'LL')|capitalize }}: <a href="http://caribbeandigital.net/revelan-brechas-criticas-en-las-informaciones-presupuestarias-que-el-gobierno-divulga-al-publico/">Revelan brechas críticas en las informaciones presupuestarias que el gobierno divulga al público</a></li>
+      <li>{{ date_format(Date.parse('October 29, 2014'), 'LL')|capitalize }}: <a href="http://www.elnuevodiario.com.do/app/article.aspx?id=396736">Afirman transparencia de los presupuestos públicos ayudan a reducir la corrupción</a></li>
+      <li>{{ date_format(Date.parse('October 29, 2014'), 'LL')|capitalize }}: <a href="https://opengov.ellak.gr/?p=321">Ανοιχτοί Προϋπολογισμοί. Για όλους, με όλους!</a></li>
+      <li>{{ date_format(Date.parse('October 22, 2014'), 'LL')|capitalize }}: <a href="https://www.youtube.com/watch?v=0xuEdSwu5_I&amp;feature=youtu.be">Open Budget Survey Tracker Roundtable in Nigeria Organised by CIRRDOC in collaboration with Centre LSD (video)</a></li>
+      <li>{{ date_format(Date.parse('October 21, 2014'), 'LL')|capitalize }}: <a href="https://www.opendemocracy.net/openglobalrights/helena-hofbauer/%E8%83%9C%E5%88%A9%E8%80%85%E5%92%8C%E5%A4%B1%E8%B4%A5%E8%80%85%EF%BC%9A%E2%80%9C%E4%BA%BA%E6%9D%83%E9%A2%84%E7%AE%97%E2%80%9D%E8%83%BD%E5%A4%9F%E7%BB%99%E8%B4%AB%E5%9B%B0%E7%BE%A4%E4%BD%93%E5%B8%A6%E6%9D%A5%E4%BB%80%E4%B9%88%E5%B8%AE%E5%8A%A9">胜利者和失败者：“人权预算”能够给贫困群体带来什么帮助</a></li>
+      <li>{{ date_format(Date.parse('October 15, 2014'), 'LL')|capitalize }}: <a href="https://www.opendemocracy.net/openglobalrights/helena-hofbauer/les-gagnants-et-les-perdants-comment-la-budg%C3%A9tisation-pour-les-droi">Les gagnants et les perdants : comment la budgétisation pour les droits de l’homme peut aider les pauvres</a></li>
+      <li>{{ date_format(Date.parse('October 13, 2014'), 'LL')|capitalize }}: <a href="http://www.tienphong.vn/Kinh-Te/co-bat-thuong-khi-cong-khai-ngan-sach-viet-nam-xep-vao-nhom-cuoi-770493.tpo">Có bất thường khi công khai ngân sách Việt Nam xếp vào nhóm cuối?</a></li>
+      <li>{{ date_format(Date.parse('October 13, 2014'), 'LL')|capitalize }}: <a href="http://bizlive.vn/kinh-te-dau-tu/co-bat-thuong-khi-cong-khai-ngan-sach-viet-nam-xep-vao-nhom-cuoi-494026.html">Có bất thường khi công khai ngân sách Việt Nam xếp vào nhóm cuối?</a></li>
+      <li>{{ date_format(Date.parse('October 10, 2014'), 'LL')|capitalize }}: <a href="http://us.24h.com.vn/tai-chinh-bat-dong-san/nguoi-viet-mu-mo-ve-ngan-sach-nha-nuoc-c161a664497.html">Người Việt “mù mờ” về ngân sách nhà nước</a></li>
+      <li>{{ date_format(Date.parse('October 9, 2014'), 'LL')|capitalize }}: <a href="https://www.opendemocracy.net/openglobalrights/helena-hofbauer/ganadores-y-perdedores-presupuestar-con-perspectiva-de-derechos-hum">Ganadores y perdedores: Presupuestar con perspectiva de derechos humanos le sirve a los pobres</a></li>
+      <li>{{ date_format(Date.parse('October 9, 2014'), 'LL')|capitalize }}: <a href="http://baocongthuong.com.vn/trong-nuoc/67552/tang-cuong-chi-so-xep-hang-minh-bach-ngan-sach.htm#.VEVAPvnF9rJ">Tăng cường chỉ số xếp hạng minh bạch ngân sách</a></li>
+      <li>{{ date_format(Date.parse('October 8, 2014'), 'LL')|capitalize }}: <a href="http://www.aps.sn/articles.php?id_article=133870">Conférence de presse sur l&#8217;outil &#8220;Tracker&#8221;, jeudi</a></li>
+      <li>{{ date_format(Date.parse('October 3, 2014'), 'LL')|capitalize }}: <a href="http://grupofaro.org/content/la-nueva-herramienta-de-seguimiento-de-la-transparencia-presupuestaria-revela-brechas-cr%C3%ADtic">La nueva herramienta de seguimiento de la transparencia presupuestaria revela brechas críticas en la información financiera que los gobiernos divulgan al público</a></li>
+      <li>{{ date_format(Date.parse('October 1, 2014'), 'LL')|capitalize }}: <a href="https://www.opendemocracy.net/openglobalrights/helena-hofbauer/pemenang-dan-yang-terpinggirkan-bagaimana-anggaran-untuk-hak-asasi-">Pemenang dan yang terpinggirkan: bagaimana anggaran untuk hak asasi manusia dapat membantu kaum tidak mampu</a></li>
+      <li>{{ date_format(Date.parse('October 1, 2014'), 'LL')|capitalize }}: <a href="http://www.laprensa.com.ni/2014/10/02/economia/213937-presupuesto-claro-mejorara-riesgo-pais-nicaragua-con-bajo-puntaje-en-indice-de-presupuesto-abierto">Presupuesto claro mejorará riesgo país</a></li>
+      <li>{{ date_format(Date.parse('October 1, 2014'), 'LL')|capitalize }}: <a href="http://www.ieepp.org/index.php/la-nueva-herramienta-de-seguimiento-de-la-transparencia-presupuestaria-revela-brechas-criticas-en-la-informacion-financiera-que-los-gobiernos-divulgan-al-publico/">La nueva herramienta de seguimiento de la transparencia presupuestaria revela brechas críticas en la información financiera que los gobiernos divulgan al público</a></li>
+      <li>{{ date_format(Date.parse('September 29, 2014'), 'LL')|capitalize }}: <a href="http://precedent.kg/2014/09/29/komitet-zhk-po-mezhdunarodnym-delam-obsudil-proekt-zakona-o-respublikanskom-byudzhete-na-2015-god/">Комитет ЖК по международным делам обсудил проект закона «О республиканском бюджете на 2015 год»</a></li>
+      <li>{{ date_format(Date.parse('September 27, 2014'), 'LL')|capitalize }}: <a href="http://openasia.org/en/?p=4903">Winners and losers: how budgeting for human rights can help the poor</a></li>
+      <li>{{ date_format(Date.parse('September 18, 2014'), 'LL')|capitalize }}: <a href="http://aman-palestine.org/ar/activities/2161.html">الموازنة العامة الفلسطينية تعاني من ضعف في الشفافية</a></li>
+      <li>{{ date_format(Date.parse('September 15, 2014'), 'LL')|capitalize }}: <a href="http://pcij.org/blog/2014/09/15/track-budget-documents-real-time">Track Budget Documents Real-Time</a></li>
+      <li>{{ date_format(Date.parse('September 15, 2014'), 'LL')|capitalize }}: <a href="http://tech.transparency-initiative.org/ibp-adds-real-time-tool-for-tracking-federal-budget-activity/">Bridging Transparency and Technology</a></li>
+      <li>{{ date_format(Date.parse('August 14, 2014'), 'LL')|capitalize }}: <a href="http://www.eng.24.kg/economics/171869-news24.html">Kyrgyzstan Joins Budget Tracker International Database of Budget Information</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-4 vcard">
+    <h2>{{ gettext("Media Contact") }}</h2>
+    <div class="fn">Delaine McCullough</div>
+    <div class="title">{{ gettext("Communications Manager") }}</div>
+    <div><a href="mailto:dmccullough@internationalbudget.org" class="email">dmccullough@internationalbudget.org</a></div>
+    <div class="tel"><span class="type">{{ gettext("Phone") }}</span>: <span class="value">+1-202-408-1080</span></div>
+    <div class="tel"><span class="type">{{ gettext("Mobile") }}</span>: <span class="value">+1-202-360-3057</span></div>
+  </div>
+
+</div>
+
+{% endblock %}

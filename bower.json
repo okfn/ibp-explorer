@@ -1,0 +1,10 @@
+{
+  "name": "open-budget-survey-tracker",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "3.2.0",
+    "jquery": "2.1.1",
+    "table-fixed-header": "https://github.com/oma/table-fixed-header/archive/master.zip",
+    "ScrollToFixed": "1.0.6"
+  }
+}

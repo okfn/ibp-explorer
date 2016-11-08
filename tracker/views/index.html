@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+{% import "helpers.html" as h %}
+
+{% block page_title %}{{ gettext("Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div id="heading" class="panel-heading">
+          <div class="text-right"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+            <strong>{{ gettext("Key") }}:</strong>
+            <span class="item">
+              <span class="badge state state-available"><span>{{ gettext("Publicly available") }}</span></span>
+              {{ gettext("Publicly available") }}
+            </span>
+            <span class="item">
+              <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
+              {{ gettext("Internal use only") }}
+            </span>
+            <span class="item">
+              <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
+              {{ gettext("Not produced") }} / {{ gettext("Published late") }}
+            </span>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table id="overview-table" class="table table-hover">
+            <colgroup>
+              <col width="22%">
+              <col width="2%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+            </colgroup>
+            <thead class="header">
+              <tr>
+                <th>{{ gettext("Country") }}</th>
+                <th class="text-center" data-toggle="popover" data-placement="bottom" data-content="{{ gettext("The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.") }}"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+                  {{ gettext("Open Budget Index") }}
+                </th>
+                {% for doc in docs %}
+                  <th class="text-center" data-toggle="popover" data-placement="bottom" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
+                    {{ gettext(doc.title) }}
+                  </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for country in countries %}
+                {% set code = country.code|lower %}
+                <tr>
+                  <td><a href="/status/{{ country.country }}">{{ gettext(country.country) }}</a></td>
+                  {% if country.obi_scores %}
+                    <td class="text-center" data-toggle="popover" data-content="From {{ country.obi_scores|last.year }}">
+                      {{ country.obi_scores|last.score }}
+                    </td>
+                  {% else %}
+                    <td></td>
+                  {% endif %}
+                  {% for doc in docs %}
+		    {% set cell = undefined %}
+		    {% for year in country.documents|reverse %}
+                      {% if not cell %}
+                        {% if doc.title in country.documents[year] %}
+                          {% set cell = country.documents[year][doc.title]|first %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    {% if cell %}
+                      <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, cell) }}">
+                        <span class="badge state state-{{ cell.state|replace(' ', '-') }}">
+                          <span>{{ h.state(cell.state) }}</span>
+                        </span>
+                      </td>
+                    {% else %}
+                      <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, doc) }}">
+                        <span class="badge state state-not-produced">
+                          <span>{{ h.state("not produced") }}</span>
+                        </span>
+                      </td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div id="more-links" class="panel panel-default">
+        <div class="panel-heading">
+          {{ gettext("What is the Open Budget Survey?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. <!-- more -->This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("What is the OBS Tracker?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("A tool that provides regular monthly updates on whether the central government of the countries publish each of the key budget documents on time as per international standards.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("Where can I get the data?") }}
+        </div>
+	<div class="panel-body">
+          <p>{{ gettext('You can download our data as <a href="/data.csv">a csv file</a>.') }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("How do Tracker results relate to Open Budget Index scores?") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The <strong>OBS Tracker</strong> monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). <!-- more -->Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("Why do we need to know about government budgets?") }}</h4>
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext("Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. <!-- more --> Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.") }}</p>
+        </div>
+        <div class="panel-heading">
+          {{ gettext("Open Budget Survey Data") }}
+        </div>
+        <div class="panel-body">
+          <p>{{ gettext('To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href="http://survey.internationalbudget.org/">Open Budget Survey Data Explorer</a>.') }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
