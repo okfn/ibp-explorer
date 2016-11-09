@@ -8,10 +8,9 @@ var minify_css = require('gulp-minify-css');
 var rev = require('gulp-rev');
 var clean = require('gulp-clean');
 var extend = require('gulp-extend');
-var gutil = require('gulp-util')
-var webpack = require('webpack')
-var WebpackDevServer = require('webpack-dev-server')
-var webpackConfig = require('./webpack.config.development')
+var gls = require('gulp-live-server')
+var spawn = require('child_process').spawn
+var runSequence = require('run-sequence')
 
 var paths = {
   vendor_scripts: [
@@ -38,6 +37,29 @@ var paths = {
     'tracker/build/styles/*/rev-manifest.json'
   ]
 };
+
+gulp.task('webpack-watch', (cb) => {
+  const webpack_watch = spawn('./node_modules/.bin/webpack',
+                              ['--watch',
+                               '--config',
+                               __dirname + '/webpack.config.development.js']);
+
+  webpack_watch.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+    //hacky: inform that webpack finished once it writes on stdout
+    cb()
+  });
+
+  webpack_watch.stderr.on('data', (data) => {
+    console.log(`stderr: ${data}`);
+  });
+
+  webpack_watch.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
+
+});
 
 gulp.task('clean', function (callback) {
   del(['tracker/build'], callback);
@@ -86,7 +108,7 @@ gulp.task('styles', ['clean'], function () {
 
 gulp.task('images', ['clean'], function () {
   return gulp.src(paths.images)
-    .pipe(imagemin({optimizationLevel: 5}))
+    .pipe(imagemin({ optimizationLevel: 5 }))
     .pipe(gulp.dest('tracker/build/images'));
 });
 
@@ -96,7 +118,7 @@ gulp.task('vendor_fonts', ['clean'], function () {
 });
 
 gulp.task('manifest', function (callback) {
-  gulp.src(paths.manifest)
+  return gulp.src(paths.manifest)
     .pipe(clean({ force: true }))
     .pipe(extend('manifest.json'))
     .pipe(gulp.dest('tracker/build'));
@@ -105,48 +127,96 @@ gulp.task('manifest', function (callback) {
 gulp.task('dev_vendor_styles', function () {
   return gulp.src(paths.vendor_styles)
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest('tracker/styles/'));
+    .pipe(rev())
+    .pipe(gulp.dest('tracker/build/styles/'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('tracker/build/styles/1'))
 });
 
 gulp.task('dev_vendor_scripts', function () {
   return gulp.src(paths.vendor_scripts)
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('tracker/scripts/'));
+    .pipe(rev())
+    .pipe(gulp.dest('tracker/build/scripts/'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('tracker/build/scripts/1'))
+});
+
+gulp.task('dev_scripts', ['clean'], function () {
+  return gulp.src(paths.scripts)
+    .pipe(concat('app.js'))
+    .pipe(rev())
+    .pipe(gulp.dest('tracker/build/scripts/'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('tracker/build/scripts/2'))
 });
 
 gulp.task('dev_styles', function () {
   return gulp.src(paths.styles)
     .pipe(less())
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('tracker/styles/'));
+    .pipe(rev())
+    .pipe(gulp.dest('tracker/build/styles/'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('tracker/build/styles/2'))
 });
 
-gulp.task('watch', function () {
-  gulp.start(['dev_vendor_styles']);
-  gulp.start(['dev_vendor_scripts']);
-  gulp.start(['dev_styles']);
-  gulp.watch(paths.vendor_styles, ['dev_vendor_styles']);
-  gulp.watch(paths.vendor_scripts, ['dev_vendor_scripts']);
-  gulp.watch(paths.styles, ['dev_styles']);
-});
+gulp.task('gulp-watch', function (cb) {
+  gulp.start(['dev:build'])
 
-gulp.task("webpack-dev-server", function(callback) {
-  // modify some webpack config options
-  var myConfig = Object.create(webpackConfig);
-  myConfig.devtool = "eval";
-  myConfig.debug = true;
-
-  // Start a webpack-dev-server
-  new WebpackDevServer(webpack(myConfig), {
-    stats: {
-      colors: true
-    }
-  }).listen(8080, "localhost", function(err) {
-    if(err) throw new gutil.PluginError("webpack-dev-server", err);
-    gutil.log("[webpack-dev-server]", "http://localhost:8080/");
+  gulp.watch(paths.vendor_styles, function () {
+    runSequence('dev_vendor_styles', 'manifest')
+  })
+  gulp.watch(paths.vendor_scripts, function () {
+    runSequence('dev_vendor_scripts', 'manifest')
   });
+  gulp.watch(paths.styles, function () {
+    runSequence('dev_styles', 'manifest')
+  });
+  gulp.watch(paths.scripts, function () {
+    runSequence('dev_scripts', 'manifest')
+  });
+
+  cb()
 });
 
-gulp.task('build', ['vendor_scripts', 'scripts', 'vendor_styles', 'styles', 'vendor_fonts', 'images']);
-gulp.task('deploy', ['manifest'])
-gulp.task('webserver', ['webpack-dev-server'])
+
+gulp.task('live-server', function () {
+  var server = gls(__dirname + '/bin/www', undefined, false)
+  server.start()
+  gulp.watch('tracker/build/manifest.json', function (file) {
+    //we need a server restart so the new tracker bundles are picked up
+    server.start()
+  })
+
+})
+
+gulp.task('deploy', function (cb) {
+  runSequence('clean',
+              [
+                'vendor_styles',
+                'vendor_scripts',
+                'styles',
+                'scripts',
+                'vendor_fonts',
+                'images'
+              ], 'manifest', cb)
+})
+
+gulp.task('dev:build', function (cb) {
+  runSequence('clean',
+              [
+                'dev_vendor_styles',
+                'dev_vendor_scripts',
+                'dev_styles',
+                'dev_scripts',
+                'vendor_fonts',
+                'images'
+              ], 'manifest', cb)
+})
+
+gulp.task('dev:watch', function () {
+  runSequence(['webpack-watch', 'gulp-watch'], 'live-server')
+})
+
+
