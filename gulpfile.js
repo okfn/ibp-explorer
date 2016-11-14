@@ -38,29 +38,6 @@ var paths = {
   ]
 };
 
-gulp.task('webpack-watch', (cb) => {
-  const webpack_watch = spawn('./node_modules/.bin/webpack',
-                              ['--watch',
-                               '--config',
-                               __dirname + '/webpack.config.development.js']);
-
-  webpack_watch.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-    //hacky: inform that webpack finished once it writes on stdout
-    cb()
-  });
-
-  webpack_watch.stderr.on('data', (data) => {
-    console.log(`stderr: ${data}`);
-  });
-
-  webpack_watch.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-
-
-});
-
 gulp.task('clean', function (callback) {
   del(['tracker/build'], callback);
 });
@@ -161,8 +138,8 @@ gulp.task('dev_styles', function () {
     .pipe(gulp.dest('tracker/build/styles/2'))
 });
 
-gulp.task('gulp-watch', function (cb) {
-  gulp.start(['dev:build'])
+gulp.task('tracker-watch', function (cb) {
+  gulp.start(['build:dev:tracker'])
 
   gulp.watch(paths.vendor_styles, function () {
     runSequence('dev_vendor_styles', 'manifest')
@@ -191,7 +168,30 @@ gulp.task('live-server', function () {
 
 })
 
-gulp.task('deploy', function (cb) {
+gulp.task('webpack-watch', (cb) => {
+  const webpack_watch = spawn('./node_modules/.bin/webpack',
+                              ['--watch',
+                               '--config',
+                               __dirname + '/webpack.config.development.js']);
+
+  webpack_watch.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+    //hacky: inform that webpack finished once it writes on stdout
+    cb()
+  });
+
+  webpack_watch.stderr.on('data', (data) => {
+    console.log(`stderr: ${data}`);
+  });
+
+  webpack_watch.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
+
+});
+
+gulp.task('build:prod:tracker', function (cb) {
   runSequence('clean',
               [
                 'vendor_styles',
@@ -203,7 +203,7 @@ gulp.task('deploy', function (cb) {
               ], 'manifest', cb)
 })
 
-gulp.task('dev:build', function (cb) {
+gulp.task('build:dev:tracker', function (cb) {
   runSequence('clean',
               [
                 'dev_vendor_styles',
@@ -216,7 +216,7 @@ gulp.task('dev:build', function (cb) {
 })
 
 gulp.task('dev:watch', function () {
-  runSequence(['webpack-watch', 'gulp-watch'], 'live-server')
+  runSequence(['webpack-watch', 'tracker-watch'], 'live-server')
 })
 
 
