@@ -1,5 +1,5 @@
 var fs = require('fs');
-var Indaba = require('open-budget-indaba-client').default.Indaba;
+var Indaba = require('ibp-explorer-data-client').default.Indaba;
 var moment = require('moment');
 
 function api_call (endpoint, callback) {
@@ -31,6 +31,32 @@ function api_call (endpoint, callback) {
   }
 }
 
+function getSearch() {
+  return new Promise(function (resolve, reject) {
+    var cache_file = './cache/searchdata.json'
+    var cache_exists = fs.existsSync(cache_file)
+    if (cache_exists) {
+      var stat = fs.statSync(cache_file)
+      var hours = moment().diff(new Date(stat.mtime), 'hours')
+      if (hours > 1) {
+        Indaba.getSearchJSON().then(function (res) {
+          resolve(res)
+          fs.writeFileSync(cache_file, JSON.stringify(res))
+        })
+      } else {
+        var data = fs.readFileSync(cache_file)
+        resolve(JSON.parse(data))
+      }
+    } else {
+      Indaba.getSearchJSON().then(function (res) {
+        resolve(res)
+        fs.writeFileSync(cache_file, JSON.stringify(res))
+      })
+    }
+  })
+}
+
 module.exports = {
-  call: api_call
+  call: api_call,
+  getSearch: getSearch
 };
