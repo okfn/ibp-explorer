@@ -7,6 +7,7 @@
 @state-color-not-produced: @state-color-late;
 @state-color-internal: #F5DD0C;
 @state-color-available: #28C926;
+@state-color-hard-soft-copy-only: @state-color-internal;
 
 @font-face {
   font-family: 'clear_sansregular';
@@ -468,6 +469,10 @@ a#okfn {
     &.state-available {
       background-color: lighten(@state-color-available, 15%) !important;
       border-color: darken(@state-color-available, 15%) !important;
+    }
+    &.state-hard-soft-copy-only {
+      background-color: lighten(@state-color-hard-soft-copy-only, 15%) !important;
+      border-color: darken(@state-color-hard-soft-copy-only, 15%) !important;
     }
   }
 
