@@ -3,7 +3,11 @@
         <div class="span12">
             <div class="search-results">
                 <div class="row">
-                    <div class="span12 result-title">{{title}}</div>
+                    {{#if title}}
+                        <div class="span12 result-title">{{title}}</div>
+                    {{else}}
+                        <div class="span12 result-title">{{filename}}</div>
+                    {{/if}}
                 </div>
                 <div class="row">
                     <div class="span12">
@@ -30,14 +34,10 @@
                                     <h5>View document folder »</h5>
                                 </a>
                             {{else}}
-                                {{#if uploads}}
-                                    {{#each uploads}}
-                                        {{#if driveId}}
-                                            <a target="_blank" href="https://drive.google.com/file/d/{{driveId}}">
-                                                <h5>View document »</h5>
-                                            </a>
-                                        {{/if}}
-                                    {{/each}}
+                                {{#if driveId}}
+                                    <a target="_blank" href="https://drive.google.com/file/d/{{driveId}}">
+                                        <h5>View document »</h5>
+                                    </a>
                                 {{/if}}
                             {{/if}}
                         </div>
