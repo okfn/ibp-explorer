@@ -14,40 +14,33 @@ class SearchPage extends View {
     this._getFilteredResults = _.bind(this._getFilteredResults, this)
     this._setAllOnFilters = _.bind(this._setAllOnFilters, this)
     this._onFiltersReset = _.bind(this._onFiltersReset, this)
-    //TODO this should get inmplemented in the indaba-client once gdrive is ready for that
-    _SEARCH_DATASET.documents = _.filter(_SEARCH_DATASET.documents, (document) => {
-      if (document.uploads) {
-        let found = _.find(document.uploads, (upload) => {
-          return upload.driveId
-        })
-        if (found) {
-          return true
-        }
-      }
-      return false
-    })
-    this.documents = _SEARCH_DATASET.documents
     this.activeFilters = {}
     this.filtersChanged = false
   }
 
   renderPage(target) {
-    this.$el.html(template_page({
-                                  countries: _SEARCH_DATASET.countries,
-                                  document_types: _SEARCH_DATASET.document_types,
-                                  years: _SEARCH_DATASET.years,
-                                  states: _SEARCH_DATASET.states,
-                                  documents: this.documents
-                                }))
-    target.html(this.$el)
-    let nav = this.$el.find('.chosenify')
-    nav.chosen()
-    $(nav).bind('change', this._onFilterChange)
-    $('#search-reset').bind('click', this._onFiltersReset)
+    fetch('/search_data').then((res) => {
+      return res.json().then((dataset) => {
+        window._SEARCH_DATASET = dataset
+        this.documents = _SEARCH_DATASET.documents
+        this.$el.html(template_page({
+                                      countries: _SEARCH_DATASET.countries,
+                                      document_types: _SEARCH_DATASET.document_types,
+                                      years: _SEARCH_DATASET.years,
+                                      states: _SEARCH_DATASET.states,
+                                      documents: this.documents
+                                    }))
+        target.html(this.$el)
+        let nav = this.$el.find('.chosenify')
+        nav.chosen()
+        $(nav).bind('change', this._onFilterChange)
+        $('#search-reset').bind('click', this._onFiltersReset)
+      })
+    })
   }
 
   _getFilteredResults(subset = true) {
-    if (subset){
+    if (subset) {
       return _.where(this.documents, this.activeFilters)
     } else {
       return _.where(_SEARCH_DATASET.documents, this.activeFilters)
@@ -120,15 +113,17 @@ class SearchPage extends View {
                                     dataSource: this.documents,
                                     callback: (data, pagination) => {
                                       $('#results-container')
-                                        .html(template_search_row({documents: data}))
-                                      $("html, body").animate({ scrollTop: 120 }, "slow");
+                                        .html(template_search_row(
+                                          { documents: data }))
+                                      $("html, body")
+                                        .animate({ scrollTop: 120 }, "slow");
                                     }
                                   })
     } else {
       $('#pagination').hide()
       $('#results-container').html(template_search_row({
-                                                      documents: []
-                                                    }))
+                                                         documents: []
+                                                       }))
     }
   }
 }
