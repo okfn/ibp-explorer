@@ -43,7 +43,11 @@
   </div>
   <div class="col-md-3">
     <div class="row top30">
-      <a href="{{ country.library }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      {% if country.driveCountryId %}
+        <a href="https://drive.google.com/drive/folders/{{ country.driveCountryId }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      {% elif country.library %}
+        <a href="{{ country.library }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      {% endif %}
     </div>
     <div class="row top5">
       <a href="/availability/country/{{ country.country }}/embed" class="btn btn-primary col-md-12">{{ gettext("View historical information") }}</a>
