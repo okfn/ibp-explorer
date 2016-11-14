@@ -28,7 +28,7 @@
             </span>
             <span class="item">
               <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
-              {{ gettext("Internal use only") }}
+              {{ gettext("Internal use only / Soft or hard copy only") }}
             </span>
             <span class="item">
               <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
@@ -99,7 +99,10 @@
                         {% if parentId %}
                           <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
                         {% endif %}
-                        <span class="badge state state-{{ cell.state|replace(' ', '-') }}">
+                            <!-- for some reason "Hard/Soft Copy Only" is not
+                            properly reproduced with one whitespace replace filter -->
+                        <span class="badge state
+                              state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
                           <span>{{ h.state(cell.state) }}</span>
                         </span>
                         {% if parentId %}

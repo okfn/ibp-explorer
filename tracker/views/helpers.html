@@ -7,6 +7,8 @@
     {{ gettext("Published late") }}
   {%- elif check == "discontinued" -%}
     {{ gettext("Discontinued") }}
+  {%- elif check == 'Hard/Soft Copy Only' -%}
+    {{ gettext("Hard or soft copy only")}}
   {%- else -%}
     {{ gettext("Not produced") }}
   {%- endif -%}
@@ -22,6 +24,8 @@
     {{ gettext("was published late") }}
   {%- elif doc.state == 'discontinued' %}
     {{ doc.popup }}
+  {%- elif doc.state == 'Hard/Soft Copy Only' -%}
+    {{ gettext("is produced in hard or soft copy only") }}
   {%- else %}
     {{ gettext("is not produced") }}
   {%- endif -%}

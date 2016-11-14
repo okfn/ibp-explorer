@@ -54,12 +54,12 @@
 <h2>{{ gettext("Current Status") }}</h2>
 <table class="table table-hover status-table">
   <colgroup>
-    <col width="22%">
+    <col width="24%">
     <col width="11%">
-    <col width="18%">
+    <col width="22%">
     <col width="4%">
     <col width="16%">
-    <col width="29%">
+    <col width="23%">
   </colgroup>
   <thead>
     <tr>
@@ -98,10 +98,12 @@
               {% endif %}
           {% endfor %}
         {% endif %}
-        {% if parentId %}
-          <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
+        {% if cell.groupParentId %}
+            <a target="_blank" href="https://drive.google.com/drive/folders/{{ cell.groupParentId }}">
+        {% elif cell.driveId %}
+            <a target="_blank" href="https://drive.google.com/file/d/{{ cell.driveId }}/view">
         {% endif %}
-        <span class="badge state state-{{ cell.state|replace(' ', '-') }}">
+        <span class="badge state state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
           <span>{{ h.state(cell.state) }}</span>
         </span>
         {{ h.state(cell.state) }}
