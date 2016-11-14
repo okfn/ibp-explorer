@@ -23,7 +23,6 @@
     "build:dev:watch": "gulp dev:watch",
     "build:dev": "npm run build:dev:explorer && npm run build:dev:tracker",
     "build:prod": "npm run build:prod:explorer && npm run build:prod:tracker",
-    "build:prod:travis": "npm run build:prod:explorer && gulp build:prod:tracker:travis",
     "build:prod:start": "npm run build:prod && npm run start",
     "test": "mocha --require babel-core/register tests/",
     "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- --report lcovonly --require babel-core/register tests/*.js && if [ -f ./coverage/lcov.info ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage; fi"

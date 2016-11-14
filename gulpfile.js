@@ -89,11 +89,6 @@ gulp.task('images', ['clean'], function () {
     .pipe(gulp.dest('tracker/build/images'));
 });
 
-gulp.task('images-travis', ['clean'], function () {
-  return gulp.src(paths.images)
-    .pipe(gulp.dest('tracker/build/images'));
-});
-
 gulp.task('vendor_fonts', ['clean'], function () {
   return gulp.src(paths.vendor_fonts)
     .pipe(gulp.dest('tracker/build/fonts'));
@@ -205,20 +200,6 @@ gulp.task('build:prod:tracker', function (cb) {
                 'scripts',
                 'vendor_fonts',
                 'images'
-              ], 'manifest', cb)
-})
-
-//Build on travis-ci fails because of imagemin
-//This task is intended for building on travis-ci only
-gulp.task('build:prod:tracker:travis', function (cb) {
-  runSequence('clean',
-              [
-                'vendor_styles',
-                'vendor_scripts',
-                'styles',
-                'scripts',
-                'vendor_fonts',
-                'images-travis'
               ], 'manifest', cb)
 })
 
