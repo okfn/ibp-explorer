@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var moment = require('moment');
 var _ = require('underscore');
 var i18n = require('i18n-abide');
+var api = require('./api')
 
 var locales = _.without(fs.readdirSync(path.join(__dirname, '/i18n')), './templates');
 var routes = require('./routes/index');
@@ -83,6 +84,14 @@ app.use(function (req, res, next) {
 // Now routes...
 app.use('/', express.static('./_build'))
 app.use('/availability', routes);
+app.get('/search_data', function (req, res) {
+  api.getSearch().then(function (search) {
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify(search))
+  }).catch(function (err) {
+    console.log(err)
+  })
+})
 
 
 /// catch 404 and forward to error handler
