@@ -14,20 +14,20 @@ This is a web application developed using [Brunch](http://brunch.io). To run loc
 
 * Clone this repository. 
 * Install [Node.js](http://nodejs.org).
+* Set the environment variables needed for `ibp-explorer-data-client` in `.env`. See https://github.com/okfn/ibp-explorer-data-client.
 * Run `npm install` in the root directory of this repo to install dependencies.
-* Run `npm run build:dev` to bundle the front-end. This also watches for changes in the code and automatically re-bundles the code. Leave this running if you need the auto re-bundling.
-* Set the environment variables (you can also set them inline with `npm run start` if you don't want to export them):
-  * `PORT` if you want to change the dafult port of the server which is 8080
-  * `TRACKER_URL` currently the tracker is implemented in an iframe. Use full URL, for example `http://localhost:3000`
+* Run `npm run build:dev` to bundle the front-end for the explorer and build the tracker. If you want to watch for code changes use `npm run build:dev:watch`. This will also start the server.
+  * Run `npm run build:dev:tracker` or `npm run build:dev:tracker:watch` to do the same **only** for the tracker.
+  * Run `npm run build:dev:explorer` or `npm run build:dev:explorer:watch` to do the same **only** for the explorer.
 * Run `npm run start` to start the node server.
-* Point your browser at http://localhost:8080.
+* Point your browser at http://localhost:3000.
 
 To deploy:
 
 * Get the above working.
-* Kill `npm run start` and `npm run build:dev`.
-* Set production `PORT` and `TRACKER_URL`.
-* Run `npm run build:production`. This will build minified version of the front-end and run the node server.
+* Kill any running processes from `ibp-explorer`.
+* Set production `PORT`
+* Run `npm run build:prod`. This will build minified version of the tracker and the explorer.
 
 Environment variables:
 
