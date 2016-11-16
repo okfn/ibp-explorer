@@ -14,19 +14,19 @@ var runSequence = require('run-sequence')
 
 var paths = {
   vendor_scripts: [
-    'bower_components/jquery/dist/jquery.js',
-    'bower_components/bootstrap/dist/js/bootstrap.js',
-    'bower_components/table-fixed-header/table-fixed-header.js',
-    'bower_components/ScrollToFixed/jquery-scrolltofixed.js'
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/bootstrap/dist/js/bootstrap.js',
+    'vendor/scripts/table-fixed-header.js',
+    'node_modules/scrolltofixed/jquery-scrolltofixed.js'
   ],
   scripts: 'tracker/scripts/**/*.js',
   vendor_styles: [
-    'bower_components/bootstrap/dist/css/bootstrap.css'
+    'node_modules/bootstrap/dist/css/bootstrap.css'
   ],
   styles: 'tracker/styles/*.less',
   images: 'tracker/images/**/*',
   vendor_fonts: [
-    'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.*'
+    'node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.*'
   ],
   rev: [
     'tracker/build/scripts/*.js',
