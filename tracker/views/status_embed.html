@@ -58,21 +58,17 @@
 <h2>{{ gettext("Current Status") }}</h2>
 <table class="table table-hover status-table">
   <colgroup>
-    <col width="24%">
-    <col width="11%">
-    <col width="22%">
-    <col width="4%">
-    <col width="16%">
-    <col width="23%">
+    <col width="25%">
+    <col width="10%">
+    <col width="20%">
+    <col width="15%">
   </colgroup>
   <thead>
     <tr>
       <th>{{ gettext("Document") }}</th>
       <th>{{ gettext("Fiscal Year") }}</th>
       <th>{{ gettext("Current Status") }}</th>
-      <th>{{ gettext("Comments") }}</th>
       <th>{{ gettext("Date of Publication") }}</th>
-      <th><span class="text-muted">{{ gettext("Next Publishing Period") }}</span></th>
     </tr>
   </thead>
   <tbody>
@@ -91,7 +87,7 @@
       <th scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
         {{ gettext(doc.title) }}
       </th>
-      <td class="text-center">{{ date_format({'year':fiscal_year}, 'YYYY') }}</td>
+      <td>{{ date_format({'year':fiscal_year}, 'YYYY') }}</td>
       <td>
 	{% if cell %}
         {% set parentId = "" %}
@@ -121,62 +117,16 @@
         {{ h.state("not produced") }}
 	{% endif %}
       </td>
-      <td class="text-center">
-	{% if cell.comments %}
-	<span data-toggle="popover" data-placement="top" data-content="{{ cell.comments }}" class="text-info glyphicon glyphicon-comment"></span>
-	{% endif %}
-      </td>
       <td>
 	{% if cell %}
         {% if cell.date_published %}
           {{ date_format(Date.parse(cell.date_published), 'll') }}
         {% else %}
-        <span class="text-muted">
-          {{ gettext("Unavailable") }}
-        </span>
+        <span class="text-muted">-</span>
         {% endif %}
 	{% else %}
-        <span class="text-muted">{{ gettext("Unavailable") }}</span>
+        <span class="text-muted">-</span>
 	{% endif %}
-      </td>
-      <td>
-        <span class="text-muted">
-          {#
-          Special cases:
-          * In-Year Report
-          * Citizens Budget
-	  
-          For these next publication should just be described with
-          static text since they cannot be computed and are dependent
-          on each government's budget cycle.
-          #}
-          {% set static_expected = {
-          'in-year report': gettext('Publishing period for each report is one to three months after a particular month/quarter ends.'),
-          "citizens budget": gettext('Same as either the Executive Budget Proposal or Enacted Budget.') }
-          %}
-          {% if doc.title|lower in static_expected %}
-            {{ static_expected[doc.title|lower] }}
-          {% else %}
-            {% set search_dates_found = false %}
-            {% for site in country.sites %}
-              {% if !search_dates_found && site.type == doc.title %}
-                {% set start_date = Date.parse(site.search_dates.start) %}
-                {% set end_date = Date.parse(site.search_dates.end) %}
-                {% if end_date >= Date.now() %}
-                  {%- if start_date < Date.now() %}
-                    {{ i18nformat(gettext('Before %s'), [date_format(Date.parse(site.search_dates.end), 'll')]) }}
-                  {%- else %}
-                    {{ date_format(Date.parse(site.search_dates.start), 'll') }} - {{ date_format(Date.parse(site.search_dates.end), 'll') }}
-                  {% endif %}
-                  {% set search_dates_found = true %}
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-            {% if !search_dates_found %}
-              {{ gettext("Unavailable") }}
-            {% endif %}
-          {% endif %}
-	</span>
       </td>
     </tr>
     {% endfor %}
