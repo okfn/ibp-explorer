@@ -52,6 +52,7 @@ var country_override = {
     }
 };
 
+var last_update = new Date(2016, 3, 30)
 
 router.get('/country/:country/embed', function (req, res) {
   api.call('countries', function (countries) {
@@ -231,7 +232,7 @@ router.get('/locale/:locale/embed', function (req, res) {
 
 
 router.get('/', function (req, res) {
-  api.call('countries', function (countries, last_update) {
+  api.call('countries', function (countries) {
     //Override countries (e.g. discontinued countries)
     countries = _.map(countries, function(obj) {
       if (obj.country in country_override) {
