@@ -1,0 +1,35 @@
+{%- macro state(check) -%}
+  {%- if check == "available" -%}
+    {{ gettext("Publicly available") }}
+  {%- elif check == "internal" -%}
+    {{ gettext("Internal use only") }}
+  {%- elif check == 'late' - %}
+    {{ gettext("Published late") }}
+  {%- elif check == "discontinued" -%}
+    {{ gettext("Discontinued") }}
+  {%- elif check == 'Hard/Soft Copy Only' -%}
+    {{ gettext("Hard or soft copy only")}}
+  {%- else -%}
+    {{ gettext("Not produced") }}
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro tooltip(country, doc) -%}
+  {{ gettext(country.country) }}: {% if doc.type %}{{ gettext(doc.type) }}{% elif doc.title %}{{ gettext(doc.title) }}{% else %}{% endif %} 
+  {%- if doc.state == 'available' %}
+    {{ gettext("is publicly available") }}
+  {%- elif doc.state == "internal" %}
+    {{ gettext("is produced and available for internal use only") }}
+  {%- elif doc.state == 'late' %}
+    {{ gettext("was published late") }}
+  {%- elif doc.state == 'discontinued' %}
+    {{ doc.popup }}
+  {%- elif doc.state == 'Hard/Soft Copy Only' -%}
+    {{ gettext("is produced in hard or soft copy only") }}
+  {%- else %}
+    {{ gettext("is not produced") }}
+  {%- endif -%}
+  {%- if doc.state != 'not produced' && doc.date_published -%}
+    {{ gettext("and was published on") }} {{ doc.date_published }}
+  {%- endif -%}
+{%- endmacro -%}

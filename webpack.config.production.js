@@ -10,10 +10,10 @@ let extractLESS = new ExtractTextPlugin('[name].css');
 
 module.exports = {
   entry: {
-    app: './app/initialize.js'
+    app: './explorer/initialize.js'
     , vendor: ['jquery', 'underscore', 'backbone', 'chosen', 'downloadify'
       , 'bootstrap-js', 'jsPlumb', 'exports?jvm!jvm', 'jvm-world-mill'
-      , 'jvm-css', 'jsPlumb', 'ibpDataset', 'searchDataset', 'console-helper'
+      , 'jvm-css', 'jsPlumb', 'ibpDataset', 'console-helper'
       , 'jquery.color', 'vendor-css', 'monkeypatches', 'handlebars']
   }
   , resolve: {
@@ -25,7 +25,6 @@ module.exports = {
       , 'jvm-css': 'jvectormap-dev/jquery-jvectormap-1.0.css'
       , jsPlumb: 'jquery.jsPlumb-1.3.9-all.js'
       , ibpDataset: 'ibp_dataset.js'
-      , searchDataset: 'search_dataset.js'
       , chosen: 'chosen.jquery.min.js'
       , 'console-helper': 'scripts/console-helper.js'
       , 'jquery.color': 'scripts/jquery.color-2.1.2.js' // npm contains 1.5.1
@@ -45,7 +44,7 @@ module.exports = {
       {
         test: /\.js$/
         , loader: 'babel-loader'
-        , include: path.resolve(__dirname, 'app')
+        , include: path.resolve(__dirname, 'explorer')
         , exclude: [path.resolve(__dirname, 'node_modules')
         , path.resolve(__dirname, 'vendor')]
         , query: { presets: ['es2015'] }
@@ -56,7 +55,7 @@ module.exports = {
       }
       , {
         test: /\.hbs$/
-        , include: path.resolve(__dirname, 'app')
+        , include: path.resolve(__dirname, 'explorer')
         , loader: 'handlebars-loader'
       }
       , {
@@ -105,9 +104,10 @@ module.exports = {
       , 'Handlebars': 'handlebars'
     })
     , new CopyWebpackPlugin([
-      { from: './app/assets/images', to: 'images' }
-      , { from: './app/assets/downloads', to: 'downloads' }
-      , { from: './app/assets/downloadify.swf', to: './' }
+      { from: './explorer/assets/images', to: 'images' }
+      , { from: './explorer/assets/downloads', to: 'downloads' }
+      , { from: './explorer/assets/downloadify.swf', to: './' }
+      , { from: './explorer/assets/fonts', to: 'fonts'}
     ])
    , new webpack.optimize.OccurenceOrderPlugin()
     , new webpack.optimize.UglifyJsPlugin({

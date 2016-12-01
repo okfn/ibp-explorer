@@ -1,0 +1,6 @@
+{% extends "layout_embed.html" %}
+
+{% block content %}
+  <h1>{{ error.status }}: {{ message }}</h1>
+  <pre>{{ error.stack }}</pre>
+{% endblock %}
