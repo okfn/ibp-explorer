@@ -11,7 +11,7 @@
       {%- if country.message %}
       <div class="alert alert-danger">{{ gettext(country.message) }}</div>
       {% endif %}
-      <h2>{{ gettext("Open Budget Index") }} <small><a href="/availability/about"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></small></h2>
+      <h2>{{ gettext("Open Budget Index") }}</h2>
       {% if country.obi_scores %}
       <div class="table-responsive">
 	<table class="table">
@@ -60,11 +60,11 @@
         </span>
         <span class="item">
           <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
-          {{ gettext("Internal use only / Soft or hard copy only") }}
+          {{ gettext("Internal use only / Soft or hard copy only") }} / {{ gettext("Published late") }}
         </span>
         <span class="item">
           <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
-          {{ gettext("Not produced") }} / {{ gettext("Published late") }}
+          {{ gettext("Not produced") }}
         </span>
       </div>
     </div>

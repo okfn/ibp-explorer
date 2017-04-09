@@ -8,12 +8,12 @@
 {% block content %}
   <div class="row">
     <div class="col-md-offset-8 col-md-4"  style="margin-bottom: 5px">
-      <a href="/#search" target="_parent" class="btn btn-primary col-md-12">Browse budget documents library</a>
+      <a href="/#search" target="_parent" class="btn btn-primary col-md-12">{{ gettext("Browse budget documents library") }}</a>
     </div>
   </div>
   <div class="row">
     <div class="col-md-offset-8 col-md-4" style="margin-bottom: 20px">
-      <a href="https://drive.google.com/drive/folders/0ByA9wmvBrAnZN3ZrdzNzcS1JZzg" target="_blank" class="btn btn-primary col-md-12">View budget documents library in full</a>
+      <a href="https://drive.google.com/drive/folders/0ByA9wmvBrAnZN3ZrdzNzcS1JZzg" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View budget documents library in full") }}</a>
     </div>
   </div>
   <div class="row">
@@ -28,11 +28,11 @@
             </span>
             <span class="item">
               <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
-              {{ gettext("Internal use only / Soft or hard copy only") }}
+              {{ gettext("Internal use only / Soft or hard copy only") }} / {{ gettext("Published late") }}
             </span>
             <span class="item">
               <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
-              {{ gettext("Not produced") }} / {{ gettext("Published late") }}
+              {{ gettext("Not produced") }}
             </span>
           </div>
         </div>
@@ -127,34 +127,16 @@
     <div class="col-md-2" style="padding: 0px">
       <div id="more-links" class="panel panel-default">
         <div class="panel-heading">
-          {{ gettext("What is the Open Budget Survey?") }}
-        </div>
-        <div class="panel-body">
-          <p>{{ gettext("The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.") }}</p>
-        </div>
-        <div class="panel-heading">
-          {{ gettext("What are the OBS Document Availability Updates?") }}
+          {{ gettext("What is the OBS Document Availability Tracker?") }}
         </div>
         <div class="panel-body">
           <p>{{ gettext("A biannual update of the first section of the Open Budget Survey, which looks at whether the eight key budget documents are made available to the public. Twice a year this page will provide fresh data on whether national governments in countries included in the Open Budget Survey publish each of the eight key budget documents on time as per international standards.") }}</p>
         </div>
         <div class="panel-heading">
-          {{ gettext("Where can I get the data?") }}
+          {{ gettext("How does the OBS Document Availability Tracker relate to the Open Budget Index score?") }}
         </div>
         <div class="panel-body">
-          <p>{{ gettext('You can download our data as <a href="/data.csv">a csv file</a>.') }}</p>
-        </div>
-        <div class="panel-heading">
-          {{ gettext("How do the OBS Document Availability Updates relate to the Open Budget Index score?") }}
-        </div>
-        <div class="panel-body">
-          <p>{{ gettext("A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Updates monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Updates allow for tracking a country's progress on meeting basic international standards for the publication of budget documents.") }}</p>
-        </div>
-        <div class="panel-heading">
-          {{ gettext("Why do we need to know about government budgets?") }}</h4>
-        </div>
-        <div class="panel-body">
-          <p>{{ gettext("Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.") }}</p>
+          <p>{{ gettext("A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Tracker monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Tracker allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.")}}</p>
         </div>
       </div>
     </div>

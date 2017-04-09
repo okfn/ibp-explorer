@@ -12,7 +12,7 @@
     <div class="alert alert-danger">{{ gettext(country.message) }}</div>
     {% endif %}
     <div>
-      <h2>{{ gettext("Open Budget Index") }} <small><a href="/availability/about"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></small></h2>
+      <h2>{{ gettext("Open Budget Index") }}</h2>
       {% if country.obi_scores %}
       {% set lastscore = country.obi_scores|last %}
       {% if lastscore %}
@@ -132,10 +132,4 @@
     {% endfor %}
   </tbody>
 </table>
-
-<div class="row top30">
-  <p class="text-muted">
-    <small>{{ gettext('Note: Comments are only shown if present and only available in English or language of origin/researcher') }}</small>
-</p>
-</div>
 {% endblock %}
