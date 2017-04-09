@@ -36,6 +36,15 @@ app.use(i18n.abide({
   translation_directory: 'tracker/i18n',
 }));
 
+swig.setFilter('formatDate', function (input) {
+  var date = moment(input)
+  if (date.isValid()) {
+    return moment(input).format("D MMMM YYYY")
+  }
+
+  return input
+})
+
 app.use(function (req, res, next) {
   if (req.query.locale) {
     req.setLocale(req.query.locale);
@@ -78,6 +87,13 @@ app.use(function (req, res, next) {
         return date;
       }
   };
+  res.locals.isString = function (object) {
+      if (typeof object === 'string') {
+        return true
+      }
+
+      return false
+  }
   next();
 });
 
