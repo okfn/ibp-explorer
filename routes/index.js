@@ -41,49 +41,54 @@ var docs = [
   }
 ];
 
-var country_override = {
-    "Philippines": {
-        "date": new Date(2015, 3, 30),
-	"message": "The availability status of the Philippines’ budget documents stopped being tracked on April 30, 2015. Historical information and published budget documents are available through this website, till that point.",
-	"value": [{
-          "state": "discontinued",
-          "popup": "The Philippines’ budget documents stopped being tracked on April 30, 2015"
-	}]
-    }
-};
 
-var last_update = new Date(2016, 3, 30)
+// Country names override. Due to the specific update process
+// from the API, it's better in the long run to have this override
+// here than in data-client.
+var country_name_override = {
+    "Korea, Republic of": "South Korea",
+    "Yemen, Rep.": "Yemen"
+}
+
+// Countries that should not get displayed on the site.
+var country_blacklist = [
+  "Moldova, Republic of"
+]
+
+//
+var document_override = {
+  "Zambia": {
+    "country": "Zambia",
+    "type": "Citizens Budget",
+    "state": "Hard/Soft Copy Only",
+    "year": 2016
+  }
+}
+
+var last_update = moment(process.env.TRACKER_LAST_UPDATE)
+
 
 router.get('/country/:country/embed', function (req, res) {
   api.call('countries', function (countries) {
     var country = {};
+    countries = _.map(countries, function(obj) {
+      if (obj.country in country_name_override) {
+        obj.country = country_name_override[obj.country]
+      }
+      return obj;
+    });
+
     for (var i in countries) {
       if (countries[i].country == req.params.country) {
         country = countries[i];
         break;
       }
     }
-    country.snapshots = _.sortBy(country.snapshots, function(obj) {
-	return -obj.date;
-    });
 
-    // Override country if needed (e.g. discontinued countries)
-    if (country.country in country_override) {
-	var documents = _.indexBy(_.pluck(docs, 'title'));
-        documents = _.mapObject(documents, function(value){
-          return country_override[country.country].value;
-        });
-	var this_year = ''+(new Date).getFullYear();
-        var overwritten = {};
-        overwritten[this_year] = documents;
-	country.snapshots = _.map(country.snapshots, function(obj) {
-            if (new Date(obj.date) > country_override[country.country].date) {
-		obj.snapshot = overwritten;
-	    }
-	    return obj;
-	});
-        country.message = country_override[country.country].message;
-    }
+
+    country.snapshots = _.sortBy(country.snapshots, function(obj) {
+	    return -obj.date;
+    });
 
     res.render('country_embed', {
       'docs': docs,
@@ -96,24 +101,19 @@ router.get('/country/:country/embed', function (req, res) {
 
 router.get('/status/:country/embed', function (req, res) {
   api.call('countries', function (countries) {
+    countries = _.map(countries, function(obj) {
+      if (obj.country in country_name_override) {
+        obj.country = country_name_override[obj.country]
+      }
+      return obj;
+    });
+
     var country = {};
     for (var i in countries) {
       if (countries[i].country == req.params.country) {
         country = countries[i];
         break;
       }
-    }
-
-    // Override country if needed (e.g. discontinued countries)
-    if (country.country in country_override) {
-      var documents = _.indexBy(_.pluck(docs, 'title'));
-      documents = _.mapObject(documents, function(value){
-        return country_override[country.country].value;
-      });
-      var this_year = ''+(new Date).getFullYear();
-      country.documents = {};
-      country.documents[this_year] = documents;
-      country.message = country_override[country.country].message;
     }
 
     res.render('status_embed', {
@@ -159,20 +159,6 @@ router.get('/data.csv', function (req, res) {
 		data.push(country.code);
 		var snapshot = snapshots[s];
 		var date = moment(snapshot.date);
-
-                //Override countries (e.g. discontinued countries)
-                if (country.country in country_override) {
-		  var documents = _.indexBy(_.pluck(docs, 'title'));
-                  documents = _.mapObject(documents, function(value){
-                    return country_override[country.country].value;
-                  });
-                  var this_year = ''+(new Date).getFullYear();
-                  var overwritten = {};
-                  overwritten[this_year] = documents;
-		  if (date > moment(country_override[country.country].date)) {
-		    snapshot.snapshot = overwritten;
-                  }
-                }
 
 		data.push(date.month()+1);  // Months in js start from 0
 		data.push(date.year());
@@ -233,23 +219,28 @@ router.get('/locale/:locale/embed', function (req, res) {
 
 router.get('/', function (req, res) {
   api.call('countries', function (countries) {
-    //Override countries (e.g. discontinued countries)
+    // Override country name if needed
     countries = _.map(countries, function(obj) {
-      if (obj.country in country_override) {
-        var documents = _.indexBy(_.pluck(docs, 'title'));
-        documents = _.mapObject(documents, function(value){
-          return country_override[obj.country].value;
-        });
-        obj.documents = {}
-        obj.documents[''+last_update.getFullYear()] = documents;
+      if (obj.country in country_name_override) {
+        obj.country = country_name_override[obj.country]
       }
+      if (obj.country in document_override) {
+        obj.obi.availability[document_override[obj.country].year][document_override[obj.country].type].status =
+          document_override[obj.country].state
+      }
+
       return obj;
     });
+
+    // Filter out countries that should not get displayed
+    countries = _.filter(countries, function (country) {
+      return _.indexOf(country_blacklist, country.country) === -1
+    })
 
     res.render('index_embed', {
       'docs': docs,
       'countries': countries,
-      'last_update': last_update
+      'last_update': last_update.toDate()
     });
   });
 });
