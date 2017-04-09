@@ -10,7 +10,7 @@ var _ = require('underscore');
 var i18n = require('i18n-abide');
 var api = require('./api')
 
-var locales = _.without(fs.readdirSync(path.join(__dirname, '/i18n')), './templates');
+var locales = _.without(fs.readdirSync(path.join(__dirname, 'tracker', '/i18n')), 'templates');
 var routes = require('./routes/index');
 var manifest = require('./tracker/build/manifest.json');
 

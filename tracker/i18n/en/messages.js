@@ -1,8 +1,28 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2015-03-18 11:30+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+         "Project-Id-Version": " PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2017-02-13 11:35+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
       },
+      "Publications - Open Budget Survey - Tracker": [
+         null,
+         ""
+      ],
+      "Reports": [
+         null,
+         ""
+      ],
+      "Open Budget Survey Tracker Report": [
+         null,
+         ""
+      ],
+      "Updates": [
+         null,
+         ""
+      ],
+      "Open Budget Survey Tracker Update": [
+         null,
+         ""
+      ],
       "Publicly available": [
          null,
          ""
@@ -12,6 +32,14 @@
          ""
       ],
       "Published late": [
+         null,
+         ""
+      ],
+      "Discontinued": [
+         null,
+         ""
+      ],
+      "Hard or soft copy only": [
          null,
          ""
       ],
@@ -31,123 +59,15 @@
          null,
          ""
       ],
+      "is produced in hard or soft copy only": [
+         null,
+         ""
+      ],
       "is not produced": [
          null,
          ""
       ],
       "and was published on": [
-         null,
-         ""
-      ],
-      "Open Budget Survey - Tracker": [
-         null,
-         ""
-      ],
-      "Data as of": [
-         null,
-         ""
-      ],
-      "Key": [
-         null,
-         ""
-      ],
-      "Internally available": [
-         null,
-         ""
-      ],
-      "Country": [
-         null,
-         ""
-      ],
-      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
-         null,
-         ""
-      ],
-      "Open Budget Index": [
-         null,
-         ""
-      ],
-      "What is the Open Budget Survey?": [
-         null,
-         ""
-      ],
-      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. <!-- more -->This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
-         null,
-         ""
-      ],
-      "What is the OBS Tracker?": [
-         null,
-         ""
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries publish each of the key budget documents on time as per international standards.": [
-         null,
-         ""
-      ],
-      "Where can I get the data?": [
-         null,
-         ""
-      ],
-      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
-         null,
-         ""
-      ],
-      "How do Tracker results relate to Open Budget Index scores?": [
-         null,
-         ""
-      ],
-      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The <strong>OBS Tracker</strong> monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). <!-- more -->Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         ""
-      ],
-      "Why do we need to know about government budgets?": [
-         null,
-         ""
-      ],
-      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. <!-- more --> Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         ""
-      ],
-      "Open Budget Survey Data": [
-         null,
-         ""
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org/\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         ""
-      ],
-      "Open Budget Survey: Data Explorer": [
-         null,
-         ""
-      ],
-      "Monitoring the Public Availability of Key Government Budget Documents": [
-         null,
-         ""
-      ],
-      "International Budget Parternship: Open Budgets. Transform Lives.": [
-         null,
-         ""
-      ],
-      "Home": [
-         null,
-         ""
-      ],
-      "Gathering the Data": [
-         null,
-         ""
-      ],
-      "Publications": [
-         null,
-         ""
-      ],
-      "Press room": [
-         null,
-         ""
-      ],
-      "About this site": [
-         null,
-         ""
-      ],
-      "Site created by": [
          null,
          ""
       ],
@@ -199,27 +119,7 @@
          null,
          ""
       ],
-      "Comments": [
-         null,
-         ""
-      ],
       "Date of Publication": [
-         null,
-         ""
-      ],
-      "Next Publishing Period": [
-         null,
-         ""
-      ],
-      "Unavailable": [
-         null,
-         ""
-      ],
-      "Before %s": [
-         null,
-         ""
-      ],
-      "Note: Comments are only shown if present and only available in English or language of origin/researcher": [
          null,
          ""
       ],
@@ -251,70 +151,6 @@
          null,
          ""
       ],
-      "Gathering the Data - Open Budget Survey - Tracker": [
-         null,
-         ""
-      ],
-      "Which year’s budget documents are monitored by the OBS Tracker?": [
-         null,
-         ""
-      ],
-      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
-         null,
-         ""
-      ],
-      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
-         null,
-         ""
-      ],
-      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
-         null,
-         ""
-      ],
-      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
-         null,
-         ""
-      ],
-      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
-         null,
-         ""
-      ],
-      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
-         null,
-         ""
-      ],
-      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
-         null,
-         ""
-      ],
-      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
-         null,
-         ""
-      ],
-      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
-         null,
-         ""
-      ],
-      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
-         null,
-         ""
-      ],
-      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
-         null,
-         ""
-      ],
-      "More information": [
-         null,
-         ""
-      ],
-      "Open Budget Survey Tracker Guide": [
-         null,
-         ""
-      ],
-      "Research partners": [
-         null,
-         ""
-      ],
       "View current status": [
          null,
          ""
@@ -323,59 +159,15 @@
          null,
          ""
       ],
-      "Not tracked": [
+      "Key": [
          null,
          ""
       ],
-      "About - Open Budget Survey - Tracker": [
+      "Internally available": [
          null,
          ""
       ],
-      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
-         null,
-         ""
-      ],
-      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
-         null,
-         ""
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         ""
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
-         null,
-         ""
-      ],
-      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
-         null,
-         ""
-      ],
-      "How does a country’s Tracker results relate to its Open Budget Index score?": [
-         null,
-         ""
-      ],
-      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         ""
-      ],
-      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         ""
-      ],
-      "More detailed information": [
-         null,
-         ""
-      ],
-      "Open Budget Survey": [
-         null,
-         ""
-      ],
-      "Country Info landing page": [
-         null,
-         ""
-      ],
-      "Budget Library (Google docs)": [
+      "Internal use only / Soft or hard copy only": [
          null,
          ""
       ],
@@ -571,23 +363,195 @@
          null,
          ""
       ],
-      "Publications - Open Budget Survey - Tracker": [
+      "About - Open Budget Survey - Tracker": [
          null,
          ""
       ],
-      "Reports": [
+      "What is the Open Budget Survey?": [
          null,
          ""
       ],
-      "Open Budget Survey Tracker Report": [
+      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
          null,
          ""
       ],
-      "Updates": [
+      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
          null,
          ""
       ],
-      "Open Budget Survey Tracker Update": [
+      "Open Budget Survey Data": [
+         null,
+         ""
+      ],
+      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
+         null,
+         ""
+      ],
+      "What is the OBS Tracker?": [
+         null,
+         ""
+      ],
+      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
+         null,
+         ""
+      ],
+      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
+         null,
+         ""
+      ],
+      "How does a country’s Tracker results relate to its Open Budget Index score?": [
+         null,
+         ""
+      ],
+      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         ""
+      ],
+      "Why do we need to know about government budgets?": [
+         null,
+         ""
+      ],
+      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
+         null,
+         ""
+      ],
+      "More detailed information": [
+         null,
+         ""
+      ],
+      "Open Budget Survey": [
+         null,
+         ""
+      ],
+      "Country Info landing page": [
+         null,
+         ""
+      ],
+      "Budget Library (Google docs)": [
+         null,
+         ""
+      ],
+      "Gathering the Data - Open Budget Survey - Tracker": [
+         null,
+         ""
+      ],
+      "Which year’s budget documents are monitored by the OBS Tracker?": [
+         null,
+         ""
+      ],
+      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
+         null,
+         ""
+      ],
+      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
+         null,
+         ""
+      ],
+      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
+         null,
+         ""
+      ],
+      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
+         null,
+         ""
+      ],
+      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
+         null,
+         ""
+      ],
+      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
+         null,
+         ""
+      ],
+      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
+         null,
+         ""
+      ],
+      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
+         null,
+         ""
+      ],
+      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
+         null,
+         ""
+      ],
+      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
+         null,
+         ""
+      ],
+      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
+         null,
+         ""
+      ],
+      "More information": [
+         null,
+         ""
+      ],
+      "Open Budget Survey Tracker Guide": [
+         null,
+         ""
+      ],
+      "Research partners": [
+         null,
+         ""
+      ],
+      "Open Budget Survey - Tracker": [
+         null,
+         ""
+      ],
+      "Data as of": [
+         null,
+         ""
+      ],
+      "Browse budget documents library": [
+         null,
+         ""
+      ],
+      "View budget documents library in full": [
+         null,
+         ""
+      ],
+      "Country": [
+         null,
+         ""
+      ],
+      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
+         null,
+         ""
+      ],
+      "Open Budget Index": [
+         null,
+         ""
+      ],
+      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
+         null,
+         ""
+      ],
+      "What are the OBS Document Availability Updates?": [
+         null,
+         ""
+      ],
+      "A biannual update of the first section of the Open Budget Survey, which looks at whether the eight key budget documents are made available to the public. Twice a year this page will provide fresh data on whether national governments in countries included in the Open Budget Survey publish each of the eight key budget documents on time as per international standards.": [
+         null,
+         ""
+      ],
+      "Where can I get the data?": [
+         null,
+         ""
+      ],
+      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
+         null,
+         ""
+      ],
+      "How does the OBS Document Availability Tracker relate to the Open Budget Index score?": [
+         null,
+         ""
+      ],
+      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Tracker monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Tracker allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         ""
+      ],
+      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
          null,
          ""
       ]

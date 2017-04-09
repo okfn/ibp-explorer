@@ -1,8 +1,28 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2015-03-18 11:30+0000\nPO-Revision-Date: 2015-04-17 11:27+0000\nLast-Translator: Tryggvi Björgvinsson <tryggvi.bjorgvinsson@okfn.org>\nLanguage-Team: Shemy\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Virtaal 0.7.1\n"
+         "Project-Id-Version": " PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2017-02-13 11:35+0000\nPO-Revision-Date: 2015-04-17 11:27+0000\nLast-Translator: Tryggvi Björgvinsson <tryggvi.bjorgvinsson@okfn.org>\nLanguage-Team: Shemy\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Virtaal 0.7.1\n"
       },
+      "Publications - Open Budget Survey - Tracker": [
+         null,
+         "المنشورات - مسح الموازنة المفتوحة -  برنامج التتبع"
+      ],
+      "Reports": [
+         null,
+         "التقاري"
+      ],
+      "Open Budget Survey Tracker Report": [
+         null,
+         "تقرير برنامج تتبع مسح الموازنة المفتوحة"
+      ],
+      "Updates": [
+         null,
+         "التحديثات"
+      ],
+      "Open Budget Survey Tracker Update": [
+         null,
+         "تحديث برنامج تتبع مسح الموازنة المفتوحة"
+      ],
       "Publicly available": [
          null,
          "متاح للعامة"
@@ -14,6 +34,14 @@
       "Published late": [
          null,
          "تم النشر في وقت متأخر"
+      ],
+      "Discontinued": [
+         null,
+         ""
+      ],
+      "Hard or soft copy only": [
+         null,
+         ""
       ],
       "Not produced": [
          null,
@@ -31,6 +59,10 @@
          null,
          "تم النشر في وقت متأخر"
       ],
+      "is produced in hard or soft copy only": [
+         null,
+         "يتم إنتاجه في شكل نسخة مبرمجة أو مطبوعة فقط"
+      ],
       "is not produced": [
          null,
          "لم يتم الإنتاج"
@@ -38,118 +70,6 @@
       "and was published on": [
          null,
          "لو تم النشر في"
-      ],
-      "Open Budget Survey - Tracker": [
-         null,
-         "مسح الموازنة المفتوحة -  برنامج التتبع"
-      ],
-      "Data as of": [
-         null,
-         "البيانات في تاريخ"
-      ],
-      "Key": [
-         null,
-         "المفتاح"
-      ],
-      "Internally available": [
-         null,
-         "متاح داخليًا"
-      ],
-      "Country": [
-         null,
-         "الدولة"
-      ],
-      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
-         null,
-         "يستخدم مؤشر الموازنة المفتوحة (OBI) بيانات مسح الموازنة المفتوحة لحساب درجة للشفافية (من صفر إلى 100) لكل دولة في المسح اعتمادًا على مقدار معلومات الموازنة التي تتيحها الدولة."
-      ],
-      "Open Budget Index": [
-         null,
-         "مؤشر الموازنة المفتوحة"
-      ],
-      "What is the Open Budget Survey?": [
-         null,
-         "ما المقصود بمسح الموازنة المفتوحة؟"
-      ],
-      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. <!-- more -->This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
-         null,
-         "يعد  <strong>مسح الموازنة المفتوحة (OBS) لشراكة الموازنة الدولية (IBP) </strong> التقييم المستقل والمنتظم والمقارن الوحيد لشفافية الموازنة والمشاركة في مختلف أرجاء العالم. <!-- المزيد -->ويتم تنفيذ هذا التقييم الصارم والشامل كل عامين، وهو يرمي إلى قياس مقدار معلومات الموازنة التي تتيحها الحكومة المركزية للدولة للعامة وهل أشركت المواطنين في عمليات الموازنة أم لا بالإضافة إلى قوة مؤسسات الإشراف الرسمية. ويستخدم <strong>فهرس الموازنة المفتوحة</strong> بيانات مسح الموازنة المفتوحة (OBS) لحساب نتيجة الشفافية (على مقياس من 0 إلى 100) لكل دولة في مسح الموازنة المفتوحة اعتمادًا على مقدار معلومات الموازنة التي تتيحها الحكومة."
-      ],
-      "What is the OBS Tracker?": [
-         null,
-         "ما المقصود ببرنامج تتبع مسح الموازنة المفتوحة (OBS)؟"
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries publish each of the key budget documents on time as per international standards.": [
-         null,
-         "عبارة عن أداة توفر تحديثات شهرية منتظمة حول ما إذا كانت الحكومة المركزية في الدول تقوم بنشر وثائق الموازنة الرئيسية في الوقت المناسب وفقًا للمعايير الدولية أم لا."
-      ],
-      "Where can I get the data?": [
-         null,
-         "من أين يمكنني الحصول على البيانات؟"
-      ],
-      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
-         null,
-         "يمكن تنزيل البيانات الخاصة بنا في شكل  <a href=\"/data.csv\">ملف csv</a>."
-      ],
-      "How do Tracker results relate to Open Budget Index scores?": [
-         null,
-         "ما هي علاقة نتائج برنامج التتبع بنتائج مؤشر الموازنة المفتوحة؟"
-      ],
-      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The <strong>OBS Tracker</strong> monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). <!-- more -->Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         "نتيجة مؤشر فهرس الموازنة المفتوحة لدولة ما عبارة عن الإجراء الأكثر شمولية لشفافية الموازنة على مستوى الحكومة المركزية إلا أنها يتم تحديثها كل عامين فقط. ويستخدم <strong>برنامج تتبع مسح الموازنة المفتوحة (OBS)</strong> لمراقبة أحد العوامل المضمنة في فهرس الموازنة المفتوحة على أساس شهري: هل تقوم الحكومات بإصدار وثائق الموازنة الرئيسية الثمانية للعامة أم لا (لا يقيم مستوى المعلومات التفصيلية التي يتم توفيرها). <!-- المزيد -->رغم أن نتيجة فهرس مؤشر الموازنة المفتوحة هو الإجراء القياسي الذهبي، إلا أن <strong>برنامج التتبع</strong> يسمح بتتبع مدى تقدم الدولة فيما يتعلق بالوفاء بالمعايير الدولية الأساسية من أجل نشر وثائق الموازنة."
-      ],
-      "Why do we need to know about government budgets?": [
-         null,
-         "لما نرغب في التعرف على الموازنات الحكومية؟"
-      ],
-      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. <!-- more --> Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         "الموازنات هي أقوى الأدوات الحكومية المستخدمة للوفاء باحتياجات وأولويات الدولة وشعبها. <!-- المزيد --> وتحتاج منظمات المجتمع المدني والجهات التشريعية والمراجعين ووسائل الإعلام والعامة بشكل أوسع نطاقًا إلى الحصول على معلومات الموازنة في الوقت المناسب من أجل محاسبة الحكومة على كيفية استخدام الموارد العامة. وبدون هذا التدقيق، يمكن أن تختار الحكومة اختيارات سيئة أو برامج غير شهيرة أو غير مناسبة، ويمكن أن تقوم بإهدار الأموال، كما يمكن أن تفتح الباب على مصراعيه أمام الفساد. وفي المقابل، عندما يتاح للأشخاص العاديين المعلومات والفرص للمشاركة في عمليات الموازنة الحكومية، يمكنهم تعزيز التحسينات الفعلية فيما يتعلق بالإدارة والسياسات."
-      ],
-      "Open Budget Survey Data": [
-         null,
-         "بيانات مسح الموازنة المفتوحة"
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org/\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         "للاطلاع على النتائج الكاملة لدورات مسح الموازنة المفتوحة الأربعة الخاصة بنا، قم بزيارة الموقع التفاعلي الخاص بنا <a href=\"http://survey.internationalbudget.org/\">مستكشف بيانات مسح الموازنة المفتوح</a>."
-      ],
-      "Open Budget Survey: Data Explorer": [
-         null,
-         "مسح الموازنة المفتوحة: مستكشف البيانات"
-      ],
-      "Monitoring the Public Availability of Key Government Budget Documents": [
-         null,
-         "مراقبة الإتاحة العامة لوثائق الموازنة الحكومية الرئيسية"
-      ],
-      "International Budget Parternship: Open Budgets. Transform Lives.": [
-         null,
-         "شراكة الموازنة الدولية: الموازنات المفتوحة. تطوير مستويات الحياة."
-      ],
-      "Home": [
-         null,
-         "الصفحة الرئيسية"
-      ],
-      "Gathering the Data": [
-         null,
-         "تجميع البيانات"
-      ],
-      "Publications": [
-         null,
-         "المنشورات"
-      ],
-      "Press room": [
-         null,
-         "غرفة الأخبار"
-      ],
-      "About this site": [
-         null,
-         "نبذة عن هذا الموقع"
-      ],
-      "Site created by": [
-         null,
-         "تم عمل الموقع من خلال"
       ],
       " - Open Budget Survey - Tracker": [
          null,
@@ -199,29 +119,9 @@
          null,
          "العام المالي"
       ],
-      "Comments": [
-         null,
-         "تعليقات"
-      ],
       "Date of Publication": [
          null,
          "تاريخ النشر"
-      ],
-      "Next Publishing Period": [
-         null,
-         "فترة النشر التالية"
-      ],
-      "Unavailable": [
-         null,
-         "غير متاح"
-      ],
-      "Before %s": [
-         null,
-         "قبل %s"
-      ],
-      "Note: Comments are only shown if present and only available in English or language of origin/researcher": [
-         null,
-         "ملاحظة: لا يتم عرض التعليقات إلا إذا كانت موجودة ومتاحة فقط باللغة الإنجليزية أو لغة الأصل / الباحث"
       ],
       "Press - Open Budget Survey - Tracker": [
          null,
@@ -251,70 +151,6 @@
          null,
          "الهاتف المحمول"
       ],
-      "Gathering the Data - Open Budget Survey - Tracker": [
-         null,
-         "تجميع البيانات - مسح الموازنة المفتوحة - برنامج التتبع"
-      ],
-      "Which year’s budget documents are monitored by the OBS Tracker?": [
-         null,
-         "ما هي وثائق الموازنة للعام التي تتم مراقبتها من خلال برنامج تتبع مسح الموازنة المفتوحة (OBS)؟"
-      ],
-      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
-         null,
-         "يتم تحديث برنامج تتبع مسح الموازنة المفتوحة (OBS) بشكل شهري من أجل تسجيل نشر وثائق الموازنة الجديدة في دولة من الدول. وتشتمل هذه الوثائق على خطط الموازنة للعام المالي التالي وتقارير تنفيذ الموازنة للعام المالي الجاري وتقارير التنفيذ والتقييم للموازنات تغطي الأعوام المالية السابقة. ويستخدم برنامج التتبع لتحليل الإتاحة العامة لوثائق الموازنة التي تتعلق بسنوات متعددة."
-      ],
-      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
-         null,
-         "وبالتالي، يمكن أن تقوم الحكومات، خلال شهر أو شهرين، بنشر وثائق الموازنة المتعلقة بثلاثة أعوام مالية، للأسباب التالية:"
-      ],
-      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
-         null,
-         "غالبًا يتم إصدار البيان التمهيدي للموازنة المتعلق بالموازنة القادمة قبل أربعة إلى ستة أشهر من بدء العام المالي التالي؛"
-      ],
-      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
-         null,
-         "غالبًا يتم إصدار مقترح الموازنة للسلطة التنفيذية وموازنة المواطنين للموازنة القادمة قبل شهر إلى ثلاثة أشهر من بدء العام المالي التالي؛"
-      ],
-      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
-         null,
-         "غالبًا يتم إصدار الموازنة المقررة المتعلقة بالموازنة القادمة قبل شهر من بدء العام المالي التالي؛"
-      ],
-      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
-         null,
-         "غالبًا يتم إصدار التقارير الدورية المتعلقة بالموازنة الجارية كل شهر أو كل ربع سنة بفارق زمني مقداره شهر إلى ثلاثة شهور؛"
-      ],
-      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
-         null,
-         "غالبًا يتم إصدار مراجعة منتصف العام المتعلقة بالموازنة الجارية قبل شهر إلى ثلاثة أشهر بعد منتصف العام المالي؛"
-      ],
-      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
-         null,
-         "غالبًا يتم إصدار تقرير منتصف العام المتعلق بالموازنة السابقة قبل ستة أشهر إلى اثني عشر شهرًا بعد نهاية العام المالي السابق؛ و"
-      ],
-      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
-         null,
-         "غالبًا يتم إصدار تقرير المراجعة في أي وقت بين ستة أشهر إلى ثمانية عشر شهرًا بعد نهاية العام المالي. وبالتالي، عندما يتم إصدار التقرير، يمكن أن يغطي الموازنة السابقة (إذا تم إصداره خلال 12 شهرًا من نهاية الموازنة) أو حتى العام السابق للموازنة السابقة (إذا تم إصداره بعد 12 شهرًا من نهاية الموازنة)."
-      ],
-      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
-         null,
-         "على سبيل المثال، في الدول التي تكون السنة المالية هي نفس السنة التقويمية، يمكن أن تصدر الحكومة البيان التمهيدي للموازنة (العام المالي التالي) ومراجعة منتصف العام (العام المالي الحالي) وتقرير نهاية العام (العام المالي السابق) في شهر أغسطس أو سبتمبر من العام المالي الحالي."
-      ],
-      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
-         null,
-         "يمكن أن تأخذ الدورة الكاملة للموازنة الكاملة ما يقترب من عامين لكي تكتمل، بدءًا بنشر البيان التمهيدي للموازنة قبل عدة أشهر من بدء العام المالي الخاضع للتغطية من خلال الموازنة وانتهاءً بنشر تقرير المراجعة بعد ما يصل إلى 18 شهرًا من انتهاء العام المالي. تم تصميم برنامج التتبع بحيث يتوقع متى تكون كل وثيقة من تلك الوثائق متاحة للعامة في دولة ما اعتمادًا على دورة الموازنة بها ثم رفع تقرير حول ما إذا كانت الحكومة قد قامت بإتاحتها بالفعل أم لا."
-      ],
-      "More information": [
-         null,
-         "المزيد من المعلومات"
-      ],
-      "Open Budget Survey Tracker Guide": [
-         null,
-         "دليل برنامج تتبع مسح الموازنة المفتوحة"
-      ],
-      "Research partners": [
-         null,
-         "شركاء الأبحاث"
-      ],
       "View current status": [
          null,
          "عرض الحالة الحالية"
@@ -323,61 +159,17 @@
          null,
          "المعلومات التاريخية"
       ],
-      "Not tracked": [
+      "Key": [
          null,
-         "بدون تتبع"
+         "المفتاح"
       ],
-      "About - Open Budget Survey - Tracker": [
+      "Internally available": [
          null,
-         "نبذة - مسح الموازنة المفتوحة -  برنامج التتبع"
+         "متاح داخليًا"
       ],
-      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
+      "Internal use only / Soft or hard copy only": [
          null,
-         "يعد <strong>مسح الموازنة المفتوحة لشراكة الموازنة الدولية (IBP) </strong>هو التقييم الوحيد المستقل والمنتظم والمقارن لشفافية الموازنة والمشاركة في مختلف أرجاء العالم. ويتم تنفيذ هذا التقييم الصارم والشامل كل عامين، وهو يرمي إلى قياس مقدار معلومات الموازنة التي تتيحها الحكومة المركزية للدولة للعامة وهل أشركت المواطنين في عمليات الموازنة أم لا بالإضافة إلى قوة مؤسسات الإشراف الرسمية."
-      ],
-      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
-         null,
-         "يتم استخدام بيانات المسح حول مقدار المعلومات المرتبطة بالموازنة والتي تتيحها الحكومات من أجل حساب <strong>مؤشر الموازنة المفتوحة</strong>، والتي تمنح لكل دولة نتيجة للشفافية تتراوح بين 0 و100."
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         "للاطلاع على النتائج الكاملة لدورات مسح الموازنة المفتوحة الأربعة الخاصة بنا، قم بزيارة الموقع التفاعلي الخاص بنا <a href=\"http://survey.internationalbudget.org/\">مستكشف بيانات مسح الموازنة المفتوح</a>."
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
-         null,
-         "عبارة عن أداة توفر تحديثات شهرية منتظمة حول ما إذا كانت الحكومة المركزية في الدول تقوم بنشر وثائق الموازنة الرئيسية في الوقت المناسب وفقًا للمعايير الدولية أم لا."
-      ],
-      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
-         null,
-         "يتم تجميع البيانات المتعلقة بالمسح وبرنامج التتبع من خلال باحثي المجتمع المدني المستقلين في كل دولة من الدول."
-      ],
-      "How does a country’s Tracker results relate to its Open Budget Index score?": [
-         null,
-         "ما هي علاقة نتائج برنامج التتبع الخاص بدولة ما بنتائج مؤشر الموازنة المفتوحة الخاص بهذه الدولة؟"
-      ],
-      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         "نتيجة مؤشر فهرس الموازنة المفتوحة لدولة ما عبارة عن الإجراء الأكثر شمولية لشفافية الموازنة الخاصة بها إلا أنها يتم تحديثها كل عامين فقط. ويستخدم <strong>برنامج تتبع مسح الموازنة المفتوحة (OBS)</strong>، في المقابل، لمراقبة أحد العوامل المضمنة في فهرس الموازنة المفتوحة على أساس شهري: هل تقوم الحكومات بإصدار وثائق الموازنة الرئيسية الثمانية للعامة أم لا (لا يقيم مستوى المعلومات التفصيلية التي يتم توفيرها). رغم أن نتيجة فهرس مؤشر الموازنة المفتوحة هو الإجراء القياسي الذهبي، إلا أن <strong>برنامج التتبع</strong> يسمح بتتبع مدى تقدم الدولة فيما يتعلق بالوفاء بالمعايير الدولية الأساسية من أجل نشر وثائق الموازنة."
-      ],
-      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         "الموازنات هي أقوى الأدوات الحكومية المستخدمة للوفاء باحتياجات وأولويات الدولة وشعبها. وتحتاج منظمات المجتمع المدني والجهات التشريعية والمراجعين ووسائل الإعلام والعامة بشكل أوسع نطاقًا إلى الحصول على معلومات الموازنة في الوقت المناسب من أجل محاسبة الحكومة على كيفية استخدام الموارد العامة. وبدون هذا التدقيق، يمكن أن تختار الحكومة اختيارات سيئة أو برامج غير شهيرة أو غير مناسبة، ويمكن أن تقوم بإهدار الأموال، كما يمكن أن تفتح الباب على مصراعيه أمام الفساد. وفي المقابل، عندما يتاح للأشخاص العاديين المعلومات والفرص للمشاركة في عمليات الموازنة الحكومية، يمكنهم تعزيز التحسينات الفعلية فيما يتعلق بالإدارة والسياسات."
-      ],
-      "More detailed information": [
-         null,
-         "المزيد من المعلومات التفصيلية"
-      ],
-      "Open Budget Survey": [
-         null,
-         " مسح الموازنة المفتوحة"
-      ],
-      "Country Info landing page": [
-         null,
-         "الصفحة الرئيسية لمعلومات الدولة"
-      ],
-      "Budget Library (Google docs)": [
-         null,
-         "مكتبة الموازنة (وثائق Google)"
+         "للاستخدام الداخلي فقط / النسخ المبرمجة أو المطبوعة فقط"
       ],
       "Pre-Budget Statement": [
          null,
@@ -571,25 +363,197 @@
          null,
          "فيتنام"
       ],
-      "Publications - Open Budget Survey - Tracker": [
+      "About - Open Budget Survey - Tracker": [
          null,
-         "المنشورات - مسح الموازنة المفتوحة -  برنامج التتبع"
+         "نبذة - مسح الموازنة المفتوحة -  برنامج التتبع"
       ],
-      "Reports": [
+      "What is the Open Budget Survey?": [
          null,
-         "التقاري"
+         "ما المقصود بمسح الموازنة المفتوحة؟"
       ],
-      "Open Budget Survey Tracker Report": [
+      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
          null,
-         "تقرير برنامج تتبع مسح الموازنة المفتوحة"
+         "يعد <strong>مسح الموازنة المفتوحة لشراكة الموازنة الدولية (IBP) </strong>هو التقييم الوحيد المستقل والمنتظم والمقارن لشفافية الموازنة والمشاركة في مختلف أرجاء العالم. ويتم تنفيذ هذا التقييم الصارم والشامل كل عامين، وهو يرمي إلى قياس مقدار معلومات الموازنة التي تتيحها الحكومة المركزية للدولة للعامة وهل أشركت المواطنين في عمليات الموازنة أم لا بالإضافة إلى قوة مؤسسات الإشراف الرسمية."
       ],
-      "Updates": [
+      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
          null,
-         "التحديثات"
+         "يتم استخدام بيانات المسح حول مقدار المعلومات المرتبطة بالموازنة والتي تتيحها الحكومات من أجل حساب <strong>مؤشر الموازنة المفتوحة</strong>، والتي تمنح لكل دولة نتيجة للشفافية تتراوح بين 0 و100."
       ],
-      "Open Budget Survey Tracker Update": [
+      "Open Budget Survey Data": [
          null,
-         "تحديث برنامج تتبع مسح الموازنة المفتوحة"
+         "بيانات مسح الموازنة المفتوحة"
+      ],
+      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
+         null,
+         "للاطلاع على النتائج الكاملة لدورات مسح الموازنة المفتوحة الأربعة الخاصة بنا، قم بزيارة الموقع التفاعلي الخاص بنا <a href=\"http://survey.internationalbudget.org/\">مستكشف بيانات مسح الموازنة المفتوح</a>."
+      ],
+      "What is the OBS Tracker?": [
+         null,
+         "ما المقصود ببرنامج تتبع مسح الموازنة المفتوحة (OBS)؟"
+      ],
+      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
+         null,
+         "عبارة عن أداة توفر تحديثات شهرية منتظمة حول ما إذا كانت الحكومة المركزية في الدول تقوم بنشر وثائق الموازنة الرئيسية في الوقت المناسب وفقًا للمعايير الدولية أم لا."
+      ],
+      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
+         null,
+         "يتم تجميع البيانات المتعلقة بالمسح وبرنامج التتبع من خلال باحثي المجتمع المدني المستقلين في كل دولة من الدول."
+      ],
+      "How does a country’s Tracker results relate to its Open Budget Index score?": [
+         null,
+         "ما هي علاقة نتائج برنامج التتبع الخاص بدولة ما بنتائج مؤشر الموازنة المفتوحة الخاص بهذه الدولة؟"
+      ],
+      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         "نتيجة مؤشر فهرس الموازنة المفتوحة لدولة ما عبارة عن الإجراء الأكثر شمولية لشفافية الموازنة الخاصة بها إلا أنها يتم تحديثها كل عامين فقط. ويستخدم <strong>برنامج تتبع مسح الموازنة المفتوحة (OBS)</strong>، في المقابل، لمراقبة أحد العوامل المضمنة في فهرس الموازنة المفتوحة على أساس شهري: هل تقوم الحكومات بإصدار وثائق الموازنة الرئيسية الثمانية للعامة أم لا (لا يقيم مستوى المعلومات التفصيلية التي يتم توفيرها). رغم أن نتيجة فهرس مؤشر الموازنة المفتوحة هو الإجراء القياسي الذهبي، إلا أن <strong>برنامج التتبع</strong> يسمح بتتبع مدى تقدم الدولة فيما يتعلق بالوفاء بالمعايير الدولية الأساسية من أجل نشر وثائق الموازنة."
+      ],
+      "Why do we need to know about government budgets?": [
+         null,
+         "لما نرغب في التعرف على الموازنات الحكومية؟"
+      ],
+      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
+         null,
+         "الموازنات هي أقوى الأدوات الحكومية المستخدمة للوفاء باحتياجات وأولويات الدولة وشعبها. وتحتاج منظمات المجتمع المدني والجهات التشريعية والمراجعين ووسائل الإعلام والعامة بشكل أوسع نطاقًا إلى الحصول على معلومات الموازنة في الوقت المناسب من أجل محاسبة الحكومة على كيفية استخدام الموارد العامة. وبدون هذا التدقيق، يمكن أن تختار الحكومة اختيارات سيئة أو برامج غير شهيرة أو غير مناسبة، ويمكن أن تقوم بإهدار الأموال، كما يمكن أن تفتح الباب على مصراعيه أمام الفساد. وفي المقابل، عندما يتاح للأشخاص العاديين المعلومات والفرص للمشاركة في عمليات الموازنة الحكومية، يمكنهم تعزيز التحسينات الفعلية فيما يتعلق بالإدارة والسياسات."
+      ],
+      "More detailed information": [
+         null,
+         "المزيد من المعلومات التفصيلية"
+      ],
+      "Open Budget Survey": [
+         null,
+         " مسح الموازنة المفتوحة"
+      ],
+      "Country Info landing page": [
+         null,
+         "الصفحة الرئيسية لمعلومات الدولة"
+      ],
+      "Budget Library (Google docs)": [
+         null,
+         "مكتبة الموازنة (وثائق Google)"
+      ],
+      "Gathering the Data - Open Budget Survey - Tracker": [
+         null,
+         "تجميع البيانات - مسح الموازنة المفتوحة - برنامج التتبع"
+      ],
+      "Which year’s budget documents are monitored by the OBS Tracker?": [
+         null,
+         "ما هي وثائق الموازنة للعام التي تتم مراقبتها من خلال برنامج تتبع مسح الموازنة المفتوحة (OBS)؟"
+      ],
+      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
+         null,
+         "يتم تحديث برنامج تتبع مسح الموازنة المفتوحة (OBS) بشكل شهري من أجل تسجيل نشر وثائق الموازنة الجديدة في دولة من الدول. وتشتمل هذه الوثائق على خطط الموازنة للعام المالي التالي وتقارير تنفيذ الموازنة للعام المالي الجاري وتقارير التنفيذ والتقييم للموازنات تغطي الأعوام المالية السابقة. ويستخدم برنامج التتبع لتحليل الإتاحة العامة لوثائق الموازنة التي تتعلق بسنوات متعددة."
+      ],
+      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
+         null,
+         "وبالتالي، يمكن أن تقوم الحكومات، خلال شهر أو شهرين، بنشر وثائق الموازنة المتعلقة بثلاثة أعوام مالية، للأسباب التالية:"
+      ],
+      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
+         null,
+         "غالبًا يتم إصدار البيان التمهيدي للموازنة المتعلق بالموازنة القادمة قبل أربعة إلى ستة أشهر من بدء العام المالي التالي؛"
+      ],
+      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
+         null,
+         "غالبًا يتم إصدار مقترح الموازنة للسلطة التنفيذية وموازنة المواطنين للموازنة القادمة قبل شهر إلى ثلاثة أشهر من بدء العام المالي التالي؛"
+      ],
+      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
+         null,
+         "غالبًا يتم إصدار الموازنة المقررة المتعلقة بالموازنة القادمة قبل شهر من بدء العام المالي التالي؛"
+      ],
+      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
+         null,
+         "غالبًا يتم إصدار التقارير الدورية المتعلقة بالموازنة الجارية كل شهر أو كل ربع سنة بفارق زمني مقداره شهر إلى ثلاثة شهور؛"
+      ],
+      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
+         null,
+         "غالبًا يتم إصدار مراجعة منتصف العام المتعلقة بالموازنة الجارية قبل شهر إلى ثلاثة أشهر بعد منتصف العام المالي؛"
+      ],
+      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
+         null,
+         "غالبًا يتم إصدار تقرير منتصف العام المتعلق بالموازنة السابقة قبل ستة أشهر إلى اثني عشر شهرًا بعد نهاية العام المالي السابق؛ و"
+      ],
+      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
+         null,
+         "غالبًا يتم إصدار تقرير المراجعة في أي وقت بين ستة أشهر إلى ثمانية عشر شهرًا بعد نهاية العام المالي. وبالتالي، عندما يتم إصدار التقرير، يمكن أن يغطي الموازنة السابقة (إذا تم إصداره خلال 12 شهرًا من نهاية الموازنة) أو حتى العام السابق للموازنة السابقة (إذا تم إصداره بعد 12 شهرًا من نهاية الموازنة)."
+      ],
+      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
+         null,
+         "على سبيل المثال، في الدول التي تكون السنة المالية هي نفس السنة التقويمية، يمكن أن تصدر الحكومة البيان التمهيدي للموازنة (العام المالي التالي) ومراجعة منتصف العام (العام المالي الحالي) وتقرير نهاية العام (العام المالي السابق) في شهر أغسطس أو سبتمبر من العام المالي الحالي."
+      ],
+      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
+         null,
+         "يمكن أن تأخذ الدورة الكاملة للموازنة الكاملة ما يقترب من عامين لكي تكتمل، بدءًا بنشر البيان التمهيدي للموازنة قبل عدة أشهر من بدء العام المالي الخاضع للتغطية من خلال الموازنة وانتهاءً بنشر تقرير المراجعة بعد ما يصل إلى 18 شهرًا من انتهاء العام المالي. تم تصميم برنامج التتبع بحيث يتوقع متى تكون كل وثيقة من تلك الوثائق متاحة للعامة في دولة ما اعتمادًا على دورة الموازنة بها ثم رفع تقرير حول ما إذا كانت الحكومة قد قامت بإتاحتها بالفعل أم لا."
+      ],
+      "More information": [
+         null,
+         "المزيد من المعلومات"
+      ],
+      "Open Budget Survey Tracker Guide": [
+         null,
+         "دليل برنامج تتبع مسح الموازنة المفتوحة"
+      ],
+      "Research partners": [
+         null,
+         "شركاء الأبحاث"
+      ],
+      "Open Budget Survey - Tracker": [
+         null,
+         "مسح الموازنة المفتوحة -  برنامج التتبع"
+      ],
+      "Data as of": [
+         null,
+         "البيانات في تاريخ"
+      ],
+      "Browse budget documents library": [
+         null,
+         "استعراض مكتبة وثائق الموازنة"
+      ],
+      "View budget documents library in full": [
+         null,
+         "عرض مكتبة وثائق الموازنة بشكل كامل"
+      ],
+      "Country": [
+         null,
+         "الدولة"
+      ],
+      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
+         null,
+         "يستخدم مؤشر الموازنة المفتوحة (OBI) بيانات مسح الموازنة المفتوحة لحساب درجة للشفافية (من صفر إلى 100) لكل دولة في المسح اعتمادًا على مقدار معلومات الموازنة التي تتيحها الدولة."
+      ],
+      "Open Budget Index": [
+         null,
+         "مؤشر الموازنة المفتوحة"
+      ],
+      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
+         null,
+         "يعد  <strong>مسح الموازنة المفتوحة (OBS) لشراكة الموازنة الدولية (IBP) </strong> التقييم المستقل والمنتظم والمقارن الوحيد لشفافية الموازنة والمشاركة في مختلف أرجاء العالم. <!-- المزيد -->ويتم تنفيذ هذا التقييم الصارم والشامل كل عامين، وهو يرمي إلى قياس مقدار معلومات الموازنة التي تتيحها الحكومة المركزية للدولة للعامة وهل أشركت المواطنين في عمليات الموازنة أم لا بالإضافة إلى قوة مؤسسات الإشراف الرسمية. ويستخدم <strong>فهرس الموازنة المفتوحة</strong> بيانات مسح الموازنة المفتوحة (OBS) لحساب نتيجة الشفافية (على مقياس من 0 إلى 100) لكل دولة في مسح الموازنة المفتوحة اعتمادًا على مقدار معلومات الموازنة التي تتيحها الحكومة."
+      ],
+      "What are the OBS Document Availability Updates?": [
+         null,
+         "ما المقصود ببرنامج تتبع إتاحة وثائق مسح الموازنة المفتوحة (OBS)؟"
+      ],
+      "A biannual update of the first section of the Open Budget Survey, which looks at whether the eight key budget documents are made available to the public. Twice a year this page will provide fresh data on whether national governments in countries included in the Open Budget Survey publish each of the eight key budget documents on time as per international standards.": [
+         null,
+         "عملية تحديث نصف سنوية للقسم الأول من مسح الموازنة المفتوحة، والذي يبحث في أمر ما إذا كانت مسح الموازنة المفتوحة، والذي يبحث في أمر ما إذا كانت وم هذه الصفحة، مرتين في العام، بتوفير بيانات حديثة حول ما إذا كانت الحكومات القومية في الدول المضمنة في مسح الموازنة المفتوحة قد قامت بنشر وثائق الموازنة الثمانية الرئيسية أم لا في الوقت المناسب وفقًا للمعايير الدولية."
+      ],
+      "Where can I get the data?": [
+         null,
+         "من أين يمكنني الحصول على البيانات؟"
+      ],
+      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
+         null,
+         "يمكن تنزيل البيانات الخاصة بنا في شكل  <a href=\"/data.csv\">ملف csv</a>."
+      ],
+      "How does the OBS Document Availability Tracker relate to the Open Budget Index score?": [
+         null,
+         "ما علاقة برنامج تتبع وثائق مسح الموازنة المفتوحة بنتيجة مؤشر الموازنة المفتوحة؟"
+      ],
+      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Tracker monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Tracker allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         "نتيجة مؤشر فهرس الموازنة المفتوحة لدولة ما عبارة عن الإجراء الأكثر شمولية لشفافية الموازنة على مستوى الحكومة المركزية إلا أنها يتم تحديثها كل عامين فقط. ويراقب برنامج تتبع وثائق مسح الموازنة المفتوحة، بشكل نصف سنوي، العوامل المضمنة في مؤشر الموازنة المفتوحة: هل تقوم الحكومات على الأقل بنشر وثائق الموازنة الثمانية للعامة (ولا يقوم بتقييم مستوى المعلومات التفصيلية التي يتم توفيرها). رغم أن نتيجة فهرس مؤشر الموازنة المفتوحة هو الإجراء القياسي الذهبي، إلا أن برنامج تتبع مسح الموازنة المفتوحة يسمح بتتبع مدى تقدم الدولة فيما يتعلق بالوفاء بالمعايير الدولية الأساسية من أجل نشر وثائق الموازنة. "
+      ],
+      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
+         null,
+         "الموازنات هي أقوى الأدوات الحكومية المستخدمة للوفاء باحتياجات وأولويات الدولة وشعبها. وتحتاج منظمات المجتمع المدني والجهات التشريعية والمراجعين ووسائل الإعلام والعامة بشكل أوسع نطاقًا إلى الحصول على معلومات الموازنة في الوقت المناسب من أجل محاسبة الحكومة على كيفية استخدام الموارد العامة. وبدون هذا التدقيق، يمكن أن تختار الحكومة اختيارات سيئة أو برامج غير شهيرة أو غير مناسبة، ويمكن أن تقوم بإهدار الأموال، كما يمكن أن تفتح الباب على مصراعيه أمام الفساد. وفي المقابل، عندما يتاح للأشخاص العاديين المعلومات والفرص للمشاركة في عمليات الموازنة الحكومية، يمكنهم تعزيز التحسينات الفعلية فيما يتعلق بالإدارة والسياسات."
       ]
    }
 }

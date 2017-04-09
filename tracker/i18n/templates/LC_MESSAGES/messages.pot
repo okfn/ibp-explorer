@@ -1,0 +1,789 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2017-02-13 11:35+0000\n"
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:3
+msgid "Publications - Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:13
+msgid "Reports"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:16
+msgid "Open Budget Survey Tracker Report"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:21
+msgid "Updates"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:24
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:27
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:30
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:33
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:36
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:39
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:42
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:45
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:48
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:51
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:54
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:57
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:60
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/publications.html:63
+msgid "Open Budget Survey Tracker Update"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:3
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:57
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:58
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:26
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:27
+msgid "Publicly available"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:5
+msgid "Internal use only"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:7
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:9
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:62
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:31
+msgid "Published late"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:11
+msgid "Discontinued"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:13
+msgid "Hard or soft copy only"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:15
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:65
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:66
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:34
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:35
+msgid "Not produced"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:22
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:44
+msgid "is publicly available"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:24
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:46
+msgid "is produced and available for internal use only"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:26
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:28
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:48
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:50
+msgid "was published late"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:32
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:52
+msgid "is produced in hard or soft copy only"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:34
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:54
+msgid "is not produced"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/helpers.html:37
+msgid "and was published on"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:4
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:4
+msgid " - Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:24
+msgid ""
+"Provides <strong>scant</strong> information to the public in its budget "
+"documents during the year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:26
+msgid ""
+"Provides <strong>minimal</strong> information to the public in its budget "
+"documents during the year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:28
+msgid ""
+"Provides <strong>some</strong> information to the public in its budget "
+"documents during the year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:30
+msgid ""
+"Provides <strong>significant</strong> information to the public in its "
+"budget documents during the year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:32
+msgid ""
+"Provides <strong>extensive</strong> information to the public in its budget "
+"documents during the year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:39
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:34
+msgid "N/A -- This country was not included in the Open Budget Survey"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:46
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:48
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:40
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:42
+msgid "View the Budget Library"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:52
+msgid "View historical information"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:57
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:69
+msgid "Current Status"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:67
+msgid "Document"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:68
+msgid "Fiscal Year"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/status_embed.html:70
+msgid "Date of Publication"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:3
+msgid "Press - Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:14
+msgid "Press Releases"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:21
+msgid "OBS Tracker in the News"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:78
+msgid "Media Contact"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:80
+msgid "Communications Manager"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:82
+msgid "Phone"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/press.html:83
+msgid "Mobile"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:46
+msgid "View current status"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:51
+msgid "Historical Information"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:55
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:24
+msgid "Key"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:61
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:30
+msgid "Internally available"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/country_embed.html:62
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:31
+msgid "Internal use only / Soft or hard copy only"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:3
+msgid "Pre-Budget Statement"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:4
+msgid ""
+"The purpose of the Pre-Budget Statement is to disclose the parameters of "
+"the Executive's Budget Proposal. It outlines the government's macroeconomic "
+"assumptions as well as anticipated total revenue and expenditures, and it "
+"sets out the debt that will be incurred during the upcoming budget year. "
+"The Pre-Budget Statement should be available no less than one month prior "
+"to the introduction of the Executive's Budget Proposal. If the Pre-Budget "
+"Statement is published less than a month before the Executive's Budget "
+"Proposal is submitted to the legislature, it is considered to be 'not "
+"publicly available'."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:5
+msgid "Executive's Budget Proposal"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:6
+msgid ""
+"The nature of the Executive's Budget Proposal varies from country to "
+"country. Sometimes it is a single document, sometimes multiple documents. "
+"The Executive's Budget Proposal is the document or documents that the "
+"executive submits to the legislature for its approval. It details expected "
+"government revenue and the sources of that revenue, as well as allocations "
+"to be made to all ministries, and to subnational governments in countries "
+"where the national government provides funding to the latter. The "
+"Executive's Budget Proposal should be made publicly available when it is "
+"first presented to the legislature, or, at a minimum, before the "
+"legislature approves it."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:7
+msgid "Enacted Budget"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:8
+msgid ""
+"The Enacted Budget is the budget that has been passed into law by the "
+"legislature. Unlike most budget documents, the Enacted Budget should be "
+"available from the committee within the legislature that deals with the "
+"budget, although the Ministry of Finance or other body that houses the "
+"executive's budget documents may also have a copy of the Enacted Budget. "
+"The Enacted Budget must be released to the public no later than three "
+"months after the legislature has approved it."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:9
+msgid "Citizens Budget"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:10
+msgid ""
+"A Citizens Budget is a version of the Executive's Budget Proposal, the "
+"Enacted Budget, or any other budget document that is simpler and less "
+"technical than the full document. It is normally shorter than the document "
+"on which it is based and is specifically designed to convey the key "
+"information in the particular document to the general public. A Citizens "
+"Budget should be available at the same time that the underlying document is "
+"made available. For example, if the Citizens Budget is a simplified version "
+"of the Executive's Budget Proposal, it should be released at the same time "
+"as the Executive's Budget Proposal."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:11
+msgid "In-Year Report"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:12
+msgid ""
+"These may be issued on a quarterly or monthly basis. They may be in the "
+"form of a consolidated report for the entire government or multiple reports "
+"from different agencies. In-Year Reports should be issued no later than "
+"three months after the end of the reporting period. If the report is issued "
+"after this date, it is considered as 'not publicly available'."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:13
+msgid "Mid-Year Review"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:14
+msgid ""
+"The Mid-Year Review contains a comprehensive update on the implementation "
+"of the budget as of the middle of the fiscal year, including a review of "
+"economic assumptions underlying the budget, and an updated forecast of the "
+"budget outcome for the fiscal year. The Mid-Year Review should be available "
+"no later than three months after the end of the first six months of the "
+"fiscal year."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:15
+msgid "Year-End Report"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:16
+msgid ""
+"Generally the Year-End Report is issued as a single, consolidated report "
+"for the entire government, but individual ministries may issue separate "
+"Year-End Reports. The Year-End Report should be released no later than one "
+"year after the end of the fiscal year. The Year-End Report is 'not publicly "
+"available' if issued later than one year after the end of the fiscal year "
+"it reports on."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:17
+msgid "Audit Report"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:18
+msgid ""
+"The Audit Report is issued by the country's supreme audit institution "
+"(SAI). It attests to the soundness and completeness of the government's "
+"year-end accounts. Unlike most other budget documents, the Audit Report is "
+"housed with the SAI. To be considered 'publicly available' the Audit Report "
+"must be published within 18 months after the end of the fiscal year to "
+"which it relates. The Audit Report would be 'not publicly available' if it "
+"is issued after that 18 month period."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:20
+msgid ""
+"Publishing period for each report is one to three months after a particular "
+"month/quarter ends."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:21
+msgid "Same as either the Executive Budget Proposal or Enacted Budget."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:23
+msgid "Armenia"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:24
+msgid "Bolivia"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:25
+msgid "Côte d’Ivoire"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:26
+msgid "Dem. Rep. of Congo"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:27
+msgid "Dominican Republic"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:28
+msgid "Ecuador"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:29
+msgid "Egypt"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:30
+msgid "El Salvador"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:31
+msgid "Fiji"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:32
+msgid "Georgia"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:33
+msgid "Ghana"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:34
+msgid "Greece"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:35
+msgid "Hungary"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:36
+msgid "Iraq"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:37
+msgid "Kenya"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:38
+msgid "Kyrgyz Republic"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:39
+msgid "Macedonia"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:40
+msgid "Mali"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:41
+msgid "Myanmar"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:42
+msgid "Nicaragua"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:43
+msgid "Niger"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:44
+msgid "Nigeria"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:45
+msgid "Palestine"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:46
+msgid "Philippines"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:47
+msgid "Senegal"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:48
+msgid "Sierra Leone"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:49
+msgid "Tanzania"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:50
+msgid "Timor-Leste"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:51
+msgid "Tunisia"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/on-the-fly-translations.html:52
+msgid "Vietnam"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:3
+msgid "About - Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:10
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:130
+msgid "What is the Open Budget Survey?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:11
+msgid ""
+"The <strong>IBP’s Open Budget Survey</strong> is the only independent, "
+"regular, and comparative assessment of budget transparency and "
+"participation worldwide. This rigorous, comprehensive assessment is "
+"conducted every two years and measures the amount of budget information a "
+"country’s central government makes publicly available, whether it engages "
+"citizens in budget processes, and the strength of formal oversight "
+"institutions."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:12
+msgid ""
+"Survey data on the amount of budget information that governments make "
+"public are used to calculate the <strong>Open Budget Index</strong>, which "
+"gives each country a transparency score from 0 to 100."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:13
+msgid "Open Budget Survey Data"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:14
+msgid ""
+"To see the complete results of four rounds of the Open Budget Survey, visit "
+"our interactive <a href=\"http://survey.internationalbudget.org\">Open "
+"Budget Survey Data Explorer</a>."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:18
+msgid "What is the OBS Tracker?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:19
+msgid ""
+"A tool that provides regular monthly updates on whether the central "
+"government of the countries included publish each of the key budget "
+"documents on time as per international standards."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:20
+msgid ""
+"The data for the Survey and Tracker are collected by independent civil "
+"society researchers in each country."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:21
+msgid "How does a country’s Tracker results relate to its Open Budget Index score?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:22
+msgid ""
+"A country’s Open Budget Index score is the most comprehensive measure of "
+"its budget transparency but is updated only every two years. The "
+"<strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis "
+"one of the factors included in the Open Budget Index: whether governments "
+"are at least releasing the eight key budget documents to the public (it "
+"does not assess the level of detailed information provided). Though the "
+"Open Budget Index score is the gold standard measure, the "
+"<strong>Tracker</strong> allows for tracking a country’s progress on "
+"meeting basic international standards for the publication of budget "
+"documents."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:26
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:154
+msgid "Why do we need to know about government budgets?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:27
+msgid ""
+"Budgets are a government’s most powerful tool to meet the needs and "
+"priorities of a country and its people. Civil society organizations, "
+"legislators, auditors, the media, and the broader public need timely budget "
+"information to hold the government accountable for how it uses public "
+"resources. Without such scrutiny, the government can make bad choices on "
+"unpopular or inappropriate programs, waste money, and open the door to "
+"corruption. On the other hand, when ordinary people have information and "
+"opportunities to participate in government budget processes, they can "
+"promote real improvements in governance and policy."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:29
+msgid "More detailed information"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:31
+msgid "Open Budget Survey"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:32
+msgid "Country Info landing page"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/about.html:33
+msgid "Budget Library (Google docs)"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:3
+msgid "Gathering the Data - Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:10
+msgid "Which year’s budget documents are monitored by the OBS Tracker?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:11
+msgid ""
+"The OBS Tracker is updated on a monthly basis to record the publication of "
+"new budget documents in a country.  These documents include budget plans "
+"for the forthcoming fiscal year, budget execution reports for the fiscal "
+"year underway, and implementation and evaluation reports for budgets "
+"covering prior fiscal years. As such, the Tracker analyzes the public "
+"availability of budget documents that pertain to multiple years."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:13
+msgid ""
+"Therefore, it is possible that in the space of a month or two a government "
+"could publish budget documents related to three fiscal years, because:"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:15
+msgid ""
+"a Pre-Budget Statement related to the forthcoming budget is often released "
+"four to six months before the start of the next fiscal year;"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:16
+msgid ""
+"an Executive’s Budget Proposal and Citizens Budget related to the "
+"forthcoming budget is often released one to three months before the start "
+"of the next fiscal year;"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:17
+msgid ""
+"an Enacted Budget related to the forthcoming budget is often released one "
+"month before the start of the next fiscal year;"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:18
+msgid ""
+"In-Year Reports related to the budget underway are often released every "
+"month or every quarter with a lag of one to three months;"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:19
+msgid ""
+"a Mid-Year Review related to the budget underway is typically released one "
+"to three months after the midpoint of the fiscal year;"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:20
+msgid ""
+"a Year-End Report related to the previous budget is typically released six "
+"to 12 months after the end of the prior fiscal year; and"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:21
+msgid ""
+"an Audit Report is often released anytime between six to 18 months after "
+"the end of the fiscal year. Thus, when this report is released, it may "
+"cover the previous budget (if it is released within 12 months of the end of "
+"the budget) or even the year prior to the previous budget (if it is "
+"released after 12 months of the end of the budget)."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:24
+msgid ""
+"For example, in a country where the fiscal year and the calendar year are "
+"the same, the government could release a Pre-Budget Statement (next fiscal "
+"year), a Mid-Year Review (current fiscal year), and a Year-End Report "
+"(prior fiscal year) in August or September of the current fiscal year."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:26
+msgid ""
+"The full cycle for a single budget could take close to two years to "
+"complete, beginning with the publication of the Pre-Budget Statement "
+"several months prior to the start of the fiscal year covered by the budget "
+"and ending with the publication of the Audit Report up to 18 months after "
+"fiscal year has ended.  The Tracker is designed to anticipate when each of "
+"these key documents should be made available to the public in a country "
+"based on its budget cycle, and then report on whether the government has "
+"actually made them available."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:30
+msgid "More information"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:32
+msgid "Open Budget Survey Tracker Guide"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/gathering.html:33
+msgid "Research partners"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:4
+msgid "Open Budget Survey - Tracker"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:6
+msgid "Data as of"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:11
+msgid "Browse budget documents library"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:16
+msgid "View budget documents library in full"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:55
+msgid "Country"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:56
+msgid ""
+"The Open Budget Index (OBI) uses Open Budget Survey data to calculate a "
+"transparency score (0 to 100) for each country in the Survey based on the "
+"amount of budget information that governments make public."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:57
+msgid "Open Budget Index"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:133
+msgid ""
+"The <strong>IBP's Open Budget Survey (OBS)</strong> is the only "
+"independent, regular, and comparative assessment of budget transparency and "
+"participation worldwide. This rigorous, comprehensive assessment is "
+"conducted every two years and measures the amount of budget information a "
+"country's central government makes publicly available, whether it engages "
+"citizens in budget processes, and the strength of formal oversight "
+"institutions. The <strong>Open Budget Index</strong> uses OBS data to "
+"calculate a transparency score (0 to 100) for each country in the OBS based "
+"on the amount of budget information that governments make public."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:136
+msgid "What are the OBS Document Availability Updates?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:139
+msgid ""
+"A biannual update of the first section of the Open Budget Survey, which "
+"looks at whether the eight key budget documents are made available to the "
+"public. Twice a year this page will provide fresh data on whether national "
+"governments in countries included in the Open Budget Survey publish each of "
+"the eight key budget documents on time as per international standards."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:142
+msgid "Where can I get the data?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:145
+msgid "You can download our data as <a href=\"/data.csv\">a csv file</a>."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:148
+msgid ""
+"How does the OBS Document Availability Tracker relate to the Open Budget "
+"Index score?"
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:151
+msgid ""
+"A country's Open Budget Index score is the most comprehensive measure of "
+"budget transparency at the central government level but is updated only "
+"every two years. The OBS Document Availability Tracker monitors on a "
+"biannual basis one of the factors included in the Open Budget Index: "
+"whether governments are at least releasing the eight key budget documents "
+"to the public (it does not assess the level of detailed information "
+"provided). Though the Open Budget Index score is the gold standard measure, "
+"the OBS Document Availability Tracker allows for tracking a country's "
+"progress on meeting basic international standards for the publication of "
+"budget documents."
+msgstr ""
+
+#: /home/damjan/dev/okfn4/ibp-explorer/tracker/views/index_embed.html:157
+msgid ""
+"Budgets are a government's most powerful tool to meet the needs and "
+"priorities of a country and its people. Civil society organizations, "
+"legislators, auditors, the media, and the broader public need timely budget "
+"information to hold the government accountable for how it uses public "
+"resources. Without such scrutiny, the government can make bad choices on "
+"unpopular or inappropriate programs, waste money, and open the door to "
+"corruption. On the other hand, when ordinary people have information and "
+"opportunities to participate in government budget processes, they can "
+"promote real improvements in governance and policy."
+msgstr ""

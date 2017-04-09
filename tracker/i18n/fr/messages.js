@@ -1,8 +1,28 @@
 ;var json_locale_data = {
    "messages": {
       "": {
-         "Project-Id-Version": " PACKAGE VERSION\nPOT-Creation-Date: 2015-03-18 11:30+0000\nPO-Revision-Date: 2015-04-17 11:37+0000\nLast-Translator: Tryggvi Björgvinsson <tryggvi.bjorgvinsson@okfn.org>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n > 1);\nX-Generator: Virtaal 0.7.1\n"
+         "Project-Id-Version": " PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2017-02-13 11:35+0000\nPO-Revision-Date: 2015-04-17 11:37+0000\nLast-Translator: Tryggvi Björgvinsson <tryggvi.bjorgvinsson@okfn.org>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n > 1);\nX-Generator: Virtaal 0.7.1\n"
       },
+      "Publications - Open Budget Survey - Tracker": [
+         null,
+         "Publications - Enquête sur le budget ouvert - Outil de suivi budgétaire"
+      ],
+      "Reports": [
+         null,
+         "Rapports"
+      ],
+      "Open Budget Survey Tracker Report": [
+         null,
+         "Rapport de l'Outil de suivi budgétaire de l'Enquête sur le budget ouvert"
+      ],
+      "Updates": [
+         null,
+         "Mises à jour"
+      ],
+      "Open Budget Survey Tracker Update": [
+         null,
+         "Mise à jour de l'Outil de suivi budgétaire"
+      ],
       "Publicly available": [
          null,
          "Disponible au public"
@@ -14,6 +34,14 @@
       "Published late": [
          null,
          "Publié en retard"
+      ],
+      "Discontinued": [
+         null,
+         ""
+      ],
+      "Hard or soft copy only": [
+         null,
+         ""
       ],
       "Not produced": [
          null,
@@ -31,6 +59,10 @@
          null,
          "a été publié en retard"
       ],
+      "is produced in hard or soft copy only": [
+         null,
+         "n'est produit qu'au format papier ou au format numérique"
+      ],
       "is not produced": [
          null,
          "n'a pas été produit"
@@ -38,118 +70,6 @@
       "and was published on": [
          null,
          "et a été publié le"
-      ],
-      "Open Budget Survey - Tracker": [
-         null,
-         "Enquête sur le budget ouvert - Outil de suivi budgétaire"
-      ],
-      "Data as of": [
-         null,
-         "Données en date du"
-      ],
-      "Key": [
-         null,
-         "Clé"
-      ],
-      "Internally available": [
-         null,
-         "Disponible en interne"
-      ],
-      "Country": [
-         null,
-         "Pays"
-      ],
-      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
-         null,
-         "L'Indice sur le budget ouvert (IBO) utilise les données de l'Enquête sur le budget ouvert pour calculer la note de transparence (de 0 à 100) de chaque pays figurant dans l'Enquête, en se basant sur la quantité d'informations budgétaires rendues publiques par les gouvernements."
-      ],
-      "Open Budget Index": [
-         null,
-         "Indice sur le budget ouvert"
-      ],
-      "What is the Open Budget Survey?": [
-         null,
-         "Qu'est-ce que l'Enquête sur le budget ouvert ?"
-      ],
-      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. <!-- more -->This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
-         null,
-         "L'<strong>Enquête sur le budget ouvert (EBO) de l'IBP</strong> est la seule évaluation indépendante, comparative et régulière de la transparence du budget et de la participation aux processus budgétaires dans le monde entier. <!-- more -->Cette évaluation rigoureuse et complète est réalisée tous les deux ans, et mesure la quantité d'informations budgétaires rendues publiques par le gouvernement central des pays, l'implication des citoyens dans les processus budgétaires et la solidité des institutions de contrôle officielles. L' <strong>Indice sur le budget ouvert</strong> utilise les données de l'EBO pour calculer la note de transparence (de 0 à 100) de chaque pays figurant dans l'EBO en fonction de la quantité d'informations budgétaires rendues publiques par les gouvernements."
-      ],
-      "What is the OBS Tracker?": [
-         null,
-         "Qu'est-ce que l'Outil de suivi budgétaire de l'EBO ?"
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries publish each of the key budget documents on time as per international standards.": [
-         null,
-         "Un outil fournissant des mises à jour mensuelles régulières sur la publication des documents budgétaires clés en temps opportun et selon les normes internationales par les gouvernements centraux."
-      ],
-      "Where can I get the data?": [
-         null,
-         "Où puis-je obtenir les données ?"
-      ],
-      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
-         null,
-         "Nos données sont disponibles au téléchargement sous la forme d'un <a href=\"/data.csv\">fichier csv</a>."
-      ],
-      "How do Tracker results relate to Open Budget Index scores?": [
-         null,
-         "Quel est le lien entre les résultats de l'Outil de suivi et les notes de l'Indice sur le budget ouvert ?"
-      ],
-      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The <strong>OBS Tracker</strong> monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). <!-- more -->Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         "La note de l'Indice sur le budget ouvert d'un pays est la mesure la plus complète de la transparence budgétaire au niveau du gouvernement central, mais elle n'est mise à jour que tous les deux ans. L'<strong>Outil de suivi de l'EBO</strong> contrôle, sur une base mensuelle, l'un des facteurs inclus dans l'Indice sur le budget ouvert : la publication par les gouvernements des huit documents budgétaires clés (il n'évalue pas le niveau de précision des informations fournies). <!-- more -->Bien que la note de l'Indice sur le budget ouvert constitue la mesure de référence, l'<strong>Outil de suivi</strong> permet de suivre les progrès d'un pays concernant le respect des normes internationales de base pour la publication des documents budgétaires."
-      ],
-      "Why do we need to know about government budgets?": [
-         null,
-         "Pourquoi est-il nécessaire de s'informer à propos des budgets gouvernementaux ?"
-      ],
-      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. <!-- more --> Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         "Les budgets constituent l'outil le plus puissant du gouvernement pour répondre aux besoins et aux priorités d'un pays et de sa population. <!-- more --> Les organisations de la société civile, les législateurs, les auditeurs, les médias et le public ont besoin d'informations budgétaires à jour pour pouvoir tenir le gouvernement responsable de son utilisation des ressources publiques. En l'absence d'un tel contrôle, le gouvernement peut faire de mauvais choix concernant des programmes impopulaires ou inappropriés, gaspiller de l'argent et ouvrir la voie à la corruption. Au contraire, lorsque de simples citoyens ont accès aux informations et ont la possibilité de participer aux processus budgétaires du gouvernement, ils peuvent favoriser de réelles améliorations en matière de gouvernance et de politique."
-      ],
-      "Open Budget Survey Data": [
-         null,
-         "Données de l'Enquête sur le budget ouvert"
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org/\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         "Pour consulter les résultats complets des quatre cycles de l'Enquête sur le budget ouvert, visitez notre <a href=\"http://survey.internationalbudget.org/\">Explorateur de données interactif de l'Enquête sur le budget ouvert</a>."
-      ],
-      "Open Budget Survey: Data Explorer": [
-         null,
-         "Enquête sur le budget ouvert : explorateur de données"
-      ],
-      "Monitoring the Public Availability of Key Government Budget Documents": [
-         null,
-         "Contrôler la disponibilité au public des documents budgétaires clés "
-      ],
-      "International Budget Parternship: Open Budgets. Transform Lives.": [
-         null,
-         "Partenariat Budgétaire International : Ouvrir les budgets. Changer des vies."
-      ],
-      "Home": [
-         null,
-         "Accueil"
-      ],
-      "Gathering the Data": [
-         null,
-         "Collecte des données"
-      ],
-      "Publications": [
-         null,
-         "Publications"
-      ],
-      "Press room": [
-         null,
-         "Salle de presse"
-      ],
-      "About this site": [
-         null,
-         "À propos de ce site"
-      ],
-      "Site created by": [
-         null,
-         "Site créé par"
       ],
       " - Open Budget Survey - Tracker": [
          null,
@@ -199,29 +119,9 @@
          null,
          "Exercice budgétaire"
       ],
-      "Comments": [
-         null,
-         "Observations"
-      ],
       "Date of Publication": [
          null,
          "Date de publication"
-      ],
-      "Next Publishing Period": [
-         null,
-         "Prochaine période de publication"
-      ],
-      "Unavailable": [
-         null,
-         "Non disponible"
-      ],
-      "Before %s": [
-         null,
-         "Avant le %s"
-      ],
-      "Note: Comments are only shown if present and only available in English or language of origin/researcher": [
-         null,
-         "Remarque : Les observations ne sont indiquées que lorsqu'elles ont été fournies et qu'elles sont disponibles en anglais ou dans la langue d'origine / du chercheur"
       ],
       "Press - Open Budget Survey - Tracker": [
          null,
@@ -251,70 +151,6 @@
          null,
          "Mobile"
       ],
-      "Gathering the Data - Open Budget Survey - Tracker": [
-         null,
-         "Collecte des données - Enquête sur le budget ouvert - Outil de suivi budgétaire"
-      ],
-      "Which year’s budget documents are monitored by the OBS Tracker?": [
-         null,
-         "À quel exercice correspondent les documents budgétaires contrôlés par l'Outil de suivi budgétaire de l'EBO ?"
-      ],
-      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
-         null,
-         "L'Outil de suivi budgétaire de l'EBO est mis à jour sur une base mensuelle pour enregistrer la publication des nouveaux documents budgétaires d'un pays. Ces documents comprennent les projets de budget pour l'exercice à venir, les rapports d'exécution budgétaire pour l'exercice en cours, et les rapport de mise en œuvre et d'évaluation pour les budgets couvrant les exercices précédents. En tant que tel, l'Outil de suivi budgétaire analyse la disponibilité au public de documents budgétaires portant sur plusieurs exercices."
-      ],
-      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
-         null,
-         "Il est donc possible qu'en l'espace d'un mois ou deux un gouvernement publie des documents budgétaires relatifs à trois exercices budgétaires, car :"
-      ],
-      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
-         null,
-         "un Rapport préalable au budget portant sur le budget à venir est souvent publié entre quatre et six mois avant le commencement de l'exercice budgétaire suivant ;"
-      ],
-      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
-         null,
-         "un Projet de budget de l'exécutif et un Budget des citoyens portant sur le budget à venir sont souvent publiés entre un et trois mois avant le commencement du prochain exercice budgétaire ;"
-      ],
-      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
-         null,
-         "un Budget approuvé portant sur le budget à venir est souvent publié un mois avant le commencement de l'exercice budgétaire suivant ;"
-      ],
-      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
-         null,
-         "les Rapports en cours d'année portant sur le budget en cours sont souvent publiés chaque mois ou chaque trimestre avec un délai d'un à trois mois ;"
-      ],
-      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
-         null,
-         "une Revue de milieu d'année portant sur le budget en cours est généralement publiée entre un et trois mois après la moitié de l'exercice budgétaire ;"
-      ],
-      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
-         null,
-         "un Rapport de fin d'année lié au budget précédent est généralement publié entre six et 12 mois après la fin de l'exercice précédent ; et"
-      ],
-      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
-         null,
-         "un Rapport d'audit est souvent publié entre six et 18 mois après la fin de l'exercice budgétaire. Ainsi, lorsque ce rapport est publié, il peut couvrir le budget précédent (s'il est publié dans un délai de 12 mois suivant la fin du budget) ou même l'année avant le budget précédent (s'il est publié plus de 12 mois après la fin du budget)."
-      ],
-      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
-         null,
-         "Par exemple, dans un pays où l'exercice budgétaire coïncide avec l'année civile, le gouvernement peut publier un Rapport préalable au budget (exercice suivant), une Revue de milieu d'année (exercice actuel) et un Rapport de fin d'année (exercice précédent) en août ou septembre de l'exercice en cours."
-      ],
-      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
-         null,
-         "L'achèvement du cycle complet correspondant à un seul budget peut prendre jusqu'à deux ans, en commençant par la publication du Rapport préalable au budget plusieurs mois avant le commencement de l'exercice couvert par le budget et se terminant par la publication du Rapport d'audit jusqu'à 18 mois après la fin de l'exercice budgétaire. L'Outil de suivi budgétaire est conçu pour prévoir le moment où chacun de ces documents clés devrait être rendu public dans un pays, en fonction de son cycle budgétaire, puis de déterminer si le gouvernement les a réellement rendus publics."
-      ],
-      "More information": [
-         null,
-         "Plus d'informations"
-      ],
-      "Open Budget Survey Tracker Guide": [
-         null,
-         "Guide de l'Outil de suivi budgétaire de l'Enquête sur le budget ouvert"
-      ],
-      "Research partners": [
-         null,
-         "Partenaires de recherche"
-      ],
       "View current status": [
          null,
          "Afficher le statut actuel'"
@@ -323,61 +159,17 @@
          null,
          "Données historiques"
       ],
-      "Not tracked": [
+      "Key": [
          null,
-         "Non suivi"
+         "Clé"
       ],
-      "About - Open Budget Survey - Tracker": [
+      "Internally available": [
          null,
-         "À propos - Enquête sur le Budget Ouvert - Outil de suivi budgétaire"
+         "Disponible en interne"
       ],
-      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
+      "Internal use only / Soft or hard copy only": [
          null,
-         "L'<strong>Enquête sur le budget ouvert de l'IBP</strong> est la seule évaluation indépendante, comparative et régulière de la transparence du budget et de la participation aux processus budgétaires dans le monde entier. Cette évaluation rigoureuse et complète est réalisée tous les deux ans, et mesure la quantité d'informations budgétaires rendues publiques par le gouvernement central des pays, l'implication des citoyens dans les processus budgétaires et la solidité des institutions de contrôle officielles."
-      ],
-      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
-         null,
-         "Les données de l'enquête sur la quantité d'informations budgétaires rendues publiques par les gouvernements sont utilisées pour calculer l'<strong>Indice sur le budget ouvert</strong> qui donne à chaque pays une note de transparence de 0 à 100."
-      ],
-      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
-         null,
-         "Pour consulter les résultats complets des quatre cycles de l'Enquête sur le budget ouvert, visitez notre <a href=\"http://survey.internationalbudget.org\">Explorateur de données interactif de l'Enquête sur le budget ouvert</a>."
-      ],
-      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
-         null,
-         "Un outil fournissant des mises à jour mensuelles régulières sur la publication des documents budgétaires clés en temps opportun et selon les normes internationales par les gouvernements centraux des pays inclus."
-      ],
-      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
-         null,
-         "Les données de l'Enquête et de l'Outil de suivi budgétaire sont recueillies par des chercheurs indépendants de la société civile de chaque pays."
-      ],
-      "How does a country’s Tracker results relate to its Open Budget Index score?": [
-         null,
-         "Quel est le lien entre les résultats de l'Outil de suivi budgétaire d'un pays et sa note de l'Indice sur le budget ouvert ?"
-      ],
-      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
-         null,
-         "La note de l'Indice sur le budget ouvert d'un pays est la mesure la plus complète de sa transparence budgétaire, mais elle n'est mise à jour que tous les deux ans. L'<strong>Outil de suivi de l'EBO</strong>, quant à lui, contrôle sur une base mensuelle l'un des facteurs inclus dans l'Indice sur le budget ouvert : la publication par les gouvernements des huit documents budgétaires clés (il n'évalue pas le niveau de précision des informations fournies). Bien que la note de l'Indice sur le budget ouvert constitue la mesure de référence, l'<strong>Outil de suivi</strong> permet de suivre les progrès d'un pays concernant le respect des normes internationales de base pour la publication des documents budgétaires."
-      ],
-      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
-         null,
-         "Les budgets constituent l'outil le plus puissant du gouvernement pour répondre aux besoins et aux priorités d'un pays et de sa population. Les organisations de la société civile, les législateurs, les auditeurs, les médias et le public ont besoin d'informations budgétaires à jour pour pouvoir tenir le gouvernement responsable de son utilisation des ressources publiques. En l'absence d'un tel contrôle, le gouvernement peut faire de mauvais choix concernant des programmes impopulaires ou inappropriés, gaspiller de l'argent et ouvrir la voie à la corruption. Au contraire, lorsque de simples citoyens ont accès aux informations et ont la possibilité de participer aux processus budgétaires du gouvernement, ils peuvent favoriser de réelles améliorations en matière de gouvernance et de politique."
-      ],
-      "More detailed information": [
-         null,
-         "Informations plus détaillées"
-      ],
-      "Open Budget Survey": [
-         null,
-         "Enquête sur le budget ouvert"
-      ],
-      "Country Info landing page": [
-         null,
-         "Page d'accueil des informations sur les pays"
-      ],
-      "Budget Library (Google docs)": [
-         null,
-         "Bibliothèque du budget (Google Docs)"
+         "Usage interne uniquement / Format papier ou format numérique uniquement"
       ],
       "Pre-Budget Statement": [
          null,
@@ -571,25 +363,197 @@
          null,
          "Viêt Nam"
       ],
-      "Publications - Open Budget Survey - Tracker": [
+      "About - Open Budget Survey - Tracker": [
          null,
-         "Publications - Enquête sur le budget ouvert - Outil de suivi budgétaire"
+         "À propos - Enquête sur le Budget Ouvert - Outil de suivi budgétaire"
       ],
-      "Reports": [
+      "What is the Open Budget Survey?": [
          null,
-         "Rapports"
+         "Qu'est-ce que l'Enquête sur le budget ouvert ?"
       ],
-      "Open Budget Survey Tracker Report": [
+      "The <strong>IBP’s Open Budget Survey</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country’s central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions.": [
          null,
-         "Rapport de l'Outil de suivi budgétaire de l'Enquête sur le budget ouvert"
+         "L'<strong>Enquête sur le budget ouvert de l'IBP</strong> est la seule évaluation indépendante, comparative et régulière de la transparence du budget et de la participation aux processus budgétaires dans le monde entier. Cette évaluation rigoureuse et complète est réalisée tous les deux ans, et mesure la quantité d'informations budgétaires rendues publiques par le gouvernement central des pays, l'implication des citoyens dans les processus budgétaires et la solidité des institutions de contrôle officielles."
       ],
-      "Updates": [
+      "Survey data on the amount of budget information that governments make public are used to calculate the <strong>Open Budget Index</strong>, which gives each country a transparency score from 0 to 100.": [
          null,
-         "Mises à jour"
+         "Les données de l'enquête sur la quantité d'informations budgétaires rendues publiques par les gouvernements sont utilisées pour calculer l'<strong>Indice sur le budget ouvert</strong> qui donne à chaque pays une note de transparence de 0 à 100."
       ],
-      "Open Budget Survey Tracker Update": [
+      "Open Budget Survey Data": [
          null,
-         "Mise à jour de l'Outil de suivi budgétaire"
+         "Données de l'Enquête sur le budget ouvert"
+      ],
+      "To see the complete results of four rounds of the Open Budget Survey, visit our interactive <a href=\"http://survey.internationalbudget.org\">Open Budget Survey Data Explorer</a>.": [
+         null,
+         "Pour consulter les résultats complets des quatre cycles de l'Enquête sur le budget ouvert, visitez notre <a href=\"http://survey.internationalbudget.org\">Explorateur de données interactif de l'Enquête sur le budget ouvert</a>."
+      ],
+      "What is the OBS Tracker?": [
+         null,
+         "Qu'est-ce que l'Outil de suivi budgétaire de l'EBO ?"
+      ],
+      "A tool that provides regular monthly updates on whether the central government of the countries included publish each of the key budget documents on time as per international standards.": [
+         null,
+         "Un outil fournissant des mises à jour mensuelles régulières sur la publication des documents budgétaires clés en temps opportun et selon les normes internationales par les gouvernements centraux des pays inclus."
+      ],
+      "The data for the Survey and Tracker are collected by independent civil society researchers in each country.": [
+         null,
+         "Les données de l'Enquête et de l'Outil de suivi budgétaire sont recueillies par des chercheurs indépendants de la société civile de chaque pays."
+      ],
+      "How does a country’s Tracker results relate to its Open Budget Index score?": [
+         null,
+         "Quel est le lien entre les résultats de l'Outil de suivi budgétaire d'un pays et sa note de l'Indice sur le budget ouvert ?"
+      ],
+      "A country’s Open Budget Index score is the most comprehensive measure of its budget transparency but is updated only every two years. The <strong>OBS Tracker</strong>, on the other hand, monitors on monthly basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the <strong>Tracker</strong> allows for tracking a country’s progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         "La note de l'Indice sur le budget ouvert d'un pays est la mesure la plus complète de sa transparence budgétaire, mais elle n'est mise à jour que tous les deux ans. L'<strong>Outil de suivi de l'EBO</strong>, quant à lui, contrôle sur une base mensuelle l'un des facteurs inclus dans l'Indice sur le budget ouvert : la publication par les gouvernements des huit documents budgétaires clés (il n'évalue pas le niveau de précision des informations fournies). Bien que la note de l'Indice sur le budget ouvert constitue la mesure de référence, l'<strong>Outil de suivi</strong> permet de suivre les progrès d'un pays concernant le respect des normes internationales de base pour la publication des documents budgétaires."
+      ],
+      "Why do we need to know about government budgets?": [
+         null,
+         "Pourquoi est-il nécessaire de s'informer à propos des budgets gouvernementaux ?"
+      ],
+      "Budgets are a government’s most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
+         null,
+         "Les budgets constituent l'outil le plus puissant du gouvernement pour répondre aux besoins et aux priorités d'un pays et de sa population. Les organisations de la société civile, les législateurs, les auditeurs, les médias et le public ont besoin d'informations budgétaires à jour pour pouvoir tenir le gouvernement responsable de son utilisation des ressources publiques. En l'absence d'un tel contrôle, le gouvernement peut faire de mauvais choix concernant des programmes impopulaires ou inappropriés, gaspiller de l'argent et ouvrir la voie à la corruption. Au contraire, lorsque de simples citoyens ont accès aux informations et ont la possibilité de participer aux processus budgétaires du gouvernement, ils peuvent favoriser de réelles améliorations en matière de gouvernance et de politique."
+      ],
+      "More detailed information": [
+         null,
+         "Informations plus détaillées"
+      ],
+      "Open Budget Survey": [
+         null,
+         "Enquête sur le budget ouvert"
+      ],
+      "Country Info landing page": [
+         null,
+         "Page d'accueil des informations sur les pays"
+      ],
+      "Budget Library (Google docs)": [
+         null,
+         "Bibliothèque du budget (Google Docs)"
+      ],
+      "Gathering the Data - Open Budget Survey - Tracker": [
+         null,
+         "Collecte des données - Enquête sur le budget ouvert - Outil de suivi budgétaire"
+      ],
+      "Which year’s budget documents are monitored by the OBS Tracker?": [
+         null,
+         "À quel exercice correspondent les documents budgétaires contrôlés par l'Outil de suivi budgétaire de l'EBO ?"
+      ],
+      "The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.": [
+         null,
+         "L'Outil de suivi budgétaire de l'EBO est mis à jour sur une base mensuelle pour enregistrer la publication des nouveaux documents budgétaires d'un pays. Ces documents comprennent les projets de budget pour l'exercice à venir, les rapports d'exécution budgétaire pour l'exercice en cours, et les rapport de mise en œuvre et d'évaluation pour les budgets couvrant les exercices précédents. En tant que tel, l'Outil de suivi budgétaire analyse la disponibilité au public de documents budgétaires portant sur plusieurs exercices."
+      ],
+      "Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:": [
+         null,
+         "Il est donc possible qu'en l'espace d'un mois ou deux un gouvernement publie des documents budgétaires relatifs à trois exercices budgétaires, car :"
+      ],
+      "a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;": [
+         null,
+         "un Rapport préalable au budget portant sur le budget à venir est souvent publié entre quatre et six mois avant le commencement de l'exercice budgétaire suivant ;"
+      ],
+      "an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;": [
+         null,
+         "un Projet de budget de l'exécutif et un Budget des citoyens portant sur le budget à venir sont souvent publiés entre un et trois mois avant le commencement du prochain exercice budgétaire ;"
+      ],
+      "an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;": [
+         null,
+         "un Budget approuvé portant sur le budget à venir est souvent publié un mois avant le commencement de l'exercice budgétaire suivant ;"
+      ],
+      "In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;": [
+         null,
+         "les Rapports en cours d'année portant sur le budget en cours sont souvent publiés chaque mois ou chaque trimestre avec un délai d'un à trois mois ;"
+      ],
+      "a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;": [
+         null,
+         "une Revue de milieu d'année portant sur le budget en cours est généralement publiée entre un et trois mois après la moitié de l'exercice budgétaire ;"
+      ],
+      "a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and": [
+         null,
+         "un Rapport de fin d'année lié au budget précédent est généralement publié entre six et 12 mois après la fin de l'exercice précédent ; et"
+      ],
+      "an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).": [
+         null,
+         "un Rapport d'audit est souvent publié entre six et 18 mois après la fin de l'exercice budgétaire. Ainsi, lorsque ce rapport est publié, il peut couvrir le budget précédent (s'il est publié dans un délai de 12 mois suivant la fin du budget) ou même l'année avant le budget précédent (s'il est publié plus de 12 mois après la fin du budget)."
+      ],
+      "For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.": [
+         null,
+         "Par exemple, dans un pays où l'exercice budgétaire coïncide avec l'année civile, le gouvernement peut publier un Rapport préalable au budget (exercice suivant), une Revue de milieu d'année (exercice actuel) et un Rapport de fin d'année (exercice précédent) en août ou septembre de l'exercice en cours."
+      ],
+      "The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.": [
+         null,
+         "L'achèvement du cycle complet correspondant à un seul budget peut prendre jusqu'à deux ans, en commençant par la publication du Rapport préalable au budget plusieurs mois avant le commencement de l'exercice couvert par le budget et se terminant par la publication du Rapport d'audit jusqu'à 18 mois après la fin de l'exercice budgétaire. L'Outil de suivi budgétaire est conçu pour prévoir le moment où chacun de ces documents clés devrait être rendu public dans un pays, en fonction de son cycle budgétaire, puis de déterminer si le gouvernement les a réellement rendus publics."
+      ],
+      "More information": [
+         null,
+         "Plus d'informations"
+      ],
+      "Open Budget Survey Tracker Guide": [
+         null,
+         "Guide de l'Outil de suivi budgétaire de l'Enquête sur le budget ouvert"
+      ],
+      "Research partners": [
+         null,
+         "Partenaires de recherche"
+      ],
+      "Open Budget Survey - Tracker": [
+         null,
+         "Enquête sur le budget ouvert - Outil de suivi budgétaire"
+      ],
+      "Data as of": [
+         null,
+         "Données en date du"
+      ],
+      "Browse budget documents library": [
+         null,
+         "Consultez la bibliothèque des documents budgétaires"
+      ],
+      "View budget documents library in full": [
+         null,
+         "Consultez l'intégralité des documents budgétaires dans la bibliothèque"
+      ],
+      "Country": [
+         null,
+         "Pays"
+      ],
+      "The Open Budget Index (OBI) uses Open Budget Survey data to calculate a transparency score (0 to 100) for each country in the Survey based on the amount of budget information that governments make public.": [
+         null,
+         "L'Indice sur le budget ouvert (IBO) utilise les données de l'Enquête sur le budget ouvert pour calculer la note de transparence (de 0 à 100) de chaque pays figurant dans l'Enquête, en se basant sur la quantité d'informations budgétaires rendues publiques par les gouvernements."
+      ],
+      "Open Budget Index": [
+         null,
+         "Indice sur le budget ouvert"
+      ],
+      "The <strong>IBP's Open Budget Survey (OBS)</strong> is the only independent, regular, and comparative assessment of budget transparency and participation worldwide. This rigorous, comprehensive assessment is conducted every two years and measures the amount of budget information a country's central government makes publicly available, whether it engages citizens in budget processes, and the strength of formal oversight institutions. The <strong>Open Budget Index</strong> uses OBS data to calculate a transparency score (0 to 100) for each country in the OBS based on the amount of budget information that governments make public.": [
+         null,
+         "L'<strong>Enquête sur le budget ouvert (EBO) de l'IBP</strong> est la seule évaluation indépendante, comparative et régulière de la transparence du budget et de la participation aux processus budgétaires dans le monde entier. <!-- more -->Cette évaluation rigoureuse et complète est réalisée tous les deux ans, et mesure la quantité d'informations budgétaires rendues publiques par le gouvernement central des pays, l'implication des citoyens dans les processus budgétaires et la solidité des institutions de contrôle officielles. L' <strong>Indice sur le budget ouvert</strong> utilise les données de l'EBO pour calculer la note de transparence (de 0 à 100) de chaque pays figurant dans l'EBO en fonction de la quantité d'informations budgétaires rendues publiques par les gouvernements."
+      ],
+      "What are the OBS Document Availability Updates?": [
+         null,
+         "Qu'est-ce que l'outil de suivi de la disponibilité des documents de l'EBO ?"
+      ],
+      "A biannual update of the first section of the Open Budget Survey, which looks at whether the eight key budget documents are made available to the public. Twice a year this page will provide fresh data on whether national governments in countries included in the Open Budget Survey publish each of the eight key budget documents on time as per international standards.": [
+         null,
+         "Une mise à jour semestrielle de la première section de l'Enquête sur le budget ouvert (EBO), qui vise à savoir si les huit documents budgétaires clés sont mis à la disposition du public. Deux fois par an, cette page fournira les données les plus récentes pour savoir si les gouvernements nationaux de tous les pays étudiés dans l'Enquête sur le budget ouvert publient les huit documents budgétaires clés en temps opportun selon les normes internationales."
+      ],
+      "Where can I get the data?": [
+         null,
+         "Où puis-je obtenir les données ?"
+      ],
+      "You can download our data as <a href=\"/data.csv\">a csv file</a>.": [
+         null,
+         "Nos données sont disponibles au téléchargement sous la forme d'un <a href=\"/data.csv\">fichier csv</a>."
+      ],
+      "How does the OBS Document Availability Tracker relate to the Open Budget Index score?": [
+         null,
+         "Quel est le lien entre l'Outil de suivi de la disponibilité des documents de l'EBO et le score de l'Indice sur le budget ouvert ?"
+      ],
+      "A country's Open Budget Index score is the most comprehensive measure of budget transparency at the central government level but is updated only every two years. The OBS Document Availability Tracker monitors on a biannual basis one of the factors included in the Open Budget Index: whether governments are at least releasing the eight key budget documents to the public (it does not assess the level of detailed information provided). Though the Open Budget Index score is the gold standard measure, the OBS Document Availability Tracker allows for tracking a country's progress on meeting basic international standards for the publication of budget documents.": [
+         null,
+         "Le score de l'IBO obtenu par un pays constitue la mesure la plus complète de sa transparence budgétaire ay niveau du gouvernement central, mais il n'est mis à jour qu'une fois tous les deux ans. L'Outil de suivi de la disponibilité des documents de l'EBO surveille sur une base semestrielle l'un des facteurs compris dans l'Indice sur le budget ouvert : savoir si les gouvernements publient au moins les huit documents budgétaires clés à l'attention du public (il n'évalue pas le niveau de détail des informations fournies). Même si le score de l'Indice sur le budget ouvert est la mesure de référence, l'Outil de suivi de la disponibilité des documents de l'EBO permet de suivre les progrès réalisés par un pays pour répondre aux normes internationales de base relatives à la publication des documents budgétaires."
+      ],
+      "Budgets are a government's most powerful tool to meet the needs and priorities of a country and its people. Civil society organizations, legislators, auditors, the media, and the broader public need timely budget information to hold the government accountable for how it uses public resources. Without such scrutiny, the government can make bad choices on unpopular or inappropriate programs, waste money, and open the door to corruption. On the other hand, when ordinary people have information and opportunities to participate in government budget processes, they can promote real improvements in governance and policy.": [
+         null,
+         "Les budgets constituent l'outil le plus puissant du gouvernement pour répondre aux besoins et aux priorités d'un pays et de sa population. Les organisations de la société civile, les législateurs, les auditeurs, les médias et le public ont besoin d'informations budgétaires à jour pour pouvoir tenir le gouvernement responsable de son utilisation des ressources publiques. En l'absence d'un tel contrôle, le gouvernement peut faire de mauvais choix concernant des programmes impopulaires ou inappropriés, gaspiller de l'argent et ouvrir la voie à la corruption. Au contraire, lorsque de simples citoyens ont accès aux informations et ont la possibilité de participer aux processus budgétaires du gouvernement, ils peuvent favoriser de réelles améliorations en matière de gouvernance et de politique."
       ]
    }
 }
