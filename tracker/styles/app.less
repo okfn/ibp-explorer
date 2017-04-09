@@ -3,11 +3,11 @@
 @import "../../node_modules/bootstrap/less/glyphicons.less";
 
 @header-height: 99px;
-@state-color-late: #CA2222;
-@state-color-not-produced: @state-color-late;
+@state-color-not-produced: #CA2222;
 @state-color-internal: #F5DD0C;
 @state-color-available: #28C926;
 @state-color-hard-soft-copy-only: @state-color-internal;
+@state-color-late: @state-color-internal;
 
 @font-face {
   font-family: 'clear_sansregular';
@@ -454,7 +454,8 @@ a#okfn {
     span {
       display: none;
     }
-    &.state-late {
+    &.state-late,
+    &.state-published-late {
       background-color: lighten(@state-color-late, 15%) !important;
       border-color: darken(@state-color-late, 15%) !important;
     }
@@ -569,5 +570,9 @@ a#okfn {
 
   .text-score {
     margin-bottom: 30px;
+  }
+
+  .btn {
+    white-space: normal;
   }
 }
