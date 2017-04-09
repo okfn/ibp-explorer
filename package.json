@@ -25,7 +25,10 @@
     "build:prod": "npm run build:prod:explorer && npm run build:prod:tracker",
     "build:prod:start": "npm run build:prod && npm run start",
     "test": "mocha --require babel-core/register tests/",
-    "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- --report lcovonly --require babel-core/register tests/*.js && if [ -f ./coverage/lcov.info ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage; fi"
+    "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- --report lcovonly --require babel-core/register tests/*.js && if [ -f ./coverage/lcov.info ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage; fi",
+    "extract-pot": "extract-pot --locale tracker/i18n --exclude node_modules --exclude _build -t jinja -f html .",
+    "merge-po": "merge-po tracker/i18n",
+    "compile-json": "compile-json tracker/i18n tracker/i18n"
   },
   "dependencies": {
     "backbone": "^1.3.3",
