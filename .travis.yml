@@ -4,7 +4,7 @@ node_js:
 before_script:
    - npm install
    - npm run build:dev
-   - npm start &
+   - npm start >> /dev/null &
    - sleep 5
 script:
    - npm test
