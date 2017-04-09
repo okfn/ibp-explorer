@@ -6,22 +6,16 @@ var downloading_search_cache = false
 
 function api_call (endpoint, callback) {
   var cache_file = './cache/'+endpoint+'.json';
-  var should_get_from_cache = false;
   var should_update_cache = true;
   var cache_exists = fs.existsSync(cache_file);
+
   if (cache_exists) {
     should_update_cache = false;
-    should_get_from_cache = true;
     var stat = fs.statSync(cache_file);
-    var months = moment().diff(new Date(stat.mtime), 'months');
-    if (months >= 6) {
-      should_update_cache = true;
-      should_get_from_cache = false;
-    }
-  }
-  if (should_get_from_cache) {
+    var months = moment().diff(moment(stat.mtime), 'months');
     var data = fs.readFileSync(cache_file);
-    var date = new Date(stat.mtime);
+    var date = moment(stat.mtime);
+
     callback(JSON.parse(data), date);
   } else {
     Indaba.getTrackerJSON().then( function (res) {
@@ -39,7 +33,7 @@ function getSearch() {
     var cache_exists = fs.existsSync(cache_file)
     if (cache_exists) {
       var stat = fs.statSync(cache_file)
-      var days = moment().diff(new Date(stat.mtime), 'days')
+      var days = moment().diff(moment(stat.mtime), 'days')
       if (days > 1 && !downloading_search_cache) {
         downloading_search_cache = true
         Indaba.getSearchJSON().then(function (res) {
