@@ -76,16 +76,35 @@
                     <td></td>
                   {% endif %}
                   {% for doc in docs %}
-		    {% set cell = undefined %}
-                  {% if country.documents != {} %}
-		    {% for year in country.documents|reverse %}
-                      {% if not cell %}
-                        {% if doc.title in country.documents[year] %}
-                          {% set cell = country.documents[year][doc.title]|first %}
+		            {% set cell = undefined %}
+                    {% set cellYear = undefined %}
+                    {% if country.documents != {} %}
+                      {% for year in country.documents|reverse %}
+                        {% if not cell %}
+                          {% if doc.title in country.documents[year] %}
+                            {% set cell = country.documents[year][doc.title]|first %}
+                            {% set cellYear = year %}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    {% for year in country.obi.availability|reverse %}
+                      {% if year > cellYear %}
+                        {% if not cell.obi %}
+                          {% if isString(country.obi.availability[year][doc.title]) %}
+                            {% set cell.status = country.obi.availability[year][doc.title] %}
+                            {% set cell.type = doc.title %}
+                            {% set cell.year = year %}
+                            {% set cell.obi = 'True' %}
+                          {% else %}
+                            {% set cell = country.obi.availability[year][doc.title] %}
+                            {% set cell.type = doc.title %}
+                            {% set cell.year = year %}
+                            {% set cell.obi = 'True' %}
+                          {% endif %}
                         {% endif %}
                       {% endif %}
                     {% endfor %}
-                  {% endif %}
                     {% if cell %}
                       {% set parentId = "" %}
                       {% if cell.uploads %}
@@ -99,12 +118,19 @@
                         {% if parentId %}
                           <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
                         {% endif %}
+                          {% if cell.state %}
                             <!-- for some reason "Hard/Soft Copy Only" is not
                             properly reproduced with one whitespace replace filter -->
-                        <span class="badge state
-                              state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
-                          <span>{{ h.state(cell.state) }}</span>
-                        </span>
+                            <span class="badge state
+                                  state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+                              <span>{{ h.state(cell.state) }}</span>
+                            </span>
+                          {% elseif cell.status %}
+                            <span class="badge state
+                                  state-{{ cell.status|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+                              <span>{{ h.state(cell.status) }}</span>
+                            </span>
+                          {% endif %}
                         {% if parentId %}
                           </a>
                         {% endif %}

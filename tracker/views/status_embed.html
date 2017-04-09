@@ -83,6 +83,25 @@
           {% endif %}
         {% endif %}
       {% endfor %}
+    {% for year in country.obi.availability|reverse %}
+      {% if year > fiscal_year %}
+        {% if not cell.obi %}
+          {% if isString(country.obi.availability[year][doc.title]) %}
+            {% set cell.status = country.obi.availability[year][doc.title] %}
+            {% set cell.type = doc.title %}
+            {% set cell.year = year %}
+            {% set cell.obi = 'True' %}
+            {% set fiscal_year = year %}
+          {% else %}
+            {% set cell = country.obi.availability[year][doc.title] %}
+            {% set cell.type = doc.title %}
+            {% set cell.year = year %}
+            {% set cell.obi = 'True' %}
+            {% set fiscal_year = year %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
     <tr>
       <th scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
         {{ gettext(doc.title) }}
@@ -103,10 +122,17 @@
         {% elif cell.driveId %}
             <a target="_blank" href="https://drive.google.com/file/d/{{ cell.driveId }}/view">
         {% endif %}
-        <span class="badge state state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
-          <span>{{ h.state(cell.state) }}</span>
-        </span>
-        {{ h.state(cell.state) }}
+        {% if cell.state %}
+          <span class="badge state state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+            <span>{{ h.state(cell.state) }}</span>
+          </span>
+          {{ h.state(cell.state) }}
+        {% else %}
+          <span class="badge state state-{{ cell.status|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+            <span>{{ h.state(cell.status) }}</span>
+          </span>
+          {{ h.state(cell.status) }}
+        {% endif %}
         {% if parentId %}
           </a>
         {% endif %}
@@ -118,12 +144,16 @@
 	{% endif %}
       </td>
       <td>
-	{% if cell %}
-        {% if cell.date_published %}
-          {{ date_format(Date.parse(cell.date_published), 'll') }}
+	{% if cell.datePublished %}
+      {% if cell.datePublished %}
+        {% if cell.datePublished != 'N/A' %}
+            {{ date_format(Date.parse(cell.datePublished), 'll') }}
         {% else %}
-        <span class="text-muted">-</span>
+            <span class="text-muted">-</span>
         {% endif %}
+      {% endif %}
+    {% elseif cell.date_published %}
+        {{ date_format(Date.parse(cell.date_published), 'll') }}
 	{% else %}
         <span class="text-muted">-</span>
 	{% endif %}
