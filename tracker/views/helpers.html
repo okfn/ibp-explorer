@@ -38,7 +38,7 @@
   {%- if (doc.state|lower != 'not produced' || doc.status|lower != 'not produced' || doc|lower != 'not produced') -%}
     {%- if doc.date_published  %}
       {{ gettext("and was published on") }} {{ doc.date_published|formatDate }}
-    {%- elif cell.datePublished && cell.datePublished != "N/A" %}
+    {%- elif cell.datePublished && cell.datePublished != "N/A" && cell.datePublished|formatDate != '-' %}
         {{ gettext("and was published on") }} {{ cell.datePublished|formatDate }}
     {%- endif -%}
   {%- endif -%}
