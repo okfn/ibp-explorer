@@ -147,7 +147,7 @@
 	{% if cell.datePublished %}
       {% if cell.datePublished %}
         {% if cell.datePublished != 'N/A' %}
-            {{ date_format(Date.parse(cell.datePublished), 'll') }}
+            {{ cell.datePublished|formatDate }}
         {% else %}
             <span class="text-muted">-</span>
         {% endif %}
