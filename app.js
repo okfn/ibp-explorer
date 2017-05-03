@@ -40,6 +40,12 @@ swig.setFilter('formatDate', function (input) {
   var date = moment(input)
   if (date.isValid()) {
     return moment(input).format("D MMMM YYYY")
+  } else if (typeof input === 'string') {
+    if (input.toLowerCase().trim() === 'n/a' || input.toLowerCase().trim() === '\"n/a\"') {
+      return '-'
+    } else if (input.length > 15) {
+      return '-'
+    }
   }
 
   return input
