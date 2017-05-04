@@ -45,10 +45,15 @@ swig.setFilter('formatDate', function (input) {
       return '-'
     } else if (input.length > 15) {
       return '-'
+      // If there aren't any digits present in the string it's probably not a date but some description
+    } else if (!/\d/.test(input)) {
+      return '-'
     }
+
+    return input
   }
 
-  return input
+  return '-'
 })
 
 app.use(function (req, res, next) {
