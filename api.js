@@ -4,6 +4,10 @@ var moment = require('moment');
 
 var downloading_search_cache = false
 
+if (!fs.existsSync('./cache')) {
+  fs.mkdirSync('./cache')
+}
+
 function api_call (endpoint, callback) {
   var cache_file = './cache/'+endpoint+'.json';
   var should_update_cache = true;
