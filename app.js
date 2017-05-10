@@ -43,7 +43,7 @@ swig.setFilter('formatDate', function (input) {
   } else if (typeof input === 'string') {
     if (input.toLowerCase().trim() === 'n/a' || input.toLowerCase().trim() === '\"n/a\"') {
       return '-'
-    } else if (input.length > 15) {
+    } else if (input.length > 25) {
       return '-'
       // If there aren't any digits present in the string it's probably not a date but some description
     } else if (!/\d/.test(input)) {
