@@ -52,7 +52,6 @@ var country_name_override = {
 
 // Countries that should not get displayed on the site.
 var country_blacklist = [
-  "Moldova, Republic of"
 ]
 
 //
@@ -239,7 +238,7 @@ router.get('/', function (req, res) {
 
     res.render('index_embed', {
       'docs': docs,
-      'countries': countries,
+      'countries': _.sortBy(countries, 'country'),
       'last_update': last_update.toDate()
     });
   });
