@@ -36,6 +36,12 @@ app.use(i18n.abide({
   translation_directory: 'tracker/i18n',
 }));
 
+// Override moment fallback so dates are not converted
+// because partial dates like "June 2015" fallback to "1 June 2015"
+moment.createFromInputFallback = function (config) {
+  config._d = new Date(NaN);
+}
+
 swig.setFilter('formatDate', function (input) {
   var date = moment(input)
   if (date.isValid()) {
