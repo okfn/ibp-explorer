@@ -107,16 +107,24 @@
                     {% endfor %}
                     {% if cell %}
                       {% set parentId = "" %}
+                      {% set driveId = "" %}
                       {% if cell.uploads %}
                         {% for upload in cell.uploads %}
-                          {% if upload.parentId %}
+                          {% if upload.groupParentId %}
                             {% set parentId = upload.parentId %}
                           {% endif %}
                         {% endfor %}
                       {% endif %}
+                      {% if cell.groupParentId %}
+                        {% set parentId = cell.groupParentId %}
+                      {% elif cell.driveId %}
+                        {% set driveId = cell.driveId %}
+                      {% endif %}
                       <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, cell) }}">
                         {% if parentId %}
                           <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
+                        {% elif driveId %}
+                          <a target="_blank" href="https://drive.google.com/file/d/{{ driveId }}">
                         {% endif %}
                           {% if cell.state %}
                             <!-- for some reason "Hard/Soft Copy Only" is not
