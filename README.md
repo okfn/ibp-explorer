@@ -43,7 +43,8 @@ You will need to set additional environment variables needed by [ibp-explorer-da
 
 * For calls to Indaba API
   * **API_BASE** - Base URL for the API
-  * **API_TOKEN** - Access token for the API
+  * **API_USERNMAE** - Username for the API
+  * **API_PASSWORD** - Password for the API
 * Google Drive files/folders 
   * **SERVICE_CREDENTIALS** - Google Service JSON token. You can do ``export SERVICE_CREDENTIALS=`cat <path_to_credentials.json>` ``
   * **DRIVE_ROOT** - Which gdrive folder serves as root when searching for documents
