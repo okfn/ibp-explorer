@@ -7,6 +7,7 @@ const slug = require('slug-component')
 const helpers = require('handlebars-helpers')() // eslint-disable-line no-unused-vars
 const linkifyStr = require('linkifyjs/string')
 const Handlebars = require('handlebars')
+const argv = require('yargs').argv
 
 const Metalsmith = require('metalsmith')
 const layouts = require('metalsmith-layouts')
@@ -23,6 +24,8 @@ const SCORE_COL = 'E'
 const CRITERIA_COL = 'F'
 const DATA_ELEMENTS_COL = 'H'
 const COUNTRY_START_COL = 'I'
+
+const DEVELOPMENT_MODE = argv.dev !== undefined
 
 
 function getQuestionRowRanges(ws) {
@@ -235,8 +238,10 @@ workbook.csv.readFile(questionnaireFilePath)
   })
 
   const countryColStart = ws.getColumn(COUNTRY_START_COL).number
-  const countryColEnd = ws.columnCount
-  // const countryColEnd = countryColStart + 10
+  let countryColEnd = ws.columnCount
+  if (DEVELOPMENT_MODE) {
+    countryColEnd = countryColStart + 10
+  }
   const countryColRange = [countryColStart, countryColEnd]
   const countries = []
   _.each(_.range(countryColRange[0], countryColRange[1] + 1), countryColNum => {

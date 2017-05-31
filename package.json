@@ -19,6 +19,7 @@
     "build:dev:tracker": "gulp build:dev:tracker",
     "build:dev:tracker:watch": "gulp tracker-watch",
     "build:questionnaires": "node data/questionnaire/build_country_questionnaires.js",
+    "build:questionnaires:dev": "node data/questionnaire/build_country_questionnaires.js --dev",
     "build:prod:explorer": "webpack --config webpack.config.production.js",
     "build:prod:tracker": "gulp build:prod:tracker",
     "build:dev:watch": "gulp dev:watch",
@@ -92,7 +93,8 @@
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.15",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^1.0.0",
+    "yargs": "^8.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
