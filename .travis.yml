@@ -2,6 +2,7 @@ language: node_js
 node_js:
    - "6.3.0"
 before_script:
+   - cp ./.env.template ./.env
    - npm install
    - npm run build:dev
    - npm start >> /dev/null &
