@@ -1,5 +1,6 @@
 tracker/build
 _build/*
+_build-questionnaires/*
 *.py[cod]
 .idea/*
 node_modules/*

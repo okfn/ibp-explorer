@@ -1,12 +1,19 @@
-const _ = require('underscore')
 const path = require('path')
+
+const _ = require('underscore')
 const Excel = require('exceljs')
+const slug = require('slug-component')
+// Import helpers to make them available to templates
+const helpers = require('handlebars-helpers')() // eslint-disable-line no-unused-vars
+const linkifyStr = require('linkifyjs/string')
+const Handlebars = require('handlebars')
 
 const Metalsmith = require('metalsmith')
 const layouts = require('metalsmith-layouts')
+const jsonToFiles = require('metalsmith-json-to-files')
 
-const questionnaireXLSFileName = 'SAMPLE--OBS_2015data.xlsx'
-const questionnaireXLSFilePath = path.join(__dirname, questionnaireXLSFileName)
+const questionnaireFileName = '20170524_ScorecardExport_OBS_2017_Questionnaire.csv'
+const questionnaireFilePath = path.join(__dirname, questionnaireFileName)
 
 const QUESTION_ID_COL = 'A'
 const QUESTION_COL = 'B'
@@ -14,8 +21,8 @@ const QUESITON_TYPE_COL = 'C'
 const LABEL_OPTIONS_COL = 'D'
 const SCORE_COL = 'E'
 const CRITERIA_COL = 'F'
-const DATA_ELEMENTS_COL = 'G'
-const COUNTRY_START_COL = 'H'
+const DATA_ELEMENTS_COL = 'H'
+const COUNTRY_START_COL = 'I'
 
 
 function getQuestionRowRanges(ws) {
@@ -30,7 +37,9 @@ function getQuestionRowRanges(ws) {
   // Get the row number range for each question
   const qStarts = []
   idCol.eachCell({ includeEmpty: false }, (cell, rowNumber) => {
-    qStarts.push(rowNumber)
+    if (cell.value !== '' && cell.value !== null) {
+      qStarts.push(rowNumber)
+    }
   })
   const qEnds = []
   _.each(qStarts, (s, k) => {
@@ -52,7 +61,7 @@ function makeQuestionFromRowRange(ws, range) {
 
   {
     'qid': <col 1>,
-    'questions': <col 2>,
+    'question': <col 2>,
     'type': <col 3>,
     'scoreOptions': [
       {
@@ -88,13 +97,40 @@ function makeQuestionFromRowRange(ws, range) {
 function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
   /*
     For each countryColNum, make a collection of question answers and reviews.
+
+  {
+    name: <country name>,
+    slug: <country name slug,
+    answers: [
+      {
+        qid: <question id>,
+        author: {
+          score: ,
+          answerLabel: ,
+          comments: ,
+          scoreOptions: ,
+          sourceDescription:
+        },
+        reviews: [
+          {
+            reviewer: ,
+            opinion: ,
+            suggestedScore: ,
+            comments: ,
+            peerReviewDiscussions:
+          },
+          [...]
+        ]
+      }
+    ]
+  }
   */
 
   /* eslint-disable quote-props */
   const authorElements = {
     'Score': 'score'
     , 'Answer Label': 'answerLabel'
-    , 'Author Comments': 'authorComments'
+    , 'Author Comments': 'comments'
     , 'Source Options': 'sourceOptions'
     , 'Source Description': 'sourceDescription'
   }
@@ -106,9 +142,20 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
     , 'Peer Review Discussions': 'peerReviewDiscussions'
   }
   /* eslint-enable quote-props */
+  const linkifyOptions = {
+    format(value, type) {
+      const maxUrlLength = 60
+      // value is the link, type is 'url', 'email', etc.
+      if (type === 'url' && value.length > maxUrlLength) {
+        return `${value.slice(0, maxUrlLength)}…`
+      }
+      return value
+    }
+  }
 
   const country = {}
   country.name = ws.getCell(1, countryColNum).value
+  country.slug = slug(country.name)
   country.answers = []
   _.each(questions, q => {
     const answer = {}
@@ -121,22 +168,54 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
     _.each(_.range(q.rowRange[0], q.rowRange[1] + 1), r => {
       const elementName = ws.getCell(r, dataElementsColNum).value
       if (_.contains(_.keys(authorElements), elementName)) {
-        const elementValue = ws.getCell(r, countryColNum).value
+        let elementValue = ws.getCell(r, countryColNum).value
+        if (_.isString(elementValue)) {
+          elementValue = new Handlebars.SafeString(linkifyStr(elementValue, linkifyOptions))
+        }
         answer.author[authorElements[elementName]] = elementValue || null
       } else if (_.contains(_.keys(reviewElements), elementName)) {
-        const elementValue = ws.getCell(r, countryColNum).value || null
+        let elementValue = ws.getCell(r, countryColNum).value || null
         if (elementName === 'Reviewer') {
           currentReviewerIndex += 1
           answer.reviews.push({})
-        } else {
-          answer.reviews[currentReviewerIndex][reviewElements[elementName]] = elementValue
         }
+        if (_.isString(elementValue)) {
+          elementValue = new Handlebars.SafeString(linkifyStr(elementValue, linkifyOptions))
+        }
+        answer.reviews[currentReviewerIndex][reviewElements[elementName]] = elementValue
       }
     })
     country.answers.push(answer)
   })
 
   return country
+}
+
+function buildCountryPages(questions, countries) {
+  /*
+  Use Metalsmith to build the country pages.
+  */
+  const templatePath = path.join(__dirname, './views/')
+  const baseUrl = '/questionnaires/'
+
+  Metalsmith(__dirname) // eslint-disable-line new-cap
+  .metadata({
+    currentTime: Date.now()
+    , questions
+    , countries
+    , baseUrl
+  })
+  .source('./src')
+  .destination('../../_build-questionnaires')
+  .clean(true)
+  .use(jsonToFiles({ use_metadata: true }))
+  .use(layouts({
+    engine: 'handlebars'
+    , directory: templatePath
+  }))
+  .build((err) => {
+    if (err) throw err
+  })
 }
 
 /*
@@ -146,11 +225,8 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
   objects from the data. Use these to populate html templates for each country.
 */
 const workbook = new Excel.Workbook()
-workbook.xlsx.readFile(questionnaireXLSFilePath)
-.then((wb) => {
-  // Get the worksheet (first ws)
-  const ws = wb.getWorksheet(1)
-
+workbook.csv.readFile(questionnaireFilePath)
+.then((ws) => {
   const qRowRanges = getQuestionRowRanges(ws)
 
   const questions = []
@@ -158,12 +234,18 @@ workbook.xlsx.readFile(questionnaireXLSFilePath)
     questions.push(makeQuestionFromRowRange(ws, rowRange))
   })
 
-  const countryColRange = [ws.getColumn(COUNTRY_START_COL).number, ws.columnCount]
+  const countryColStart = ws.getColumn(COUNTRY_START_COL).number
+  const countryColEnd = ws.columnCount
+  // const countryColEnd = countryColStart + 10
+  const countryColRange = [countryColStart, countryColEnd]
   const countries = []
   _.each(_.range(countryColRange[0], countryColRange[1] + 1), countryColNum => {
-    countries.push(makeCountryAnswersFromQuestions(ws, countryColNum, questions))
+    if (ws.getCell(1, countryColNum).value !== null) {
+      countries.push(makeCountryAnswersFromQuestions(ws, countryColNum, questions))
+    }
   })
 
+  buildCountryPages(questions, countries)
 })
 .catch(err => {
   console.error(err.stack)
