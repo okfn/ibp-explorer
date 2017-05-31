@@ -62,7 +62,7 @@
                 {{#each countries}}
                 <option value="{{slug}}" {{#is slug ../data.slug}}selected="selected"{{/is}}>{{name}}</option>
                 {{/each}}
-                </select></h3>
+                </select> <button class="btn" id="print-answered" onclick="javascript:window.print();" style="float: right">Print/PDF</button></h3>
             </div>
             <div id="country-profile">
                 <h3 id="country-header">Country Questionnaire: {{data.name}}</h3>
