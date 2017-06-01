@@ -84,7 +84,7 @@
     "metalsmith-layouts": "^1.8.1",
     "moment": "2.8.1",
     "morgan": "~1.0.0",
-    "request": "~2.39.0",
+    "request": "~2.81.0",
     "resolve-url-loader": "^1.6.0",
     "run-sequence": "^1.2.2",
     "scrolltofixed": "1.0.6",

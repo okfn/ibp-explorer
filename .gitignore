@@ -7,3 +7,4 @@ node_modules/*
 coverage/
 .env
 cache/
+data/questionnaire/*.csv

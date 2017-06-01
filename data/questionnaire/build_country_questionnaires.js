@@ -1,8 +1,10 @@
 const path = require('path')
 
+require('dotenv').config({ silent: true })
 const _ = require('underscore')
 const Excel = require('exceljs')
 const slug = require('slug-component')
+const request = require('request')
 // Import helpers to make them available to templates
 const helpers = require('handlebars-helpers')() // eslint-disable-line no-unused-vars
 const linkifyStr = require('linkifyjs/string')
@@ -12,9 +14,6 @@ const argv = require('yargs').argv
 const Metalsmith = require('metalsmith')
 const layouts = require('metalsmith-layouts')
 const jsonToFiles = require('metalsmith-json-to-files')
-
-const questionnaireFileName = '20170524_ScorecardExport_OBS_2017_Questionnaire.csv'
-const questionnaireFilePath = path.join(__dirname, questionnaireFileName)
 
 const QUESTION_ID_COL = 'A'
 const QUESTION_COL = 'B'
@@ -26,6 +25,12 @@ const DATA_ELEMENTS_COL = 'H'
 const COUNTRY_START_COL = 'I'
 
 const DEVELOPMENT_MODE = argv.dev !== undefined
+const QUESTIONNAIRE_SPREADSHEET_ID = process.env.QUESTIONNAIRE_SPREADSHEET_ID
+if (QUESTIONNAIRE_SPREADSHEET_ID === undefined) {
+  throw new Error('The env var "QUESTIONNAIRE_SPREADSHEET_ID" must be set.')
+}
+const QUESTIONNAIRE_SPREADSHEET_URL
+  = `https://docs.google.com/spreadsheets/d/${QUESTIONNAIRE_SPREADSHEET_ID}/export?format=csv`
 
 
 function getQuestionRowRanges(ws) {
@@ -227,8 +232,18 @@ function buildCountryPages(questions, countries) {
   Read the questionnaire spreadsheet and create `question` and `country`
   objects from the data. Use these to populate html templates for each country.
 */
+const fileRequest = request.get(QUESTIONNAIRE_SPREADSHEET_URL)
+.on('response', response => {
+  if (response.statusCode !== 200) {
+    throw new Error('Error retrieving Questionnaire CSV. Response status is not 200')
+  }
+})
+.on('error', err => {
+  console.log(err)
+})
+
 const workbook = new Excel.Workbook()
-workbook.csv.readFile(questionnaireFilePath)
+workbook.csv.read(fileRequest)
 .then((ws) => {
   const qRowRanges = getQuestionRowRanges(ws)
 
