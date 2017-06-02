@@ -6,6 +6,7 @@ environment:
 env:
   node: true
   browser: true
+  mocha: true
 parserOptions:
   sourceType: module
 rules:
@@ -22,11 +23,6 @@ rules:
   comma-dangle:
     - 2
     - never
-  one-var:
-    - 1
-    - var: always
-      let: always
-      const: always
   no-use-before-define:
     - 2
     - nofunc

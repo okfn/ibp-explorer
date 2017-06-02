@@ -34,6 +34,12 @@ To deploy:
 * Set production `PORT`
 * Run `npm run build:prod`. This will build minified version of the tracker and the explorer.
 
+### Country Questionnaire Build
+
+A page for each country in the survey is built, with questions and answers from the survey questionnaire, for ease of review. These can be accessed with a username and password at `/questionnaires`. These pages are built, each time the app is deployed, from data defined in a .csv file hosted on Google Sheets.
+
+The questionnaire data spreadsheet id, and the username and password are set as env vars as defined below.
+
 ### Environment variables:
 
 * `PORT` - port on which the server will listen. Default is 3000.
@@ -56,6 +62,9 @@ You will need to set additional environment variables needed by [ibp-explorer-da
 * Google Drive Libray reindexing
   * **DRIVE_ROOT** - ID of the root where the documents should be searched
   * **SPREADSHEET_ID** - ID of the spreadsheet where the found documents should be written
+* Questionnaire
+  * **QUESTIONNAIRE_AUTH** - username and password used to resticted access to questionnaire urls, in the form `username:password`.
+  * **QUESTIONNAIRE_SPREADSHEET_ID** - Google Sheets spreadsheet ID representing the questionnaire data source.
 
 To test:
 

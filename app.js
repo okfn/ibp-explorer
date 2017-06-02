@@ -9,6 +9,7 @@ var moment = require('moment');
 var _ = require('underscore');
 var i18n = require('i18n-abide');
 var api = require('./api')
+var basicAuth = require('express-basic-auth')
 
 var locales = _.without(fs.readdirSync(path.join(__dirname, 'tracker', '/i18n')), 'templates');
 var routes = require('./routes/index');
@@ -65,7 +66,7 @@ swig.setFilter('formatDate', function (input) {
 app.use(function (req, res, next) {
   if (req.query.locale) {
     req.setLocale(req.query.locale);
-    moment.locale(req.query.locale);      
+    moment.locale(req.query.locale);
     res.cookie('obstracker_language', req.query.locale, { maxAge: 900000 })
   }
   else if (req.cookies.obstracker_language) {
@@ -92,7 +93,7 @@ app.use(function (req, res, next) {
       if (parsed_date.isValid()) {
         return parsed_date.format(format);
       }
-      else if (typeof date === 'object' && 'year' in date) { 
+      else if (typeof date === 'object' && 'year' in date) {
         var split_years = date.year.split('/');
 	var formatted = [];
 	for (var idx in split_years) {
@@ -125,6 +126,18 @@ app.get('/search_data', function (req, res) {
     console.log(err)
   })
 })
+
+
+// Set up basic auth for the Questionnaires pages using creds from env var.
+const [basicUserName, basicUserPass] = process.env.QUESTIONNAIRE_AUTH.split(':')
+const basicUserAuthObj = {
+  users: {}
+  , challenge: true
+  , realm: 'Questionnaires'
+}
+basicUserAuthObj.users[basicUserName] = basicUserPass
+const basicUserAuth = basicAuth(basicUserAuthObj)
+app.use('/questionnaires', basicUserAuth, express.static('./_build-questionnaires'))
 
 
 /// catch 404 and forward to error handler

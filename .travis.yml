@@ -1,11 +1,13 @@
 language: node_js
 node_js:
-   - "6.3.0"
+  - "6.3.0"
 before_script:
-   - npm install
-   - npm run build:dev
-   - npm start >> /dev/null &
-   - sleep 5
+  - cp ./.env.template ./.env
+  - npm install
+  - npm run build:dev
+  - npm start >> /dev/null &
+  - sleep 5
 script:
-   - npm test
-   - npm run coverage
+  - npm test
+after_success:
+  - npm run coverage

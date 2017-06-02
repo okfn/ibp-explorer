@@ -22,9 +22,9 @@ const routes = [
   , '#map'
   , '#rankings'
   , '#profile'
-  // TODO fix test for route #timeline - jsdom can't load #timeline in 5 minutes
-  //, '#timeline'
-  , 'availability'
+  // TODO fix test for route #timeline and availability - jsdom timesout
+  // , '#timeline'
+  // , 'availability'
   , '#participation'
   , '#download'
 ]

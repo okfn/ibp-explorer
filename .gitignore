@@ -1,8 +1,10 @@
 tracker/build
 _build/*
+_build-questionnaires/*
 *.py[cod]
 .idea/*
 node_modules/*
 coverage/
 .env
 cache/
+data/questionnaire/*.csv
