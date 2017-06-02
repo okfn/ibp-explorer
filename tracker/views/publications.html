@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ gettext("Publications - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block extrahead %}
+<link rel="profile" href="http://microformats.org/profile/hcard">
+{% endblock%}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>{{ gettext("Reports") }}</h2>
+    <ul>
+      <li>
+	<a href="{{ asset('/pdfs/sept_2014_obstracker_report_'+lang+'.pdf') }}">{{ date_format(Date.parse('September 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Report") }}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h2>{{ gettext("Updates") }}</h2>
+    <ul>
+      <li>
+	<a href="/updates/2015-09">{{ date_format(Date.parse('September 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-08">{{ date_format(Date.parse('August 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-07">{{ date_format(Date.parse('July 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-06">{{ date_format(Date.parse('June 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-05">{{ date_format(Date.parse('May 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-04">{{ date_format(Date.parse('April 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-03">{{ date_format(Date.parse('March 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-02">{{ date_format(Date.parse('February 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2015-01">{{ date_format(Date.parse('January 2015'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2014-12">{{ date_format(Date.parse('December 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2014-11">{{ date_format(Date.parse('November 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2014-10">{{ date_format(Date.parse('October 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2014-09">{{ date_format(Date.parse('September 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+      <li>
+	<a href="/updates/2014-08">{{ date_format(Date.parse('August 2014'), 'MMMM YYYY')|capitalize }} {{ gettext("Open Budget Survey Tracker Update") }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

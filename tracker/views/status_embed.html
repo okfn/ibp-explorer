@@ -1,0 +1,165 @@
+{% extends "layout_embed.html" %}
+{% import "helpers.html" as h %}
+
+{% block page_title %}{{ country.country + gettext(" - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-9">
+    <h1>{{ gettext(country.country) }}</h1>
+    {%- if country.message %}
+    <div class="alert alert-danger">{{ gettext(country.message) }}</div>
+    {% endif %}
+    <div>
+      <h2>{{ gettext("Open Budget Index") }}</h2>
+      {% if country.obi_scores %}
+      {% set lastscore = country.obi_scores|last %}
+      {% if lastscore %}
+      <p class="text-score">
+        <span class="lead">
+        {{ lastscore.score }}/100
+        </span>
+        <small class="text-muted">
+        {% if lastscore.score <= 20 %}
+        {{ gettext('Provides <strong>scant</strong> information to the public in its budget documents during the year') }}
+        {% elif lastscore.score <= 40 %}
+        {{ gettext('Provides <strong>minimal</strong> information to the public in its budget documents during the year') }}
+        {% elif lastscore.score <= 60 %}
+            {{ gettext('Provides <strong>some</strong> information to the public in its budget documents during the year') }}
+        {% elif lastscore.score <= 80 %}
+            {{ gettext('Provides <strong>significant</strong> information to the public in its budget documents during the year') }}
+            {% else %}
+            {{ gettext('Provides <strong>extensive</strong> information to the public in its budget documents during the year') }}
+            {% endif %}
+            ({{ date_format({'year':lastscore.year}, 'YYYY') }})
+            </small>
+      </p>
+      {% endif %}
+      {% else %}
+      <p class="text-muted">{{ gettext('N/A -- This country was not included in the Open Budget Survey') }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row top30">
+      {% if country.driveCountryId %}
+        <a href="https://drive.google.com/drive/folders/{{ country.driveCountryId }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      {% elif country.library %}
+        <a href="{{ country.library }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+      {% endif %}
+    </div>
+    <div class="row top5">
+      <a href="/availability/country/{{ country.country }}/embed" class="btn btn-primary col-md-12">{{ gettext("View historical information") }}</a>
+    </div>
+  </div>
+</div>
+
+<h2>{{ gettext("Current Status") }}</h2>
+<table class="table table-hover status-table">
+  <colgroup>
+    <col width="25%">
+    <col width="10%">
+    <col width="20%">
+    <col width="15%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>{{ gettext("Document") }}</th>
+      <th>{{ gettext("Fiscal Year") }}</th>
+      <th>{{ gettext("Current Status") }}</th>
+      <th>{{ gettext("Date of Publication") }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for doc in docs %}
+      {% set cell = undefined %}
+      {% set fiscal_year = '-' %}
+      {% for year in country.documents|reverse %}
+        {% if not cell %}
+          {% if doc.title in country.documents[year] %}
+            {% set fiscal_year = year %}
+            {% set cell = country.documents[year][doc.title]|first %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% for year in country.obi.availability|reverse %}
+      {% if year > fiscal_year %}
+        {% if not cell.obi %}
+          {% if isString(country.obi.availability[year][doc.title]) %}
+            {% set cell.status = country.obi.availability[year][doc.title] %}
+            {% set cell.type = doc.title %}
+            {% set cell.year = year %}
+            {% set cell.obi = 'True' %}
+            {% set fiscal_year = year %}
+          {% else %}
+            {% set cell = country.obi.availability[year][doc.title] %}
+            {% set cell.type = doc.title %}
+            {% set cell.year = year %}
+            {% set cell.obi = 'True' %}
+            {% set fiscal_year = year %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    <tr>
+      <th scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
+        {{ gettext(doc.title) }}
+      </th>
+      <td>{{ date_format({'year':fiscal_year}, 'YYYY') }}</td>
+      <td>
+	{% if cell %}
+        {% set parentId = "" %}
+          {% if cell.uploads %}
+            {% for upload in cell.uploads %}
+              {% if upload.parentId %}
+                {% set parentId = upload.parentId %}
+              {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if cell.groupParentId %}
+            <a target="_blank" href="https://drive.google.com/drive/folders/{{ cell.groupParentId }}">
+        {% elif cell.driveId %}
+            <a target="_blank" href="https://drive.google.com/file/d/{{ cell.driveId }}/view">
+        {% endif %}
+        {% if cell.state %}
+          <span class="badge state state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+            <span>{{ h.state(cell.state) }}</span>
+          </span>
+          {{ h.state(cell.state) }}
+        {% else %}
+          <span class="badge state state-{{ cell.status|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
+            <span>{{ h.state(cell.status) }}</span>
+          </span>
+          {{ h.state(cell.status) }}
+        {% endif %}
+        {% if parentId %}
+          </a>
+        {% endif %}
+	{% else %}
+        <span class="badge state state-not-produced">
+          <span>{{ h.state("not produced") }}</span>
+        </span>
+        {{ h.state("not produced") }}
+	{% endif %}
+      </td>
+      <td>
+	{% if cell.datePublished %}
+      {% if cell.datePublished %}
+        {% if cell.datePublished != 'N/A' %}
+            {{ cell.datePublished|formatDate }}
+        {% else %}
+            <span class="text-muted">-</span>
+        {% endif %}
+      {% endif %}
+    {% elseif cell.date_published %}
+        {{ date_format(Date.parse(cell.date_published), 'll') }}
+	{% else %}
+        <span class="text-muted">-</span>
+	{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

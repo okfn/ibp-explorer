@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ gettext("Gathering the Data - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+  <div class="col-md-8">
+    <h2>{{ gettext("Which year’s budget documents are monitored by the OBS Tracker?") }}</h2>
+    <p>{{ gettext("The OBS Tracker is updated on a monthly basis to record the publication of new budget documents in a country.  These documents include budget plans for the forthcoming fiscal year, budget execution reports for the fiscal year underway, and implementation and evaluation reports for budgets covering prior fiscal years. As such, the Tracker analyzes the public availability of budget documents that pertain to multiple years.") }}</p>
+
+    <p>{{ gettext("Therefore, it is possible that in the space of a month or two a government could publish budget documents related to three fiscal years, because:") }}</p>
+    <ul>
+      <li>{{ gettext("a Pre-Budget Statement related to the forthcoming budget is often released four to six months before the start of the next fiscal year;") }}</li>
+      <li>{{ gettext("an Executive’s Budget Proposal and Citizens Budget related to the forthcoming budget is often released one to three months before the start of the next fiscal year;") }}</li>
+      <li>{{ gettext("an Enacted Budget related to the forthcoming budget is often released one month before the start of the next fiscal year;") }}</li>
+      <li>{{ gettext("In-Year Reports related to the budget underway are often released every month or every quarter with a lag of one to three months;") }}</li>
+      <li>{{ gettext("a Mid-Year Review related to the budget underway is typically released one to three months after the midpoint of the fiscal year;") }}</li>
+      <li>{{ gettext("a Year-End Report related to the previous budget is typically released six to 12 months after the end of the prior fiscal year; and") }}</li>
+      <li>{{ gettext("an Audit Report is often released anytime between six to 18 months after the end of the fiscal year. Thus, when this report is released, it may cover the previous budget (if it is released within 12 months of the end of the budget) or even the year prior to the previous budget (if it is released after 12 months of the end of the budget).") }}</li>
+    </ul>
+
+    <p>{{ gettext("For example, in a country where the fiscal year and the calendar year are the same, the government could release a Pre-Budget Statement (next fiscal year), a Mid-Year Review (current fiscal year), and a Year-End Report (prior fiscal year) in August or September of the current fiscal year.") }}</p>
+
+    <p>{{ gettext("The full cycle for a single budget could take close to two years to complete, beginning with the publication of the Pre-Budget Statement several months prior to the start of the fiscal year covered by the budget and ending with the publication of the Audit Report up to 18 months after fiscal year has ended.  The Tracker is designed to anticipate when each of these key documents should be made available to the public in a country based on its budget cycle, and then report on whether the government has actually made them available.") }}</p>
+  </div>
+
+  <div class="col-md-4">
+    <h2>{{ gettext("More information") }}</h2>
+    <ul>
+      <li><a href="{{ asset('/pdfs/obs_tracker_guide.pdf') }}">{{ gettext("Open Budget Survey Tracker Guide") }}</a></li>
+      <li><a href="{{ asset('/pdfs/obstracker_research_partners.pdf') }}">{{ gettext("Research partners") }}</a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}

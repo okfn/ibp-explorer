@@ -1,0 +1,121 @@
+{% extends "layout_embed.html" %}
+{% import "helpers.html" as h %}
+
+{% block page_title %}{{ country.country + gettext(" - Open Budget Survey - Tracker") }}{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-9">
+      <h1>{{ gettext(country.country) }}</h1>
+      {%- if country.message %}
+      <div class="alert alert-danger">{{ gettext(country.message) }}</div>
+      {% endif %}
+      <h2>{{ gettext("Open Budget Index") }}</h2>
+      {% if country.obi_scores %}
+      <div class="table-responsive">
+	<table class="table">
+	  <thead>
+	    <tr>
+	      {% for score in country.obi_scores %}
+	      <th scope="row">{{ date_format(Date.parse(score.year), 'YYYY') }}</th>
+	      {% endfor %}
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      {% for score in country.obi_scores %}
+	      <td>{{ score.score }}</td>
+	      {% endfor %}
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+      {% else %}
+      <p class="text-muted">{{ gettext('N/A -- This country was not included in the Open Budget Survey') }}</p>
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      <div class="row top30">
+          {% if country.driveCountryId %}
+            <a href="https://drive.google.com/drive/folders/{{ country.driveCountryId }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+          {% elif country.library %}
+            <a href="{{ country.library }}" target="_blank" class="btn btn-primary col-md-12">{{ gettext("View the Budget Library") }}</a>
+          {% endif %}
+      </div>
+      <div class="row top5">
+	<a href="/availability/status/{{ country.country }}/embed" class="btn btn-primary col-md-12">{{ gettext("View current status") }}</a>
+      </div>
+    </div>
+  </div>
+
+  <h2>{{ gettext("Historical Information") }}</h2>
+  <div class="panel panel-default">
+    <div id="heading" class="panel-heading">
+      <div class="text-right"{% if lang == 'ru'%} style="font-size:70%;"{% endif %}>
+        <strong>{{ gettext("Key") }}:</strong>
+        <span class="item">
+          <span class="badge state state-available"><span>{{ gettext("Publicly available") }}</span></span>
+          {{ gettext("Publicly available") }}
+        </span>
+        <span class="item">
+          <span class="badge state state-internal"><span>{{ gettext("Internally available") }}</span></span>
+          {{ gettext("Internal use only / Soft or hard copy only") }} / {{ gettext("Published late") }}
+        </span>
+        <span class="item">
+          <span class="badge state state-not-produced"><span>{{ gettext("Not produced") }}</span></span>
+          {{ gettext("Not produced") }}
+        </span>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <colgroup>
+        <col width="16%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+        <col width="10.5%">
+      </colgroup>
+      <thead>
+        <th></th>
+        {% set obi_latest = country.obi.availability|sort|last %}
+        {% for doc in docs %}
+            <th class="text-center" scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>{{ gettext(doc.title) }}</th>
+        {% endfor %}
+      </thead>
+      <tbody>
+	{% for snapshot_obj in country.snapshots|reverse %}
+      {% set snapshot = undefined %}
+      {% if snapshot_obj.snapshot %}
+          {% set snapshot = snapshot_obj.snapshot %}
+      {% endif %}
+      {% if snapshot['Year-End Report'] %}
+        <tr>
+          <th>{{ snapshot_obj.name }}</th>
+          {% for doc in docs %}
+            <td class="text-center">
+              <div>
+                {% if snapshot[doc.title].status %}
+                  <span class="badge state state-{{ snapshot[doc.title].status|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}" data-toggle="popover" data-placement="top" data-content="{{ h.tooltipSnapshot(country, snapshot[doc.title].status, doc.title) }}">
+                    <span>{{ h.state(snapshot[doc]) }}</span>
+                  </span>
+                {% else %}
+                  <span class="badge state state-{{ snapshot[doc.title]|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}" data-toggle="popover" data-placement="top" data-content="{{ h.tooltipSnapshot(country, snapshot[doc.title], doc.title) }}">
+                    <span>{{ h.state(snapshot[doc]) }}</span>
+                  </span>
+                {% endif %}
+              </div>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
