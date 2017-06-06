@@ -430,7 +430,7 @@ class ReportGenerator extends Backbone.View {
     })
     let selected_countries = []
     _.forEach(region, (reg) => {
-      _.forEach(reg.contains, (contained) => {
+      _.forEach(datasetRegions[reg].contains, (contained) => {
         selected_countries.push(contained)
       })
     })
@@ -447,15 +447,15 @@ class ReportGenerator extends Backbone.View {
         selected_year = [selected_year]
       }
       _.forEach(selected_year, (year) => {
-        if (!_.contains(country, year)) return
+        if (!_.has(country, year)) return
         let row = [country.alpha2, country.country, year, country[year]]
         _.forEach(questionSet, (q) => {
           row.push(tmp[country.alpha2]['db_'+year][q])
         })
-        _.forEach((questionSet, (q) => {
+        _.forEach(questionSet, (q) => {
           let value = tmp[country.alpha2]['db_'+year][q]
           row.push(this._number_to_letter(value))
-        }))
+        })
         assert(row.length == headers.length)
         this._writeLine(out, row)
       })
