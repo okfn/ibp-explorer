@@ -18,16 +18,14 @@ logically separated in the code and served together through a central express
 ### Explorer
 
 *Explorer* is the biggest part of the web application, representing most of the
-endpoints, and is served from the root route - `/`. *Tracker* is concerned with
-the 'Document Availability' page and is served from the `/availability` route.
+endpoints, and is served from the root route - `/`.
 
 The *explorer* application is a static [backbone](https://backbonejs.org) app
 (served through express), built using [webpack](https://webpack.github.io/). Its data is built up from static files stored in the `./data` directory. See [below](#updating-the-explorer-data) for more details.
 
 ### Tracker
 
-The *tracker* application is an [express](https://expressjs.com/) app. Its data
-is retrieved during runtime from an external API using the separate [ibp-explorer-data-client](https://github.com/okfn/ibp-explorer-data-client) app.
+The *Tracker* app is concerned with the 'Document Availability' page and is served from the `/availability` route. It is an [express](https://expressjs.com/) app. Its data is retrieved during runtime from an external API using the separate [ibp-explorer-data-client](https://github.com/okfn/ibp-explorer-data-client) app.
 
 ### Questionnaire Review
 
