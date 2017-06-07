@@ -1,13 +1,28 @@
 <tr>
     <td class="country"><a href="#profile/{{alpha2}}">{{name}}</a></td>
-    <td class="flag"><img src="images/flags/{{alpha2}}.GIF"/></td>
-    <td class="score">{{score}}</td>
-    <td class="dot"><img src="images/dot/{{prebudgetstatement}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{executivesbudgetproposal}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{enactedbudget}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{citizensbudget}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{inyearreports}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{midyearreview}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{yearendreport}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{auditreport}}.png"/></td>
+    <td class="text-center">{{score}}</td>
+    <td class="text-center"><span class="badge state state-{{ prebudgetstatement }}">
+                              <span>{{ prebudgetstatement }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ executivesbudgetproposal }}">
+                              <span>{{ executivesbudgetproposal }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ enactedbudget }}">
+                              <span>{{ enactedbudget }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ citizensbudget }}">
+                              <span>{{ citizensbudget }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ inyearreports }}">
+                              <span>{{ inyearreports }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ midyearreview }}">
+                              <span>{{ midyearreview }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ yearendreport }}">
+                              <span>{{ yearendreport }}</span>
+    </span></td>
+    <td class="text-center"><span class="badge state state-{{ auditreport }}">
+                              <span>{{ auditreport }}</span>
+    </span></td>
 </tr>

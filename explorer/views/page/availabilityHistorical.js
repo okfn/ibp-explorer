@@ -50,7 +50,7 @@ class ProjectPage extends Backbone.View {
   _repaint(dataset = reportGenerator.dataset,
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
-    let tbody = $('#availability tbody')
+    let tbody = $('#overview-table tbody')
     tbody.empty()
     let datasetRegions, datasetAv
     if (this.year != '2015') {
