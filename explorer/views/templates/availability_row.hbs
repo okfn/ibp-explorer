@@ -1,13 +1,37 @@
 <tr>
-    <td class="country"><a href="#profile/{{alpha2}}">{{name}}</a></td>
-    <td class="flag"><img src="images/flags/{{alpha2}}.GIF"/></td>
-    <td class="score">{{score}}</td>
-    <td class="dot"><img src="images/dot/{{prebudgetstatement}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{executivesbudgetproposal}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{enactedbudget}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{citizensbudget}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{inyearreports}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{midyearreview}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{yearendreport}}.png"/></td>
-    <td class="dot"><img src="images/dot/{{auditreport}}.png"/></td>
+    <td class="country"><a href="#profile/{{ obj.alpha2 }}">{{ obj.name }}</a></td>
+    <td class="text-right">{{#if compareObj}}{{obj.year}}<br><span class="text-muted">{{compareObj.year}}</span>{{/if}}</td>
+    <td class="text-center">{{ obj.score }}{{#if compareObj.score}}<br><span class="text-muted">{{ compareObj.score }}</span>{{/if}}</td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.prebudgetstatement }}"><span>{{ obj.prebudgetstatement }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.prebudgetstatement }}"><span>{{ compareObj.prebudgetstatement }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.executivesbudgetproposal }}"><span>{{ obj.executivesbudgetproposal }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.executivesbudgetproposal }}"><span>{{ compareObj.executivesbudgetproposal }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.enactedbudget }}"><span>{{ obj.enactedbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.enactedbudget }}"><span>{{ compareObj.enactedbudget }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.citizensbudget }}"><span>{{ obj.citizensbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.citizensbudget }}"><span>{{ compareObj.citizensbudget }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.inyearreports }}"><span>{{ obj.inyearreports }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.inyearreports }}"><span>{{ compareObj.inyearreports }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.midyearreview }}"><span>{{ obj.midyearreview }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.midyearreview }}"><span>{{ compareObj.midyearreview }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.yearendreport }}"><span>{{ obj.yearendreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.yearendreport }}"><span>{{ compareObj.yearendreport }}</span></span>
+        {{/if}}
+    </td>
+    <td class="text-center">
+        <span class="badge state state-{{ obj.auditreport }}"><span>{{ obj.auditreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.auditreport }}"><span>{{ compareObj.auditreport }}</span></span>
+        {{/if}}
+    </td>
 </tr>

@@ -1,66 +1,98 @@
-<div class="document-availability">
-    <h2>Public Availability of Budget Documents</h2>
+<link rel="stylesheet" href="/styles/vendor.css">
 
-    <div class="col4">
-      <table id="availability-key">
-        <tr>
-            <th colspan="2">Key</th>
-            </tr>
-            <tr>
-                <td class="dot"><img src="images/dot/PW.png"/></td>
-                <td class="text">Available to the public</td>
-            </tr>
-            <tr>
-                <td class="dot"><img src="images/dot/IU.png"/></td>
-                <td class="text">Available for internal use</td>
-            </tr>
-            <tr>
-                <td class="dot"><img src="images/dot/NP.png"/></td>
-                <td class="text">Not produced / Published late</td>
-            </tr>
-      </table>
-      <div id="region">
-          <h6><img src="images/world.png"> Regions</h6>
-          <ul id="av-region-toggler">
-              <li><a id="region-0" class="av-region-toggler active" href="#">Entire World</a></li>
-              <li><a id="region-1" class="av-region-toggler" href="#">East Asia &amp; Pacific</a></li>
-              <li><a id="region-2" class="av-region-toggler" href="#">Eastern Europe</a></li>
-              <li><a id="region-3" class="av-region-toggler" href="#">Central Asia</a></li>
-              <li><a id="region-4" class="av-region-toggler" href="#">Latin America &amp; Caribbean</a></li>
-              <li><a id="region-5" class="av-region-toggler" href="#">Middle East &amp; North Africa</a></li>
-              <li><a id="region-6" class="av-region-toggler" href="#">South Asia</a></li>
-              <li><a id="region-7" class="av-region-toggler" href="#">Sub-Saharan Africa</a></li>
-              <li><a id="region-8" class="av-region-toggler" href="#">Western Europe &amp; the U.S.</a></li>
-          </ul>
-        </div>
+<div class="document-availability" id="availability-tracker">
+  <div class="row">
+    <h2>Public Availability of Budget Documents</h2>
+    <div class="year-selector btn-group" role="group" id="year-toggles">
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
     </div>
-    <div class="col8">
-        <div class="year-selector btn-group" id="year-toggles">
-            <button data-year="2006" class="btn">2006</button>
-            <button data-year="2008" class="btn">2008</button>
-            <button data-year="2010" class="btn">2010</button>
-            <button data-year="2012" class="btn">2012</button>
-            <button data-year="2015" class="btn">2015</button>
+    <h5>Compare with:</h5>
+    <div class="year-selector btn-group" role="group" id="year-compare-toggles">
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
+      <button data-year="None" class="btn btn-default">None</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10" style="padding-left: 0px">
+      <div class="panel panel-default">
+        <div id="heading" class="panel-heading">
+          <div class="text-right">
+            <strong>Key:</strong>
+            <span class="item">
+              <span class="badge state state-available"><span>Publicly available</span></span>
+              Publicly available
+            </span>
+            <span class="item">
+              <span class="badge state state-internal"><span>Internally available</span></span>
+              Internal use only / Soft or hard copy only / Published late
+            </span>
+            <span class="item">
+              <span class="badge state state-not-produced"><span>Not produced</span></span>
+              Not produced
+            </span>
+          </div>
         </div>
-        <table id="availability" class="table table-striped table-condensed">
-            <thead>
-                <tr>
-                    <td class="country">&nbsp;</td>
-                    <td class="flag">&nbsp;</td>
-                    <td class="score">Open Budget Index</td>
-                    <td class="dot">Pre-Budget Statement</td>
-                    <td class="dot">Executive's Budget Proposal</td>
-                    <td class="dot">Enacted Budget</td>
-                    <td class="dot">Citizens Budget</td>
-                    <td class="dot">In-Year Reports</td>
-                    <td class="dot">Mid-Year Review</td>
-                    <td class="dot">Year-End Report</td>
-                    <td class="dot">Audit Report</td>
-                </tr>
+        <div class="table-responsive">
+          <table id="overview-table" class="table table-hover">
+            <colgroup>
+              <col>
+              <col>
+              <col width="2%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+            </colgroup>
+            <thead class="header">
+              <tr>
+                <th>Country</th>
+                <th>&nbsp;</th>
+                <th class="text-center">Open Budget Index</th>
+                <th class="text-center">Pre-Budget Statement</th>
+                <th class="text-center">Executive's Budget Proposal</th>
+                <th class="text-center">Enacted Budget</th>
+                <th class="text-center">Citizens Budget</th>
+                <th class="text-center">In-Year Reports</th>
+                <th class="text-center">Mid-Year Review</th>
+                <th class="text-center">Year-End Report</th>
+                <th class="text-center">Audit Report</th>
+              </tr>
             </thead>
             <tbody>
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div id="region">
+        <h6><img src="images/world.png"> Regions</h6>
+        <ul id="av-region-toggler">
+          <li><a id="region-0" class="av-region-toggler active" href="#">Entire World</a></li>
+          <li><a id="region-1" class="av-region-toggler" href="#">East Asia &amp; Pacific</a></li>
+          <li><a id="region-2" class="av-region-toggler" href="#">Eastern Europe</a></li>
+          <li><a id="region-3" class="av-region-toggler" href="#">Central Asia</a></li>
+          <li><a id="region-4" class="av-region-toggler" href="#">Latin America &amp; Caribbean</a></li>
+          <li><a id="region-5" class="av-region-toggler" href="#">Middle East &amp; North Africa</a></li>
+          <li><a id="region-6" class="av-region-toggler" href="#">South Asia</a></li>
+          <li><a id="region-7" class="av-region-toggler" href="#">Sub-Saharan Africa</a></li>
+          <li><a id="region-8" class="av-region-toggler" href="#">Western Europe &amp; the U.S.</a></li>
+        </ul>
+      </div>
     </div>
     <div class="clearfix"></div>
+  </div>
 </div>
