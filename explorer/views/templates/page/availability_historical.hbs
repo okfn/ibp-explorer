@@ -4,11 +4,20 @@
   <div class="row">
     <h2>Public Availability of Budget Documents</h2>
     <div class="year-selector btn-group" role="group" id="year-toggles">
-        <button data-year="2006" class="btn btn-default">2006</button>
-        <button data-year="2008" class="btn btn-default">2008</button>
-        <button data-year="2010" class="btn btn-default">2010</button>
-        <button data-year="2012" class="btn btn-default">2012</button>
-        <button data-year="2015" class="btn btn-default">2015</button>
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
+    </div>
+    <h5>Compare with:</h5>
+    <div class="year-selector btn-group" role="group" id="year-compare-toggles">
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
+      <button data-year="None" class="btn btn-default">None</button>
     </div>
   </div>
 
@@ -35,7 +44,8 @@
         <div class="table-responsive">
           <table id="overview-table" class="table table-hover">
             <colgroup>
-              <col width="22%">
+              <col>
+              <col>
               <col width="2%">
               <col width="9.5%">
               <col width="9.5%">
@@ -49,6 +59,7 @@
             <thead class="header">
               <tr>
                 <th>Country</th>
+                <th>&nbsp;</th>
                 <th class="text-center">Open Budget Index</th>
                 <th class="text-center">Pre-Budget Statement</th>
                 <th class="text-center">Executive's Budget Proposal</th>
