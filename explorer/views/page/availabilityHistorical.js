@@ -39,12 +39,9 @@ class ProjectPage extends Backbone.View {
     this._repaint()
   }
 
-  _findScore(dataset, country, year) {
-    // TODO: refactor this
-    return _.find(dataset, (x) => {
-      return (x.alpha2 === country)
-    })[year]
-    //assert(false, "couldn't find country: " + country)
+  _findScore(countries, country, year) {
+    return _.find(countries, x => (x.alpha2 === country))[`db_${year}`].roundobi
+    // assert(false, "couldn't find country: " + country)
   }
 
   _repaint(dataset = reportGenerator.dataset,
@@ -52,13 +49,15 @@ class ProjectPage extends Backbone.View {
            region = reportGenerator.region) {
     let tbody = $('#overview-table tbody')
     tbody.empty()
-    let datasetRegions, datasetAv
+    let datasetRegions, datasetAv, countries
     if (this.year != '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_old
       datasetAv = _EXPLORER_DATASET.availability_old
+      countries = _EXPLORER_DATASET.country_old
     } else {
       datasetRegions = _EXPLORER_DATASET.regions
       datasetAv = _EXPLORER_DATASET.availability
+      countries = _EXPLORER_DATASET.country
     }
     let countriesIncluded = []
     _.forEach(this.regionId, (reg) => {
@@ -67,11 +66,11 @@ class ProjectPage extends Backbone.View {
       })
     })
     _.forEach(datasetAv, (row) => {
-      const key = 'db_' + this.year
+      const key = `db_${this.year}`
       if (!(_.has(row, key))) return
       if (!(_.contains(countriesIncluded, row[key].alpha2))) return
-      let obj = row[key]
-      obj.score = this._findScore(dataset, row[key].alpha2, this.year)
+      const obj = row[key]
+      obj.score = this._findScore(countries, row[key].alpha2, this.year)
       tbody.append(template_row(obj))
     })
   }
