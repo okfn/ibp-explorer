@@ -6,7 +6,7 @@
     <title>Open Budget Survey | International Budget Partnership</title>
     <meta name="description" content="Learn how to do budget analysis and budget advocacy with practical tools and resources. Read articles on public finance, social audits, and budget oversight issues; find civil society organizations doing budget work; and access international comparative data on public participation in government budgets, citizens budgets, and budget transparency and accountability.">
     <link rel="shortcut icon" href="http://internationalbudget.org/favicon.ico">
-    <link rel="stylesheet" href="/vendor.css">
+    <link rel="stylesheet" href="/styles/vendor.css">
     <link rel="stylesheet" href="/app.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" id="blm_googleFonts-css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed%3A700&amp;ver=4.2.2" type="text/css" media="all">
@@ -55,88 +55,77 @@
         <div id="report-generator">
         </div>
         <div id="explorer">
-            <div class="country-nav-select-outer">
-                <h3>Country:&nbsp;&nbsp;
-                <select class="country-nav-select" onchange="location = '{{baseUrl}}' + this.options[this.selectedIndex].value;">
-                <option value="">Select a country...</option>
-                {{#each countries}}
-                <option value="{{slug}}" {{#is slug ../data.slug}}selected="selected"{{/is}}>{{name}}</option>
+          <div class="country-nav-select-outer">
+            <h3>Country:&nbsp;&nbsp;
+            <select class="country-nav-select" onchange="location = '{{baseUrl}}' + this.options[this.selectedIndex].value;">
+            <option value="">Select a country...</option>
+            {{#each countries}}
+            <option value="{{slug}}" {{#is slug ../data.slug}}selected="selected"{{/is}}>{{name}}</option>
+            {{/each}}
+            </select> <button class="btn btn-default" id="print-answered" onclick="javascript:window.print();" style="float: right">Print/PDF</button></h3>
+          </div>
+          <div id="country-profile">
+            <h3 id="country-header">Country Questionnaire: {{data.name}}</h3>
+
+            {{#each questions}}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4><strong>{{qid}}:</strong> {{question}}</h4>
+              </div>
+              <div class="panel-body">
+                {{#if scoreOptions}}
+                <ul class="list-unstyled">
+                {{#each scoreOptions }}
+                  <li><strong>{{ label_option }}</strong> {{#if score}}({{ score }}){{/if}} {{ criteria }}</li>
                 {{/each}}
-                </select> <button class="btn" id="print-answered" onclick="javascript:window.print();" style="float: right">Print/PDF</button></h3>
+                </ul>
+                {{/if}}
+
+                {{#each ../data.answers}}
+                  {{#is qid ../qid}}
+                    <div class="well well-sm">
+                      <ul class="list-unstyled">
+                        {{#if author.answerLabel}}
+                          <li><strong>Answer:</strong> {{author.answerLabel}} {{#if author.score}}({{author.score}}){{/if}}<br><br></li>
+                        {{/if}}
+                        {{#if author.sourceOptions}}
+                          <li><strong>Source options:</strong> {{author.sourceOptions}}</li>
+                        {{/if}}
+                        {{#if author.sourceDescription}}
+                          <li><strong>Sources:</strong> {{author.sourceDescription}}</li>
+                        {{/if}}
+                        {{#if author.comments}}
+                          <li><strong>Comments:</strong> {{author.comments}}</li>
+                        {{/if}}
+                      </ul>
+                    </div>
+                    {{#if reviews}}
+                      {{#each reviews}}
+                        <ul class="list-unstyled">
+                          {{#if reviewer}}
+                            <li><strong>Reviewer:</strong> {{reviewer}}</li>
+                          {{/if}}
+                          {{#if opinion}}
+                            <li><strong>Opinion:</strong> {{opinion}}</li>
+                          {{/if}}
+                          {{#if suggestedScore}}
+                            <li><strong>Suggested answer:</strong> {{suggestedScore}}</li>
+                          {{/if}}
+                          {{#if comments}}
+                            <li><strong>Comments:</strong> {{comments}}</li>
+                          {{/if}}
+                          {{#if peerReviewDiscussions}}
+                            <li><strong>Peer review Discussions:</strong> {{peerReviewDiscussions}}</li>
+                          {{/if}}
+                        </ul>
+                      {{/each}}
+                    {{/if}}
+                  {{/is}}
+                {{/each}}
+              </div>
             </div>
-            <div id="country-profile">
-                <h3 id="country-header">Country Questionnaire: {{data.name}}</h3>
-                <table class="table table-condensed" id="question-table-print-show">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Question</th>
-                            <th class="space"></th>
-                            <th>Answers</th>
-                        </tr>
-                    </thead>
-                    {{#each questions}}
-                        <tr class="question-row" data-question-number="{{qid}}">
-                            <td class="number-print">{{qid}}</td>
-                            <td class="question-print">
-                                <p>{{question}}</p>
-                                {{#if scoreOptions}}
-                                <p>Criteria:</p>
-                                <ul>
-                                {{#each scoreOptions }}
-                                    <li>{{ label_option }} {{#if score}}({{ score }}){{/if}} {{ criteria }}</li>
-                                {{/each}}
-                                </ul>
-                                {{/if}}
-                            </td>
-                            <td class="space-print"></td>
-                            <td>
-                            {{#each ../data.answers}}
-                                {{#is qid ../qid}}
-                                    <p>Author:</p>
-                                    <ul>
-                                        {{#if author.answerLabel}}
-                                            <li>Answer: {{author.answerLabel}} {{#if author.score}}({{author.score}}){{/if}}</li>
-                                        {{/if}}
-                                        {{#if author.sourceOptions}}
-                                            <li>Source options: {{author.sourceOptions}}</li>
-                                        {{/if}}
-                                        {{#if author.sourceDescription}}
-                                            <li>Source description: {{author.sourceDescription}}</li>
-                                        {{/if}}
-                                        {{#if author.comments}}
-                                            <li>Comments: {{author.comments}}</li>
-                                        {{/if}}
-                                    </ul>
-                                    {{#if reviews}}
-                                        <p>Reviews:</p>
-                                        {{#each reviews}}
-                                            <ul>
-                                                {{#if reviewer}}
-                                                    <li>Reviewer: {{reviewer}}</li>
-                                                {{/if}}
-                                                {{#if opinion}}
-                                                    <li>Opinion: {{opinion}}</li>
-                                                {{/if}}
-                                                {{#if suggestedScore}}
-                                                    <li>Suggested answer: {{suggestedScore}}</li>
-                                                {{/if}}
-                                                {{#if comments}}
-                                                    <li>Comments: {{comments}}</li>
-                                                {{/if}}
-                                                {{#if peerReviewDiscussions}}
-                                                    <li>Peer review Discussions: {{peerReviewDiscussions}}</li>
-                                                {{/if}}
-                                            </ul>
-                                        {{/each}}
-                                    {{/if}}
-                                {{/is}}
-                            {{/each}}
-                            </td>
-                        </tr>
-                    {{/each}}
-                </table>
-            </div>
+            {{/each}}
+          </div>
         </div>
         <div class="clearfix">
         </div>
