@@ -32,6 +32,7 @@ if (QUESTIONNAIRE_SPREADSHEET_ID === undefined) {
 const QUESTIONNAIRE_SPREADSHEET_URL
   = `https://docs.google.com/spreadsheets/d/${QUESTIONNAIRE_SPREADSHEET_ID}/export?format=csv`
 
+const NUM_COUNTRIES_DEV = 10
 
 function getQuestionRowRanges(ws) {
   /*
@@ -161,6 +162,21 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
     }
   }
 
+  function tranformElementValue(ev) {
+    /*
+    If a string, `ev` is prepared for display by linking urls and cleaning
+    certain persona identifiers.
+    */
+    // regexp pattern to replace identifiers: 'Reviewer1234' with 'Reviewer'
+    const personaPattern = /(Reviewer|Researcher)\d+/
+    let transformedValue = ev || null
+    if (_.isString(transformedValue)) {
+      transformedValue = transformedValue.replace(personaPattern, '$1')
+      transformedValue = new Handlebars.SafeString(linkifyStr(transformedValue, linkifyOptions))
+    }
+    return transformedValue
+  }
+
   const country = {}
   country.name = ws.getCell(1, countryColNum).value
   country.slug = slug(country.name)
@@ -177,9 +193,7 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
       const elementName = ws.getCell(r, dataElementsColNum).value
       if (_.contains(_.keys(authorElements), elementName)) {
         let elementValue = ws.getCell(r, countryColNum).value
-        if (_.isString(elementValue)) {
-          elementValue = new Handlebars.SafeString(linkifyStr(elementValue, linkifyOptions))
-        }
+        elementValue = tranformElementValue(elementValue)
         answer.author[authorElements[elementName]] = elementValue || null
       } else if (_.contains(_.keys(reviewElements), elementName)) {
         let elementValue = ws.getCell(r, countryColNum).value || null
@@ -187,9 +201,7 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
           currentReviewerIndex += 1
           answer.reviews.push({})
         }
-        if (_.isString(elementValue)) {
-          elementValue = new Handlebars.SafeString(linkifyStr(elementValue, linkifyOptions))
-        }
+        elementValue = tranformElementValue(elementValue)
         answer.reviews[currentReviewerIndex][reviewElements[elementName]] = elementValue
       }
     })
@@ -255,7 +267,7 @@ workbook.csv.read(fileRequest)
   const countryColStart = ws.getColumn(COUNTRY_START_COL).number
   let countryColEnd = ws.columnCount
   if (DEVELOPMENT_MODE) {
-    countryColEnd = countryColStart + 10
+    countryColEnd = countryColStart + NUM_COUNTRIES_DEV
   }
   const countryColRange = [countryColStart, countryColEnd]
   const countries = []
