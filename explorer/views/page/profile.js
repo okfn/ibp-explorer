@@ -23,6 +23,7 @@ class ProfilePage extends Backbone.View {
     this._repaint = _.bind(this._repaint, this)
     this._yearToggle = _.bind(this._yearToggle, this)
     this._onClickPrint = _.bind(this._onClickPrint, this)
+    this._onClickReset = _.bind(this._onClickReset, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
@@ -156,8 +157,8 @@ class ProfilePage extends Backbone.View {
     }
     if (this.year === '2006' && this.alpha2 === 'HU') {
       this.data = {
-        alpha2: 'HU',
-        name: 'Hungary'
+        alpha2: 'HU'
+        , name: 'Hungary'
       }
     } else {
       this.data = this.lookup(this.alpha2)
@@ -402,6 +403,7 @@ class ProfilePage extends Backbone.View {
         $('#profile-toggle').addClass('active')
         $('#profile-mode').addClass('profile-mode-expanded')
         $('#profile-toggle').html('« Hide 2017 Calculator')
+        $('#profile-reset').click(this._onClickReset)
         $('#print-answered').click(this._onClickPrint)
         $('#print-table').click(this._onClickPrint)
       } else if ($('#profile-toggle').hasClass('active')) {
@@ -440,6 +442,18 @@ class ProfilePage extends Backbone.View {
     this._animationHackScale($('.year-box.year-2017'))
     router.navigate(
       `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
+  }
+
+  _onClickReset(e) {
+    /*
+    Resets the future results calculator back to displaying current results.
+    */
+    e.preventDefault()
+    this.params = {}
+    this.db_2017 = $.extend({}, this.data.db_2015, this.params)
+    router.navigate(
+      `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
+    this._repaint()
   }
 
   _onClickPrint(e, questionSet = reportGenerator.questionSet) {
