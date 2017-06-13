@@ -7,8 +7,22 @@ import OBSRouter from './router.js'
 import './assets/index.html'
 import './views/styles/main.less'
 
+// Filter out countries in this list from _EXPLORER_DATASET
+const COUNTRY_BLACKLIST = [
+]
+
 const loadDataset = function () {
   assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.')
+
+  // Remove blacklisted countries from country_old
+  _EXPLORER_DATASET.country_old = _.reject(_EXPLORER_DATASET.country_old, c => {
+    return (_.indexOf(COUNTRY_BLACKLIST, c.alpha2) !== -1)
+  })
+  // Remove blacklisted countries from country
+  _EXPLORER_DATASET.country = _.reject(_EXPLORER_DATASET.country, c => {
+    return (_.indexOf(COUNTRY_BLACKLIST, c.alpha2) !== -1)
+  })
+
   // 2015 survey dataset
   // Assign an ID to all groupings
   let id = 0
