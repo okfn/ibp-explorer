@@ -92,7 +92,7 @@ class ReportGenerator extends Backbone.View {
     })
     this.$el.find('.toggle-box').bind('click', this._clickBoxToggle)
     this.$el.find('.nav a').bind('click', this._expand_collapse)
-    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear);
+    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear)
     this.$el.find('.download-csv').bind('click', this._download)
     this.$el.find('.toggle-box').tooltip({
       placement: 'left',

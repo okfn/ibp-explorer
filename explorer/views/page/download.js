@@ -203,31 +203,8 @@ class DownloadPage extends Backbone.View {
         }
       })(this))
       $('input[name="downloadyear"]').bind('change', this.changeyear)
+      this.$el.find('.download-csv').bind('click', reportGenerator._download)
       this._repaint()
-      let options = {
-        filename() {
-          return 'custom-budget-report.csv'
-        },
-        data() {
-            return $('#custom-csv').val()
-        },
-        onComplete() {
-          return alert('Your File Has Been Saved!')
-        },
-        onCancel() {
-          return null
-        },
-        onError() {
-          return alert('Error')
-        },
-        swf: 'downloadify.swf',
-        downloadImage: 'images/download.png',
-        width: 100,
-        height: 30,
-        transparent: true,
-        append: false
-      }
-      Downloadify.create('downloadify', options)
     }
   }
 }
