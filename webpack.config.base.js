@@ -11,7 +11,7 @@ let extractLESS = new ExtractTextPlugin('[name].css');
 module.exports = {
   entry: {
     app: './explorer/initialize.js'
-    , vendor: ['jquery', 'underscore', 'backbone', 'chosen', 'downloadify'
+    , vendor: ['jquery', 'underscore', 'backbone', 'chosen'
       , 'bootstrap-js', 'jsPlumb', 'exports?jvm!jvm', 'jvm-world-mill'
       , 'jvm-css', 'jsPlumb', 'ibpDataset', 'console-helper'
       , 'jquery.color', 'vendor-css', 'monkeypatches', 'whatwg-fetch', 'handlebars']
@@ -31,8 +31,7 @@ module.exports = {
       , 'vendor-css': 'styles/main.css'
       , 'bootstrap-js': 'scripts/bootstrap.min.js'
       , monkeypatches: 'scripts/monkeypatches.js'
-      , downloadify: 'scripts/Downloadify/downloadify.min.js'
-      , 'handlebars': 'handlebars/runtime.js'
+      , handlebars: 'handlebars/runtime.js'
     }
   }
   , output: {
@@ -106,8 +105,7 @@ module.exports = {
     , new CopyWebpackPlugin([
       { from: './explorer/assets/images', to: 'images' }
       , { from: './explorer/assets/downloads', to: 'downloads' }
-      , { from: './explorer/assets/downloadify.swf', to: './' }
-      , { from: './explorer/assets/fonts', to: 'fonts'}
+      , { from: './explorer/assets/fonts', to: 'fonts' }
     ])
   ]
 }
