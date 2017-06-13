@@ -132,15 +132,15 @@ class DownloadPage extends Backbone.View {
       }
       _.forEach(selected_year, (year) => {
         if (!(_.has(country, year))) return
-        let row =[country.alpha2, country.country, year, country[year]]
+        const countryYearValue = (country[year] === -1) ? '' : country[year]
+        const row = [country.alpha2, country.country, year, countryYearValue]
         _.forEach(questionSet, (q) => {
-          row.push(tmp[country.alpha2]['db_'+year][q])
-        })
-        _.forEach(questionSet, (q) => {
-          let value = tmp[country.alpha2]['db_'+year][q]
+          const value = tmp[country.alpha2][`db_${year}`][q]
+          const numValue = (value === -1) ? '' : value
+          row.push(numValue)
           row.push(this._number_to_letter(value))
         })
-        assert(row.length==headers.length)
+        assert(row.length === headers.length)
         this._writeLine(out, row)
       })
     })
