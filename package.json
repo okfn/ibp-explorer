@@ -91,7 +91,6 @@
     "slug-component": "^1.1.0",
     "style-loader": "^0.13.1",
     "swig": "~1.4.2",
-    "to-title-case": "^1.0.0",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.15",

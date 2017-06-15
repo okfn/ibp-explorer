@@ -10,7 +10,6 @@ const helpers = require('handlebars-helpers')() // eslint-disable-line no-unused
 const linkifyStr = require('linkifyjs/string')
 const Handlebars = require('handlebars')
 const argv = require('yargs').argv
-const toTitleCase = require('to-title-case')
 
 const Metalsmith = require('metalsmith')
 const layouts = require('metalsmith-layouts')
@@ -181,7 +180,7 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
   }
 
   const country = {}
-  country.name = toTitleCase(ws.getCell(1, countryColNum).value)
+  country.name = ws.getCell(1, countryColNum).value
   country.slug = slug(country.name)
   country.answers = []
   _.each(questions, q => {
