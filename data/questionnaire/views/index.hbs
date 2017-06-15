@@ -14,12 +14,6 @@
   <body>
     <div id="header-container" class="container">
       <div id="header">
-        <!--ul id="utility-nav">
-          <li><a href="http://internationalbudget.org/" title="International Budget Partnership">Home</a></li>
-          <li><a href="http://internationalbudget.org/who-does-budget-work/findgroup">Find a Group</a></li>
-          <li><a href="http://internationalbudget.org/contact-us">Contact Us</a></li>
-          <li><a href="http://internationalbudget.org/library/publications/newsletter/sign-up-for-ibp-e-publications/">Email sign-up</a></li>
-        </ul-->
         <h1 id="logo1">
           <a href="#" title="Open Budget Index: Data Explorer"><img src="/images/data-explorer-logo.png" alt="Open Budget Index: Data Explorer"></a>
         </h1>
@@ -103,7 +97,7 @@
                       {{#each reviews}}
                         <ul class="list-unstyled">
                           {{#if reviewer}}
-                            <li><strong>Reviewer:</strong> {{reviewer}}</li>
+                            <li><strong>{{reviewer}}</strong></li>
                           {{/if}}
                           {{#if opinion}}
                             <li><strong>Opinion:</strong> {{opinion}}</li>
@@ -120,6 +114,17 @@
                         </ul>
                       {{/each}}
                     {{/if}}
+                    {{#or author.researcherResponse author.ibpComment}}
+                      <ul class="list-unstyled">
+                      {{#if author.researcherResponse}}
+                        <li><strong>Research response:</strong> {{author.researcherResponse}}</li>
+                      {{/if}}
+                      {{#if author.ibpComment}}
+                        <li><strong>IBP comment:</strong> {{author.ibpComment}}</li>
+                      {{/if}}
+                      </ul>
+                    {{/or}}
+
                   {{/is}}
                 {{/each}}
               </div>
