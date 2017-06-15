@@ -142,6 +142,8 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
     , 'Author Comments': 'comments'
     , 'Source Options': 'sourceOptions'
     , 'Source Description': 'sourceDescription'
+    , 'Researcher Response': 'researcherResponse'
+    , 'IBP Comment': 'ibpComment'
   }
   const reviewElements = {
     'Reviewer': 'reviewer'
