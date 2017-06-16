@@ -1,6 +1,7 @@
 'use strict'
 
 import _ from 'underscore'
+import _s from 'underscore.string'
 
 import OBSRouter from './router.js'
 
@@ -8,47 +9,62 @@ import './assets/index.html'
 import './views/styles/main.less'
 
 // Filter out countries in this list from _EXPLORER_DATASET
-const COUNTRY_BLACKLIST = [
-  'BF'
-  , 'BO'
-  , 'BW'
-  , 'CM'
-  , 'DZ'
-  , 'EC'
-  , 'HN'
-  , 'KE'
-  , 'KR'
-  , 'KZ'
-  , 'MW'
-  , 'NI'
-  , 'PE'
-  , 'PK'
-  , 'PL'
-  , 'SI'
-  , 'TD'
-  , 'TZ'
-  , 'ZM'
-  , 'BF'
-  , 'BW'
-  , 'EC'
-  , 'KE'
-  , 'NI'
-  , 'SD'
-  , 'TD'
-  , 'ZM'
-  , 'SD'
+const COUNTRY_EXCLUDE_LIST = [
+  ['BF', '2006']
+  , ['BO', '2006']
+  , ['BW', '2006']
+  , ['CM', '2006']
+  , ['DZ', '2006']
+  , ['EC', '2006']
+  , ['HN', '2006']
+  , ['KE', '2006']
+  , ['KR', '2006']
+  , ['KZ', '2006']
+  , ['MW', '2006']
+  , ['NI', '2006']
+  , ['PE', '2006']
+  , ['PK', '2006']
+  , ['PL', '2006']
+  , ['SI', '2006']
+  , ['TD', '2006']
+  , ['TZ', '2006']
+  , ['ZM', '2006']
+  , ['BF', '2008']
+  , ['BW', '2008']
+  , ['EC', '2008']
+  , ['KE', '2008']
+  , ['NI', '2008']
+  , ['SD', '2008']
+  , ['TD', '2008']
+  , ['ZM', '2008']
+  , ['SD', '2010']
 ]
 
 const loadDataset = function () {
   assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.')
 
-  // Remove blacklisted countries from country_old
-  _EXPLORER_DATASET.country_old = _.reject(_EXPLORER_DATASET.country_old, c => {
-    return (_.indexOf(COUNTRY_BLACKLIST, c.alpha2) !== -1)
-  })
-  // Remove blacklisted countries from country
-  _EXPLORER_DATASET.country = _.reject(_EXPLORER_DATASET.country, c => {
-    return (_.indexOf(COUNTRY_BLACKLIST, c.alpha2) !== -1)
+  const pruneCountry = function (countryList, excluded, year) {
+    /*
+    Removes `db_${year}` from the passed `excluded` country. If no
+    `db_${year}`s are left, remove the country.
+    */
+    const country = _.find(countryList, c => c.alpha2 === excluded)
+    delete country[`db_${year}`]
+
+    const countryKeys = _.keys(country)
+    if (!_.some(countryKeys, k => _s.startsWith(k, 'db_'))) {
+      countryList = _.reject(countryList, c => c.alpha2 === excluded)
+    }
+
+    return countryList
+  }
+
+  // Remove excluded country/years from `country_old`
+  _.each(COUNTRY_EXCLUDE_LIST, excluded => {
+    _EXPLORER_DATASET.country
+      = pruneCountry(_EXPLORER_DATASET.country, excluded[0], excluded[1])
+    _EXPLORER_DATASET.country_old
+      = pruneCountry(_EXPLORER_DATASET.country_old, excluded[0], excluded[1])
   })
 
   // 2015 survey dataset
