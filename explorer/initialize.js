@@ -43,13 +43,31 @@ const COUNTRY_EXCLUDE_LIST = [
 const loadDataset = function () {
   assert(_EXPLORER_DATASET !== null, 'Failed to load dataset.')
 
-  const pruneCountry = function (countryList, excluded, year) {
+    // Store excluded countries
+  _EXPLORER_DATASET.excluded_country = []
+  _EXPLORER_DATASET.excluded_country_old = []
+
+  const pruneCountry = function (countryList, excludedCountryList, excluded, year) {
     /*
-    Removes `db_${year}` from the passed `excluded` country. If no
-    `db_${year}`s are left, remove the country.
+    Remove `db_${year}` from the passed `excluded` country. If no `db_${year}`
+    properties are left, remove the country. Excluded country data is added to
+    an `_excluded_country[_old]` array, so pages have access to it if necessary
+    (e.g. availabilityHistorical.js uses it).
     */
+
     const country = _.find(countryList, c => c.alpha2 === excluded)
-    delete country[`db_${year}`]
+    if (country[`db_${year}`] !== undefined) {
+      let excludedCountry = _.find(excludedCountryList, c => c.alpha2 === excluded)
+      if (!excludedCountry) {
+        excludedCountry = {
+          alpha2: country.alpha2
+          , name: country.name
+        }
+        excludedCountryList.push(excludedCountry)
+      }
+      excludedCountry[`db_${year}`] = _.clone(country[`db_${year}`])
+      delete country[`db_${year}`]
+    }
 
     const countryKeys = _.keys(country)
     if (!_.some(countryKeys, k => _s.startsWith(k, 'db_'))) {
@@ -62,9 +80,11 @@ const loadDataset = function () {
   // Remove excluded country/years from `country_old`
   _.each(COUNTRY_EXCLUDE_LIST, excluded => {
     _EXPLORER_DATASET.country
-      = pruneCountry(_EXPLORER_DATASET.country, excluded[0], excluded[1])
+      = pruneCountry(_EXPLORER_DATASET.country, _EXPLORER_DATASET.excluded_country,
+                     excluded[0], excluded[1])
     _EXPLORER_DATASET.country_old
-      = pruneCountry(_EXPLORER_DATASET.country_old, excluded[0], excluded[1])
+      = pruneCountry(_EXPLORER_DATASET.country_old, _EXPLORER_DATASET.excluded_country_old,
+                     excluded[0], excluded[1])
   })
 
   // 2015 survey dataset

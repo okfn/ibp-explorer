@@ -53,8 +53,15 @@ class ProjectPage extends Backbone.View {
     this._repaint()
   }
 
-  _findScore(countries, country, year) {
-    return _.find(countries, x => (x.alpha2 === country))[`db_${year}`].roundobi
+  _findScore(countries, excludedCountries, country, year) {
+    /*
+    Find the score for the country/year in either `countries` or `excludedCountries`.
+    */
+    try {
+      return _.find(countries, x => (x.alpha2 === country))[`db_${year}`].roundobi
+    } catch (err) {
+      return _.find(excludedCountries, x => (x.alpha2 === country))[`db_${year}`].roundobi
+    }
   }
 
   _repaint(dataset = reportGenerator.dataset,
@@ -70,25 +77,31 @@ class ProjectPage extends Backbone.View {
     let datasetRegions
     let datasetAv
     let countries
+    let countriesExcluded
     let datasetAvCompare
     let countriesCompare
+    let countriesCompareExcluded
     if (this.year !== '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_old
       datasetAv = _EXPLORER_DATASET.availability_old
       countries = _EXPLORER_DATASET.country_old
+      countriesExcluded = _EXPLORER_DATASET.excluded_country_old
     } else {
       datasetRegions = _EXPLORER_DATASET.regions
       datasetAv = _EXPLORER_DATASET.availability
       countries = _EXPLORER_DATASET.country
+      countriesExcluded = _EXPLORER_DATASET.excluded_country
     }
 
     if (compareYear) {
       if (compareYear !== '2015') {
         datasetAvCompare = _EXPLORER_DATASET.availability_old
         countriesCompare = _EXPLORER_DATASET.country_old
+        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country_old
       } else {
         datasetAvCompare = _EXPLORER_DATASET.availability
         countriesCompare = _EXPLORER_DATASET.country
+        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
       }
     }
 
@@ -115,13 +128,14 @@ class ProjectPage extends Backbone.View {
         )
         if (comparisonRow) {
           compareObj = comparisonRow[comparisonYearKey]
-          compareObj.score = this._findScore(countriesCompare, country, compareYear)
+          compareObj.score = this._findScore(countriesCompare, countriesCompareExcluded,
+                                             country, compareYear)
         }
       }
 
       const context = {}
       context.obj = row[yearKey]
-      context.obj.score = this._findScore(countries, country, this.year)
+      context.obj.score = this._findScore(countries, countriesExcluded, country, this.year)
       context.obj.year = this.year
       if (compareObj) {
         context.compareObj = compareObj
