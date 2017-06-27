@@ -68,7 +68,8 @@ class ProjectPage extends Backbone.View {
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
     let compareYear = null
-    if (this.yearCompare !== 'None' && this.yearCompare !== undefined) {
+    if (this.yearCompare !== 'None' && this.yearCompare !== undefined
+        && this.yearCompare !== this.year) {
       compareYear = this.yearCompare
     }
 
