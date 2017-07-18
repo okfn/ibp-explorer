@@ -60,11 +60,9 @@ class ProjectPage extends View {
 
   _count(array, search, questionSet) {
     let total = 0
-    for (let i in questionSet) {
-      if (array[i] === search) {
-        total++
-      }
-    }
+    _.each(questionSet, q => {
+      if (array[q] === search) total++
+    })
     return total
   }
 
