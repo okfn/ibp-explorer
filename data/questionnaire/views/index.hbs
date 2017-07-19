@@ -70,7 +70,7 @@
                 {{#if scoreOptions}}
                 <ul class="list-unstyled">
                 {{#each scoreOptions }}
-                  <li><strong>{{ label_option }}</strong> {{#if score}}({{ score }}){{/if}} {{ criteria }}</li>
+                  <li><strong>{{ label_option }}</strong> {{#if score includeZero=true}}({{ score }}){{/if}} {{ criteria }}</li>
                 {{/each}}
                 </ul>
                 {{/if}}
@@ -114,17 +114,16 @@
                         </ul>
                       {{/each}}
                     {{/if}}
-                    {{#or author.researcherResponse author.ibpComment}}
+                    {{#if author.researcherResponse }}
                       <ul class="list-unstyled">
-                      {{#if author.researcherResponse}}
-                        <li><strong>Research response:</strong> {{author.researcherResponse}}</li>
-                      {{/if}}
-                      {{#if author.ibpComment}}
-                        <li><strong>IBP comment:</strong> {{author.ibpComment}}</li>
-                      {{/if}}
+                        <li><strong>Researcher response:</strong> {{author.researcherResponse}}</li>
                       </ul>
-                    {{/or}}
-
+                    {{/if}}
+                    {{#if author.ibpComment}}
+                      <ul class="list-unstyled">
+                        <li><strong>IBP comment:</strong> {{author.ibpComment}}</li>
+                      </ul>
+                    {{/if}}
                   {{/is}}
                 {{/each}}
               </div>
