@@ -70,7 +70,7 @@
                 {{#if scoreOptions}}
                 <ul class="list-unstyled">
                 {{#each scoreOptions }}
-                  <li><strong>{{ label_option }}</strong> {{#if score}}({{ score }}){{/if}} {{ criteria }}</li>
+                  <li><strong>{{ label_option }}</strong> {{#if score includeZero=true}}({{ score }}){{/if}} {{ criteria }}</li>
                 {{/each}}
                 </ul>
                 {{/if}}
