@@ -98,8 +98,14 @@
         <tr>
           <th>{{ snapshot_obj.name }}</th>
           {% for doc in docs %}
+            {% if doc.title %}
+              {% set directoryId = country.topLevelDirectoryIds[doc.title] %}
+            {% endif %}
             <td class="text-center">
               <div>
+                {% if directoryId %}
+                  <a target="_blank" href="https://drive.google.com/drive/folders/{{ directoryId }}">
+                {% endif %}
                 {% if snapshot[doc.title].status %}
                   <span class="badge state state-{{ snapshot[doc.title].status|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}" data-toggle="popover" data-placement="top" data-content="{{ h.tooltipSnapshot(country, snapshot[doc.title].status, doc.title) }}">
                     <span>{{ h.state(snapshot[doc]) }}</span>
@@ -108,6 +114,9 @@
                   <span class="badge state state-{{ snapshot[doc.title]|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}" data-toggle="popover" data-placement="top" data-content="{{ h.tooltipSnapshot(country, snapshot[doc.title], doc.title) }}">
                     <span>{{ h.state(snapshot[doc]) }}</span>
                   </span>
+                {% endif %}
+                {% if directoryId %}
+                  </a>
                 {% endif %}
               </div>
             </td>
