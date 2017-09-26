@@ -73,6 +73,7 @@
   </thead>
   <tbody>
     {% for doc in docs %}
+
       {% set cell = undefined %}
       {% set fiscal_year = '-' %}
       {% for year in country.documents|reverse %}
@@ -83,44 +84,37 @@
           {% endif %}
         {% endif %}
       {% endfor %}
-    {% for year in country.obi.availability|reverse %}
-      {% if year > fiscal_year %}
-        {% if not cell.obi %}
-          {% if isString(country.obi.availability[year][doc.title]) %}
-            {% set cell.status = country.obi.availability[year][doc.title] %}
-            {% set cell.type = doc.title %}
-            {% set cell.year = year %}
-            {% set cell.obi = 'True' %}
-            {% set fiscal_year = year %}
-          {% else %}
-            {% set cell = country.obi.availability[year][doc.title] %}
-            {% set cell.type = doc.title %}
-            {% set cell.year = year %}
-            {% set cell.obi = 'True' %}
-            {% set fiscal_year = year %}
+      {% for year in country.obi.availability|reverse %}
+        {% if year > fiscal_year %}
+          {% if not cell.obi %}
+            {% if isString(country.obi.availability[year][doc.title]) %}
+              {% set cell.status = country.obi.availability[year][doc.title] %}
+              {% set cell.type = doc.title %}
+              {% set cell.year = year %}
+              {% set cell.obi = 'True' %}
+              {% set fiscal_year = year %}
+            {% else %}
+              {% set cell = country.obi.availability[year][doc.title] %}
+              {% set cell.type = doc.title %}
+              {% set cell.year = year %}
+              {% set cell.obi = 'True' %}
+              {% set fiscal_year = year %}
+            {% endif %}
           {% endif %}
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
     <tr>
       <th scope="row" data-toggle="popover" data-placement="top" data-content="{{ gettext(doc.description) }}"{% if lang == 'es' %} style="font-size:90%;"{% endif %}{% if lang == 'ru' %} style="font-size:70%;"{% endif %}>
         {{ gettext(doc.title) }}
       </th>
       {# <td>{{ date_format({'year':fiscal_year}, 'YYYY') }}</td> #}
       <td>
-	{% if cell %}
-        {% set parentId = "" %}
-          {% if cell.uploads %}
-            {% for upload in cell.uploads %}
-              {% if upload.parentId %}
-                {% set parentId = upload.parentId %}
-              {% endif %}
-          {% endfor %}
+      {% if cell %}
+        {% if cell.type %}
+          {% set directoryId = country.topLevelDirectoryIds[cell.type] %}
         {% endif %}
-        {% if cell.groupParentId %}
-            <a target="_blank" href="https://drive.google.com/drive/folders/{{ cell.groupParentId }}">
-        {% elif cell.driveId %}
-            <a target="_blank" href="https://drive.google.com/file/d/{{ cell.driveId }}/view">
+        {% if directoryId %}
+          <a target="_blank" href="https://drive.google.com/drive/folders/{{ directoryId }}">
         {% endif %}
         {% if cell.state %}
           <span class="badge state state-{{ cell.state|replace(' ', '-')|replace('/', '-')|replace(' ', '-')|lower }}">
@@ -133,32 +127,33 @@
           </span>
           {{ h.state(cell.status) }}
         {% endif %}
-        {% if parentId %}
+        {% if directoryId %}
           </a>
         {% endif %}
-	{% else %}
-        <span class="badge state state-not-produced">
-          <span>{{ h.state("not produced") }}</span>
-        </span>
-        {{ h.state("not produced") }}
-	{% endif %}
+        {% else %}
+          <span class="badge state state-not-produced">
+            <span>{{ h.state("not produced") }}</span>
+          </span>
+          {{ h.state("not produced") }}
+        {% endif %}
       </td>
       <td>
-	{% if cell.datePublished %}
       {% if cell.datePublished %}
-        {% if cell.datePublished != 'N/A' %}
-            {{ cell.datePublished|formatDate }}
-        {% else %}
-            <span class="text-muted">-</span>
+        {% if cell.datePublished %}
+          {% if cell.datePublished != 'N/A' %}
+              {{ cell.datePublished|formatDate }}
+          {% else %}
+              <span class="text-muted">-</span>
+          {% endif %}
         {% endif %}
+      {% elseif cell.date_published %}
+          {{ date_format(Date.parse(cell.date_published), 'll') }}
+      {% else %}
+          <span class="text-muted">-</span>
       {% endif %}
-    {% elseif cell.date_published %}
-        {{ date_format(Date.parse(cell.date_published), 'll') }}
-	{% else %}
-        <span class="text-muted">-</span>
-	{% endif %}
       </td>
     </tr>
+
     {% endfor %}
   </tbody>
 </table>

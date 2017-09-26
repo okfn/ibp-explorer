@@ -76,6 +76,7 @@
                     <td></td>
                   {% endif %}
                   {% for doc in docs %}
+
 		            {% set cell = undefined %}
                     {% set cellYear = undefined %}
                     {% if country.documents != {} %}
@@ -106,25 +107,12 @@
                       {% endif %}
                     {% endfor %}
                     {% if cell %}
-                      {% set parentId = "" %}
-                      {% set driveId = "" %}
-                      {% if cell.uploads %}
-                        {% for upload in cell.uploads %}
-                          {% if upload.groupParentId %}
-                            {% set parentId = upload.parentId %}
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                      {% if cell.groupParentId %}
-                        {% set parentId = cell.groupParentId %}
-                      {% elif cell.driveId %}
-                        {% set driveId = cell.driveId %}
+                      {% if cell.type %}
+                        {% set directoryId = country.topLevelDirectoryIds[cell.type] %}
                       {% endif %}
                       <td class="text-center" data-toggle="popover" data-content="{{ h.tooltip(country, cell) }}">
-                        {% if parentId %}
-                          <a target="_blank" href="https://drive.google.com/drive/folders/{{ parentId }}">
-                        {% elif driveId %}
-                          <a target="_blank" href="https://drive.google.com/file/d/{{ driveId }}">
+                        {% if directoryId %}
+                          <a target="_blank" href="https://drive.google.com/drive/folders/{{ directoryId }}">
                         {% endif %}
                           {% if cell.state %}
                             <!-- for some reason "Hard/Soft Copy Only" is not
@@ -139,7 +127,7 @@
                               <span>{{ h.state(cell.status) }}</span>
                             </span>
                           {% endif %}
-                        {% if parentId %}
+                        {% if directoryId %}
                           </a>
                         {% endif %}
                       </td>
@@ -152,6 +140,7 @@
                     {% endif %}
                   {% endfor %}
                 </tr>
+
               {% endfor %}
             </tbody>
           </table>
