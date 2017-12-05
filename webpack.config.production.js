@@ -46,7 +46,7 @@ module.exports = {
         , include: path.resolve(__dirname, 'explorer')
         , exclude: [path.resolve(__dirname, 'node_modules')
         , path.resolve(__dirname, 'vendor')]
-        , query: { presets: ['es2015'] }
+        , query: { presets: ['env'] }
       }
       , {
         test: /\.(png$|jpg$|woff2$)/
