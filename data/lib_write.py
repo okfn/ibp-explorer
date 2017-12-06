@@ -43,7 +43,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     print 'Writing XLSX file...'
     from openpyxl import Workbook
     wb = Workbook()
-    first_sheet = wb.get_active_sheet()
+    first_sheet = wb.active
     _write_sheet(wb,'Summary', SM_HEADERS, SM_DATA)
     _write_sheet(wb,'Questions', Q_HEADERS, Q_DATA)
     _write_sheet(wb,'Scores', S_HEADERS, S_DATA)
@@ -94,7 +94,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     if years[0] == 2015:
         os.unlink( csv_p )
     # Create list of downloads
-    downloads = [ 
+    downloads = [
             {'filename':files['xlsx'], 'format':'Excel' },
             {'filename':files['csv_zip'], 'format':'CSV' },
             {'filename':files['json'], 'format':'JSON' },

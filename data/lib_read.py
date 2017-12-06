@@ -54,15 +54,15 @@ def _lookup(sheet,x,y):
 def _read_answers(a_workbook, iso_data, sheet_name, years):
     sheet = a_workbook.get_sheet_by_name(name=sheet_name)
     answers = {}
-    height = sheet.get_highest_row()
-    width = sheet.get_highest_column()
+    height = sheet.max_row
+    width = sheet.max_column
     # Not unlike CSV Dictreader. Also, I like comprehensions.
     headers = { x : _lookup(sheet,x,1)
                 for x in range(1,width+1) }
     rows = []
     for y in range(2,height+1):
         row = { headers[x]: _lookup(sheet,x,y)
-                for x in range(1,width+1) } 
+                for x in range(1,width+1) }
         rows.append(row)
     # Verify the data
     question_label = re.compile('^((q[0-9]+l?)|(t3[a-z]{2,3}l?))$')
@@ -74,7 +74,7 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
         assert type(name) is unicode, '[%s/%s] Invalid country name %s' % (name,year,unicode(name))
         name = name.strip()
         assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
-        assert type(year) is int, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
+        assert type(year) is int or type(year) is long, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
         assert year in years, '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
         # Validate the row content
         validated = {}
@@ -89,7 +89,7 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
                     if value is None:
                         # Blank becomes -1
                         value = -1
-                    assert type(value) is int, error_string
+                    assert type(value) is int or type(value) is long, error_string
                     assert value in [100,67,33,0,-1], error_string
                 if re.search('^q[0-9]+l?$', key):
                     key = key[1:]
@@ -106,9 +106,9 @@ def _read_questions(q_workbook, sheet_name):
     # Question dict
     sheet = q_workbook.get_sheet_by_name(name=sheet_name)
     questions = {}
-    height = sheet.get_highest_row()
+    height = sheet.max_row
     for n in range(2,height+1):
-        questions[n-1] = { 
+        questions[n-1] = {
           'number': _lookup(sheet,1,n),
           'text': _lookup(sheet,2,n),
           'a': _lookup(sheet,3,n),
@@ -130,7 +130,7 @@ def _read_groupings(g_workbook, sheet_name):
     sheet = g_workbook.get_sheet_by_name(name=sheet_name)
     out = []
     # Scroll down column B
-    height = sheet.get_highest_row()
+    height = sheet.max_row
     y = 2
     while y <= height:
         title = _lookup(sheet,2,y)
@@ -190,10 +190,10 @@ def _read_availability(av_workbook, iso_data, sheets):
         sheet = av_workbook.get_sheet_by_name(name=sheet_name)
         # Check the sheet is structured the way we expect
         for x in range(1,len(column_headers)+1):
-            column_header = _lookup(sheet, x,1) 
+            column_header = _lookup(sheet, x,1)
             assert column_header == column_headers[x-1][0], 'Bad column header on sheet %s: Got "%s" but expected "%s".' % (sheet_name,column_header,column_headers[x-1])
         # Scraped the data into a structured JSON object
-        height = sheet.get_highest_row()
+        height = sheet.max_row
         for y in range(2,height+1):
             name = _lookup(sheet,1,y)
             assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
@@ -214,8 +214,8 @@ def _read_participation(pp_workbook, iso_data, sheet_name):
     sheet = pp_workbook.get_sheet_by_name(name=sheet_name)
     participation = []
     vtypes = {'Score': 'score', 'Letter': 'letter', 'Comments and Citations in support of the response': 'comments'}
-    height = sheet.get_highest_row()
-    width = sheet.get_highest_column()
+    height = sheet.max_row
+    width = sheet.max_column
 
     headers = { x : (_lookup(sheet,x,1), _lookup(sheet,x,2))
                 for x in range(1,width+1) }
@@ -251,7 +251,7 @@ def _parse_int_list(int_list):
         int_list = unicode(int_list)
     if (type(int_list) is float) or (type(int_list) is int):
         int_list = unicode(int(int_list))
-    
+
     out = []
     for s in int_list.replace(' ','').split(','):
         split = s.split('-')
