@@ -7,7 +7,7 @@ import lib_write
 
 DEFAULT_ISOFILE = 'country_to_iso3166.json'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
-DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
+DEFAULT_DOWNLOADFOLDER = '../explorer/assets/downloads/'
 
 DOWNLOADS_COMPARABLE = {}
 DOWNLOADS_COMPARABLE['xlsx'] = 'ibp_data_comparable.xlsx'
