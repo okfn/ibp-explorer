@@ -70,15 +70,19 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
     for row in rows:
         name = row['country']
         year = row['year']
+        if type(year) is long:
+            year = int(year)
         # Don't trust spreadsheets
         assert type(name) is unicode, '[%s/%s] Invalid country name %s' % (name,year,unicode(name))
         name = name.strip()
         assert name in iso_data, '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name,year,name)
-        assert type(year) is int or type(year) is long, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
+        assert type(year) is int, '[%s/%s] Invalid year %s (%s)' % (name,year,unicode(year),type(year))
         assert year in years, '[%s/%s] Unexpected value of "year": %s' % (name,year,year)
         # Validate the row content
         validated = {}
-        for key,value in row.items():
+        for key, value in row.items():
+            if type(value) is long:
+                value = int(value)
             if key is None: continue
             if question_label.match(key) is not None:
                 error_string = '[%s/%s] Invalid value for %s: %s'% (name,year,key,value)
@@ -89,7 +93,7 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
                     if value is None:
                         # Blank becomes -1
                         value = -1
-                    assert type(value) is int or type(value) is long, error_string
+                    assert type(value) is int, error_string
                     assert value in [100,67,33,0,-1], error_string
                 if re.search('^q[0-9]+l?$', key):
                     key = key[1:]
