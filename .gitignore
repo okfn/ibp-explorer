@@ -8,3 +8,4 @@ coverage/
 .env
 cache/
 data/questionnaire/*.csv
+.python-version
