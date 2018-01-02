@@ -242,6 +242,8 @@ def _scores_as_csv(dataset, years, countries):
                     100: 'a'
                  }[score]
                 row.append(letter)
+            # Replace -1 with None for values in row
+            row = [None if i == -1 else i for i in row]
             DATA.append(row)
     return HEADERS, DATA
 
