@@ -105,10 +105,8 @@ To update the data:
 To get those changes processed by the tool:
 
 * Get Python set up on your system.
-* Install [Pip](http://pypi.python.org/pypi/pip), the Python package manager.
-* `pip install openpyxl`
-* `pip install unicodecsv`
-* `pip install xlrd`
+* Install [pip](http://pypi.python.org/pypi/pip), the Python package manager.
+* Install requirements with `pip install -r requirements.txt`
 * You're all set up. Run `python etl.py` to update the tool.
 * Run the tool locally to prove it works. 
 * Follow the above deployment instructions to get it ready for a live server.

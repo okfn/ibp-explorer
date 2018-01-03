@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 
-# Standard libraries
-import argparse
 import json
-import sys
-# Custom pipeline
+
 import lib_read
 import lib_write
 
 DEFAULT_ISOFILE = 'country_to_iso3166.json'
 DEFAULT_OUTPUT = '../vendor/ibp_dataset.js'
-DEFAULT_DOWNLOADFOLDER = '../app/assets/downloads/'
+DEFAULT_DOWNLOADFOLDER = '../explorer/assets/downloads/'
 
 DOWNLOADS_COMPARABLE = {}
 DOWNLOADS_COMPARABLE['xlsx'] = 'ibp_data_comparable.xlsx'
@@ -30,7 +27,8 @@ DOWNLOADS_PRE_2015['csv'] = 'ibp_data_%s_2006-2012.csv'
 DOWNLOADS_PRE_2015['csv_zip'] = 'ibp_data_csv_2006-2012.zip'
 DOWNLOADS_PRE_2015['json'] = 'ibp_data_2006-2012.json'
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     # Get ISO data
     iso_data = json.load(open(DEFAULT_ISOFILE))
 
@@ -44,11 +42,15 @@ if __name__=='__main__':
     datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
     datafiles['g_xlsx_csheet'] = 'CountriesRegions'
     datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
-    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012','2015']
-    datafiles['years'] = [2006,2008,2010,2012,2015]
+    datafiles['av_xlsx_sheets'] = ['2006', '2008', '2010', '2012', '2015']
+    datafiles['years'] = [2006, 2008, 2010, 2012, 2015]
 
-    comparable_dataset = lib_read.read( iso_data, datafiles, True )
-    comparable_dataset = lib_write.write_downloads(comparable_dataset, iso_data, DEFAULT_DOWNLOADFOLDER, DOWNLOADS_COMPARABLE, datafiles['years'])
+    comparable_dataset = lib_read.read(iso_data, datafiles, True)
+    comparable_dataset = lib_write.write_downloads(comparable_dataset,
+                                                   iso_data,
+                                                   DEFAULT_DOWNLOADFOLDER,
+                                                   DOWNLOADS_COMPARABLE,
+                                                   datafiles['years'])
 
     # Pre-2015 survey data
     datafiles = {}
@@ -60,11 +62,14 @@ if __name__=='__main__':
     datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
     datafiles['g_xlsx_csheet'] = 'CountriesRegions'
     datafiles['av_xlsx'] = 'Public Availability All Years.xlsx'
-    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012']
-    datafiles['years'] = [2006,2008,2010,2012]
+    datafiles['av_xlsx_sheets'] = ['2006', '2008', '2010', '2012']
+    datafiles['years'] = [2006, 2008, 2010, 2012]
 
-    old_dataset = lib_read.read( iso_data, datafiles, True )
-    old_dataset = lib_write.write_downloads(old_dataset, iso_data, DEFAULT_DOWNLOADFOLDER, DOWNLOADS_PRE_2015, datafiles['years'])
+    old_dataset = lib_read.read(iso_data, datafiles, True)
+    old_dataset = lib_write.write_downloads(old_dataset, iso_data,
+                                            DEFAULT_DOWNLOADFOLDER,
+                                            DOWNLOADS_PRE_2015,
+                                            datafiles['years'])
 
     # 2015 survey data
     datafiles = {}
@@ -76,13 +81,16 @@ if __name__=='__main__':
     datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
     datafiles['g_xlsx_csheet'] = 'CountriesRegions'
     datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
-    datafiles['av_xlsx_sheets'] = ['2006','2008','2010','2012','2015']
+    datafiles['av_xlsx_sheets'] = ['2006', '2008', '2010', '2012', '2015']
     datafiles['pp_xlsx'] = 'public participation.xlsx'
     datafiles['pp_xlsx_sheet'] = 'Sheet1'
     datafiles['years'] = [2015]
 
-    dataset = lib_read.read( iso_data, datafiles, False )
-    dataset = lib_write.write_downloads(dataset, iso_data, DEFAULT_DOWNLOADFOLDER, DOWNLOADS_2015, datafiles['years'])
+    dataset = lib_read.read(iso_data, datafiles, False)
+    dataset = lib_write.write_downloads(dataset, iso_data,
+                                        DEFAULT_DOWNLOADFOLDER,
+                                        DOWNLOADS_2015,
+                                        datafiles['years'])
     dataset.update(old_dataset)
 
     # Write output js file
