@@ -28,7 +28,7 @@ DOWNLOADS_PRE_2015['csv_zip'] = 'ibp_data_csv_2006-2012.zip'
 DOWNLOADS_PRE_2015['json'] = 'ibp_data_2006-2012.json'
 
 
-if __name__ == '__main__':
+def run_etl(js_output_path, download_dir_path, skip_downloads=False):
     # Get ISO data
     iso_data = json.load(open(DEFAULT_ISOFILE))
 
@@ -46,11 +46,12 @@ if __name__ == '__main__':
     datafiles['years'] = [2006, 2008, 2010, 2012, 2015]
 
     comparable_dataset = lib_read.read(iso_data, datafiles, True)
-    comparable_dataset = lib_write.write_downloads(comparable_dataset,
-                                                   iso_data,
-                                                   DEFAULT_DOWNLOADFOLDER,
-                                                   DOWNLOADS_COMPARABLE,
-                                                   datafiles['years'])
+    if not skip_downloads:
+        comparable_dataset = lib_write.write_downloads(comparable_dataset,
+                                                       iso_data,
+                                                       download_dir_path,
+                                                       DOWNLOADS_COMPARABLE,
+                                                       datafiles['years'])
 
     # Pre-2015 survey data
     datafiles = {}
@@ -66,10 +67,11 @@ if __name__ == '__main__':
     datafiles['years'] = [2006, 2008, 2010, 2012]
 
     old_dataset = lib_read.read(iso_data, datafiles, True)
-    old_dataset = lib_write.write_downloads(old_dataset, iso_data,
-                                            DEFAULT_DOWNLOADFOLDER,
-                                            DOWNLOADS_PRE_2015,
-                                            datafiles['years'])
+    if not skip_downloads:
+        old_dataset = lib_write.write_downloads(old_dataset, iso_data,
+                                                download_dir_path,
+                                                DOWNLOADS_PRE_2015,
+                                                datafiles['years'])
 
     # 2015 survey data
     datafiles = {}
@@ -87,11 +89,16 @@ if __name__ == '__main__':
     datafiles['years'] = [2015]
 
     dataset = lib_read.read(iso_data, datafiles, False)
-    dataset = lib_write.write_downloads(dataset, iso_data,
-                                        DEFAULT_DOWNLOADFOLDER,
-                                        DOWNLOADS_2015,
-                                        datafiles['years'])
+    if not skip_downloads:
+        dataset = lib_write.write_downloads(dataset, iso_data,
+                                            download_dir_path,
+                                            DOWNLOADS_2015,
+                                            datafiles['years'])
     dataset.update(old_dataset)
 
     # Write output js file
-    lib_write.write_js(dataset, DEFAULT_OUTPUT)
+    lib_write.write_js(dataset, js_output_path)
+
+
+if __name__ == '__main__':
+    run_etl(DEFAULT_OUTPUT, DEFAULT_DOWNLOADFOLDER)
