@@ -32,8 +32,8 @@ class ReportGenerator extends Backbone.View {
   }
 
   debugReports() {
-    const obi_questions = _EXPLORER_DATASET.groupings[0].entries[0].qs
-    _.forEach(_EXPLORER_DATASET.country, (country) => {
+    const obi_questions = _EXPLORER_DATASET.groupings_2015[0].entries[0].qs
+    _.forEach(_EXPLORER_DATASET.country_2015, (country) => {
       _.forEach(['db_2006', 'db_2008', 'db_2010', 'db_2012', 'db_2015'], (year) => {
         if (_.has(country, year)) {
           let score = this.calculateScore(country[year], obi_questions)
@@ -69,14 +69,14 @@ class ReportGenerator extends Backbone.View {
       this.years = [2006, 2008, 2010, 2012]
     } else {
       renderData = {
-        groupings0: _EXPLORER_DATASET.groupings.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings.slice(1, 2),
-        groupings2: _EXPLORER_DATASET.groupings.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question, (q) => {
+        groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
+        groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
+        groupings2: _EXPLORER_DATASET.groupings_2015.slice(2, 3),
+        question: _.map(_EXPLORER_DATASET.question_2015, (q) => {
           return q
         }),
-        country: _EXPLORER_DATASET.country,
-        regions: _EXPLORER_DATASET.regions
+        country: _EXPLORER_DATASET.country_2015,
+        regions: _EXPLORER_DATASET.regions_2015
       }
       this.years = [2006, 2008, 2010, 2012, 2015]
     }
@@ -148,14 +148,14 @@ class ReportGenerator extends Backbone.View {
       this.years = [2006, 2008, 2010, 2012]
     } else {
       renderData = {
-        groupings0: _EXPLORER_DATASET.groupings.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings.slice(1, 2),
-        groupings2: _EXPLORER_DATASET.groupings.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question, (q) => {
+        groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
+        groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
+        groupings2: _EXPLORER_DATASET.groupings_2015.slice(2, 3),
+        question: _.map(_EXPLORER_DATASET.question_2015, (q) => {
           return q
         }),
-        country: _EXPLORER_DATASET.country,
-        regions: _EXPLORER_DATASET.regions
+        country: _EXPLORER_DATASET.country_2015,
+        regions: _EXPLORER_DATASET.regions_2015
       }
       this.years = [2006, 2008, 2010, 2012, 2015]
     }
@@ -217,7 +217,7 @@ class ReportGenerator extends Backbone.View {
     if (this.year != '2015') {
       countries = _EXPLORER_DATASET.country_old
     } else {
-      countries = _EXPLORER_DATASET.country
+      countries = _EXPLORER_DATASET.country_2015
     }
     let obj
     _.forEach(countries, (country) => {
@@ -410,8 +410,8 @@ class ReportGenerator extends Backbone.View {
       datasetCountry = _EXPLORER_DATASET.country_old
       all_years = ['2006', '2008', '2010', '2012']
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
-      datasetCountry = _EXPLORER_DATASET.country
+      datasetRegions = _EXPLORER_DATASET.regions_2015
+      datasetCountry = _EXPLORER_DATASET.country_2015
       all_years = ['2015']
     }
     let out = []

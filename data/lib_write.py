@@ -14,13 +14,14 @@ def write_js(dataset, jsonfilename):
 def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     # Populate the downloads folder
     # -----------------------------
-    if years[0] == 2015:
+    if years[0] >= 2015:
         keys = {}
-        keys['question'] = 'question'
-        keys['country'] = 'country'
-        keys['groupings'] = 'groupings'
-        keys['regions'] = 'regions'
-        keys['availability'] = 'availability'
+        keys['question'] = 'question_%s' % years[0]
+        keys['country'] = 'country_%s' % years[0]
+        keys['groupings'] = 'groupings_%s' % years[0]
+        keys['regions'] = 'regions_%s' % years[0]
+        keys['availability'] = 'availability_%s' % years[0]
+        keys['downloads'] = 'downloads_%s' % years[0]
     else:
         keys = {}
         keys['question'] = 'question_old'
@@ -28,6 +29,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
         keys['groupings'] = 'groupings_old'
         keys['regions'] = 'regions_old'
         keys['availability'] = 'availability_old'
+        keys['downloads'] = 'downloads_old'
     # Import all data
     print('Importing all data...')
     Q_HEADERS, Q_DATA = _questions_as_csv(dataset, keys['question'])
@@ -106,10 +108,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
         filename = os.path.join(downloadfoldername, x['filename'])
         raw_size = os.path.getsize(filename)
         x['size'] = _format_kilobytes(raw_size)
-    if years[0] == 2015:
-        dataset['downloads'] = downloads
-    else:
-        dataset['downloads_old'] = downloads
+    dataset[keys['downloads']] = downloads
     return dataset
 
 

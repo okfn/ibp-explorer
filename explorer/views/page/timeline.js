@@ -184,7 +184,7 @@ class TimelinePage extends View {
     let html = ''
     let selected_countries = []
     _.forEach(region, (reg) => {
-      _.forEach(_EXPLORER_DATASET.regions[reg].contains, (contained) => {
+      _.forEach(_EXPLORER_DATASET.regions_2015[reg].contains, (contained) => {
         selected_countries.push(contained)
       })
     })

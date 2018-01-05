@@ -83,7 +83,7 @@ class ProfilePage extends Backbone.View {
     if (this.year !== '2015') {
       datasetCountry = _EXPLORER_DATASET.country_old
     } else {
-      datasetCountry = _EXPLORER_DATASET.country
+      datasetCountry = _EXPLORER_DATASET.country_2015
     }
     let found = _.find(datasetCountry, (x) => {
       return x.alpha2 === alpha2
@@ -107,7 +107,7 @@ class ProfilePage extends Backbone.View {
     $(window).scrollTop(0)
     const renderData = {
       alpha2: this.alpha2
-      , countries: _EXPLORER_DATASET.country
+      , countries: _EXPLORER_DATASET.country_2015
       , data: this.data
       , empty: this.alpha2 === ''
       , main_website_url: this._ibp_website_url(this.alpha2)
@@ -259,7 +259,7 @@ class ProfilePage extends Backbone.View {
     const target = $(e.delegateTarget)
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
-      datasetQuestion = _EXPLORER_DATASET.question
+      datasetQuestion = _EXPLORER_DATASET.question_2015
     } else {
       datasetQuestion = _EXPLORER_DATASET.question_old
     }
@@ -463,7 +463,7 @@ class ProfilePage extends Backbone.View {
     let detailsData = this._get_details(this.data, questionSet)
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
-      datasetQuestion = _EXPLORER_DATASET.question
+      datasetQuestion = _EXPLORER_DATASET.question_2015
     } else {
       datasetQuestion = _EXPLORER_DATASET.question_old
     }

@@ -14,7 +14,7 @@ class TestETLOutput:
 
     @classmethod
     def setup_class(cls):
-        skip_downloads = True  # If True, don't write download files (faster)
+        skip_downloads = False  # If True, don't write download files (faster)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         js_output_path = os.path.join(dir_path, 'data/etl_output_dataset.js')
         json_output_path = \

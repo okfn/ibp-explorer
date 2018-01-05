@@ -34,7 +34,7 @@ class ProjectPage extends View {
     $(window).scrollTop(0)
     this.region = '0'
     this.countriesIncluded = []
-    _.forEach(_EXPLORER_DATASET.regions[parseInt(this.region)].contains, (contained) => {
+    _.forEach(_EXPLORER_DATASET.regions_2015[parseInt(this.region)].contains, (contained) => {
       this.countriesIncluded.push(contained);
     })
     this.renderData = {
@@ -67,7 +67,7 @@ class ProjectPage extends View {
       allQ.push(n)
     })
     _.forEach(allQ, (q) => {
-      let data = _EXPLORER_DATASET.question[q + '']
+      let data = _EXPLORER_DATASET.question_2015[q + '']
       questions.push(data)
     })
     return questions
@@ -183,7 +183,7 @@ class ProjectPage extends View {
   }
 
   _completeAnswer(country, number) {
-    let q = _EXPLORER_DATASET.question[number]
+    let q = _EXPLORER_DATASET.question_2015[number]
     const countries = this._getCountry()
     _.forEach(countries, (obj) => {
       if (obj['alpha2'] === country) {
@@ -252,7 +252,7 @@ class ProjectPage extends View {
       this.region = '0'
     }
     this.countriesIncluded = []
-    _.forEach(_EXPLORER_DATASET.regions[parseInt(this.region)].contains, (contained) => {
+    _.forEach(_EXPLORER_DATASET.regions_2015[parseInt(this.region)].contains, (contained) => {
       this.countriesIncluded.push(contained)
     })
     this.renderData = {

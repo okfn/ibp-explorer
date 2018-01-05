@@ -88,9 +88,9 @@ class ProjectPage extends Backbone.View {
       countries = _EXPLORER_DATASET.country_old
       countriesExcluded = _EXPLORER_DATASET.excluded_country_old
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
-      datasetAv = _EXPLORER_DATASET.availability
-      countries = _EXPLORER_DATASET.country
+      datasetRegions = _EXPLORER_DATASET.regions_2015
+      datasetAv = _EXPLORER_DATASET.availability_2015
+      countries = _EXPLORER_DATASET.country_2015
       countriesExcluded = _EXPLORER_DATASET.excluded_country
     }
 
@@ -100,8 +100,8 @@ class ProjectPage extends Backbone.View {
         countriesCompare = _EXPLORER_DATASET.country_old
         countriesCompareExcluded = _EXPLORER_DATASET.excluded_country_old
       } else {
-        datasetAvCompare = _EXPLORER_DATASET.availability
-        countriesCompare = _EXPLORER_DATASET.country
+        datasetAvCompare = _EXPLORER_DATASET.availability_2015
+        countriesCompare = _EXPLORER_DATASET.country_2015
         countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
       }
     }

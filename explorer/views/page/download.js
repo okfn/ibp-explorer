@@ -66,7 +66,7 @@ class DownloadPage extends Backbone.View {
     const headers = ['NUMBER','TEXT','A','B','C','D','E']
     this._writeLine(out, headers)
     // Content
-    const q = _EXPLORER_DATASET.question
+    const q = _EXPLORER_DATASET.question_2015
     _.forEach(questionSet, (x) => {
       this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e])
     })
@@ -96,8 +96,8 @@ class DownloadPage extends Backbone.View {
       datasetCountry = _EXPLORER_DATASET.country_old
       all_years = ['2006', '2008', '2010', '2012']
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
-      datasetCountry = _EXPLORER_DATASET.country
+      datasetRegions = _EXPLORER_DATASET.regions_2015
+      datasetCountry = _EXPLORER_DATASET.country_2015
       all_years = ['2015']
     }
     let out = []
@@ -162,9 +162,9 @@ class DownloadPage extends Backbone.View {
         sf: false,
         cq: false,
         cr: false,
-        excel: [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads[0]],
-        csv: [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads[1]],
-        json: [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads[2]]
+        excel: [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads_2015[0]],
+        csv: [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads_2015[1]],
+        json: [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads_2015[2]]
       }
     } else if (value === 'sf') {
       renderFiles = {

@@ -119,7 +119,7 @@ class ProjectPage extends View {
     if (this.year !== '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_old
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
+      datasetRegions = _EXPLORER_DATASET.regions_2015
     }
     const countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
     let selected_countries = []

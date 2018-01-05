@@ -114,16 +114,16 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
   // 2015 survey dataset
   // Assign an ID to all groupings
   let id = 0
-  _.forEach(explorerDataset.groupings, (x) => {
+  _.forEach(explorerDataset.groupings_2015, (x) => {
     _.forEach(x.entries, (y) => {
       y.group_id = id++
     })
   })
   id = 0
-  _.forEach(explorerDataset.question, (qdata, qnum) => {
+  _.forEach(explorerDataset.question_2015, (qdata, qnum) => {
     qdata.groups = []
     // Tag the question with a list of parent groups
-    _.forEach(explorerDataset.groupings, (category) => {
+    _.forEach(explorerDataset.groupings_2015, (category) => {
       _.forEach(category.entries, (group) => {
         if (_.contains(group.qs, qnum)) {
           qdata.groups.push('group-'+group.group_id)
@@ -136,12 +136,12 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
     name: 'Entire World',
     contains: []
   }
-  _.forEach(explorerDataset.country, (country) => {
+  _.forEach(explorerDataset.country_2015, (country) => {
     entire_world.contains.push(country.alpha2)
   })
-  explorerDataset.regions.unshift(entire_world)
+  explorerDataset.regions_2015.unshift(entire_world)
   // Attach a region_index to each region
-  _.forEach(explorerDataset.regions, (element, index) => {
+  _.forEach(explorerDataset.regions_2015, (element, index) => {
     element.region_index = parseInt(index)
   })
 

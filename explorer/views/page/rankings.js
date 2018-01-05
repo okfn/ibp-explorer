@@ -91,8 +91,8 @@ class ProjectPage extends View {
       datasetRegions = _EXPLORER_DATASET.regions_old
       datasetCountry = _EXPLORER_DATASET.country_old
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
-      datasetCountry = _EXPLORER_DATASET.country
+      datasetRegions = _EXPLORER_DATASET.regions_2015
+      datasetCountry = _EXPLORER_DATASET.country_2015
     }
     let target = $('#rankings-table tbody').empty()
     if (questionSet.length === 0) {
