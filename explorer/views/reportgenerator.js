@@ -32,14 +32,14 @@ class ReportGenerator extends Backbone.View {
   }
 
   debugReports() {
-    const obi_questions = _EXPLORER_DATASET.groupings_2015[0].entries[0].qs
+    const obiQuestions = _EXPLORER_DATASET.groupings_2015[0].entries[0].qs
     _.forEach(_EXPLORER_DATASET.country_2015, (country) => {
       _.forEach(['db_2006', 'db_2008', 'db_2010', 'db_2012', 'db_2015'], (year) => {
         if (_.has(country, year)) {
-          let score = this.calculateScore(country[year], obi_questions)
-          expected = country[year].obi
+          const score = this.calculateScore(country[year], obiQuestions)
+          const expected = country[year].obi
           if (!Math.round(expected * 100) == Math.round(score * 100)) {
-            console.warn('Warning ' + country.name + '.' + year + ' failed')
+            console.warn(`Warning ${country.name}.${year} failed`)
           }
         }
       })
