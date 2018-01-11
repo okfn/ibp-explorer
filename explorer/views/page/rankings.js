@@ -36,15 +36,15 @@ class ProjectPage extends View {
     $('.sortbyname').click(this._sortByNameToggle)
     $('.sortbyname[data-sortbyname="' + this.sortByName + '"]').addClass('active')
     $('#rankings-toggles button').click(this._rankingsToggle)
-    $('button[data-year="2015"]').click()
+    $('button[data-year="2017"]').click()
   }
 
-  //Private methods
+  // Private methods
   _rankingsToggle(e) {
-    let target = $(e.delegateTarget)
-    let lastYear = $('#rankings-toggles button.active').attr('data-year')
-    let currentYear = target.attr('data-year')
-    let newReport = (lastYear === '2015' || currentYear === '2015')
+    const target = $(e.delegateTarget)
+    const lastYear = $('#rankings-toggles button.active').attr('data-year')
+    const currentYear = target.attr('data-year')
+    const newReport = (lastYear !== currentYear)
     $('#rankings-toggles button').removeClass('active')
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
@@ -55,7 +55,6 @@ class ProjectPage extends View {
       }
       reportGenerator.update(this.year, collapsed)
     }
-    this._reflow()
   }
 
   _count(array, search, questionSet) {
@@ -83,40 +82,46 @@ class ProjectPage extends View {
     return false
   }
 
-  _reflow(dataset = reportGenerator.dataset, questionSet = reportGenerator.questionSet, region = reportGenerator.region) {
-    let obj, el
+  _reflow(dataset = reportGenerator.dataset,
+          questionSet = reportGenerator.questionSet,
+          region = reportGenerator.region) {
+    let obj
+    let el
     let datasetRegions
     let datasetCountry
-    if (this.year != 2015) {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-    } else {
+    if (this.year === '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetCountry = _EXPLORER_DATASET.country_2015
+    } else if (this.year === '2017') {
+      datasetRegions = _EXPLORER_DATASET.regions_2017
+      datasetCountry = _EXPLORER_DATASET.country_2017
+    } else {
+      datasetRegions = _EXPLORER_DATASET.regions_old
+      datasetCountry = _EXPLORER_DATASET.country_old
     }
-    let target = $('#rankings-table tbody').empty()
+    const target = $('#rankings-table tbody').empty()
     if (questionSet.length === 0) {
       target.html('<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>')
       return
     }
-    let data = []
-    let selected_countries = []
+    const data = []
+    const selectedCountries = []
 
     _.forEach(region, (reg) => {
       _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+        selectedCountries.push(contained)
       })
     })
 
     _.forEach(datasetCountry, (country) => {
-      if (!(_.has(country, 'db_' + this.year))) {
+      if (!(_.has(country, `db_${this.year}`))) {
         return
       }
-      if (!(_.contains(selected_countries, country.alpha2))) {
+      if (!(_.contains(selectedCountries, country.alpha2))) {
         return
       }
 
-      const db = country['db_' + this.year]
+      const db = country[`db_${this.year}`]
       obj = {
         country: country.name,
         alpha2: country.alpha2,

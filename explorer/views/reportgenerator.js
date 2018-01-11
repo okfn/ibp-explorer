@@ -11,7 +11,7 @@ class ReportGenerator extends Backbone.View {
       this.debugReports()
     }
     this.region = [0] // Initially our custom 'Entire World' collection
-    this.year = '2015'
+    this.year = '2017'
     this._download = _.bind(this._download, this)
     this._csvAnswers = _.bind(this._csvAnswers, this)
     this._number_to_letter = _.bind(this._number_to_letter, this)
@@ -48,26 +48,9 @@ class ReportGenerator extends Backbone.View {
   }
 
 
-  // Public methods
-  setInitialState() {
-    this.$el.find('#group-0').click()
-  }
-
-  render(target) {
+  getRenderData() {
     let renderData
-    if (this.year != '2015') {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_old.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_old.slice(1, 3),
-        groupings2: _EXPLORER_DATASET.groupings_old.slice(3, 5),
-        question: _.map(_EXPLORER_DATASET.question_old, (q) => {
-          return q
-        }),
-        country: _EXPLORER_DATASET.country_old,
-        regions: _EXPLORER_DATASET.regions_old
-      }
-      this.years = [2006, 2008, 2010, 2012]
-    } else {
+    if (this.year === '2015') {
       renderData = {
         groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
         groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
@@ -79,7 +62,43 @@ class ReportGenerator extends Backbone.View {
         regions: _EXPLORER_DATASET.regions_2015
       }
       this.years = [2006, 2008, 2010, 2012, 2015]
+    } else if (this.year === '2017') {
+      renderData = {
+        groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1),
+        groupings1: _EXPLORER_DATASET.groupings_2017.slice(1, 2),
+        groupings2: _EXPLORER_DATASET.groupings_2017.slice(2, 3),
+        question: _.map(_EXPLORER_DATASET.question_2017, (q) => {
+          return q
+        }),
+        country: _EXPLORER_DATASET.country_2017,
+        regions: _EXPLORER_DATASET.regions_2017
+      }
+      this.years = [2006, 2008, 2010, 2012, 2015, 2017]
+    } else {
+      renderData = {
+        groupings0: _EXPLORER_DATASET.groupings_old.slice(0, 1),
+        groupings1: _EXPLORER_DATASET.groupings_old.slice(1, 3),
+        groupings2: _EXPLORER_DATASET.groupings_old.slice(3, 5),
+        question: _.map(_EXPLORER_DATASET.question_old, (q) => {
+          return q
+        }),
+        country: _EXPLORER_DATASET.country_old,
+        regions: _EXPLORER_DATASET.regions_old
+      }
+      this.years = [2006, 2008, 2010, 2012]
     }
+
+    return renderData
+  }
+
+  // Public methods
+  setInitialState() {
+    this.$el.find('#group-0').click()
+  }
+
+  render(target) {
+    const renderData = this.getRenderData()
+
     // Write to DOM
     this.$el.html(template(renderData))
     target.empty().append(this.$el)
@@ -133,32 +152,9 @@ class ReportGenerator extends Backbone.View {
 
   update(selectedYear, collapsed, entireWorld = false) {
     this.year = selectedYear
-    let renderData
-    if (this.year != '2015') {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_old.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_old.slice(1, 3),
-        groupings2: _EXPLORER_DATASET.groupings_old.slice(3, 5),
-        question: _.map(_EXPLORER_DATASET.question_old, (q) => {
-          return q
-        }),
-        country: _EXPLORER_DATASET.country_old,
-        regions: _EXPLORER_DATASET.regions_old
-      }
-      this.years = [2006, 2008, 2010, 2012]
-    } else {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
-        groupings2: _EXPLORER_DATASET.groupings_2015.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question_2015, (q) => {
-          return q
-        }),
-        country: _EXPLORER_DATASET.country_2015,
-        regions: _EXPLORER_DATASET.regions_2015
-      }
-      this.years = [2006, 2008, 2010, 2012, 2015]
-    }
+
+    const renderData = this.getRenderData()
+
     // Write to DOM
     this.$el.html(template(renderData))
 
@@ -214,10 +210,12 @@ class ReportGenerator extends Backbone.View {
     // Calculate dataset of contries and scores
     this.dataset_unrounded = []
     let countries
-    if (this.year != '2015') {
-      countries = _EXPLORER_DATASET.country_old
-    } else {
+    if (this.year === '2015') {
       countries = _EXPLORER_DATASET.country_2015
+    } else if (this.year === '2017') {
+      countries = _EXPLORER_DATASET.country_2017
+    } else {
+      countries = _EXPLORER_DATASET.country_old
     }
     let obj
     _.forEach(countries, (country) => {
@@ -229,7 +227,7 @@ class ReportGenerator extends Backbone.View {
         if (!(_.has(country, 'db_' + year))) {
           return
         }
-        let score = this.calculateScore(country['db_' + year], this.questionSet)
+        const score = this.calculateScore(country['db_' + year], this.questionSet)
         obj[year] = score
       })
       this.dataset_unrounded.push(obj)
@@ -404,15 +402,15 @@ class ReportGenerator extends Backbone.View {
   _csvAnswers(dataset, region, questionSet) {
     let datasetRegions
     let datasetCountry
-    let all_years
+    let allYears
     if (this.year != '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_old
       datasetCountry = _EXPLORER_DATASET.country_old
-      all_years = ['2006', '2008', '2010', '2012']
+      allYears = ['2006', '2008', '2010', '2012']
     } else {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetCountry = _EXPLORER_DATASET.country_2015
-      all_years = ['2015']
+      allYears = ['2015']
     }
     let out = []
     const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
@@ -428,25 +426,26 @@ class ReportGenerator extends Backbone.View {
     _.forEach(datasetCountry, (x) => {
       tmp[x.alpha2] = x
     })
-    let selected_countries = []
+    let selectedCountries = []
     _.forEach(region, (reg) => {
       _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+        selectedCountries.push(contained)
       })
     })
     _.forEach(dataset, (country) => {
       // Maybe has?
-      if (!_.contains(selected_countries, country.alpha2)) return
-      let selected_year = $('.year-selector button.active').attr('data-year') || $('input[name="downloadyear"]:checked').val()
+      if (!_.contains(selectedCountries, country.alpha2)) return
+      let selectedYear = $('.year-selector button.active').attr('data-year') ||
+                           $('input[name="downloadyear"]:checked').val()
       if ($('#datasheet-toggles button.active').attr('data-year') == '2006') {
-        selected_year = 'all'
+        selectedYear = 'all'
       }
-      if (!_.contains(all_years, selected_year)) {
-        selected_year = all_years
+      if (!_.contains(allYears, selectedYear)) {
+        selectedYear = allYears
       } else {
-        selected_year = [selected_year]
+        selectedYear = [selectedYear]
       }
-      _.forEach(selected_year, (year) => {
+      _.forEach(selectedYear, (year) => {
         if (!(_.has(country, year))) return
         const countryYearValue = (country[year] === -1) ? '' : country[year]
         const row = [country.alpha2, country.country, year, countryYearValue]
