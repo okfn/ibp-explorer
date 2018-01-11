@@ -31,7 +31,7 @@ class TimelinePage extends View {
       collapsed = true
     }
     reportGenerator.update('2015', collapsed, true)
-    $(window).scrollTop(0);
+    $(window).scrollTop(0)
     this.$el.html(template_page())
     target.html(this.$el)
     $('input[name="timeline"]').bind('change', this._onToggleMode)
@@ -39,7 +39,7 @@ class TimelinePage extends View {
   }
 
   _initializeReport() {
-    reportGenerator.update('2015', false, true);
+    reportGenerator.update('2015', false, true)
     const lastReport = {
       dataset: reportGenerator.dataset,
       region: reportGenerator.region,
@@ -55,79 +55,79 @@ class TimelinePage extends View {
       region: lastReport.region,
       dataset_unrounded: []
     }
-    _.forEach(lastReport.dataset_unrounded, (country_last) => {
-      let country_found = false
-      _.forEach(oldReport.dataset_unrounded, (country_old) => {
-        if (country_last.alpha2 === country_old.alpha2) {
-          country_found = true
+    _.forEach(lastReport.dataset_unrounded, (countryLast) => {
+      let countryFound = false
+      _.forEach(oldReport.dataset_unrounded, (countryOld) => {
+        if (countryLast.alpha2 === countryOld.alpha2) {
+          countryFound = true
           const obj = {
-            alpha2: country_last.alpha2,
-            country: country_last.country
+            alpha2: countryLast.alpha2,
+            country: countryLast.country
           }
-          if ('2006' in country_old) {
-            obj['2006'] = country_old['2006']
+          if ('2006' in countryOld) {
+            obj['2006'] = countryOld['2006']
           }
-          if ('2008' in country_old) {
-            obj['2008'] = country_old['2008']
+          if ('2008' in countryOld) {
+            obj['2008'] = countryOld['2008']
           }
-          if ('2010' in country_old) {
-            obj['2010'] = country_old['2010']
+          if ('2010' in countryOld) {
+            obj['2010'] = countryOld['2010']
           }
-          if ('2012' in country_old) {
-            obj['2012'] = country_old['2012']
+          if ('2012' in countryOld) {
+            obj['2012'] = countryOld['2012']
           }
-          obj['2015'] = country_last['2015']
+          obj['2015'] = countryLast['2015']
           this.timelineReport.dataset_unrounded.push(obj)
         }
       })
-      if (!country_found) {
+      if (!countryFound) {
         const obj = {
-          alpha2: country_last.alpha2,
-          country: country_last.country
-        };
-        obj['2015'] = country_last['2015'];
+          alpha2: countryLast.alpha2,
+          country: countryLast.country
+        }
+        obj['2015'] = countryLast['2015']
         this.timelineReport.dataset_unrounded.push(obj)
       }
     })
-    _.forEach(lastReport.dataset, (country_last) => {
-      let country_found = false
-      _.forEach(oldReport.dataset, (country_old) => {
-        if (country_last.alpha2 === country_old.alpha2) {
-          country_found = true
+    _.forEach(lastReport.dataset, (countryLast) => {
+      let countryFound = false
+      _.forEach(oldReport.dataset, (countryOld) => {
+        if (countryLast.alpha2 === countryOld.alpha2) {
+          countryFound = true
           const obj = {
-            alpha2: country_last.alpha2,
-            country: country_last.country
+            alpha2: countryLast.alpha2,
+            country: countryLast.country
           }
-          if ('2006' in country_old) {
-            obj['2006'] = country_old['2006']
+          if ('2006' in countryOld) {
+            obj['2006'] = countryOld['2006']
           }
-          if ('2008' in country_old) {
-            obj['2008'] = country_old['2008']
+          if ('2008' in countryOld) {
+            obj['2008'] = countryOld['2008']
           }
-          if ('2010' in country_old) {
-            obj['2010'] = country_old['2010']
+          if ('2010' in countryOld) {
+            obj['2010'] = countryOld['2010']
           }
-          if ('2012' in country_old) {
-            obj['2012'] = country_old['2012']
+          if ('2012' in countryOld) {
+            obj['2012'] = countryOld['2012']
           }
-          obj['2015'] = country_last['2015']
-          this.timelineReport.dataset.push(obj);
+          obj['2015'] = countryLast['2015']
+          this.timelineReport.dataset.push(obj)
         }
       })
-      if (!country_found) {
+      if (!countryFound) {
         const obj = {
-          alpha2: country_last.alpha2,
-          country: country_last.country
-        };
-        obj['2015'] = country_last['2015'];
+          alpha2: countryLast.alpha2,
+          country: countryLast.country
+        }
+        obj['2015'] = countryLast['2015']
         this.timelineReport.dataset.push(obj)
       }
     })
-  };
+  }
 
-  _onToggleMode(showRank=true) {
+  _onToggleMode(showRank = true) {
     const value = $('input[name="timeline"]:checked').val()
-    assert(value === 'rankings' || value === 'scores')
+    assert (value === 'rankings' || value === 'scores')
     if (value === 'rankings') {
       $('.timeline-cell-score').hide()
       $('.timeline-cell-rank').show()
@@ -139,8 +139,7 @@ class TimelinePage extends View {
 
   _buildRankingTable(year, dataset, selected_countries) {
     // Basic dataset
-    var i, j, len, len1, ref1, x;
-    let out = []
+    const out = []
     _.forEach(dataset, (obj, country) => {
       if (!_.has(obj, year)) return
       if (!_.contains(selected_countries, obj.alpha2)) return
@@ -151,14 +150,14 @@ class TimelinePage extends View {
     let rank = 0
     let latest = 999
     let n = 0
-    let tag_duplicates = []
+    const tagDuplicates = []
     _.forEach(out, (x) => {
       n += 1
       if (x.score < latest) {
         latest = x.score
         rank = n
       } else {
-        tag_duplicates.push(x.score)
+        tagDuplicates.push(x.score)
       }
       x.rank = rank
     })
@@ -168,7 +167,7 @@ class TimelinePage extends View {
         x.rank = 'N/A'
         x.score = 'N/A'
       }
-      if (_.contains(tag_duplicates, x.score)) {
+      if (_.contains(tagDuplicates, x.score)) {
         x.rank = '= ' + x.rank
       }
       x.score = Math.round(x.score)
@@ -176,27 +175,27 @@ class TimelinePage extends View {
     return out
   }
 
-  _updateReport(dataset=this.timelineReport.dataset,
-                region=this.timelineReport.region,
-                dataset_unrounded=this.timelineReport.dataset_unrounded) {
+  _updateReport(dataset = this.timelineReport.dataset,
+                region = this.timelineReport.region,
+                dataset_unrounded = this.timelineReport.dataset_unrounded) {
     const target = $('#timeline-columns')
     if (target.length === 0) return
     let html = ''
-    let selected_countries = []
+    const selectedCountries = []
     _.forEach(region, (reg) => {
       _.forEach(_EXPLORER_DATASET.regions_2015[reg].contains, (contained) => {
-        selected_countries.push(contained)
+        selectedCountries.push(contained)
       })
     })
-    _.forEach([2006,2008,2010,2012], (year) => {
+    _.forEach([2006, 2008, 2010, 2012], (year) => {
       html += template_timeline_column_abbr({
         year: year,
-        data: this._buildRankingTable(year, dataset_unrounded, selected_countries)
+        data: this._buildRankingTable(year, dataset_unrounded, selectedCountries)
       })
     })
     html += template_timeline_column({
       year: 2015,
-      data: this._buildRankingTable(2015, dataset_unrounded, selected_countries)
+      data: this._buildRankingTable(2015, dataset_unrounded, selectedCountries)
     })
     target.html(html)
     target.find('tr').bind('mouseover', this._mouseoverRanking)
@@ -215,21 +214,21 @@ class TimelinePage extends View {
     }
   }
 
-  _redrawJsPlumb(alpha2=null) {
+  _redrawJsPlumb(alpha2 = null) {
     if (alpha2) {
-      this.mouseoverAlpha2 = alpha2;
+      this.mouseoverAlpha2 = alpha2
     }
-    $('.hover').removeClass('hover');
-    const els = $('.timeline-row-' + this.mouseoverAlpha2);
+    $('.hover').removeClass('hover')
+    const els = $('.timeline-row-' + this.mouseoverAlpha2)
     if (!els.length) return
     els.addClass('hover')
     jsPlumb.deleteEveryEndpoint()
     // This is expensive, so hold off until the mouse has settled for a few ms
     if (this.timeout) {
-      clearTimeout(this.timeout);
+      clearTimeout(this.timeout)
     }
-    this.timeout = setTimeout(function() {
-      _.forEach(_.range(els.length-1), (x) => {
+    this.timeout = setTimeout(function () {
+      _.forEach(_.range(els.length - 1), (x) => {
         jsPlumb.connect({
           source: els[x],
           target: els[x + 1],
