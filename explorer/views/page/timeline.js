@@ -34,90 +34,57 @@ class TimelinePage extends View {
   }
 
   _initializeReport() {
+    /*
+    Create report data structure to drive timeline.
+
+    Query reportGenerator for data from 2017, 2015 and 'old' years (2006-2012).
+    Collect results together, only include countries found in the most recent
+    year (2017).
+    */
+
+    const filteredYearReport = function (year, countries) {
+      // Return report object for year, filtered with `countries`.
+      reportGenerator.update(year, false, true)
+      const filteredDatasets = _.filter(reportGenerator.dataset, c =>
+        _.contains(countries, c.alpha2)
+      )
+      const filteredDatasetsUnrounded = _.filter(reportGenerator.dataset_unrounded, c =>
+        _.contains(countries, c.alpha2)
+      )
+      return {
+        dataset: filteredDatasets,
+        dataset_unrounded: _.clone(filteredDatasetsUnrounded)
+      }
+    }
+
+    // Initialise our most recent year object
     reportGenerator.update('2015', false, true)
     const lastReport = {
       dataset: reportGenerator.dataset,
       region: reportGenerator.region,
       dataset_unrounded: reportGenerator.dataset_unrounded
     }
-    reportGenerator.update('2006', false, true)
-    const oldReport = {
-      dataset: reportGenerator.dataset,
-      dataset_unrounded: reportGenerator.dataset_unrounded
-    }
+    // List of country codes we're interested in.
+    const latestCountries = _.pluck(lastReport.dataset, 'alpha2')
+
+    // Get the old report, filtered for the countries we're interested in.
+    const oldReport = filteredYearReport('2006', latestCountries)
+
+    // Merge the report properties for latest, and old.
+    const mergedDataset = _.map(lastReport.dataset, c => {
+      const oldCountry = _.find(oldReport.dataset, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, oldCountry)
+    })
+    const mergedDatasetUnrounded = _.map(lastReport.dataset_unrounded, c => {
+      const oldCountry = _.find(oldReport.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, oldCountry)
+    })
+
     this.timelineReport = {
-      dataset: [],
+      dataset: mergedDataset,
       region: lastReport.region,
-      dataset_unrounded: []
+      dataset_unrounded: mergedDatasetUnrounded
     }
-    _.forEach(lastReport.dataset_unrounded, (countryLast) => {
-      let countryFound = false
-      _.forEach(oldReport.dataset_unrounded, (countryOld) => {
-        if (countryLast.alpha2 === countryOld.alpha2) {
-          countryFound = true
-          const obj = {
-            alpha2: countryLast.alpha2,
-            country: countryLast.country
-          }
-          if ('2006' in countryOld) {
-            obj['2006'] = countryOld['2006']
-          }
-          if ('2008' in countryOld) {
-            obj['2008'] = countryOld['2008']
-          }
-          if ('2010' in countryOld) {
-            obj['2010'] = countryOld['2010']
-          }
-          if ('2012' in countryOld) {
-            obj['2012'] = countryOld['2012']
-          }
-          obj['2015'] = countryLast['2015']
-          this.timelineReport.dataset_unrounded.push(obj)
-        }
-      })
-      if (!countryFound) {
-        const obj = {
-          alpha2: countryLast.alpha2,
-          country: countryLast.country
-        }
-        obj['2015'] = countryLast['2015']
-        this.timelineReport.dataset_unrounded.push(obj)
-      }
-    })
-    _.forEach(lastReport.dataset, (countryLast) => {
-      let countryFound = false
-      _.forEach(oldReport.dataset, (countryOld) => {
-        if (countryLast.alpha2 === countryOld.alpha2) {
-          countryFound = true
-          const obj = {
-            alpha2: countryLast.alpha2,
-            country: countryLast.country
-          }
-          if ('2006' in countryOld) {
-            obj['2006'] = countryOld['2006']
-          }
-          if ('2008' in countryOld) {
-            obj['2008'] = countryOld['2008']
-          }
-          if ('2010' in countryOld) {
-            obj['2010'] = countryOld['2010']
-          }
-          if ('2012' in countryOld) {
-            obj['2012'] = countryOld['2012']
-          }
-          obj['2015'] = countryLast['2015']
-          this.timelineReport.dataset.push(obj)
-        }
-      })
-      if (!countryFound) {
-        const obj = {
-          alpha2: countryLast.alpha2,
-          country: countryLast.country
-        }
-        obj['2015'] = countryLast['2015']
-        this.timelineReport.dataset.push(obj)
-      }
-    })
   }
 
   _onToggleMode() {
