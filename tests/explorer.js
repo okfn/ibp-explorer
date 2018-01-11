@@ -59,7 +59,7 @@ describe('Explorer dataset', function () {
 
     it('should match for each item against expected data', function (done) {
       _.each(mungedDataset, function (v, k) {
-        assert.deepEqual(v, expectedDataset[k])
+        assert.deepEqual(v, expectedDataset[k], `Data object not as expected for key "${k}"`)
       })
       done()
     })
