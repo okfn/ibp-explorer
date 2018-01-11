@@ -120,7 +120,7 @@ class TimelinePage extends View {
     })
   }
 
-  _onToggleMode(showRank = true) {
+  _onToggleMode() {
     const value = $('input[name="timeline"]:checked').val()
     assert (value === 'rankings' || value === 'scores')
     if (value === 'rankings') {
@@ -198,7 +198,7 @@ class TimelinePage extends View {
       this.mouseoverAlpha2 = $('#timeline-column-2015 tbody tr:first-child').attr('data-alpha2')
     }
     this._redrawJsPlumb()
-    return this._onToggleMode()
+    this._onToggleMode()
   }
 
   _mouseoverRanking(e) {
