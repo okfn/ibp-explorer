@@ -111,80 +111,61 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
     })
   })
 
-  // 2015 survey dataset
   // Assign an ID to all groupings
-  let id = 0
-  _.forEach(explorerDataset.groupings_2015, (x) => {
-    _.forEach(x.entries, (y) => {
-      y.group_id = id++
-    })
-  })
-  id = 0
-  _.forEach(explorerDataset.question_2015, (qdata, qnum) => {
-    qdata.groups = []
-    // Tag the question with a list of parent groups
-    _.forEach(explorerDataset.groupings_2015, (category) => {
-      _.forEach(category.entries, (group) => {
-        if (_.contains(group.qs, qnum)) {
-          qdata.groups.push('group-'+group.group_id)
-        }
+  const assignGroupIds = function (dataset, suffix) {
+    let id = 0
+    _.forEach(dataset['groupings_' + suffix], x => {
+      _.forEach(x.entries, y => {
+        y.group_id = id++
       })
     })
-  })
-  // Create an 'Entire World' region
-  let entire_world = {
-    name: 'Entire World',
-    contains: []
+
+    _.forEach(dataset['question_' + suffix], (qdata, qnum) => {
+      qdata.groups = []
+      // Tag the question with a list of parent groups
+      _.forEach(dataset['groupings_' + suffix], (category) => {
+        _.forEach(category.entries, (group) => {
+          if (_.contains(group.qs, qnum)) {
+            qdata.groups.push('group-' + group.group_id)
+          }
+        })
+      })
+    })
   }
-  _.forEach(explorerDataset.country_2015, (country) => {
-    entire_world.contains.push(country.alpha2)
-  })
-  explorerDataset.regions_2015.unshift(entire_world)
-  // Attach a region_index to each region
-  _.forEach(explorerDataset.regions_2015, (element, index) => {
-    element.region_index = parseInt(index)
-  })
+
+  const assignRegion = function (dataset, suffix) {
+    // Create an 'Entire World' region
+    let entire_world = {
+      name: 'Entire World',
+      contains: []
+    }
+    _.forEach(dataset['country_' + suffix], (country) => {
+      entire_world.contains.push(country.alpha2)
+    })
+    dataset['regions_' + suffix].unshift(entire_world)
+    // Attach a region_index to each region
+    _.forEach(dataset['regions_' + suffix], (element, index) => {
+      element.region_index = parseInt(index)
+    })
+  }
+
+  // 2015 survey dataset
+  assignGroupIds(explorerDataset, '2015')
+  assignRegion(explorerDataset, '2015')
+
+  // 2017 survey dataset
+  assignGroupIds(explorerDataset, '2017')
+  assignRegion(explorerDataset, '2017')
 
   // Pre-2015 survey dataset
-  // Assign an ID to all groupings
-  id = 0
-  _.forEach(explorerDataset.groupings_old, (x) => {
-    _.forEach(x.entries, (y) => {
-      y.group_id = id++
-    })
-  })
-  // Assign group IDs to all questions
-  id = 0
-  _.forEach(explorerDataset.question_old, (qdata, qnum) => {
-    qdata.groups = []
-    // Tag the question with a list of parent groups
-    _.forEach(explorerDataset.groupings_old, (category) => {
-      _.forEach(category.entries, (group) => {
-        if (_.contains(group.qs, qnum)) {
-          qdata.groups.push('group-'+group.group_id)
-        }
-      })
-    })
-  })
-  // Create an 'Entire World' region
-  entire_world = {
-    name: 'Entire World'
-    , contains: []
-  }
-  _.forEach(explorerDataset.country_old, (country) => {
-    entire_world.contains.push(country.alpha2)
-  })
-  explorerDataset.regions_old.unshift(entire_world)
-  // Attach a region_index to each region
-  _.forEach(explorerDataset.regions_old, (element, index) => {
-    element.region_index = parseInt(index)
-  })
+  assignGroupIds(explorerDataset, 'old')
+  assignRegion(explorerDataset, 'old')
 
   return explorerDataset
 }
 
 
-export  {
+export {
   sortFunction,
   sortFunctionByName,
   mungeExplorerDataset
