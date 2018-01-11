@@ -101,33 +101,34 @@ def run_etl(js_output_path, download_dir_path, skip_downloads=False):
                                                  DOWNLOADS_2015,
                                                  datafiles['years'])
 
-    # # 2017 survey data
-    # datafiles = {}
-    # datafiles['q_xlsx'] = 'OBS2017_QuestionsNumbers+Text.xlsx'
-    # datafiles['q_xlsx_sheet'] = '2017'
-    # datafiles['a_xlsx'] = 'OBI 2017.xlsx'
-    # datafiles['a_xlsx_sheet'] = 'Sheet1'
-    # # ::TODO:: groupings to use new 2017 file?
-    # datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
-    # datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
-    # datafiles['g_xlsx_csheet'] = 'CountriesRegions'
+    # 2017 survey data
+    datafiles = {}
+    datafiles['q_xlsx'] = 'OBS2017_QuestionsNumbers+Text.xlsx'
+    datafiles['q_xlsx_sheet'] = '2017'
+    datafiles['a_xlsx'] = 'OBI 2017.xlsx'
+    datafiles['a_xlsx_sheet'] = 'Sheet1'
+    # ::TODO:: groupings to use new 2017 file?
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
 
-    # datafiles['av_xlsx'] = 'Public Availability 2017.xlsx'
-    # datafiles['av_xlsx_sheets'] = \
-    #     ['2006', '2008', '2010', '2012', '2015', '2017']
-    # datafiles['pp_xlsx'] = 'public participation.xlsx'
-    # datafiles['pp_xlsx_sheet'] = 'Sheet1'
-    # datafiles['years'] = [2017]
+    datafiles['av_xlsx'] = 'Public Availability 2017.xlsx'
+    datafiles['av_xlsx_sheets'] = \
+        ['2006', '2008', '2010', '2012', '2015', '2017']
+    datafiles['pp_xlsx'] = 'public participation.xlsx'
+    datafiles['pp_xlsx_sheet'] = 'Sheet1'
+    datafiles['years'] = [2017]
 
-    # dataset = lib_read.read(iso_data, datafiles, '2017')
-    # if not skip_downloads:
-    #     dataset = lib_write.write_downloads(dataset, iso_data,
-    #                                         download_dir_path,
-    #                                         DOWNLOADS_2017,
-    #                                         datafiles['years'])
+    dataset_2017 = lib_read.read(iso_data, datafiles, '2017')
+    if not skip_downloads:
+        dataset_2017 = lib_write.write_downloads(dataset_2017, iso_data,
+                                                 download_dir_path,
+                                                 DOWNLOADS_2017,
+                                                 datafiles['years'])
     dataset = {}
     dataset.update(old_dataset)
     dataset.update(dataset_2015)
+    dataset.update(dataset_2017)
 
     # Write output js file
     lib_write.write_js(dataset, js_output_path)
