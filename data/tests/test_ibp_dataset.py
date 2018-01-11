@@ -8,8 +8,8 @@ class TestETLOutput:
     '''
     Basic tests for ibp dataset etl system.
 
-    Expected dataset is in tests/ibp_dataset.json. etl pipeline is run and
-    compared with expected dataset.
+    Expected dataset is in tests/expected_ibp_dataset.json. etl pipeline is run
+    and compared with expected dataset.
     '''
 
     @classmethod
@@ -26,7 +26,7 @@ class TestETLOutput:
 
         # import expected data from ibp_dataset
         with open(os.path.join(dir_path,
-                               'ibp_dataset.json')) as expected_data:
+                               'expected_ibp_dataset.json')) as expected_data:
             cls.expected_data = json.load(expected_data)
             if skip_downloads:
                 del cls.expected_data['downloads']
