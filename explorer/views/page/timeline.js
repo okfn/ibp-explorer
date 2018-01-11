@@ -58,7 +58,7 @@ class TimelinePage extends View {
     }
 
     // Initialise our most recent year object
-    reportGenerator.update('2015', false, true)
+    reportGenerator.update('2017', false, true)
     const lastReport = {
       dataset: reportGenerator.dataset,
       region: reportGenerator.region,
@@ -68,16 +68,19 @@ class TimelinePage extends View {
     const latestCountries = _.pluck(lastReport.dataset, 'alpha2')
 
     // Get the old report, filtered for the countries we're interested in.
-    const oldReport = filteredYearReport('2006', latestCountries)
+    const reportOld = filteredYearReport('2006', latestCountries)
+    const report2015 = filteredYearReport('2015', latestCountries)
 
     // Merge the report properties for latest, and old.
     const mergedDataset = _.map(lastReport.dataset, c => {
-      const oldCountry = _.find(oldReport.dataset, oc => oc.alpha2 === c.alpha2)
-      return _.extend(c, oldCountry)
+      const countryOld = _.find(reportOld.dataset, oc => oc.alpha2 === c.alpha2)
+      const country2015 = _.find(report2015.dataset, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, countryOld, country2015)
     })
     const mergedDatasetUnrounded = _.map(lastReport.dataset_unrounded, c => {
-      const oldCountry = _.find(oldReport.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
-      return _.extend(c, oldCountry)
+      const countryOld = _.find(reportOld.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      const country2015 = _.find(report2015.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, countryOld, country2015)
     })
 
     this.timelineReport = {
@@ -99,12 +102,12 @@ class TimelinePage extends View {
     }
   }
 
-  _buildRankingTable(year, dataset, selected_countries) {
+  _buildRankingTable(year, dataset, selectedCountries) {
     // Basic dataset
     const out = []
     _.forEach(dataset, (obj, country) => {
       if (!_.has(obj, year)) return
-      if (!_.contains(selected_countries, obj.alpha2)) return
+      if (!_.contains(selectedCountries, obj.alpha2)) return
       obj.score = obj[year]
       out.push(obj)
     })
@@ -142,22 +145,20 @@ class TimelinePage extends View {
                 dataset_unrounded = this.timelineReport.dataset_unrounded) {
     const target = $('#timeline-columns')
     if (target.length === 0) return
-    let html = ''
     const selectedCountries = []
     _.forEach(region, (reg) => {
       _.forEach(_EXPLORER_DATASET.regions_2015[reg].contains, (contained) => {
         selectedCountries.push(contained)
       })
     })
-    _.forEach([2006, 2008, 2010, 2012], (year) => {
-      html += template_timeline_column_abbr({
-        year: year,
-        data: this._buildRankingTable(year, dataset_unrounded, selectedCountries)
+    let html = ''
+    const years = [2006, 2008, 2010, 2012, 2015, 2017]
+    _.each(years, y => {
+      const templ = (y === _.last(years)) ? template_timeline_column : template_timeline_column_abbr
+      html += templ({
+        year: y,
+        data: this._buildRankingTable(y, dataset_unrounded, selectedCountries)
       })
-    })
-    html += template_timeline_column({
-      year: 2015,
-      data: this._buildRankingTable(2015, dataset_unrounded, selectedCountries)
     })
     target.html(html)
     target.find('tr').bind('mouseover', this._mouseoverRanking)
