@@ -26,11 +26,6 @@ class TimelinePage extends View {
   }
 
   renderPage(target) {
-    let collapsed = false
-    if ($('#accordion2 .accordion-toggle').hasClass('collapsed')) {
-      collapsed = true
-    }
-    reportGenerator.update('2015', collapsed, true)
     $(window).scrollTop(0)
     this.$el.html(template_page())
     target.html(this.$el)
