@@ -86,9 +86,10 @@ class OBSRouter extends Backbone.Router {
     })
   }
 
-  setCurrent(view, showReportGenerator = true) {
+  setCurrent(view, showReportGenerator = true, viewName = 'default') {
     if (!(view === this.currentView)) {
       this.currentView = view
+      $('#explorer').parents('.site-main').attr('id', viewName)
       view.renderPage($('#explorer'))
     }
     if (showReportGenerator) {
@@ -109,7 +110,7 @@ class OBSRouter extends Backbone.Router {
 
   timeline() {
     const showReportGenerator = false
-    this.setCurrent(singletons.timelinePage(), showReportGenerator )
+    this.setCurrent(singletons.timelinePage(), showReportGenerator, 'timeline')
   }
 
   rankings() {
