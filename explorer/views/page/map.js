@@ -41,8 +41,8 @@ class ProjectPage extends View {
     $(window).scrollTop(0)
     this.$el.html(template_page())
     target.html(this.$el)
-    let map = this.$el.find('#map')
-    const x = map.vectorMap({
+    const map = this.$el.find('#map')
+    map.vectorMap({
       map: MAP_NAME,
       series: {
         regions: [{}],
@@ -114,34 +114,34 @@ class ProjectPage extends View {
   _repaint(dataset = reportGenerator.dataset,
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
-    var contained, country, i, j, k, len, len1, len2, ref, ref1, reg, stcolor, value, x;
+    let stcolor
     let datasetRegions
     if (this.year !== '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_old
     } else {
       datasetRegions = _EXPLORER_DATASET.regions_2015
     }
-    const countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
-    let selected_countries = []
+    const countriesInMap = jvm.WorldMap.maps[MAP_NAME].paths
+    const selectedCountries = []
     _.forEach(region, (reg) => {
       _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+        selectedCountries.push(contained)
       })
     })
     this.mapData = {}
     this.mapColor = {}
     this.countriesInSurvey = []
     this.countriesInSurvey = []
-    _.forEach(countries_in_map, (obj, key) => {
+    _.forEach(countriesInMap, (obj, key) => {
       this.mapData[key] = -1
       this.mapColor[key] = 0
     })
     if (reportGenerator.questionSet.length > 0) {
       _.forEach(dataset, (country) => {
-        if (!(_.has(countries_in_map, country.alpha2) && country.alpha2 !== 'ST')) return
-        if (!(_.contains(selected_countries, country.alpha2))) return
+        if (!(_.has(countriesInMap, country.alpha2) && country.alpha2 !== 'ST')) return
+        if (!(_.contains(selectedCountries, country.alpha2))) return
         if (!(_.has(country, this.year))) return
-        let value = country[this.year]
+        const value = country[this.year]
         if (value < 0) {
           return
         }
@@ -165,18 +165,19 @@ class ProjectPage extends View {
   _labelShow(e, mapLabel, code) {
     this.mapLabel = mapLabel
 
-    if ((!(_.contains(this.countriesInSurvey, code)) && code !== '0') || (code === '0' && this.year === '2006')) {
+    if ((!(_.contains(this.countriesInSurvey, code)) && code !== '0')
+        || (code === '0' && this.year === '2006')) {
       this.mapLabel.css({
-        'opacity': '0.5'
+        opacity: '0.5'
       })
     } else if (code === '0' && this.year !== '2006') {
       this.mapLabel.css({
-        'opacity': '1.0'
+        opacity: '1.0'
       })
       this.mapLabel.html(this.mapLabel.html() + ': ' + this.mapData['ST'])
     } else {
       this.mapLabel.css({
-        'opacity': '1.0'
+        opacity: '1.0'
       })
       this.mapLabel.html(this.mapLabel.html() + ': ' + this.mapData[code])
     }
@@ -193,7 +194,7 @@ class ProjectPage extends View {
       if (this.mapLabel.length) {
         this.mapLabel.remove()
       }
-      window.location = '#profile/ST';
+      window.location = '#profile/ST'
     }
   }
 }
