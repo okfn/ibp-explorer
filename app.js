@@ -106,11 +106,13 @@ app.use(function (req, res, next) {
       }
   };
   res.locals.isString = function (object) {
-      if (typeof object === 'string') {
-        return true
-      }
-
-      return false
+    return (typeof object === 'string')
+  }
+  res.locals.isObject = function (object) {
+    return (typeof object === 'object')
+  }
+  res.locals.lastChars = function (string, n) {
+    return string.substr(string.length - n)
   }
   next();
 });

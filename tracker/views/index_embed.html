@@ -3,7 +3,7 @@
 
 {% block page_title %}{{ gettext("Open Budget Survey - Tracker") }}{% endblock %}
 
-{% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%}
+{# {% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%} #}
 
 {% block content %}
   <div class="row">
@@ -65,6 +65,7 @@
             </thead>
             <tbody>
               {% for country in countries %}
+{#                 {% if country.code == 'AF' %} #}
                 {% set code = country.code|lower %}
                 <tr>
                   <td><a href="/availability/status/{{ country.country }}/embed">{{ gettext(country.country) }}</a></td>
@@ -75,9 +76,9 @@
                   {% else %}
                     <td></td>
                   {% endif %}
-                  {% for doc in docs %}
 
-		            {% set cell = undefined %}
+                  {% for doc in docs %}
+                    {% set cell = undefined %}
                     {% set cellYear = undefined %}
                     {% if country.documents != {} %}
                       {% for year in country.documents|reverse %}
@@ -89,15 +90,17 @@
                         {% endif %}
                       {% endfor %}
                     {% endif %}
+
                     {% for year in country.obi.availability|reverse %}
+                      {% set year = lastChars(year, 4)%}
                       {% if year > cellYear %}
-                        {% if not cell.obi %}
+                        {% if not cell.obi and country.obi.availability[year] %}
                           {% if isString(country.obi.availability[year][doc.title]) %}
                             {% set cell.status = country.obi.availability[year][doc.title] %}
                             {% set cell.type = doc.title %}
                             {% set cell.year = year %}
                             {% set cell.obi = 'True' %}
-                          {% else %}
+                          {% elseif country.obi.availability[year][doc.title] %}
                             {% set cell = country.obi.availability[year][doc.title] %}
                             {% set cell.type = doc.title %}
                             {% set cell.year = year %}
@@ -139,8 +142,9 @@
                       </td>
                     {% endif %}
                   {% endfor %}
-                </tr>
 
+                </tr>
+                {# {% endif %} #}
               {% endfor %}
             </tbody>
           </table>
