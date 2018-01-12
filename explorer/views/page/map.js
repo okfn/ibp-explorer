@@ -8,11 +8,11 @@ import reportGenerator from '../reportgenerator.js'
 
 const MAP_NAME = 'world_mill_en'
 const COLOR_SCHEME = [
-  'B8282E',
-  'F48022',
-  'DAC300',
-  '007A78',
-  '0065A4'
+  '5C111B',
+  'AF1F24',
+  'FDB721',
+  '1F9E79',
+  '0B6866'
 ]
 // Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
 jvm.NumericScale.prototype.getValue = (_x) => {
