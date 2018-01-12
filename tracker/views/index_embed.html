@@ -64,8 +64,13 @@
               </tr>
             </thead>
             <tbody>
+{# How the Document Availability page gets document status (logic in tracker/views/index_embed.html): #}
+{# 1. For each document type, get the first document for the most recent year from country.documents and assign it to `cell`. #}
+{# 2. If there is a more recent year in obi.availability, or no `cell` was defined at all, either #}
+    {# a) if obi.availability is a string, augment `cell` with status data from obi.availability #}
+    {# b) if obi.availability is an object, replace `cell` completely #}
+{# 3. Print the cell.state, or cell.status if cell.state is undefined #}
               {% for country in countries %}
-{#                 {% if country.code == 'AF' %} #}
                 {% set code = country.code|lower %}
                 <tr>
                   <td><a href="/availability/status/{{ country.country }}/embed">{{ gettext(country.country) }}</a></td>
@@ -77,6 +82,7 @@
                     <td></td>
                   {% endif %}
 
+                  {% spaceless %}
                   {% for doc in docs %}
                     {% set cell = undefined %}
                     {% set cellYear = undefined %}
@@ -109,6 +115,7 @@
                         {% endif %}
                       {% endif %}
                     {% endfor %}
+
                     {% if cell %}
                       {% if cell.type %}
                         {% set directoryId = country.topLevelDirectoryIds[cell.type] %}
@@ -142,9 +149,8 @@
                       </td>
                     {% endif %}
                   {% endfor %}
-
+                  {% endspaceless %}
                 </tr>
-                {# {% endif %} #}
               {% endfor %}
             </tbody>
           </table>
