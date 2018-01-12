@@ -3,7 +3,7 @@
 
 {% block page_title %}{{ gettext("Open Budget Survey - Tracker") }}{% endblock %}
 
-{% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%}
+{# {% block shortinfo %}{{ gettext("Data as of") }} {{ date_format(last_update, 'LL') }}{% endblock%} #}
 
 {% block content %}
   <div class="row">
@@ -64,6 +64,12 @@
               </tr>
             </thead>
             <tbody>
+{# How the Document Availability page gets document status (logic in tracker/views/index_embed.html): #}
+{# 1. For each document type, get the first document for the most recent year from country.documents and assign it to `cell`. #}
+{# 2. If there is a more recent year in obi.availability, or no `cell` was defined at all, either #}
+    {# a) if obi.availability is a string, augment `cell` with status data from obi.availability #}
+    {# b) if obi.availability is an object, replace `cell` completely #}
+{# 3. Print the cell.state, or cell.status if cell.state is undefined #}
               {% for country in countries %}
                 {% set code = country.code|lower %}
                 <tr>
@@ -75,9 +81,10 @@
                   {% else %}
                     <td></td>
                   {% endif %}
-                  {% for doc in docs %}
 
-		            {% set cell = undefined %}
+                  {% spaceless %}
+                  {% for doc in docs %}
+                    {% set cell = undefined %}
                     {% set cellYear = undefined %}
                     {% if country.documents != {} %}
                       {% for year in country.documents|reverse %}
@@ -89,15 +96,17 @@
                         {% endif %}
                       {% endfor %}
                     {% endif %}
+
                     {% for year in country.obi.availability|reverse %}
+                      {% set year = lastChars(year, 4)%}
                       {% if year > cellYear %}
-                        {% if not cell.obi %}
+                        {% if not cell.obi and country.obi.availability[year] %}
                           {% if isString(country.obi.availability[year][doc.title]) %}
                             {% set cell.status = country.obi.availability[year][doc.title] %}
                             {% set cell.type = doc.title %}
                             {% set cell.year = year %}
                             {% set cell.obi = 'True' %}
-                          {% else %}
+                          {% elseif country.obi.availability[year][doc.title] %}
                             {% set cell = country.obi.availability[year][doc.title] %}
                             {% set cell.type = doc.title %}
                             {% set cell.year = year %}
@@ -106,6 +115,7 @@
                         {% endif %}
                       {% endif %}
                     {% endfor %}
+
                     {% if cell %}
                       {% if cell.type %}
                         {% set directoryId = country.topLevelDirectoryIds[cell.type] %}
@@ -139,8 +149,8 @@
                       </td>
                     {% endif %}
                   {% endfor %}
+                  {% endspaceless %}
                 </tr>
-
               {% endfor %}
             </tbody>
           </table>
