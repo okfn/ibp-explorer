@@ -96,19 +96,17 @@ class ProjectPage extends View {
     const target = $(e.delegateTarget)
     const lastYear = $('#map-toggles button.active').attr('data-year')
     const currentYear = target.attr('data-year')
-    const newReport = lastYear === '2015' || currentYear === '2015'
+    const newReport = (lastYear !== currentYear)
     $('#map-toggles button').removeClass('active')
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
-    let collapsed
     if (newReport) {
-      collapsed = false
+      let collapsed = false
       if ($('#accordion2 .accordion-body').hasClass('in')) {
         collapsed = true
       }
       reportGenerator.update(this.year, collapsed)
     }
-    this._repaint()
   }
 
   _repaint(dataset = reportGenerator.dataset,
