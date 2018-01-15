@@ -36,7 +36,8 @@ class ProfilePage extends Backbone.View {
   }
 
   _decodeParams(queryString) {
-    let params = {}, tmpObj
+    const params = {}
+    let tmpObj
     if (queryString) {
       _.each(
         _.map(decodeURI(queryString).split(/&/g), function (el, i) {
@@ -106,19 +107,19 @@ class ProfilePage extends Backbone.View {
     reportGenerator.update(this.year, collapsed)
     $(window).scrollTop(0)
     const renderData = {
-      alpha2: this.alpha2
-      , countries: _EXPLORER_DATASET.country_2015
-      , data: this.data
-      , empty: this.alpha2 === ''
-      , main_website_url: this._ibp_website_url(this.alpha2)
-      , years: this.years
+      alpha2: this.alpha2,
+      countries: _EXPLORER_DATASET.country_2015,
+      data: this.data,
+      empty: this.alpha2 === '',
+      main_website_url: this._ibp_website_url(this.alpha2),
+      years: this.years
     }
     this.viewPast = true
     this.$el.html(template_page(renderData))
     target.html(this.$el)
     this._repaint()
     // Set up nav
-    let nav = this.$el.find('.country-nav-select')
+    const nav = this.$el.find('.country-nav-select')
     nav.chosen()
     nav.val(this.alpha2).trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
@@ -141,14 +142,14 @@ class ProfilePage extends Backbone.View {
     if (this.year === '2015') {
       this.years = [2015]
       badges = {
-        years: this.years
-        , last: true
+        years: this.years,
+        last: true
       }
     } else {
       this.years = [2006, 2008, 2010, 2012]
       badges = {
-        years: this.years
-        , last: false
+        years: this.years,
+        last: false
       }
     }
     $('#profile-mode').empty().append($(template_profile_badges(badges)))
@@ -157,8 +158,8 @@ class ProfilePage extends Backbone.View {
     }
     if (this.year === '2006' && this.alpha2 === 'HU') {
       this.data = {
-        alpha2: 'HU'
-        , name: 'Hungary'
+        alpha2: 'HU',
+        name: 'Hungary'
       }
     } else {
       this.data = this.lookup(this.alpha2)
@@ -173,7 +174,7 @@ class ProfilePage extends Backbone.View {
 
   _repaint(dataset = reportGenerator.dataset,
            questionSet = reportGenerator.questionSet) {
-    var renderScore, score
+    let score
     let percentageData
     if (this.year !== '2015') {
       percentageData = {
@@ -195,9 +196,9 @@ class ProfilePage extends Backbone.View {
     $('.percentages').empty()
       .append($(template_profile_percentages(percentageData)))
     $('.percentbar').tooltip({
-      placement: 'right'
-      , delay: 50
-      , animation: true
+      placement: 'right',
+      delay: 50,
+      animation: true
     })
     const detailsData = this._get_details(this.data, questionSet)
     if (this.viewPast) {
@@ -222,7 +223,7 @@ class ProfilePage extends Backbone.View {
     this.$el.find('tr.question-row').mouseover(this._onHoverQuestion)
     this.$el.find('tr.question-row:first').mouseover()
     // Fill out scores
-    renderScore = function (year, score) {
+    const renderScore = function (year, score) {
       if (!(score === undefined)) {
         $('.scores .year-' + year).css('opacity', '1.0')
         $('.scores .year-' + year + ' .bottom').text('Score: ' + score)
@@ -273,20 +274,21 @@ class ProfilePage extends Backbone.View {
       t3yer: '139',
       t3ar: '140'
     }
-    let nb, q
+    let nb
+    let q
     if (_.has(t3q, number)) {
       nb = t3q[number]
       q = datasetQuestion[nb]
     } else {
       q = datasetQuestion[number]
     }
-    let qbox = $('.question-box')
+    const qbox = $('.question-box')
     qbox.html(template_question_text(q))
     const top = target.position().top - 21
-    const max_top = $('.details').height() - qbox.height() - 21
+    const maxTop = $('.details').height() - qbox.height() - 21
     qbox.css({
       left: $('.details table').width(),
-      top: Math.max(0, Math.min(top, max_top))
+      top: Math.max(0, Math.min(top, maxTop))
     })
     $('tr.question-row').removeClass('hover')
     target.addClass('hover')
@@ -320,11 +322,11 @@ class ProfilePage extends Backbone.View {
       value = '-1'
     }
     return {
-      '-1': 'e'
-      , 0: 'd'
-      , 33: 'c'
-      , 67: 'b'
-      , 100: 'a'
+      '-1': 'e',
+      0: 'd',
+      33: 'c',
+      67: 'b',
+      100: 'a'
     }[value]
   }
 
@@ -335,14 +337,14 @@ class ProfilePage extends Backbone.View {
         not_defined: true
       }
     }
-    let out = {
-      total: questionSet.length
-      , year: year
-      , a: 0
-      , b: 0
-      , c: 0
-      , d: 0
-      , e: 0
+    const out = {
+      total: questionSet.length,
+      year: year,
+      a: 0,
+      b: 0,
+      c: 0,
+      d: 0,
+      e: 0
     }
     _.forEach(reportGenerator.dataset, (x) => {
       if (x.alpha2 === alpha2) {
@@ -372,7 +374,7 @@ class ProfilePage extends Backbone.View {
   }
 
   _get_details(data, questionSet) {
-    let out = {
+    const out = {
       questions: [],
       years: this.years
     }
@@ -382,13 +384,13 @@ class ProfilePage extends Backbone.View {
       out.last = false
     }
     _.forEach(questionSet, (x) => {
-      let obj = {
+      const obj = {
         number: x
       }
       _.forEach(this.years, (y) => {
-        const year_key = 'l' + y
-        const db_key = 'db_' + y
-        obj[year_key] = this._number_to_letter(data[db_key], x)
+        const yearKey = 'l' + y
+        const dbKey = 'db_' + y
+        obj[yearKey] = this._number_to_letter(data[dbKey], x)
       })
       out.questions.push(obj)
     })
@@ -460,7 +462,7 @@ class ProfilePage extends Backbone.View {
     e.preventDefault()
     const target = e.delegateTarget
     const printHeader = printHeader || $('#country-header').text()
-    let detailsData = this._get_details(this.data, questionSet)
+    const detailsData = this._get_details(this.data, questionSet)
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
       datasetQuestion = _EXPLORER_DATASET.question_2015
@@ -483,34 +485,34 @@ class ProfilePage extends Backbone.View {
       _.forEach($('.question-row-print'), (x) => {
         x = $(x)
         const qnum = x.attr('data-question-number')
-        let score = this.db_2017[qnum]
-        let previous_answer = this._number_to_letter(this.data.db_2015, qnum)
-        if (previous_answer) {
-          previous_answer = previous_answer.toUpperCase()
-          x.find('.previous-year').html(`Answer was ${previous_answer} in 2015`)
+        const score = this.db_2017[qnum]
+        let previousAnswer = this._number_to_letter(this.data.db_2015, qnum)
+        if (previousAnswer) {
+          previousAnswer = previousAnswer.toUpperCase()
+          x.find('.previous-year').html(`Answer was ${previousAnswer} in 2015`)
         }
         x.find('div[data-score="' + score + '"]').addClass('active-print')
       })
     }
     if (target.id === 'print-table') {
-      let score2017 = reportGenerator.calculateScore(this.db_2017,
+      const score2017 = reportGenerator.calculateScore(this.db_2017,
                                                  reportGenerator.questionSet)
-      let score2015 = reportGenerator.calculateScore(this.data.db_2015,
+      const score2015 = reportGenerator.calculateScore(this.data.db_2015,
                                                   reportGenerator.questionSet)
       _.forEach(detailsData.questions, (question) => {
         question['l2017'] = this._number_to_letter(this.db_2017,
                                                    question['number'])
       })
       $('.details').html(template_profile_details_future_print_table({
-        data: detailsData
-        , score2017: Math.round(score2017)
-        , score2015: Math.round(score2015)
-        , year: 2017 }))
+        data: detailsData,
+        score2017: Math.round(score2017),
+        score2015: Math.round(score2015),
+        year: 2017 }))
     }
     _.forEach($('.question-row'), (x) => {
       x = $(x)
       const qnum = x.attr('data-question-number')
-      let score = this.db_2017[qnum]
+      const score = this.db_2017[qnum]
       x.find('img[data-score="' + score + '"]').removeClass('inactive')
         .addClass('active')
     })
@@ -538,24 +540,25 @@ class ProfilePage extends Backbone.View {
     element = $(element)
     element.css('font-size', 100)
     element.animate({
-                      'font-size': 0
-                    }, {
-                      duration: time,
-                      easing: 'linear',
-                      step: function (now, fx) {
-                        var _scale, x
-                        x = (now * Math.PI) / 100;
-                        x = 1 + (Math.sin(x) * (scale - 1))
-                        _scale = 'scale(' + x + ',' + x + ')'
-                        return element.css({
-                                             '-moz-transform': _scale,
-                                             '-o-transform': _scale,
-                                             '-ms-transform': _scale,
-                                             '-webkit-transform': _scale,
-                                             'transform': _scale
-                                           })
-                      }
-                    })
+      'font-size': 0
+    }, {
+      duration: time,
+      easing: 'linear',
+      step: function (now, fx) {
+        let _scale
+        let x
+        x = (now * Math.PI) / 100;
+        x = 1 + (Math.sin(x) * (scale - 1))
+        _scale = 'scale(' + x + ',' + x + ')'
+        return element.css({
+          '-moz-transform': _scale,
+          '-o-transform': _scale,
+          '-ms-transform': _scale,
+          '-webkit-transform': _scale,
+          'transform': _scale
+        })
+      }
+    })
   }
 }
 
