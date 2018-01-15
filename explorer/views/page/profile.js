@@ -1,6 +1,7 @@
 'use strict'
 
 import _ from 'underscore'
+import underscoreDeepExtend from 'underscore-deep-extend'
 
 import template_page from '../templates/page/profile.hbs'
 import template_profile_percentages from '../templates/profile_percentages.hbs'
@@ -12,6 +13,9 @@ import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
+
+_.mixin({ deepExtend: underscoreDeepExtend(_) })
+
 
 class ProfilePage extends Backbone.View {
 
@@ -80,21 +84,15 @@ class ProfilePage extends Backbone.View {
     /*
     Look up a country object by alpha2 code.
     */
-    let datasetCountry
-    if (this.year !== '2015') {
-      datasetCountry = _EXPLORER_DATASET.country_old
+    if (this.year === '2015') {
+      // For 2015, combine 2017 data too, if available
+      const found2015 = _.find(_EXPLORER_DATASET.country_2015, x => x.alpha2 === alpha2) || {}
+      const found2017 = _.find(_EXPLORER_DATASET.country_2017, x => x.alpha2 === alpha2) || {}
+      return _.deepExtend(found2015, found2017)
     } else {
-      datasetCountry = _EXPLORER_DATASET.country_2015
+      // 'Old' data already has 2006-2012 combined, just return it as is.
+      return _.find(_EXPLORER_DATASET.country_old, x => x.alpha2 === alpha2) || {}
     }
-    let found = _.find(datasetCountry, (x) => {
-      return x.alpha2 === alpha2
-    })
-    if (found) {
-      return found
-    } else if (alpha2 === '') {
-      return {}
-    }
-    assert(false, alpha2 + ' is not a valid country code.')
   }
 
   renderPage(target) {
