@@ -63,6 +63,43 @@ swig.setFilter('formatDate', function (input) {
   return '-'
 })
 
+swig.setFilter('orderYears', function (input) {
+  /*
+  Take an input list of years and order them. Can handle items like 'December
+  2016' by changing them to '2016-12'.
+  */
+
+  const orderableYear = function (ym) {
+    /*
+    Take a ym like 'December 2016', and return it as a year-mm, like 2016-12.
+    */
+    const months = {
+      January: '01',
+      February: '02',
+      March: '03',
+      April: '04',
+      May: '05',
+      June: '06',
+      July: '07',
+      August: '08',
+      September: '09',
+      October: '14',
+      November: '11',
+      December: '12'
+    }
+    const splitYear = ym.split(' ')
+    if (splitYear.length === 2) {
+      return `${splitYear[1]}-${months[splitYear[0]]}`
+    }
+    return ym
+  }
+  let ordered = _.map(input, function (y, k) {
+    return orderableYear(k)
+  })
+  ordered = ordered.sort().reverse()
+  return ordered
+})
+
 app.use(function (req, res, next) {
   if (req.query.locale) {
     req.setLocale(req.query.locale);
@@ -110,9 +147,6 @@ app.use(function (req, res, next) {
   }
   res.locals.isObject = function (object) {
     return (typeof object === 'object')
-  }
-  res.locals.lastChars = function (string, n) {
-    return string.substr(string.length - n)
   }
   next();
 });
