@@ -32,11 +32,11 @@ class ProfilePage extends Backbone.View {
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
     this.year = '2015'
+    this.years = [2015, 2017]
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
     this.db_2017 = $.extend({}, this.data.db_2015, this.params)
     reportGenerator.bind('update', this._repaint)
-    this.years = [2015]
   }
 
   _decodeParams(queryString) {
@@ -106,7 +106,7 @@ class ProfilePage extends Backbone.View {
     $(window).scrollTop(0)
     const renderData = {
       alpha2: this.alpha2,
-      countries: _EXPLORER_DATASET.country_2015,
+      countries: _EXPLORER_DATASET.country_2017,
       data: this.data,
       empty: this.alpha2 === '',
       main_website_url: this._ibp_website_url(this.alpha2),
@@ -115,7 +115,6 @@ class ProfilePage extends Backbone.View {
     this.viewPast = true
     this.$el.html(template_page(renderData))
     target.html(this.$el)
-    this._repaint()
     // Set up nav
     const nav = this.$el.find('.country-nav-select')
     nav.chosen()
@@ -138,10 +137,10 @@ class ProfilePage extends Backbone.View {
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
     if (this.year === '2015') {
-      this.years = [2015]
+      this.years = [2015, 2017]
       badges = {
         years: this.years,
-        last: true
+        last: false
       }
     } else {
       this.years = [2006, 2008, 2010, 2012]
@@ -174,25 +173,24 @@ class ProfilePage extends Backbone.View {
            questionSet = reportGenerator.questionSet) {
     let score
     let percentageData
-    if (this.year !== '2015') {
+    if (this.year === '2015') {
       percentageData = {
-        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2006,
-                                            '2006', questionSet),
-                      this._get_percentages(this.data.alpha2, this.data.db_2008,
-                                            '2008', questionSet),
-                      this._get_percentages(this.data.alpha2, this.data.db_2010,
-                                            '2010', questionSet),
-                      this._get_percentages(this.data.alpha2, this.data.db_2012,
-                                            '2012', questionSet)]
+        percentages: [
+          this._get_percentages(this.data.alpha2, this.data.db_2015, '2015', questionSet),
+          this._get_percentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+        ]
       }
     } else {
       percentageData = {
-        percentages: [this._get_percentages(this.data.alpha2, this.data.db_2015,
-                                            '2015', questionSet)]
+        percentages: [
+          this._get_percentages(this.data.alpha2, this.data.db_2006, '2006', questionSet),
+          this._get_percentages(this.data.alpha2, this.data.db_2008, '2008', questionSet),
+          this._get_percentages(this.data.alpha2, this.data.db_2010, '2010', questionSet),
+          this._get_percentages(this.data.alpha2, this.data.db_2012, '2012', questionSet)
+        ]
       }
     }
-    $('.percentages').empty()
-      .append($(template_profile_percentages(percentageData)))
+    $('.percentages').empty().append($(template_profile_percentages(percentageData)))
     $('.percentbar').tooltip({
       placement: 'right',
       delay: 50,
@@ -208,7 +206,7 @@ class ProfilePage extends Backbone.View {
       // Probably not needed
       $('.past').hide()
       $('.details').html(template_profile_details_future(detailsData))
-      $('.letter.multi img').bind('click', this._onClickAnswer)
+      // $('.letter.multi img').bind('click', this._onClickAnswer)
       _.forEach($('.question-row'), (x) => {
         x = $(x)
         const qnum = x.attr('data-question-number')
@@ -221,24 +219,25 @@ class ProfilePage extends Backbone.View {
     this.$el.find('tr.question-row').mouseover(this._onHoverQuestion)
     this.$el.find('tr.question-row:first').mouseover()
     // Fill out scores
-    const renderScore = function (year, score) {
-      if (!(score === undefined)) {
+    const renderScore = function (year, scoreToRender) {
+      if (scoreToRender !== undefined) {
         $('.scores .year-' + year).css('opacity', '1.0')
-        $('.scores .year-' + year + ' .bottom').text('Score: ' + score)
+        $('.scores .year-' + year + ' .bottom').text('Score: ' + scoreToRender)
       } else {
         $('.scores .year-' + year).css('opacity', '0.2')
         return $('.scores .year-' + year + ' .bottom').text('-')
       }
     }
-    if (this.year !== '2015') {
+    if (this.year === '2015') {
+      renderScore(2015, percentageData.percentages[0].score)
+      renderScore(2017, percentageData.percentages[1].score)
+    } else {
       renderScore(2006, percentageData.percentages[0].score)
       renderScore(2008, percentageData.percentages[1].score)
       renderScore(2010, percentageData.percentages[2].score)
       renderScore(2012, percentageData.percentages[3].score)
-    } else {
-      renderScore(2015, percentageData.percentages[0].score)
     }
-    this._repaintFutureScore()
+    // this._repaintFutureScore()
   }
 
   _ibp_website_url(alpha2) {
@@ -344,15 +343,15 @@ class ProfilePage extends Backbone.View {
       d: 0,
       e: 0
     }
-    _.forEach(reportGenerator.dataset, (x) => {
-      if (x.alpha2 === alpha2) {
-        out.score = x[year]
-        if (out.score < 0) {
-          out.score = 'N/A'
-        }
-      }
-    })
-    _.forEach(questionSet, (i) => {
+
+    out.score = reportGenerator.calculateScore(data, questionSet)
+    if (out.score < 0) {
+      out.score = 'N/A'
+    } else {
+      out.score = Math.round(out.score)
+    }
+
+    _.forEach(questionSet, i => {
       const letter = this._number_to_letter(data, i)
       assert(
         letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' ||
@@ -362,7 +361,7 @@ class ProfilePage extends Backbone.View {
     assert(out.a + out.b + out.c + out.d + out.e === out.total,
            'Integrity problem in profile calculation')
     // Calculate bar widths. They are superimposed on top of each other, in
-    // decreasing width..
+    // decreasing width.
     out.a_width = out.a * 100 / out.total
     out.b_width = (out.a + out.b) * 100 / out.total
     out.c_width = (out.a + out.b + out.c) * 100 / out.total

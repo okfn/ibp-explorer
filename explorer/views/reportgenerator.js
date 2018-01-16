@@ -207,7 +207,7 @@ class ReportGenerator extends Backbone.View {
       this.questionSet.push($(e).attr('id').substr(7))
     })
     // Inner function
-    // Calculate dataset of contries and scores
+    // Calculate dataset of countries and scores
     this.dataset_unrounded = []
     let countries
     if (this.year === '2015') {
