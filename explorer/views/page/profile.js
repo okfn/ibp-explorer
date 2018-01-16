@@ -380,12 +380,12 @@ class ProfilePage extends Backbone.View {
     } else {
       out.last = false
     }
-    _.forEach(questionSet, (x) => {
+    _.forEach(questionSet, x => {
       const obj = {
         number: x
       }
-      _.forEach(this.years, (y) => {
-        const yearKey = 'l' + y
+      _.forEach(this.years, y => {
+        const yearKey = y
         const dbKey = 'db_' + y
         obj[yearKey] = this._number_to_letter(data[dbKey], x)
       })

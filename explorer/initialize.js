@@ -5,6 +5,7 @@ import OBSRouter from './router.js'
 import './assets/index.html'
 import './views/styles/main.less'
 import * as util from './util.js'
+const isNumber = require('is-number')
 
 
 const loadDataset = function () {
@@ -50,6 +51,16 @@ Handlebars.registerHelper('if_eq', function (a, b, opts) {
   } else {
     return opts.inverse(this)
   }
+})
+
+Handlebars.registerHelper('add', function (a, b) {
+  if (isNumber(a) && isNumber(b)) {
+    return Number(a) + Number(b)
+  }
+  if (typeof a === 'string' && typeof b === 'string') {
+    return a + b
+  }
+  return ''
 })
 
 $(function () {
