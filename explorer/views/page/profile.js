@@ -36,6 +36,10 @@ class ProfilePage extends Backbone.View {
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
     this.db_2017 = $.extend({}, this.data.db_2015, this.params)
+    // `initialize` gets called when the country dropdown is changed (page is
+    // rerendered), so we want to unbind here, incase this has been bound
+    // before, to prevent unnecessary _repaints.
+    reportGenerator.unbind('update')
     reportGenerator.bind('update', this._repaint)
   }
 
@@ -102,7 +106,6 @@ class ProfilePage extends Backbone.View {
     }
     this.year =
       $('#datasheet-toggles button.active').attr('data-year') || '2015'
-    reportGenerator.update(this.year, collapsed)
     $(window).scrollTop(0)
     const renderData = {
       alpha2: this.alpha2,
@@ -150,9 +153,9 @@ class ProfilePage extends Backbone.View {
       }
     }
     $('#profile-mode').empty().append($(template_profile_badges(badges)))
-    if (this.year === '2015') {
-      $('#profile-toggle').click(this._onToggleMode)
-    }
+    // if (this.year === '2015') {
+    //   $('#profile-toggle').click(this._onToggleMode)
+    // }
     if (this.year === '2006' && this.alpha2 === 'HU') {
       this.data = {
         alpha2: 'HU',
@@ -166,7 +169,7 @@ class ProfilePage extends Backbone.View {
       collapsed = true
     }
     reportGenerator.update(this.year, collapsed)
-    this._onToggleMode()
+    // this._onToggleMode()
   }
 
   _repaint(dataset = reportGenerator.dataset,
@@ -206,7 +209,7 @@ class ProfilePage extends Backbone.View {
       // Probably not needed
       $('.past').hide()
       $('.details').html(template_profile_details_future(detailsData))
-      // $('.letter.multi img').bind('click', this._onClickAnswer)
+      $('.letter.multi img').bind('click', this._onClickAnswer)
       _.forEach($('.question-row'), (x) => {
         x = $(x)
         const qnum = x.attr('data-question-number')
@@ -395,6 +398,7 @@ class ProfilePage extends Backbone.View {
   }
 
   _onToggleMode(e) {
+    /* show/hide the future calculator */
     if (!_.isEmpty(this.params) || e) {
       if (e) e.preventDefault()
       if ($('#profile-toggle').hasClass('inactive')) {
