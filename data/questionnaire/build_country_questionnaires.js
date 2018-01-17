@@ -137,20 +137,20 @@ function makeCountryAnswersFromQuestions(ws, countryColNum, questions) {
 
   /* eslint-disable quote-props */
   const authorElements = {
-    'Score': 'score'
-    , 'Answer Label': 'answerLabel'
-    , 'Author Comments': 'comments'
-    , 'Source Options': 'sourceOptions'
-    , 'Source Description': 'sourceDescription'
-    , 'Researcher Response': 'researcherResponse'
-    , 'IBP Comment': 'ibpComment'
+    'Score': 'score',
+    'Answer Label': 'answerLabel',
+    'Author Comments': 'comments',
+    'Source Options': 'sourceOptions',
+    'Source Description': 'sourceDescription',
+    'Researcher Response': 'researcherResponse',
+    'IBP Comment': 'ibpComment'
   }
   const reviewElements = {
-    'Reviewer': 'reviewer'
-    , 'Opinion': 'opinion'
-    , 'Suggested Score': 'suggestedScore'
-    , 'Comments': 'comments'
-    , 'Peer Review Discussions': 'peerReviewDiscussions'
+    'Reviewer': 'reviewer',
+    'Opinion': 'opinion',
+    'Suggested Score': 'suggestedScore',
+    'Comments': 'comments',
+    'Peer Review Discussions': 'peerReviewDiscussions'
   }
   /* eslint-enable quote-props */
   const linkifyOptions = {
@@ -222,18 +222,18 @@ function buildCountryPages(questions, countries) {
 
   Metalsmith(__dirname) // eslint-disable-line new-cap
   .metadata({
-    currentTime: Date.now()
-    , questions
-    , countries
-    , baseUrl
+    currentTime: Date.now(),
+    questions,
+    countries,
+    baseUrl
   })
   .source('./src')
   .destination('../../_build-questionnaires')
   .clean(true)
   .use(jsonToFiles({ use_metadata: true }))
   .use(layouts({
-    engine: 'handlebars'
-    , directory: templatePath
+    engine: 'handlebars',
+    directory: templatePath
   }))
   .build((err) => {
     if (err) throw err
