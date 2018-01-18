@@ -165,9 +165,15 @@ class DownloadPage extends Backbone.View {
         sf: false,
         cq: false,
         cr: false,
-        excel: [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads_2015[0]],
-        csv: [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads_2015[1]],
-        json: [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads_2015[2]]
+        excel: [_EXPLORER_DATASET.downloads_old[0],
+                _EXPLORER_DATASET.downloads_2015[0],
+                _EXPLORER_DATASET.downloads_2017[0]],
+        csv: [_EXPLORER_DATASET.downloads_old[1],
+              _EXPLORER_DATASET.downloads_2015[1],
+              _EXPLORER_DATASET.downloads_2017[1]],
+        json: [_EXPLORER_DATASET.downloads_old[2],
+               _EXPLORER_DATASET.downloads_2015[2],
+               _EXPLORER_DATASET.downloads_2017[2]]
       }
     } else if (value === 'sf') {
       renderFiles = {
