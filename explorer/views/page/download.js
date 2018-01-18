@@ -23,7 +23,7 @@ class DownloadPage extends Backbone.View {
     reportGenerator.update(this.year, collapsed)
     this.$el.html(template_page)
     target.html(this.$el)
-    let nav = this.$el.find('.dl-nav-select')
+    const nav = this.$el.find('.dl-nav-select')
     nav.chosen()
     nav.val('').trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
@@ -49,8 +49,8 @@ class DownloadPage extends Backbone.View {
   }
 
   _writeLine(out, x) {
-    _.forEach(_.range(x.length), (index) => {
-      let element = x[index] || ''
+    _.forEach(_.range(x.length), index => {
+      const element = x[index] || ''
       assert(!_.contains(element, '"'), 'Cannot encode string: ' + element)
       if (_.contains(element, ',')) {
         x[index] = '"' + element + '"'
@@ -61,9 +61,9 @@ class DownloadPage extends Backbone.View {
 
   _csvQuestions(questionSet) {
     // Prep
-    let out = []
+    const out = []
     // Headers
-    const headers = ['NUMBER','TEXT','A','B','C','D','E']
+    const headers = ['NUMBER', 'TEXT', 'A', 'B', 'C', 'D', 'E']
     this._writeLine(out, headers)
     // Content
     const q = _EXPLORER_DATASET.question_2015
@@ -74,10 +74,11 @@ class DownloadPage extends Backbone.View {
   }
 
   _number_to_letter(value) {
-    //The given letters in the source data arent always there.
+    // The given letters in the source data arent always there.
     // 'q102l' does not exist while 'q102' does.
     // Therefore it is safer to use this technique to extract a letter...
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
+    assert(value === (-1) || value === 0 || value === 33 || value === 67 ||
+           value === 100, 'Invalid value: ' + value)
     return {
       '-1': 'e',
       0: 'd',
@@ -90,47 +91,47 @@ class DownloadPage extends Backbone.View {
   _csvAnswers(dataset, region, questionSet) {
     let datasetRegions
     let datasetCountry
-    let all_years
-    if (this.year != '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-      all_years = ['2006', '2008', '2010', '2012']
-    } else {
+    let allYears
+    if (this.year === '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetCountry = _EXPLORER_DATASET.country_2015
-      all_years = ['2015']
+      allYears = ['2015']
+    } else {
+      datasetRegions = _EXPLORER_DATASET.regions_old
+      datasetCountry = _EXPLORER_DATASET.country_old
+      allYears = ['2006', '2008', '2010', '2012']
     }
-    let out = []
-    let headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
-    _.forEach(questionSet, (x) => {
+    const out = []
+    const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
+    _.forEach(questionSet, x => {
       headers.push(x.toString())
     })
-    _.forEach(questionSet, (x) => {
-      headers.push(x+'l')
+    _.forEach(questionSet, x => {
+      headers.push(x + 'l')
     })
-    //console.log("headers: ", headers)
-    //this._writeLine(out, headers)
+    // console.log("headers: ", headers)
+    // this._writeLine(out, headers)
     // Quickly lookup country data
-    let tmp = {}
-    _.forEach(datasetCountry, (x) => {
+    const tmp = {}
+    _.forEach(datasetCountry, x => {
       tmp[x.alpha2] = x
     })
     // Compile a CSV in the browser
-    let selected_countries = []
+    const selectedCountries = []
     _.forEach(region, (reg) => {
       _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+        selectedCountries.push(contained)
       })
     })
     _.forEach(dataset, (country) => {
-      if (!(_.contains(selected_countries, country.alpha2))) return
-      let selected_year = $('input[name="downloadyear"]:checked').val()
-      if (!(_.contains(all_years, selected_year))) {
-        selected_year = all_years
+      if (!(_.contains(selectedCountries, country.alpha2))) return
+      let selectedYear = $('input[name="downloadyear"]:checked').val()
+      if (!(_.contains(allYears, selectedYear))) {
+        selectedYear = allYears
       } else {
-        selected_year = [selected_year]
+        selectedYear = [selectedYear]
       }
-      _.forEach(selected_year, (year) => {
+      _.forEach(selectedYear, (year) => {
         if (!(_.has(country, year))) return
         const countryYearValue = (country[year] === -1) ? '' : country[year]
         const row = [country.alpha2, country.country, year, countryYearValue]
@@ -147,14 +148,16 @@ class DownloadPage extends Backbone.View {
     return out
   }
 
-  _repaint(dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) {
+  _repaint(dataset = reportGenerator.dataset,
+           questionSet = reportGenerator.questionSet,
+           region = reportGenerator.region) {
     $('#custom-csv').html((this._csvAnswers(dataset, region, questionSet)).join('\n'))
   }
 
   _onNavChange(e) {
     let renderFiles
     const value = $(e.delegateTarget).val()
-    let download = $('#dl-mode')
+    const download = $('#dl-mode')
     download.empty()
     if (value === 'fd') {
       renderFiles = {
