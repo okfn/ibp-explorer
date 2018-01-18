@@ -1,40 +1,38 @@
-'use strict'
-
 import _ from 'underscore'
 import jsdom from 'jsdom'
 import jQuery from 'jquery'
-import {expect} from 'chai'
+import { expect } from 'chai'
 
 
 const jsdomConfig = {
-  url: "http://localhost:3000/"
-  , scripts: [jQuery]
-  , features: {
-    FetchExternalResources: ['script']
-    , ProcessExternalResources: ['script']
-    , MutationEvents: '2.0'
-    , SkipExternalResources: false
+  url: 'http://localhost:3000/',
+  scripts: [jQuery],
+  features: {
+    FetchExternalResources: ['script'],
+    ProcessExternalResources: ['script'],
+    MutationEvents: '2.0',
+    SkipExternalResources: false
   }
 }
 
 const routes = [
-  '#home'
-  , '#map'
-  , '#rankings'
-  , '#profile'
+  '#home',
+  '#map',
+  '#rankings',
+  '#profile',
   // TODO fix test for route #timeline and availability - jsdom timesout
-  // , '#timeline'
-  // , 'availability'
-  , '#participation'
-  , '#download'
+  // '#timeline',
+  '#availability',
+  '#participation',
+  '#download'
 ]
 
 describe('routes', function () {
-  this.timeout(50000);
-  _.forEach(routes, (route) => {
-    it(`${route}`, (done) => {
-      let config = _.extend({}, jsdomConfig),
-          children
+  this.timeout(50000)
+  _.forEach(routes, route => {
+    it(`${route}`, done => {
+      const config = _.extend({}, jsdomConfig)
+      let children
       config.url = config.url + route
       config.done = (err, window) => {
         const $ = jQuery(window)
@@ -47,8 +45,7 @@ describe('routes', function () {
         try {
           expect(children).to.be.above(0)
           done()
-        }
-        catch(e) {
+        } catch (e) {
           done(new Error(`No content populated for route ${route}`))
         }
       }
