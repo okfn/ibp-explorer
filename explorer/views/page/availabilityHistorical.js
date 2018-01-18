@@ -3,28 +3,26 @@ import _ from 'underscore'
 
 import template_page from '../templates/page/availability_historical.hbs'
 import template_row from '../templates/availability_row.hbs'
-import reportGenerator from '../reportgenerator.js'
 
 class ProjectPage extends Backbone.View {
 
   initialize() {
     this.regionId = [0]
-    this.clickregion = _.bind(this.clickregion, this);
-    this._repaint = _.bind(this._repaint, this);
-    this._yearToggle = _.bind(this._yearToggle, this);
-    this._yearCompareToggle = _.bind(this._yearCompareToggle, this);
-    this.renderPage = _.bind(this.renderPage, this);
+    this.clickRegion = _.bind(this.clickRegion, this)
+    this._repaint = _.bind(this._repaint, this)
+    this._yearToggle = _.bind(this._yearToggle, this)
+    this._yearCompareToggle = _.bind(this._yearCompareToggle, this)
+    this.renderPage = _.bind(this.renderPage, this)
   }
 
   renderPage(target) {
-    reportGenerator.update('2015', false)
     this.$el.html(template_page())
     target.html(this.$el)
     $('#year-toggles button').click(this._yearToggle)
     $('#year-compare-toggles button').click(this._yearCompareToggle)
-    $('#year-toggles button[data-year="2015"]').click()
+    $('#year-toggles button[data-year="2017"]').click()
     $('#year-compare-toggles button[data-year="None"]').click()
-    $('.av-region-toggler').click(this.clickregion)
+    $('.av-region-toggler').click(this.clickRegion)
   }
 
   // Private methods
@@ -32,25 +30,26 @@ class ProjectPage extends Backbone.View {
     const target = $(e.delegateTarget)
     const lastYear = $('#year-toggles button.active').attr('data-year')
     const currentYear = target.attr('data-year')
-    const newReport = lastYear === '2015' || currentYear === '2015'
-    $('#year-toggles button').removeClass('active');
-    target.addClass('active')
-    this.year = $(e.delegateTarget).attr('data-year')
+    const newReport = (lastYear !== currentYear)
     if (newReport) {
-      reportGenerator.update(this.year, false)
+      $('#year-toggles button').removeClass('active')
+      target.addClass('active')
+      this.year = $(e.delegateTarget).attr('data-year')
+      this._repaint()
     }
-    this._repaint()
   }
 
   _yearCompareToggle(e) {
     const target = $(e.delegateTarget)
     const lastYear = $('#year-compare-toggles button.active').attr('data-year')
     const currentYear = target.attr('data-year')
-    const newReport = lastYear === '2015' || currentYear === '2015'
-    $('#year-compare-toggles button').removeClass('active');
-    target.addClass('active')
-    this.yearCompare = $(e.delegateTarget).attr('data-year')
-    this._repaint()
+    const newReport = (lastYear !== currentYear)
+    if (newReport) {
+      $('#year-compare-toggles button').removeClass('active')
+      target.addClass('active')
+      this.yearCompare = $(e.delegateTarget).attr('data-year')
+      this._repaint()
+    }
   }
 
   _findScore(countries, excludedCountries, country, year) {
@@ -64,9 +63,7 @@ class ProjectPage extends Backbone.View {
     }
   }
 
-  _repaint(dataset = reportGenerator.dataset,
-           questionSet = reportGenerator.questionSet,
-           region = reportGenerator.region) {
+  _repaint() {
     let compareYear = null
     if (this.yearCompare !== 'None' && this.yearCompare !== undefined
         && this.yearCompare !== this.year) {
@@ -82,33 +79,42 @@ class ProjectPage extends Backbone.View {
     let datasetAvCompare
     let countriesCompare
     let countriesCompareExcluded
-    if (this.year !== '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetAv = _EXPLORER_DATASET.availability_old
-      countries = _EXPLORER_DATASET.country_old
-      countriesExcluded = _EXPLORER_DATASET.excluded_country_old
-    } else {
+    if (this.year === '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetAv = _EXPLORER_DATASET.availability_2015
       countries = _EXPLORER_DATASET.country_2015
       countriesExcluded = _EXPLORER_DATASET.excluded_country
+    } else if (this.year === '2017') {
+      datasetRegions = _EXPLORER_DATASET.regions_2017
+      datasetAv = _EXPLORER_DATASET.availability_2017
+      countries = _EXPLORER_DATASET.country_2017
+      countriesExcluded = _EXPLORER_DATASET.excluded_country
+    } else {
+      datasetRegions = _EXPLORER_DATASET.regions_old
+      datasetAv = _EXPLORER_DATASET.availability_old
+      countries = _EXPLORER_DATASET.country_old
+      countriesExcluded = _EXPLORER_DATASET.excluded_country_old
     }
 
     if (compareYear) {
-      if (compareYear !== '2015') {
-        datasetAvCompare = _EXPLORER_DATASET.availability_old
-        countriesCompare = _EXPLORER_DATASET.country_old
-        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country_old
-      } else {
+      if (compareYear === '2015') {
         datasetAvCompare = _EXPLORER_DATASET.availability_2015
         countriesCompare = _EXPLORER_DATASET.country_2015
         countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
+      } else if (compareYear === '2017') {
+        datasetAvCompare = _EXPLORER_DATASET.availability_2017
+        countriesCompare = _EXPLORER_DATASET.country_2017
+        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
+      } else {
+        datasetAvCompare = _EXPLORER_DATASET.availability_old
+        countriesCompare = _EXPLORER_DATASET.country_old
+        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country_old
       }
     }
 
     const countriesIncluded = []
     _.forEach(this.regionId, reg => {
-      _.forEach(datasetRegions[reg].contains, (contained) => {
+      _.forEach(datasetRegions[reg].contains, contained => {
         countriesIncluded.push(contained)
       })
     })
@@ -146,10 +152,9 @@ class ProjectPage extends Backbone.View {
     })
   }
 
-  // TODO: change to camelcase
-  clickregion(e) {
+  clickRegion(e) {
     e.preventDefault()
-    let target = $(e.delegateTarget)
+    const target = $(e.delegateTarget)
     const selected = parseInt(target.attr('id').replace('region-', ''))
     if (selected === 0) {
       this.regionId = [0]
@@ -158,7 +163,7 @@ class ProjectPage extends Backbone.View {
     } else {
       if (target.hasClass('active')) {
         target.removeClass('active')
-        let index = this.regionId.indexOf(selected)
+        const index = this.regionId.indexOf(selected)
         if (index >= 0) {
           this.regionId.splice(index, 1)
         }
@@ -169,7 +174,7 @@ class ProjectPage extends Backbone.View {
       } else {
         if (this.$el.find('#region-0.av-region-toggler').hasClass('active')) {
           this.$el.find('#region-0.av-region-toggler').removeClass('active')
-          let index = this.regionId.indexOf(0)
+          const index = this.regionId.indexOf(0)
           if (index >= 0) {
             this.regionId.splice(index, 1)
           }
