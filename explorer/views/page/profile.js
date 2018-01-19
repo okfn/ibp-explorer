@@ -246,7 +246,7 @@ class ProfilePage extends Backbone.View {
     if (this.year === '2015') {
       renderScore(2015, percentageData.percentages[0].score)
     } else if (this.year === '2017') {
-      renderScore(2017, percentageData.percentages[1].score)
+      renderScore(2017, percentageData.percentages[0].score)
     } else {
       renderScore(2006, percentageData.percentages[0].score)
       renderScore(2008, percentageData.percentages[1].score)
@@ -281,13 +281,23 @@ class ProfilePage extends Backbone.View {
     }
     const number = target.attr('data-question-number')
     const t3q = {
+      // t3 questions for 2015
       t3pbs: '134',
       t3ebp: '135',
       t3eb: '136',
       t3iyr: '137',
       t3myr: '138',
       t3yer: '139',
-      t3ar: '140'
+      t3ar: '140',
+
+      // t3 questions for 2017
+      'PBS-2': 143,
+      'EBP-2': 144,
+      'EB-2': 145,
+      'IYR-2': 146,
+      'MYR-2': 147,
+      'YER-2': 148,
+      'AR-2': 149
     }
     let nb
     let q
