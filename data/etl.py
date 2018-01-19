@@ -85,9 +85,9 @@ def run_etl(js_output_path, download_dir_path, skip_downloads=False):
     datafiles['q_xlsx_sheet'] = 'Sheet1'
     datafiles['a_xlsx'] = 'OBI 2015.xlsx'
     datafiles['a_xlsx_sheet'] = 'Sheet1'
-    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
-    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
-    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2017.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups 2015'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions 2015-17'
     datafiles['av_xlsx'] = 'Public Availability 2015.xlsx'
     datafiles['av_xlsx_sheets'] = ['2006', '2008', '2010', '2012', '2015']
     datafiles['pp_xlsx'] = 'public participation.xlsx'
@@ -107,11 +107,9 @@ def run_etl(js_output_path, download_dir_path, skip_downloads=False):
     datafiles['q_xlsx_sheet'] = '2017'
     datafiles['a_xlsx'] = 'OBI 2017.xlsx'
     datafiles['a_xlsx_sheet'] = 'Sheet1'
-    # ::TODO:: groupings to use new 2017 file?
-    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2015.xlsx'
-    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups'
-    datafiles['g_xlsx_csheet'] = 'CountriesRegions'
-
+    datafiles['g_xlsx'] = 'GroupingsOBSQuestions2017.xlsx'
+    datafiles['g_xlsx_qsheet'] = 'QuestionsGroups 2017'
+    datafiles['g_xlsx_csheet'] = 'CountriesRegions 2015-17'
     datafiles['av_xlsx'] = 'Public Availability 2017.xlsx'
     datafiles['av_xlsx_sheets'] = \
         ['2006', '2008', '2010', '2012', '2015', '2017']
