@@ -203,7 +203,7 @@ class ReportGenerator extends Backbone.View {
   _updated() {
     this.questionSet = []
     const el = $('.toggle-box.select') || []
-    _.forEach(el, (e) => {
+    _.forEach(el, e => {
       this.questionSet.push($(e).attr('id').substr(7))
     })
     // Inner function
@@ -403,14 +403,18 @@ class ReportGenerator extends Backbone.View {
     let datasetRegions
     let datasetCountry
     let allYears
-    if (this.year != '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-      allYears = ['2006', '2008', '2010', '2012']
-    } else {
+    if (this.year === '2015') {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetCountry = _EXPLORER_DATASET.country_2015
       allYears = ['2015']
+    } else if (this.year === '2017') {
+      datasetRegions = _EXPLORER_DATASET.regions_2017
+      datasetCountry = _EXPLORER_DATASET.country_2017
+      allYears = ['2017']
+    } else {
+      datasetRegions = _EXPLORER_DATASET.regions_old
+      datasetCountry = _EXPLORER_DATASET.country_old
+      allYears = ['2006', '2008', '2010', '2012']
     }
     let out = []
     const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
