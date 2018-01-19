@@ -207,6 +207,21 @@ def _scores_as_csv(dataset, years, countries):
                 HEADERS.append(t3q[x] + ' (LETTER)')
             else:
                 HEADERS.append('Q '+str(x)+' (LETTER)')
+    elif years[0] == 2017:
+        q = range(1, 150)
+        HEADERS = ['COUNTRY_CODE', 'YEAR']
+        t3q = {143: 'PBS-2', 144: 'EBP-2', 145: 'EB-2', 146: 'IYR-2',
+               147: 'MYR-2', 148: 'YER-2', 149: 'AR-2'}
+        for x in q:
+            if x >= 143:
+                HEADERS.append(t3q[x])
+            else:
+                HEADERS.append('Q '+str(x))
+        for x in q:
+            if x >= 143:
+                HEADERS.append(t3q[x] + ' (LETTER)')
+            else:
+                HEADERS.append('Q '+str(x)+' (LETTER)')
     else:
         HEADERS = ['COUNTRY_CODE', 'YEAR']
         q = sorted([int(d) for d in dataset[countries][0].get('db_%d' %
@@ -223,13 +238,13 @@ def _scores_as_csv(dataset, years, countries):
                 continue
             row = [country['alpha2'], year]
             for x in q:
-                if x >= 134:
+                if (year == 2015 and x >= 134) or (year == 2017 and x >= 143):
                     qkey = t3q[x]
                     row.append(db[qkey])
                 else:
                     row.append(db[str(x)])
             for x in q:
-                if x >= 134:
+                if (year == 2015 and x >= 134) or (year == 2017 and x >= 143):
                     qkey = t3q[x]
                     score = db[qkey]
                 else:
