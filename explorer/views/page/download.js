@@ -19,7 +19,7 @@ class DownloadPage extends Backbone.View {
     if ($('#accordion2 .accordion-body').hasClass('in')) {
       collapsed = true
     }
-    this.year = '2015'
+    this.year = '2017'
     reportGenerator.update(this.year, collapsed)
     this.$el.html(template_page)
     target.html(this.$el)
@@ -33,7 +33,7 @@ class DownloadPage extends Backbone.View {
     const target = $(e.delegateTarget)
     const lastYear = this.year
     const currentYear = target.attr('value')
-    const newReport = lastYear === '2015' || currentYear === '2015'
+    const newReport = (lastYear !== currentYear)
     this.year = target.attr('value')
     if (this.year === 'all') {
       this.year = '2006'
@@ -45,7 +45,6 @@ class DownloadPage extends Backbone.View {
       }
       reportGenerator.update(this.year, collapsed)
     }
-    this._repaint()
   }
 
   _writeLine(out, x) {
@@ -66,7 +65,7 @@ class DownloadPage extends Backbone.View {
     const headers = ['NUMBER', 'TEXT', 'A', 'B', 'C', 'D', 'E']
     this._writeLine(out, headers)
     // Content
-    const q = _EXPLORER_DATASET.question_2015
+    const q = _EXPLORER_DATASET.question_2017
     _.forEach(questionSet, (x) => {
       this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e])
     })
@@ -96,6 +95,10 @@ class DownloadPage extends Backbone.View {
       datasetRegions = _EXPLORER_DATASET.regions_2015
       datasetCountry = _EXPLORER_DATASET.country_2015
       allYears = ['2015']
+    } else if (this.year === '2017') {
+      datasetRegions = _EXPLORER_DATASET.regions_2017
+      datasetCountry = _EXPLORER_DATASET.country_2017
+      allYears = ['2017']
     } else {
       datasetRegions = _EXPLORER_DATASET.regions_old
       datasetCountry = _EXPLORER_DATASET.country_old
@@ -109,8 +112,6 @@ class DownloadPage extends Backbone.View {
     _.forEach(questionSet, x => {
       headers.push(x + 'l')
     })
-    // console.log("headers: ", headers)
-    // this._writeLine(out, headers)
     // Quickly lookup country data
     const tmp = {}
     _.forEach(datasetCountry, x => {
@@ -118,12 +119,12 @@ class DownloadPage extends Backbone.View {
     })
     // Compile a CSV in the browser
     const selectedCountries = []
-    _.forEach(region, (reg) => {
-      _.forEach(datasetRegions[reg].contains, (contained) => {
+    _.forEach(region, reg => {
+      _.forEach(datasetRegions[reg].contains, contained => {
         selectedCountries.push(contained)
       })
     })
-    _.forEach(dataset, (country) => {
+    _.forEach(dataset, country => {
       if (!(_.contains(selectedCountries, country.alpha2))) return
       let selectedYear = $('input[name="downloadyear"]:checked').val()
       if (!(_.contains(allYears, selectedYear))) {
@@ -131,17 +132,17 @@ class DownloadPage extends Backbone.View {
       } else {
         selectedYear = [selectedYear]
       }
-      _.forEach(selectedYear, (year) => {
+      _.forEach(selectedYear, year => {
         if (!(_.has(country, year))) return
         const countryYearValue = (country[year] === -1) ? '' : country[year]
         const row = [country.alpha2, country.country, year, countryYearValue]
-        _.forEach(questionSet, (q) => {
+        _.forEach(questionSet, q => {
           const value = tmp[country.alpha2][`db_${year}`][q]
           const numValue = (value === -1) ? '' : value
           row.push(numValue)
           row.push(this._number_to_letter(value))
         })
-        assert(row.length === headers.length)
+        assert(row.length === headers.length, `Row length is ${row.length}. Header length is ${headers.length}.`)
         this._writeLine(out, row)
       })
     })
