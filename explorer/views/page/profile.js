@@ -31,8 +31,8 @@ class ProfilePage extends Backbone.View {
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
-    this.year = '2015'
-    this.years = [2015, 2017]
+    this.year = '2017'
+    this.years = [2017]
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
     this.db_2017 = $.extend({}, this.data.db_2015, this.params)
@@ -48,7 +48,7 @@ class ProfilePage extends Backbone.View {
     let tmpObj
     if (queryString) {
       _.each(
-        _.map(decodeURI(queryString).split(/&/g), function (el, i) {
+        _.map(decodeURI(queryString).split(/&/g), (el, i) => {
           const aux = el.split('=')
           let val
           tmpObj = {}
@@ -89,12 +89,11 @@ class ProfilePage extends Backbone.View {
     Look up a country object by alpha2 code.
     */
     if (this.year === '2015') {
-      // For 2015, combine 2017 data too, if available
-      const found2015 = _.find(_EXPLORER_DATASET.country_2015, x => x.alpha2 === alpha2) || {}
-      const found2017 = _.find(_EXPLORER_DATASET.country_2017, x => x.alpha2 === alpha2) || {}
-      return _.deepExtend(found2015, found2017)
+      return _.find(_EXPLORER_DATASET.country_2015, x => x.alpha2 === alpha2) || {}
+    } else if (this.year === '2017') {
+      return _.find(_EXPLORER_DATASET.country_2017, x => x.alpha2 === alpha2) || {}
     } else {
-      // 'Old' data already has 2006-2012 combined, just return it as is.
+      // 'Old' data already has 2006-2012 combined.
       return _.find(_EXPLORER_DATASET.country_old, x => x.alpha2 === alpha2) || {}
     }
   }
@@ -105,7 +104,7 @@ class ProfilePage extends Backbone.View {
       collapsed = true
     }
     this.year =
-      $('#datasheet-toggles button.active').attr('data-year') || '2015'
+      $('#datasheet-toggles button.active').attr('data-year') || '2017'
     $(window).scrollTop(0)
     const renderData = {
       alpha2: this.alpha2,
@@ -126,6 +125,8 @@ class ProfilePage extends Backbone.View {
     $('#datasheet-toggles button').click(this._yearToggle)
     if (this.year === '2015') {
       $('button[data-year="2015"]').click()
+    } else if (this.year === '2017') {
+      $('button[data-year="2017"]').click()
     } else {
       $('button[data-year="2006"]').click()
     }
@@ -140,7 +141,13 @@ class ProfilePage extends Backbone.View {
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
     if (this.year === '2015') {
-      this.years = [2015, 2017]
+      this.years = [2015]
+      badges = {
+        years: this.years,
+        last: false
+      }
+    } else if (this.year === '2017') {
+      this.years = [2017]
       badges = {
         years: this.years,
         last: false
@@ -179,7 +186,12 @@ class ProfilePage extends Backbone.View {
     if (this.year === '2015') {
       percentageData = {
         percentages: [
-          this._get_percentages(this.data.alpha2, this.data.db_2015, '2015', questionSet),
+          this._get_percentages(this.data.alpha2, this.data.db_2015, '2015', questionSet)
+        ]
+      }
+    } else if (this.year === '2017') {
+      percentageData = {
+        percentages: [
           this._get_percentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
         ]
       }
@@ -233,6 +245,7 @@ class ProfilePage extends Backbone.View {
     }
     if (this.year === '2015') {
       renderScore(2015, percentageData.percentages[0].score)
+    } else if (this.year === '2017') {
       renderScore(2017, percentageData.percentages[1].score)
     } else {
       renderScore(2006, percentageData.percentages[0].score)
@@ -261,6 +274,8 @@ class ProfilePage extends Backbone.View {
     let datasetQuestion
     if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
       datasetQuestion = _EXPLORER_DATASET.question_2015
+    } else if ($('#datasheet-toggles button.active').attr('data-year') === '2017') {
+      datasetQuestion = _EXPLORER_DATASET.question_2017
     } else {
       datasetQuestion = _EXPLORER_DATASET.question_old
     }
