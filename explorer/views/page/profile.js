@@ -1,7 +1,6 @@
 'use strict'
 
 import _ from 'underscore'
-import underscoreDeepExtend from 'underscore-deep-extend'
 
 import template_page from '../templates/page/profile.hbs'
 import template_profile_percentages from '../templates/profile_percentages.hbs'
@@ -13,8 +12,6 @@ import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
-
-_.mixin({ deepExtend: underscoreDeepExtend(_) })
 
 
 class ProfilePage extends Backbone.View {
