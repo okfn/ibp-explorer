@@ -146,8 +146,8 @@ class TimelinePage extends View {
     const target = $('#timeline-columns')
     if (target.length === 0) return
     const selectedCountries = []
-    _.forEach(region, (reg) => {
-      _.forEach(_EXPLORER_DATASET.regions_2015[reg].contains, (contained) => {
+    _.forEach(region, reg => {
+      _.forEach(_EXPLORER_DATASET.regions_2017[reg].contains, contained => {
         selectedCountries.push(contained)
       })
     })
@@ -163,7 +163,7 @@ class TimelinePage extends View {
     target.html(html)
     target.find('tr').bind('mouseover', this._mouseoverRanking)
     if (!this.mouseoverAlpha2) {
-      this.mouseoverAlpha2 = $('#timeline-column-2015 tbody tr:first-child').attr('data-alpha2')
+      this.mouseoverAlpha2 = $('#timeline-column-2017 tbody tr:first-child').attr('data-alpha2')
     }
     this._redrawJsPlumb()
     this._onToggleMode()
