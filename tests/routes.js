@@ -20,10 +20,10 @@ const routes = [
   '#map',
   '#rankings',
   '#profile',
-  // TODO fix test for route #timeline and availability - jsdom timesout
+  // TODO fix test for route #timeline - jsdom timesout
   // '#timeline',
   '#availability',
-  '#participation',
+  '#calculator',
   '#download'
 ]
 

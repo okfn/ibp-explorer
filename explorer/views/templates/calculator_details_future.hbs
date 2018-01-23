@@ -1,0 +1,30 @@
+<table id="question-table" class="table table-condensed">
+  <tr>
+    <th></th>
+    {{#each years}}
+      <th><span class="badge">{{this}}</span></th>
+    {{/each}}
+    <th><span class="badge badge-success">2019</span></th>
+    <th class="space"></th>
+  </tr>
+  {{#each questions as |qvalue qkey| }}
+  <tr class="question-row" data-question-number="{{number}}">
+    <td class="number">{{number}}</td>
+    {{#each ../years as |yvalue ykey| }}
+      <td class="letter">{{#if (lookup qvalue yvalue)}}<img src="images/letter/{{lookup qvalue yvalue}}.png"/>{{else}}-{{/if}}</td>
+    {{/each}}
+    <td class="letter multi">
+      {{#if 2017}}
+        <img src="images/letter/a.png" class="inactive" data-score="100"/>
+        <img src="images/letter/b.png" class="inactive" data-score="67"/>
+        <img src="images/letter/c.png" class="inactive" data-score="33"/>
+        <img src="images/letter/d.png" class="inactive" data-score="0"/>
+        <img src="images/letter/e.png" class="inactive" data-score="-1"/>
+      {{else}}
+        -
+      {{/if}}
+    </td>
+    <td class="space"></td>
+  </tr>
+  {{/each}}
+</table>

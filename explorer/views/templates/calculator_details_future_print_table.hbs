@@ -1,0 +1,23 @@
+<table class="table" id="question-table-print">
+    <tr>
+        <td rowspan="2"></td>
+        <th>Latest OBI Score</th>
+        <th>Prospective OBI Score</th>
+    </tr>
+    <tr>
+        <td>{{score2015}}</td>
+        <td>{{score2017}}</td>
+    </tr>
+    <tr>
+        <th>Question number</th>
+        <th>{{ data.years }} OBI Results</th>
+        <th>2017 Calculator Responses</th>
+    </tr>
+    {{#each data.questions}}
+    <tr class="capitalLetter">
+        <td>{{number}}</td>
+        <td>{{#if l2015}} {{ l2015 }} {{else}} N/A {{/if}}</td>
+        <td>{{#if l2017}} {{ l2017 }} {{else}} N/A {{/if}}</td>
+    </tr>
+    {{/each}}
+</table>

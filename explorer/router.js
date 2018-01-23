@@ -5,9 +5,9 @@ import TimelinePage from './views/page/timeline.js'
 import RankingsPage from './views/page/rankings.js'
 import DownloadPage from './views/page/download.js'
 import ProfilePage from './views/page/profile.js'
+import CalculatorPage from './views/page/calculator.js'
 import AvailabilityPage from './views/page/availability.js'
 import SplashPage from './views/page/splash.js'
-import ParticipationPage from './views/page/participation.js'
 import SearchPage from './views/page/search.js'
 
 // Singleton report generator
@@ -34,8 +34,8 @@ const singletons = {
   splashPage() {
     return this._splash = this._splash || new SplashPage()
   },
-  participationPage() {
-    return this._participation = this._participation || new ParticipationPage()
+  calculatorPage() {
+    return this._calculator = this._calculator || new CalculatorPage()
   },
   searchPage() {
     return this._search = this._search || new SearchPage()
@@ -53,7 +53,10 @@ class OBSRouter extends Backbone.Router {
       rankings: 'rankings',
       availability: 'availability',
       download: 'download',
-      participation: 'participation',
+      // participation: 'participation',
+      calculator: 'calculator',
+      'calculator/:country': 'calculator',
+      'calculator/:country?*params': 'calculator',
       profile: 'profile',
       'profile/:country': 'profile',
       'profile/:country?*params': 'profile',
@@ -121,9 +124,8 @@ class OBSRouter extends Backbone.Router {
     this.setCurrent(singletons.downloadPage())
   }
 
-  participation() {
-    const showReportGenerator = false
-    this.setCurrent(singletons.participationPage(), showReportGenerator)
+  calculator(country = '', params = '') {
+    this.setCurrent(new CalculatorPage(country, params))
   }
 
   profile(country = '', params = '') {
