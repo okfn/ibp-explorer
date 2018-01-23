@@ -22,6 +22,7 @@ class CalculatorPage extends Backbone.View {
     this._setupYears = _.bind(this._setupYears, this)
     this._onClickPrint = _.bind(this._onClickPrint, this)
     this._onClickReset = _.bind(this._onClickReset, this)
+    this._clickCalculatorGroupToggle = _.bind(this._clickCalculatorGroupToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
@@ -110,7 +111,8 @@ class CalculatorPage extends Backbone.View {
 
   _setupYears() {
     const badges = {
-      years: this.years
+      years: this.years,
+      groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1)
     }
     $('#profile-mode').empty().append($(template_calculator_badges(badges)))
     this.data = this.lookup(this.alpha2)
@@ -124,6 +126,7 @@ class CalculatorPage extends Backbone.View {
     $('#print-answered').click(this._onClickPrint)
     $('#print-table').click(this._onClickPrint)
     $('.explanation').show()
+    $('.calculator-group-toggler').click(this._clickCalculatorGroupToggle)
   }
 
   _repaint(dataset = reportGenerator.dataset,
@@ -166,6 +169,18 @@ class CalculatorPage extends Backbone.View {
     }
     renderScore(this.year, percentageData.percentages[0].score)
     this._repaintFutureScore()
+  }
+
+  _clickCalculatorGroupToggle(e) {
+    e.preventDefault()
+
+    const el = $(e.delegateTarget)
+    const groupId = el.attr('data-group-id')
+    const reportGeneratorGroupBtn = $(`#group-${groupId}`)
+
+    $('.group-toggler').removeClass('active')
+
+    reportGeneratorGroupBtn.click()
   }
 
   _ibpWebsiteUrl(alpha2) {
