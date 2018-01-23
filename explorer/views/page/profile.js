@@ -5,9 +5,6 @@ import _ from 'underscore'
 import template_page from '../templates/page/profile.hbs'
 import template_profile_percentages from '../templates/profile_percentages.hbs'
 import template_profile_details from '../templates/profile_details.hbs'
-import template_profile_details_future from '../templates/profile_details_future.hbs'
-import template_profile_details_future_print from '../templates/profile_details_future_print.hbs'
-import template_profile_details_future_print_table from '../templates/profile_details_future_print_table.hbs'
 import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
@@ -17,14 +14,8 @@ import reportGenerator from '../reportgenerator.js'
 class ProfilePage extends Backbone.View {
 
   initialize(alpha2, params) {
-    this._animationHackScale = _.bind(this._animationHackScale, this)
-    this._repaintFutureScore = _.bind(this._repaintFutureScore, this)
-    this._onClickAnswer = _.bind(this._onClickAnswer, this)
-    this._onToggleMode = _.bind(this._onToggleMode, this)
     this._repaint = _.bind(this._repaint, this)
     this._yearToggle = _.bind(this._yearToggle, this)
-    this._onClickPrint = _.bind(this._onClickPrint, this)
-    this._onClickReset = _.bind(this._onClickReset, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
@@ -108,7 +99,7 @@ class ProfilePage extends Backbone.View {
       countries: _EXPLORER_DATASET.country_2017,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibp_website_url(this.alpha2),
+      main_website_url: this._ibpWebsiteUrl(this.alpha2),
       years: this.years
     }
     this.viewPast = true
@@ -157,9 +148,6 @@ class ProfilePage extends Backbone.View {
       }
     }
     $('#profile-mode').empty().append($(template_profile_badges(badges)))
-    // if (this.year === '2015') {
-    //   $('#profile-toggle').click(this._onToggleMode)
-    // }
     if (this.year === '2006' && this.alpha2 === 'HU') {
       this.data = {
         alpha2: 'HU',
@@ -173,7 +161,6 @@ class ProfilePage extends Backbone.View {
       collapsed = true
     }
     reportGenerator.update(this.year, collapsed)
-    // this._onToggleMode()
   }
 
   _repaint(dataset = reportGenerator.dataset,
@@ -183,22 +170,22 @@ class ProfilePage extends Backbone.View {
     if (this.year === '2015') {
       percentageData = {
         percentages: [
-          this._get_percentages(this.data.alpha2, this.data.db_2015, '2015', questionSet)
+          this._getPercentages(this.data.alpha2, this.data.db_2015, '2015', questionSet)
         ]
       }
     } else if (this.year === '2017') {
       percentageData = {
         percentages: [
-          this._get_percentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+          this._getPercentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
         ]
       }
     } else {
       percentageData = {
         percentages: [
-          this._get_percentages(this.data.alpha2, this.data.db_2006, '2006', questionSet),
-          this._get_percentages(this.data.alpha2, this.data.db_2008, '2008', questionSet),
-          this._get_percentages(this.data.alpha2, this.data.db_2010, '2010', questionSet),
-          this._get_percentages(this.data.alpha2, this.data.db_2012, '2012', questionSet)
+          this._getPercentages(this.data.alpha2, this.data.db_2006, '2006', questionSet),
+          this._getPercentages(this.data.alpha2, this.data.db_2008, '2008', questionSet),
+          this._getPercentages(this.data.alpha2, this.data.db_2010, '2010', questionSet),
+          this._getPercentages(this.data.alpha2, this.data.db_2012, '2012', questionSet)
         ]
       }
     }
@@ -208,25 +195,10 @@ class ProfilePage extends Backbone.View {
       delay: 50,
       animation: true
     })
-    const detailsData = this._get_details(this.data, questionSet)
-    if (this.viewPast) {
-      $('.past').show()
-      $('.future').hide()
-      $('.details').html(template_profile_details(detailsData))
-    } else {
-      $('.future').show()
-      // Probably not needed
-      $('.past').hide()
-      $('.details').html(template_profile_details_future(detailsData))
-      $('.letter.multi img').bind('click', this._onClickAnswer)
-      _.forEach($('.question-row'), (x) => {
-        x = $(x)
-        const qnum = x.attr('data-question-number')
-        score = this.db_2017[qnum]
-        x.find('img[data-score="' + score + '"]').removeClass('inactive')
-          .addClass('active')
-      })
-    }
+    const detailsData = this._getDetails(this.data, questionSet)
+    $('.past').show()
+    $('.future').hide()
+    $('.details').html(template_profile_details(detailsData))
     // Add question number hover effect
     this.$el.find('tr.question-row').mouseover(this._onHoverQuestion)
     this.$el.find('tr.question-row:first').mouseover()
@@ -250,10 +222,9 @@ class ProfilePage extends Backbone.View {
       renderScore(2010, percentageData.percentages[2].score)
       renderScore(2012, percentageData.percentages[3].score)
     }
-    // this._repaintFutureScore()
   }
 
-  _ibp_website_url(alpha2) {
+  _ibpWebsiteUrl(alpha2) {
     // Special cases: Links are inconsistent on the core website
     if (alpha2 === 'BJ') {
       alpha2 = 'benin'
@@ -326,7 +297,7 @@ class ProfilePage extends Backbone.View {
     }
   }
 
-  _number_to_letter(dataset, questionNumber) {
+  _numberToLetter(dataset, questionNumber) {
     /*
     The given letters in the source data aren't always there. 'q102l' does not
     exist while 'q102' does. Therefore it is safer to use this technique to
@@ -352,7 +323,7 @@ class ProfilePage extends Backbone.View {
     }[value]
   }
 
-  _get_percentages(alpha2, data, year, questionSet) {
+  _getPercentages(alpha2, data, year, questionSet) {
     if (data === undefined) {
       return {
         year: year,
@@ -377,7 +348,7 @@ class ProfilePage extends Backbone.View {
     }
 
     _.forEach(questionSet, i => {
-      const letter = this._number_to_letter(data, i)
+      const letter = this._numberToLetter(data, i)
       assert(
         letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' ||
         letter === 'e')
@@ -395,7 +366,7 @@ class ProfilePage extends Backbone.View {
     return out
   }
 
-  _get_details(data, questionSet) {
+  _getDetails(data, questionSet) {
     const out = {
       questions: [],
       years: this.years
@@ -412,176 +383,11 @@ class ProfilePage extends Backbone.View {
       _.forEach(this.years, y => {
         const yearKey = y
         const dbKey = 'db_' + y
-        obj[yearKey] = this._number_to_letter(data[dbKey], x)
+        obj[yearKey] = this._numberToLetter(data[dbKey], x)
       })
       out.questions.push(obj)
     })
     return out
-  }
-
-  _onToggleMode(e) {
-    /* show/hide the future calculator */
-    if (!_.isEmpty(this.params) || e) {
-      if (e) e.preventDefault()
-      if ($('#profile-toggle').hasClass('inactive')) {
-        $('#profile-toggle').removeClass('inactive')
-        $('#profile-toggle').addClass('active')
-        $('#profile-mode').addClass('profile-mode-expanded')
-        $('#profile-toggle').html('« Hide 2017 Calculator')
-        $('#profile-reset').click(this._onClickReset)
-        $('#print-answered').click(this._onClickPrint)
-        $('#print-table').click(this._onClickPrint)
-      } else if ($('#profile-toggle').hasClass('active')) {
-        $('#profile-toggle').removeClass('active')
-        $('#profile-toggle').addClass('inactive')
-        $('#profile-mode').removeClass('profile-mode-expanded')
-        $('#profile-toggle').html('Show 2017 Calculator »')
-      }
-    }
-    const _viewPast = this.viewPast
-    this.viewPast = !$('#profile-toggle').hasClass('active')
-    const animate = !(_viewPast === this.viewPast)
-    // Populate the DOM
-    this._repaint()
-    const explanation = $('.explanation')
-    if (!this.viewPast) {
-      explanation.show()
-      if (animate) {
-        $('.future').css('opacity', 0).animate({ 'opacity': 1 }, 300)
-      }
-    } else {
-      explanation.hide()
-    }
-  }
-
-  _onClickAnswer(e) {
-    const el = $(e.delegateTarget)
-    const tr = el.parents('tr:first')
-    const qnum = tr.attr('data-question-number')
-    const score = el.attr('data-score')
-    tr.find('img').removeClass('active').addClass('inactive')
-    el.removeClass('inactive').addClass('active')
-    this.db_2017[qnum] = parseInt(score)
-    this.params = _.extend(this.params, { [qnum]: score })
-    this._repaintFutureScore()
-    this._animationHackScale($('.year-box.year-2017'))
-    router.navigate(
-      `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
-  }
-
-  _onClickReset(e) {
-    /*
-    Resets the future results calculator back to displaying current results.
-    */
-    e.preventDefault()
-    this.params = {}
-    this.db_2017 = $.extend({}, this.data.db_2015, this.params)
-    router.navigate(
-      `#profile/${this.alpha2}?${this._encodeParams(this.params)}`)
-    this._repaint()
-  }
-
-  _onClickPrint(e, questionSet = reportGenerator.questionSet) {
-    e.preventDefault()
-    const target = e.delegateTarget
-    const printHeader = printHeader || $('#country-header').text()
-    const detailsData = this._get_details(this.data, questionSet)
-    let datasetQuestion
-    if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
-      datasetQuestion = _EXPLORER_DATASET.question_2015
-    } else {
-      datasetQuestion = _EXPLORER_DATASET.question_old
-    }
-    _.map(detailsData.questions, (val, key) => {
-      const question = _.find(datasetQuestion, (question) => {
-        return String(question['number']) === val['number']
-      })
-      return val['question'] = question
-    })
-    if (target.id === 'print-answered') {
-      $('.details').html(template_profile_details_future_print({data: detailsData, year: 2017}))
-      if (window.location.toString().split('?')[1]) {
-        $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
-      } else {
-        $('#country-header').text(printHeader + ': ACTUAL RESULTS')
-      }
-      _.forEach($('.question-row-print'), (x) => {
-        x = $(x)
-        const qnum = x.attr('data-question-number')
-        const score = this.db_2017[qnum]
-        let previousAnswer = this._number_to_letter(this.data.db_2015, qnum)
-        if (previousAnswer) {
-          previousAnswer = previousAnswer.toUpperCase()
-          x.find('.previous-year').html(`Answer was ${previousAnswer} in 2015`)
-        }
-        x.find('div[data-score="' + score + '"]').addClass('active-print')
-      })
-    }
-    if (target.id === 'print-table') {
-      const score2017 = reportGenerator.calculateScore(this.db_2017,
-                                                 reportGenerator.questionSet)
-      const score2015 = reportGenerator.calculateScore(this.data.db_2015,
-                                                  reportGenerator.questionSet)
-      _.forEach(detailsData.questions, (question) => {
-        question['l2017'] = this._number_to_letter(this.db_2017,
-                                                   question['number'])
-      })
-      $('.details').html(template_profile_details_future_print_table({
-        data: detailsData,
-        score2017: Math.round(score2017),
-        score2015: Math.round(score2015),
-        year: 2017 }))
-    }
-    _.forEach($('.question-row'), (x) => {
-      x = $(x)
-      const qnum = x.attr('data-question-number')
-      const score = this.db_2017[qnum]
-      x.find('img[data-score="' + score + '"]').removeClass('inactive')
-        .addClass('active')
-    })
-    window.print()
-    $('#country-header').text(printHeader)
-    this._repaint()
-  }
-
-  _repaintFutureScore() {
-    /*
-    Update the future score for the calculator.
-    */
-    let score = reportGenerator.calculateScore(this.db_2017,
-                                               reportGenerator.questionSet)
-    score = Math.round(score)
-    $('.scores .year-2017 .bottom').text('Score: ' + score)
-  }
-
-  _animationHackScale(element, scale = 1.3, time = 340) {
-    /*
-    Hacky function to make an element pulse to a new scale and back again.
-    Follows a SIN wave. Looks like a heartbeat. Overwrites the font-size
-    property. Hence hacky.
-    */
-    element = $(element)
-    element.css('font-size', 100)
-    element.animate({
-      'font-size': 0
-    }, {
-      duration: time,
-      easing: 'linear',
-      step: function (now, fx) {
-        let _scale
-        let x
-        x = (now * Math.PI) / 100;
-        x = 1 + (Math.sin(x) * (scale - 1))
-        _scale = 'scale(' + x + ',' + x + ')'
-        return element.css({
-          '-moz-transform': _scale,
-          '-o-transform': _scale,
-          '-ms-transform': _scale,
-          '-webkit-transform': _scale,
-          'transform': _scale
-        })
-      }
-    })
   }
 }
 

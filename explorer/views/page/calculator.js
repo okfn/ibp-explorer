@@ -93,7 +93,7 @@ class CalculatorPage extends Backbone.View {
       countries: this.countries,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibp_website_url(this.alpha2),
+      main_website_url: this._ibpWebsiteUrl(this.alpha2),
       years: this.years
     }
     this.$el.html(template_page(renderData))
@@ -131,7 +131,7 @@ class CalculatorPage extends Backbone.View {
     let score
     const percentageData = {
       percentages: [
-        this._get_percentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+        this._getPercentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
       ]
     }
     $('.percentages').empty().append($(template_profile_percentages(percentageData)))
@@ -140,7 +140,7 @@ class CalculatorPage extends Backbone.View {
       delay: 50,
       animation: true
     })
-    const detailsData = this._get_details(this.data, questionSet)
+    const detailsData = this._getDetails(this.data, questionSet)
     $('.future').show()
     $('.details').html(template_calculator_details_future(detailsData))
     $('.letter.multi img').bind('click', this._onClickAnswer)
@@ -168,7 +168,7 @@ class CalculatorPage extends Backbone.View {
     this._repaintFutureScore()
   }
 
-  _ibp_website_url(alpha2) {
+  _ibpWebsiteUrl(alpha2) {
     // Special cases: Links are inconsistent on the core website
     if (alpha2 === 'BJ') {
       alpha2 = 'benin'
@@ -225,7 +225,7 @@ class CalculatorPage extends Backbone.View {
     }
   }
 
-  _number_to_letter(dataset, questionNumber) {
+  _numberToLetter(dataset, questionNumber) {
     /*
     The given letters in the source data aren't always there. 'q102l' does not
     exist while 'q102' does. Therefore it is safer to use this technique to
@@ -251,7 +251,7 @@ class CalculatorPage extends Backbone.View {
     }[value]
   }
 
-  _get_percentages(alpha2, data, year, questionSet) {
+  _getPercentages(alpha2, data, year, questionSet) {
     if (data === undefined) {
       return {
         year: year,
@@ -276,7 +276,7 @@ class CalculatorPage extends Backbone.View {
     }
 
     _.forEach(questionSet, i => {
-      const letter = this._number_to_letter(data, i)
+      const letter = this._numberToLetter(data, i)
       assert(
         letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' ||
         letter === 'e')
@@ -294,7 +294,7 @@ class CalculatorPage extends Backbone.View {
     return out
   }
 
-  _get_details(data, questionSet) {
+  _getDetails(data, questionSet) {
     const out = {
       questions: [],
       years: this.years
@@ -306,7 +306,7 @@ class CalculatorPage extends Backbone.View {
       _.forEach(this.years, y => {
         const yearKey = y
         const dbKey = 'db_' + y
-        obj[yearKey] = this._number_to_letter(data[dbKey], x)
+        obj[yearKey] = this._numberToLetter(data[dbKey], x)
       })
       out.questions.push(obj)
     })
@@ -344,7 +344,7 @@ class CalculatorPage extends Backbone.View {
     e.preventDefault()
     const target = e.delegateTarget
     const printHeader = printHeader || $('#country-header').text()
-    const detailsData = this._get_details(this.data, questionSet)
+    const detailsData = this._getDetails(this.data, questionSet)
     const datasetQuestion = _EXPLORER_DATASET.question_2017
     _.map(detailsData.questions, (val, key) => {
       const question = _.find(datasetQuestion, (question) => {
@@ -363,7 +363,7 @@ class CalculatorPage extends Backbone.View {
         x = $(x)
         const qnum = x.attr('data-question-number')
         const score = this.db_2019[qnum]
-        let previousAnswer = this._number_to_letter(this.data.db_2015, qnum)
+        let previousAnswer = this._numberToLetter(this.data.db_2015, qnum)
         if (previousAnswer) {
           previousAnswer = previousAnswer.toUpperCase()
           x.find('.previous-year').html(`Answer was ${previousAnswer} in 2015`)
@@ -377,7 +377,7 @@ class CalculatorPage extends Backbone.View {
       const score2017 = reportGenerator.calculateScore(this.data.db_2017,
                                                   reportGenerator.questionSet)
       _.forEach(detailsData.questions, (question) => {
-        question['l2017'] = this._number_to_letter(this.db_2019,
+        question['l2017'] = this._numberToLetter(this.db_2019,
                                                    question['number'])
       })
       $('.details').html(template_calculator_details_future_print_table({
