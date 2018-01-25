@@ -11,17 +11,21 @@
   <tr class="question-row" data-question-number="{{number}}">
     <td class="number">{{number}}</td>
     {{#each ../years as |yvalue ykey| }}
-      <td class="letter">{{#if (lookup qvalue yvalue)}}<img src="images/letter/{{lookup qvalue yvalue}}.png"/>{{else}}-{{/if}}</td>
+        <td class="letters{{#if ../threeLetterAnswer}} three-letter-answer{{/if}}"><span class="letter {{lookup qvalue yvalue}}">{{lookup qvalue yvalue}}</span></td>
     {{/each}}
-    <td class="letter multi">
-      {{#if 2017}}
-        <img src="images/letter/a.png" class="inactive" data-score="100"/>
-        <img src="images/letter/b.png" class="inactive" data-score="67"/>
-        <img src="images/letter/c.png" class="inactive" data-score="33"/>
-        <img src="images/letter/d.png" class="inactive" data-score="0"/>
-        <img src="images/letter/e.png" class="inactive" data-score="-1"/>
+    <td class="letters multi{{#if threeLetterAnswer}} three-letter-answer{{/if}}">
+      {{#if threeLetterAnswer}}
+        <span class="letter a inactive" data-score="100">a</span>
+        <span class="letter b inactive" data-score="0">b</span>
+        <span class="letter c inactive" data-score="-1">c</span>
+        <span class="letter null inactive">-</span>
+        <span class="letter null inactive">-</span>
       {{else}}
-        -
+        <span class="letter a inactive" data-score="100">a</span>
+        <span class="letter b inactive" data-score="67">b</span>
+        <span class="letter c inactive" data-score="33">c</span>
+        <span class="letter d inactive" data-score="0">d</span>
+        <span class="letter e inactive" data-score="-1">e</span>
       {{/if}}
     </td>
     <td class="space"></td>

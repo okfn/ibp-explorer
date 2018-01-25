@@ -146,12 +146,12 @@ class CalculatorPage extends Backbone.View {
     const detailsData = this._getDetails(this.data, questionSet)
     $('.future').show()
     $('.details').html(template_calculator_details_future(detailsData))
-    $('.letter.multi img').bind('click', this._onClickAnswer)
+    $('.letters.multi .letter[data-score]').bind('click', this._onClickAnswer)
     _.forEach($('.question-row'), (x) => {
       x = $(x)
       const qnum = x.attr('data-question-number')
       score = this.db_2019[qnum]
-      x.find('img[data-score="' + score + '"]').removeClass('inactive')
+      x.find('.letter[data-score="' + score + '"]').removeClass('inactive')
         .addClass('active')
     })
     // Add question number hover effect
@@ -240,12 +240,46 @@ class CalculatorPage extends Backbone.View {
     }
   }
 
-  _numberToLetter(dataset, questionNumber) {
+  _getQuestionsForYear(year) {
+    let questions
+    if (year === '2015') {
+      questions = _EXPLORER_DATASET.question_2015
+    } else if (year === '2017') {
+      questions = _EXPLORER_DATASET.question_2017
+    } else {
+      questions = _EXPLORER_DATASET.question_old
+    }
+    return questions
+  }
+
+  _isThreeLetterAnswer(questionItem) {
+    /*
+    Most questions can be answered a, b, c, d, or e. Some, however are only a,
+    b, or c. This returns a boolean to determine if the passed questionItem is
+    one of these three letter answers.
+    */
+    return _.isNull(questionItem.d)
+  }
+
+  _numberToLetter(dataset, questionItem) {
     /*
     The given letters in the source data aren't always there. 'q102l' does not
     exist while 'q102' does. Therefore it is safer to use this technique to
     extract a letter...
     */
+    const questionNumber = questionItem.number
+    const fiveLetterMapping = {
+      '-1': 'e',
+      0: 'd',
+      33: 'c',
+      67: 'b',
+      100: 'a'
+    }
+    const threeLetterMapping = {
+      '-1': 'c',
+      0: 'b',
+      100: 'a'
+    }
     if (dataset === undefined) {
       return ''
     }
@@ -257,16 +291,14 @@ class CalculatorPage extends Backbone.View {
     } else {
       value = '-1'
     }
-    return {
-      '-1': 'e',
-      0: 'd',
-      33: 'c',
-      67: 'b',
-      100: 'a'
-    }[value]
+    if (this._isThreeLetterAnswer(questionItem)) {
+      return threeLetterMapping[value]
+    }
+    return fiveLetterMapping[value]
   }
 
   _getPercentages(alpha2, data, year, questionSet) {
+    const questions = this._getQuestionsForYear(year)
     if (data === undefined) {
       return {
         year: year,
@@ -291,7 +323,9 @@ class CalculatorPage extends Backbone.View {
     }
 
     _.forEach(questionSet, i => {
-      const letter = this._numberToLetter(data, i)
+      const questionItem = _.find(questions, q => String(q.number) === i)
+      const letter = this._numberToLetter(data, questionItem)
+
       assert(
         letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd' ||
         letter === 'e')
@@ -310,18 +344,21 @@ class CalculatorPage extends Backbone.View {
   }
 
   _getDetails(data, questionSet) {
+    const questions = this._getQuestionsForYear(this.year)
     const out = {
       questions: [],
       years: this.years
     }
     _.forEach(questionSet, x => {
+      const questionItem = _.find(questions, q => String(q.number) === x)
       const obj = {
-        number: x
+        number: x,
+        threeLetterAnswer: this._isThreeLetterAnswer(questionItem)
       }
       _.forEach(this.years, y => {
         const yearKey = y
         const dbKey = 'db_' + y
-        obj[yearKey] = this._numberToLetter(data[dbKey], x)
+        obj[yearKey] = this._numberToLetter(data[dbKey], questionItem)
       })
       out.questions.push(obj)
     })
@@ -333,7 +370,7 @@ class CalculatorPage extends Backbone.View {
     const tr = el.parents('tr:first')
     const qnum = tr.attr('data-question-number')
     const score = el.attr('data-score')
-    tr.find('img').removeClass('active').addClass('inactive')
+    tr.find('.multi .letter').removeClass('active').addClass('inactive')
     el.removeClass('inactive').addClass('active')
     this.db_2019[qnum] = parseInt(score)
     this.params = _.extend(this.params, { [qnum]: score })

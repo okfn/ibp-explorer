@@ -90,7 +90,7 @@ div#country-profile {
           text-align: right;
           font-weight: bold;
         }
-        td.letter {
+        td.letters {
           text-align: center;
           &.multi {
             background: lighten(#54A954, 44%);
@@ -109,6 +109,51 @@ div#country-profile {
             }
           }
         }
+        .letter {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          margin-right: 3px;
+          margin-top: 1px;
+          border-radius: 50%;
+          line-height: 20px;
+          text-align: center;
+          color: #fff;
+          cursor: pointer;
+
+          &:not([data-score]) {
+            cursor: default;
+          }
+
+          &.inactive {
+            opacity: 0.3;
+            &[data-score]:hover {
+              opacity: 0.7;
+            }
+          }
+
+          &.active {
+            border: 2px solid #000;
+          }
+        }
+        .letter.a {
+          background-color: #54a954;  // green
+        }
+        .letter.b {
+          background-color: #d9c300;  // yellow
+        }
+        .letter.c {
+          background-color: #ee7f02;  // orange
+        }
+        .letter.d,
+        .three-letter-answer .letter.b {
+          background-color: #af292b;  // red
+        }
+        .letter.e,
+        .three-letter-answer .letter.c,
+        .letter.null  {
+          background-color: #aaaaaa;  // grey
+        }
         td.space {
           width: 8px;
         }
@@ -118,7 +163,7 @@ div#country-profile {
           background: #ddd;
         }
         td.space,
-        td.letter {
+        td.letters {
           background: #eee;
           &.multi {
             background: lighten(#54A954, 40%);

@@ -10,7 +10,7 @@
     <tr class="question-row" data-question-number="{{number}}">
       <td class="number">{{number}}</td>
       {{#each ../years as |yvalue ykey| }}
-        <td class="letter">{{#if (lookup qvalue yvalue)}}<img src="images/letter/{{lookup qvalue yvalue}}.png"/>{{else}}-{{/if}}</td>
+        <td class="letters{{#if ../threeLetterAnswer}} three-letter-answer{{/if}}"><span class="letter {{#if (lookup qvalue yvalue)}}{{lookup qvalue yvalue}}{{else}}null{{/if}}">{{#if (lookup qvalue yvalue)}}{{lookup qvalue yvalue}}{{else}}-{{/if}}</span></td>
       {{/each}}
       <td class="space"></td>
     </tr>
