@@ -124,10 +124,11 @@
 }
 
 @header-height: 99px;
-@state-color-not-produced: #CA2222;
-@state-color-internal: #F5DD0C;
-@state-color-available: #28C926;
-@state-color-hard-soft-copy-only: @state-color-internal;
+@state-color-not-produced: #CA2222;  // red
+@state-color-internal: #F5DD0C;  // yellow
+@state-color-available: #28C926;  // green
+@state-color-hard-soft-copy-only: @state-color-internal;  // 2017 and after, yellow
+@state-color-hard-soft-copy-only-pre2017: @state-color-available;  // before 2017, green
 @state-color-late: @state-color-internal;
 @import "../../../node_modules/bootstrap/less/variables.less";
 @import "../../../node_modules/bootstrap/less/mixins.less";
@@ -247,6 +248,10 @@
     &.state-hard-soft-copy-only, &.state-SC, &.state-HC {
       background-color: lighten(@state-color-hard-soft-copy-only, 15%) !important;
       border-color: darken(@state-color-hard-soft-copy-only, 15%) !important;
+    }
+    &.state-hard-soft-copy-only.pre2017, &.state-SC.pre2017, &.state-HC.pre2017 {
+      background-color: lighten(@state-color-hard-soft-copy-only-pre2017, 15%) !important;
+      border-color: darken(@state-color-hard-soft-copy-only-pre2017, 15%) !important;
     }
   }
 

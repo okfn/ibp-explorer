@@ -144,9 +144,11 @@ class ProjectPage extends Backbone.View {
       context.obj = row[yearKey]
       context.obj.score = this._findScore(countries, countriesExcluded, country, this.year)
       context.obj.year = this.year
+      context.obj.pre2017 = (this.year < 2017)
       if (compareObj) {
         context.compareObj = compareObj
         context.compareObj.year = compareYear
+        context.compareObj.pre2017 = (compareYear < 2017)
       }
       tbody.append(template_row(context))
     })
