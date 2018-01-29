@@ -412,11 +412,9 @@ class ReportGenerator extends Backbone.View {
     }
     const out = []
     const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
-    _.forEach(questionSet, x => {
-      headers.push(x.toString())
-    })
-    _.forEach(questionSet, x => {
-      headers.push(x + 'l')
+    _.forEach(questionSet, q => {
+      headers.push(q.toString())
+      headers.push(`${q}l`)
     })
     if (writeHeaders) {
       this._writeLine(out, headers)

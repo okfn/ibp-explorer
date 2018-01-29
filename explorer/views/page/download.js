@@ -53,7 +53,7 @@ class DownloadPage extends Backbone.View {
     $('#custom-csv').html((reportGenerator.csvAnswers(dataset,
                                                        region,
                                                        questionSet,
-                                                       true)).join('\n'))
+                                                       false)).join('\n'))
   }
 
   _onNavChange(e) {
