@@ -13,14 +13,14 @@ class ReportGenerator extends Backbone.View {
     this.region = [0] // Initially our custom 'Entire World' collection
     this.year = '2017'
     this._download = _.bind(this._download, this)
-    this._number_to_letter = _.bind(this._number_to_letter, this)
+    this._numberToLetter = _.bind(this._numberToLetter, this)
     this._writeLine = _.bind(this._writeLine, this)
     this._clickBoxToggle = _.bind(this._clickBoxToggle, this)
     this._clickRegionToggle = _.bind(this._clickRegionToggle, this)
     this._clickGroupToggle = _.bind(this._clickGroupToggle, this)
     this._setSubtitle = _.bind(this._setSubtitle, this)
-    this._expand_collapse = _.bind(this._expand_collapse, this)
-    this._select_or_clear = _.bind(this._select_or_clear, this)
+    this._expandCollapse = _.bind(this._expandCollapse, this)
+    this._selectOrClear = _.bind(this._selectOrClear, this)
     this._updated = _.bind(this._updated, this)
     this.update = _.bind(this.update, this)
     this.csvAnswers = _.bind(this.csvAnswers, this)
@@ -55,9 +55,7 @@ class ReportGenerator extends Backbone.View {
         groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
         groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
         groupings2: _EXPLORER_DATASET.groupings_2015.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question_2015, (q) => {
-          return q
-        }),
+        question: _.map(_EXPLORER_DATASET.question_2015, q => q),
         country: _EXPLORER_DATASET.country_2015,
         regions: _EXPLORER_DATASET.regions_2015
       }
@@ -67,9 +65,7 @@ class ReportGenerator extends Backbone.View {
         groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1),
         groupings1: _EXPLORER_DATASET.groupings_2017.slice(1, 2),
         groupings2: _EXPLORER_DATASET.groupings_2017.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question_2017, (q) => {
-          return q
-        }),
+        question: _.map(_EXPLORER_DATASET.question_2017, q => q),
         country: _EXPLORER_DATASET.country_2017,
         regions: _EXPLORER_DATASET.regions_2017
       }
@@ -79,9 +75,7 @@ class ReportGenerator extends Backbone.View {
         groupings0: _EXPLORER_DATASET.groupings_old.slice(0, 1),
         groupings1: _EXPLORER_DATASET.groupings_old.slice(1, 3),
         groupings2: _EXPLORER_DATASET.groupings_old.slice(3, 5),
-        question: _.map(_EXPLORER_DATASET.question_old, (q) => {
-          return q
-        }),
+        question: _.map(_EXPLORER_DATASET.question_old, q => q),
         country: _EXPLORER_DATASET.country_old,
         regions: _EXPLORER_DATASET.regions_old
       }
@@ -106,12 +100,12 @@ class ReportGenerator extends Backbone.View {
     this.$el.find('.group-toggler').bind('mouseover', this._hoverGroupToggle)
     this.$el.find('.group-toggler').bind('click', this._clickGroupToggle)
     this.$el.find('.region-toggler').bind('click', this._clickRegionToggle)
-    this.$el.find('.group-toggler').bind('mouseout', (e) => {
+    this.$el.find('.group-toggler').bind('mouseout', e => {
       this.$el.find('.toggle-box').removeClass('hover')
     })
     this.$el.find('.toggle-box').bind('click', this._clickBoxToggle)
-    this.$el.find('.nav a').bind('click', this._expand_collapse)
-    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear)
+    this.$el.find('.nav a').bind('click', this._expandCollapse)
+    this.$el.find('.select-or-clear button').bind('click', this._selectOrClear)
     this.$el.find('.download-csv').bind('click', this._download)
     this.$el.find('.toggle-box').tooltip({
       placement: 'left',
@@ -136,7 +130,7 @@ class ReportGenerator extends Backbone.View {
     if (questionSet.length === 0) return 0
     let acc = 0
     let count = 0
-    _.forEach(questionSet, (x) => {
+    _.forEach(questionSet, x => {
       if (db[x] >= 0) {
         acc += db[x]
         count++
@@ -161,14 +155,14 @@ class ReportGenerator extends Backbone.View {
     this.$el.find('.group-toggler').bind('mouseover', this._hoverGroupToggle)
     this.$el.find('.group-toggler').bind('click', this._clickGroupToggle)
     this.$el.find('.region-toggler').bind('click', this._clickRegionToggle)
-    this.$el.find('.group-toggler').bind('mouseout', (e) => {
+    this.$el.find('.group-toggler').bind('mouseout', e => {
       this.$el.find('.toggle-box').removeClass('hover')
     })
     this.$el.find('.toggle-box').bind('click', this._clickBoxToggle)
     //@$el.find('.toggle-box').bind('mouseover', this._showQuestion)
     //@$el.find('.toggle-box').bind('mouseout', this._hideQuestion)
-    this.$el.find('.nav a').bind('click', this._expand_collapse)
-    this.$el.find('.select-or-clear button').bind('click', this._select_or_clear)
+    this.$el.find('.nav a').bind('click', this._expandCollapse)
+    this.$el.find('.select-or-clear button').bind('click', this._selectOrClear)
     this.$el.find('.download-csv').bind('click', this._download)
     this.$el.find('.toggle-box').tooltip({
       placement: 'left',
@@ -246,7 +240,7 @@ class ReportGenerator extends Backbone.View {
     this.trigger('update', this.dataset, this.questionSet, this.region, this.dataset_unrounded)
   }
 
-  _select_or_clear(e) {
+  _selectOrClear(e) {
     this._setSubtitle()
     this.$el.find('.group-toggler').removeClass('active')
     const el = $(e.delegateTarget)
@@ -258,7 +252,7 @@ class ReportGenerator extends Backbone.View {
     this._updated()
   }
 
-  _expand_collapse(e) {
+  _expandCollapse(e) {
     e.preventDefault()
     const inner = this.$el.find('.inner')
     const li = ($(e.delegateTarget)).parents('li')
@@ -304,8 +298,8 @@ class ReportGenerator extends Backbone.View {
       x.find(' .' + group).removeClass('select')
     } else {
       if (activeUl && !activeUl.is(el.parents('ul:first'))) {
-        activeUl.find('.group-toggler.active').each(function() {
-          let gp = $(this).attr('id')
+        activeUl.find('.group-toggler.active').each(function () {
+          const gp = $(this).attr('id')
           x.find(' .' + gp).removeClass('select')
           $(this).removeClass('active')
         })
@@ -313,7 +307,7 @@ class ReportGenerator extends Backbone.View {
       el.addClass('active')
       x.find(' .' + group).addClass('select')
     }
-    let selected = this.$el.find('.group-toggler.active')
+    const selected = this.$el.find('.group-toggler.active')
     if (selected.length === 1) {
       this._setSubtitle(selected.text())
     } else {
@@ -325,8 +319,8 @@ class ReportGenerator extends Backbone.View {
 
   _clickRegionToggle(e) {
     e.preventDefault()
-    let el = $(e.delegateTarget)
-    let selected = parseInt(el.attr('id').replace('region-', ''))
+    const el = $(e.delegateTarget)
+    const selected = parseInt(el.attr('id').replace('region-', ''))
     if (selected === 0) {
       this.region = [0]
       this.$el.find('.region-toggler').removeClass('active')
@@ -375,7 +369,7 @@ class ReportGenerator extends Backbone.View {
   _writeLine(out, x) {
     // Simple CSV escaping which rejects strings containing "
     _.forEach(x, (obj, index) => {
-      let element = obj || ''
+      const element = obj || ''
       assert(!(_.contains(element, '"')), 'Cannot encode string: ' + element)
       if (_.contains(element, ',')) {
         x[index] = '"' + element + '"'
@@ -384,12 +378,12 @@ class ReportGenerator extends Backbone.View {
     out.push(x.join(','))
   }
 
-  //TODO: refactor name
-  _number_to_letter(value) {
-    /*The given letters in the source data arent always there.
-     'q102l' does not exist while 'q102' does.
-     Therefore it is safer to use this technique to extract a letter...*/
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
+  _numberToLetter(value) {
+    /* The given letters in the source data arent always there. 'q102l' does not
+     exist while 'q102' does. Therefore it is safer to use this technique to
+     extract a letter... */
+    assert(value === (-1) || value === 0 || value === 33 || value === 67 ||
+           value === 100, 'Invalid value: ' + value)
     return {
       '-1': 'e',
       0: 'd',
@@ -458,9 +452,10 @@ class ReportGenerator extends Backbone.View {
           const value = tmp[country.alpha2][`db_${year}`][q]
           const numValue = (value === -1) ? '' : value
           row.push(numValue)
-          row.push(this._number_to_letter(value))
+          row.push(this._numberToLetter(value))
         })
-        assert(row.length === headers.length)
+        assert(row.length === headers.length,
+               `Row length is ${row.length}. Header length is ${headers.length}.`)
         this._writeLine(out, row)
       })
     })
