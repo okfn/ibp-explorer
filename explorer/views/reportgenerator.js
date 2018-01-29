@@ -430,18 +430,18 @@ class ReportGenerator extends Backbone.View {
         selectedCountries.push(contained)
       })
     })
+    let selectedYear = $('.year-selector button.active').attr('data-year') ||
+                         $('input[name="downloadyear"]:checked').val()
+    if ($('#datasheet-toggles button.active').attr('data-year') == '2006') {
+      selectedYear = 'all'
+    }
+    if (!_.contains(allYears, selectedYear)) {
+      selectedYear = allYears
+    } else {
+      selectedYear = [selectedYear]
+    }
     _.forEach(dataset, country => {
       if (!_.contains(selectedCountries, country.alpha2)) return
-      let selectedYear = $('.year-selector button.active').attr('data-year') ||
-                           $('input[name="downloadyear"]:checked').val()
-      if ($('#datasheet-toggles button.active').attr('data-year') == '2006') {
-        selectedYear = 'all'
-      }
-      if (!_.contains(allYears, selectedYear)) {
-        selectedYear = allYears
-      } else {
-        selectedYear = [selectedYear]
-      }
       _.forEach(selectedYear, year => {
         if (!(_.has(country, year))) return
         const countryYearValue = (country[year] === -1) ? '' : country[year]
