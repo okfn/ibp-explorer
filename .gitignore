@@ -8,4 +8,6 @@ coverage/
 .env
 cache/
 data/questionnaire/*.csv
+data/tests/data/
 .python-version
+~$*.xlsx

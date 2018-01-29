@@ -1,22 +1,22 @@
-var fs = require('fs');
-var Indaba = require('ibp-explorer-data-client').default.Indaba;
-var Filters = require('ibp-explorer-data-client').default.Filters;
-var moment = require('moment');
-var request = require('request');
+const fs = require('fs')
+const Indaba = require('ibp-explorer-data-client').default.Indaba
+const Filters = require('ibp-explorer-data-client').default.Filters
+const moment = require('moment')
+const request = require('request')
 
 if (!fs.existsSync('./cache')) {
   fs.mkdirSync('./cache')
 }
 
 function getNewToken() {
-  var options = {
+  const options = {
     uri: process.env.API_BASE + '/Users/login',
     method: 'POST',
     json: {
       username: process.env.API_USERNAME,
       password: process.env.API_PASSWORD
     }
-  };
+  }
 
   return new Promise(function (resolve, reject) {
     request(options, function (error, response, body) {
@@ -25,32 +25,32 @@ function getNewToken() {
       } else {
         reject(error, response.statusCode)
       }
-    });
+    })
   })
 }
 
 function checkTokenValidity() {
-  Indaba.getCountries(Filters().limit(1)).then(function (res) {
+  Indaba.getCountries(Filters().limit(1)).then(res => {
     if (res.error) {
       console.log('Could not generate new API token, please verify username and password')
       return false
-    } else {
-      return true
     }
+    return true
   })
 }
 
-function api_call (endpoint, callback) {
-  var cache_file = './cache/'+endpoint+'.json';
-  var cache_exists = fs.existsSync(cache_file);
-  var data, stat = null
+function api_call(endpoint, callback) {
+  const cacheFile = './cache/' + endpoint + '.json'
+  const cacheExists = fs.existsSync(cacheFile)
+  let data = null
+  let stat = null
 
   function _downloadTrackerJSON() {
     return new Promise(function (resolve, reject) {
-      Indaba.getTrackerJSON().then( function (res) {
-        fs.writeFileSync(cache_file, JSON.stringify(res));
-        resolve(res);
-      }).catch(function (err, status) {
+      Indaba.getTrackerJSON().then(res => {
+        fs.writeFileSync(cacheFile, JSON.stringify(res))
+        resolve(res)
+      }).catch((err, status) => {
         if (err) {
           reject(err)
         }
@@ -63,27 +63,27 @@ function api_call (endpoint, callback) {
       data = _downloadTrackerJSON()
       callback(data)
     } else {
-      getNewToken().then(function (token) {
+      getNewToken().then(token => {
         process.env.API_TOKEN = token
-        _downloadTrackerJSON().then(function (data) {
-          callback(data)
-        }).catch(function (err) {
+        _downloadTrackerJSON().then(d => {
+          callback(d)
+        }).catch(err => {
           console.log(err)
         })
       })
     }
   }
 
-  if (cache_exists) {
+  if (cacheExists) {
     // Pre-load the data to check length
-    data = JSON.parse(fs.readFileSync(cache_file));
-    stat = fs.statSync(cache_file)
+    data = JSON.parse(fs.readFileSync(cacheFile))
+    stat = fs.statSync(cacheFile)
   }
 
-  if (cache_exists) {
+  if (cacheExists) {
     if (data.length > 0) {
-      var date = moment(stat.mtime);
-      callback(data, date);
+      const date = moment(stat.mtime)
+      callback(data, date)
     } else {
       getTrackerData(callback)
     }
@@ -93,46 +93,46 @@ function api_call (endpoint, callback) {
 }
 
 function getSearch() {
-  return new Promise(function (resolve, reject) {
-    var cache_file = './cache/searchdata.json'
-    var cache_exists = fs.existsSync(cache_file)
-    var data = null
+  return new Promise((resolve, reject) => {
+    const cacheFile = './cache/searchdata.json'
+    const cacheExists = fs.existsSync(cacheFile)
+    let data = null
 
     function _downloadSearchJSON() {
-      return new Promise(function (resolve, reject) {
-        Indaba.getSearchJSON().then(function (res) {
-          fs.writeFileSync(cache_file, JSON.stringify(res))
-          resolve(res)
-        }).catch(function (err) {
-          reject(err)
+      return new Promise((resolve_, reject_) => {
+        Indaba.getSearchJSON().then(res => {
+          fs.writeFileSync(cacheFile, JSON.stringify(res))
+          resolve_(res)
+        }).catch(err => {
+          reject_(err)
         })
       })
     }
 
     function getSearchData() {
       if (checkTokenValidity()) {
-        _downloadSearchJSON().then(function (data) {
-          resolve(data)
-        }).catch(function (err) {
+        _downloadSearchJSON().then(d => {
+          resolve(d)
+        }).catch(err => {
           console.log(err)
         })
       } else {
-        getNewToken().then(function (token) {
+        getNewToken().then(token => {
           process.env.API_TOKEN = token
-          _downloadSearchJSON().then(function (data) {
-            resolve(data)
-          }).catch(function (err) {
+          _downloadSearchJSON().then(d => {
+            resolve(d)
+          }).catch(err => {
             console.log(err)
           })
         })
       }
     }
 
-    if (cache_exists) {
-      data = JSON.stringify(fs.readFileSync(cache_file))
+    if (cacheExists) {
+      data = JSON.stringify(fs.readFileSync(cacheFile))
     }
 
-    if (cache_exists) {
+    if (cacheExists) {
       if (data.length > 1) {
         resolve(data)
       } else {
@@ -147,4 +147,4 @@ function getSearch() {
 module.exports = {
   call: api_call,
   getSearch: getSearch
-};
+}

@@ -19,11 +19,11 @@ class DownloadPage extends Backbone.View {
     if ($('#accordion2 .accordion-body').hasClass('in')) {
       collapsed = true
     }
-    this.year = '2015'
+    this.year = '2017'
     reportGenerator.update(this.year, collapsed)
     this.$el.html(template_page)
     target.html(this.$el)
-    let nav = this.$el.find('.dl-nav-select')
+    const nav = this.$el.find('.dl-nav-select')
     nav.chosen()
     nav.val('').trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
@@ -33,11 +33,8 @@ class DownloadPage extends Backbone.View {
     const target = $(e.delegateTarget)
     const lastYear = this.year
     const currentYear = target.attr('value')
-    const newReport = lastYear === '2015' || currentYear === '2015'
+    const newReport = (lastYear !== currentYear)
     this.year = target.attr('value')
-    if (this.year === 'all') {
-      this.year = '2006'
-    }
     if (newReport) {
       let collapsed = false
       if ($('#accordion2 .accordion-body').hasClass('in')) {
@@ -45,116 +42,21 @@ class DownloadPage extends Backbone.View {
       }
       reportGenerator.update(this.year, collapsed)
     }
-    this._repaint()
   }
 
-  _writeLine(out, x) {
-    _.forEach(_.range(x.length), (index) => {
-      let element = x[index] || ''
-      assert(!_.contains(element, '"'), 'Cannot encode string: ' + element)
-      if (_.contains(element, ',')) {
-        x[index] = '"' + element + '"'
-      }
-    })
-    return out.push(x.join(','))
-  }
-
-  _csvQuestions(questionSet) {
-    // Prep
-    let out = []
-    // Headers
-    const headers = ['NUMBER','TEXT','A','B','C','D','E']
-    this._writeLine(out, headers)
-    // Content
-    const q = _EXPLORER_DATASET.question
-    _.forEach(questionSet, (x) => {
-      this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e])
-    })
-    return out
-  }
-
-  _number_to_letter(value) {
-    //The given letters in the source data arent always there.
-    // 'q102l' does not exist while 'q102' does.
-    // Therefore it is safer to use this technique to extract a letter...
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 || value === 100, 'Invalid value: ' + value)
-    return {
-      '-1': 'e',
-      0: 'd',
-      33: 'c',
-      67: 'b',
-      100: 'a'
-    }[value]
-  }
-
-  _csvAnswers(dataset, region, questionSet) {
-    let datasetRegions
-    let datasetCountry
-    let all_years
-    if (this.year != '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-      all_years = ['2006', '2008', '2010', '2012']
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions
-      datasetCountry = _EXPLORER_DATASET.country
-      all_years = ['2015']
-    }
-    let out = []
-    let headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
-    _.forEach(questionSet, (x) => {
-      headers.push(x.toString())
-    })
-    _.forEach(questionSet, (x) => {
-      headers.push(x+'l')
-    })
-    //console.log("headers: ", headers)
-    //this._writeLine(out, headers)
-    // Quickly lookup country data
-    let tmp = {}
-    _.forEach(datasetCountry, (x) => {
-      tmp[x.alpha2] = x
-    })
-    // Compile a CSV in the browser
-    let selected_countries = []
-    _.forEach(region, (reg) => {
-      _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
-      })
-    })
-    _.forEach(dataset, (country) => {
-      if (!(_.contains(selected_countries, country.alpha2))) return
-      let selected_year = $('input[name="downloadyear"]:checked').val()
-      if (!(_.contains(all_years, selected_year))) {
-        selected_year = all_years
-      } else {
-        selected_year = [selected_year]
-      }
-      _.forEach(selected_year, (year) => {
-        if (!(_.has(country, year))) return
-        const countryYearValue = (country[year] === -1) ? '' : country[year]
-        const row = [country.alpha2, country.country, year, countryYearValue]
-        _.forEach(questionSet, (q) => {
-          const value = tmp[country.alpha2][`db_${year}`][q]
-          const numValue = (value === -1) ? '' : value
-          row.push(numValue)
-          row.push(this._number_to_letter(value))
-        })
-        assert(row.length === headers.length)
-        this._writeLine(out, row)
-      })
-    })
-    return out
-  }
-
-  _repaint(dataset=reportGenerator.dataset, questionSet=reportGenerator.questionSet, region=reportGenerator.region) {
-    $('#custom-csv').html((this._csvAnswers(dataset, region, questionSet)).join('\n'))
+  _repaint(dataset = reportGenerator.dataset,
+           questionSet = reportGenerator.questionSet,
+           region = reportGenerator.region) {
+    $('#custom-csv').html((reportGenerator.csvAnswers(dataset,
+                                                       region,
+                                                       questionSet,
+                                                       false)).join('\n'))
   }
 
   _onNavChange(e) {
     let renderFiles
     const value = $(e.delegateTarget).val()
-    let download = $('#dl-mode')
+    const download = $('#dl-mode')
     download.empty()
     if (value === 'fd') {
       renderFiles = {
@@ -162,9 +64,15 @@ class DownloadPage extends Backbone.View {
         sf: false,
         cq: false,
         cr: false,
-        excel: [_EXPLORER_DATASET.downloads_old[0], _EXPLORER_DATASET.downloads[0]],
-        csv: [_EXPLORER_DATASET.downloads_old[1], _EXPLORER_DATASET.downloads[1]],
-        json: [_EXPLORER_DATASET.downloads_old[2], _EXPLORER_DATASET.downloads[2]]
+        excel: [_EXPLORER_DATASET.downloads_old[0],
+                _EXPLORER_DATASET.downloads_2015[0],
+                _EXPLORER_DATASET.downloads_2017[0]],
+        csv: [_EXPLORER_DATASET.downloads_old[1],
+              _EXPLORER_DATASET.downloads_2015[1],
+              _EXPLORER_DATASET.downloads_2017[1]],
+        json: [_EXPLORER_DATASET.downloads_old[2],
+               _EXPLORER_DATASET.downloads_2015[2],
+               _EXPLORER_DATASET.downloads_2017[2]]
       }
     } else if (value === 'sf') {
       renderFiles = {

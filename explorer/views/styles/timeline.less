@@ -3,6 +3,9 @@
         background-color: #fff;
     }
 }
+#timeline #content {
+    width: 1200px;
+}
 
 .timeline-header {
     height: 50px;
@@ -40,11 +43,11 @@
 
 .timeline-column {
     float: left;
-    padding: 0 35px 30px 35px;
-    &#timeline-column-2006 {
+    padding: 0 30px 30px;
+    &:first-of-type {
         padding-left: 3px;
     }
-    &#timeline-column-2015 {
+    &:last-of-type {
         padding-right: 0;
     }
 

@@ -26,12 +26,7 @@ class TimelinePage extends View {
   }
 
   renderPage(target) {
-    let collapsed = false
-    if ($('#accordion2 .accordion-toggle').hasClass('collapsed')) {
-      collapsed = true
-    }
-    reportGenerator.update('2015', collapsed, true)
-    $(window).scrollTop(0);
+    $(window).scrollTop(0)
     this.$el.html(template_page())
     target.html(this.$el)
     $('input[name="timeline"]').bind('change', this._onToggleMode)
@@ -39,95 +34,65 @@ class TimelinePage extends View {
   }
 
   _initializeReport() {
-    reportGenerator.update('2015', false, true);
+    /*
+    Create report data structure to drive timeline.
+
+    Query reportGenerator for data from 2017, 2015 and 'old' years (2006-2012).
+    Collect results together, only include countries found in the most recent
+    year (2017).
+    */
+
+    const filteredYearReport = function (year, countries) {
+      // Return report object for year, filtered with `countries`.
+      reportGenerator.update(year, false, true)
+      const filteredDatasets = _.filter(reportGenerator.dataset, c =>
+        _.contains(countries, c.alpha2)
+      )
+      const filteredDatasetsUnrounded = _.filter(reportGenerator.dataset_unrounded, c =>
+        _.contains(countries, c.alpha2)
+      )
+      return {
+        dataset: filteredDatasets,
+        dataset_unrounded: _.clone(filteredDatasetsUnrounded)
+      }
+    }
+
+    // Initialise our most recent year object
+    reportGenerator.update('2017', false, true)
     const lastReport = {
       dataset: reportGenerator.dataset,
       region: reportGenerator.region,
       dataset_unrounded: reportGenerator.dataset_unrounded
     }
-    reportGenerator.update('2006', false, true)
-    const oldReport = {
-      dataset: reportGenerator.dataset,
-      dataset_unrounded: reportGenerator.dataset_unrounded
-    }
-    this.timelineReport = {
-      dataset: [],
-      region: lastReport.region,
-      dataset_unrounded: []
-    }
-    _.forEach(lastReport.dataset_unrounded, (country_last) => {
-      let country_found = false
-      _.forEach(oldReport.dataset_unrounded, (country_old) => {
-        if (country_last.alpha2 === country_old.alpha2) {
-          country_found = true
-          const obj = {
-            alpha2: country_last.alpha2,
-            country: country_last.country
-          }
-          if ('2006' in country_old) {
-            obj['2006'] = country_old['2006']
-          }
-          if ('2008' in country_old) {
-            obj['2008'] = country_old['2008']
-          }
-          if ('2010' in country_old) {
-            obj['2010'] = country_old['2010']
-          }
-          if ('2012' in country_old) {
-            obj['2012'] = country_old['2012']
-          }
-          obj['2015'] = country_last['2015']
-          this.timelineReport.dataset_unrounded.push(obj)
-        }
-      })
-      if (!country_found) {
-        const obj = {
-          alpha2: country_last.alpha2,
-          country: country_last.country
-        };
-        obj['2015'] = country_last['2015'];
-        this.timelineReport.dataset_unrounded.push(obj)
-      }
-    })
-    _.forEach(lastReport.dataset, (country_last) => {
-      let country_found = false
-      _.forEach(oldReport.dataset, (country_old) => {
-        if (country_last.alpha2 === country_old.alpha2) {
-          country_found = true
-          const obj = {
-            alpha2: country_last.alpha2,
-            country: country_last.country
-          }
-          if ('2006' in country_old) {
-            obj['2006'] = country_old['2006']
-          }
-          if ('2008' in country_old) {
-            obj['2008'] = country_old['2008']
-          }
-          if ('2010' in country_old) {
-            obj['2010'] = country_old['2010']
-          }
-          if ('2012' in country_old) {
-            obj['2012'] = country_old['2012']
-          }
-          obj['2015'] = country_last['2015']
-          this.timelineReport.dataset.push(obj);
-        }
-      })
-      if (!country_found) {
-        const obj = {
-          alpha2: country_last.alpha2,
-          country: country_last.country
-        };
-        obj['2015'] = country_last['2015'];
-        this.timelineReport.dataset.push(obj)
-      }
-    })
-  };
+    // List of country codes we're interested in.
+    const latestCountries = _.pluck(lastReport.dataset, 'alpha2')
 
-  _onToggleMode(showRank=true) {
+    // Get the old report, filtered for the countries we're interested in.
+    const reportOld = filteredYearReport('2006', latestCountries)
+    const report2015 = filteredYearReport('2015', latestCountries)
+
+    // Merge the report properties for latest, and old.
+    const mergedDataset = _.map(lastReport.dataset, c => {
+      const countryOld = _.find(reportOld.dataset, oc => oc.alpha2 === c.alpha2)
+      const country2015 = _.find(report2015.dataset, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, countryOld, country2015)
+    })
+    const mergedDatasetUnrounded = _.map(lastReport.dataset_unrounded, c => {
+      const countryOld = _.find(reportOld.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      const country2015 = _.find(report2015.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      return _.extend(c, countryOld, country2015)
+    })
+
+    this.timelineReport = {
+      dataset: mergedDataset,
+      region: lastReport.region,
+      dataset_unrounded: mergedDatasetUnrounded
+    }
+  }
+
+  _onToggleMode() {
     const value = $('input[name="timeline"]:checked').val()
-    assert(value === 'rankings' || value === 'scores')
+    assert (value === 'rankings' || value === 'scores')
     if (value === 'rankings') {
       $('.timeline-cell-score').hide()
       $('.timeline-cell-rank').show()
@@ -137,13 +102,12 @@ class TimelinePage extends View {
     }
   }
 
-  _buildRankingTable(year, dataset, selected_countries) {
+  _buildRankingTable(year, dataset, selectedCountries) {
     // Basic dataset
-    var i, j, len, len1, ref1, x;
-    let out = []
+    const out = []
     _.forEach(dataset, (obj, country) => {
       if (!_.has(obj, year)) return
-      if (!_.contains(selected_countries, obj.alpha2)) return
+      if (!_.contains(selectedCountries, obj.alpha2)) return
       obj.score = obj[year]
       out.push(obj)
     })
@@ -151,14 +115,14 @@ class TimelinePage extends View {
     let rank = 0
     let latest = 999
     let n = 0
-    let tag_duplicates = []
+    const tagDuplicates = []
     _.forEach(out, (x) => {
       n += 1
       if (x.score < latest) {
         latest = x.score
         rank = n
       } else {
-        tag_duplicates.push(x.score)
+        tagDuplicates.push(x.score)
       }
       x.rank = rank
     })
@@ -168,7 +132,7 @@ class TimelinePage extends View {
         x.rank = 'N/A'
         x.score = 'N/A'
       }
-      if (_.contains(tag_duplicates, x.score)) {
+      if (_.contains(tagDuplicates, x.score)) {
         x.rank = '= ' + x.rank
       }
       x.score = Math.round(x.score)
@@ -176,35 +140,33 @@ class TimelinePage extends View {
     return out
   }
 
-  _updateReport(dataset=this.timelineReport.dataset,
-                region=this.timelineReport.region,
-                dataset_unrounded=this.timelineReport.dataset_unrounded) {
+  _updateReport(dataset = this.timelineReport.dataset,
+                region = this.timelineReport.region,
+                dataset_unrounded = this.timelineReport.dataset_unrounded) {
     const target = $('#timeline-columns')
     if (target.length === 0) return
+    const selectedCountries = []
+    _.forEach(region, reg => {
+      _.forEach(_EXPLORER_DATASET.regions_2017[reg].contains, contained => {
+        selectedCountries.push(contained)
+      })
+    })
     let html = ''
-    let selected_countries = []
-    _.forEach(region, (reg) => {
-      _.forEach(_EXPLORER_DATASET.regions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+    const years = [2006, 2008, 2010, 2012, 2015, 2017]
+    _.each(years, y => {
+      const templ = (y === _.last(years)) ? template_timeline_column : template_timeline_column_abbr
+      html += templ({
+        year: y,
+        data: this._buildRankingTable(y, dataset_unrounded, selectedCountries)
       })
-    })
-    _.forEach([2006,2008,2010,2012], (year) => {
-      html += template_timeline_column_abbr({
-        year: year,
-        data: this._buildRankingTable(year, dataset_unrounded, selected_countries)
-      })
-    })
-    html += template_timeline_column({
-      year: 2015,
-      data: this._buildRankingTable(2015, dataset_unrounded, selected_countries)
     })
     target.html(html)
     target.find('tr').bind('mouseover', this._mouseoverRanking)
     if (!this.mouseoverAlpha2) {
-      this.mouseoverAlpha2 = $('#timeline-column-2015 tbody tr:first-child').attr('data-alpha2')
+      this.mouseoverAlpha2 = $('#timeline-column-2017 tbody tr:first-child').attr('data-alpha2')
     }
     this._redrawJsPlumb()
-    return this._onToggleMode()
+    this._onToggleMode()
   }
 
   _mouseoverRanking(e) {
@@ -215,21 +177,21 @@ class TimelinePage extends View {
     }
   }
 
-  _redrawJsPlumb(alpha2=null) {
+  _redrawJsPlumb(alpha2 = null) {
     if (alpha2) {
-      this.mouseoverAlpha2 = alpha2;
+      this.mouseoverAlpha2 = alpha2
     }
-    $('.hover').removeClass('hover');
-    const els = $('.timeline-row-' + this.mouseoverAlpha2);
+    $('.hover').removeClass('hover')
+    const els = $('.timeline-row-' + this.mouseoverAlpha2)
     if (!els.length) return
     els.addClass('hover')
     jsPlumb.deleteEveryEndpoint()
     // This is expensive, so hold off until the mouse has settled for a few ms
     if (this.timeout) {
-      clearTimeout(this.timeout);
+      clearTimeout(this.timeout)
     }
-    this.timeout = setTimeout(function() {
-      _.forEach(_.range(els.length-1), (x) => {
+    this.timeout = setTimeout(function () {
+      _.forEach(_.range(els.length - 1), (x) => {
         jsPlumb.connect({
           source: els[x],
           target: els[x + 1],

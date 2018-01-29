@@ -14,13 +14,14 @@ def write_js(dataset, jsonfilename):
 def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     # Populate the downloads folder
     # -----------------------------
-    if years[0] == 2015:
+    if years[0] >= 2015:
         keys = {}
-        keys['question'] = 'question'
-        keys['country'] = 'country'
-        keys['groupings'] = 'groupings'
-        keys['regions'] = 'regions'
-        keys['availability'] = 'availability'
+        keys['question'] = 'question_%s' % years[0]
+        keys['country'] = 'country_%s' % years[0]
+        keys['groupings'] = 'groupings_%s' % years[0]
+        keys['regions'] = 'regions_%s' % years[0]
+        keys['availability'] = 'availability_%s' % years[0]
+        keys['downloads'] = 'downloads_%s' % years[0]
     else:
         keys = {}
         keys['question'] = 'question_old'
@@ -28,6 +29,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
         keys['groupings'] = 'groupings_old'
         keys['regions'] = 'regions_old'
         keys['availability'] = 'availability_old'
+        keys['downloads'] = 'downloads_old'
     # Import all data
     print('Importing all data...')
     Q_HEADERS, Q_DATA = _questions_as_csv(dataset, keys['question'])
@@ -106,10 +108,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
         filename = os.path.join(downloadfoldername, x['filename'])
         raw_size = os.path.getsize(filename)
         x['size'] = _format_kilobytes(raw_size)
-    if years[0] == 2015:
-        dataset['downloads'] = downloads
-    else:
-        dataset['downloads_old'] = downloads
+    dataset[keys['downloads']] = downloads
     return dataset
 
 
@@ -208,9 +207,25 @@ def _scores_as_csv(dataset, years, countries):
                 HEADERS.append(t3q[x] + ' (LETTER)')
             else:
                 HEADERS.append('Q '+str(x)+' (LETTER)')
+    elif years[0] == 2017:
+        q = range(1, 150)
+        HEADERS = ['COUNTRY_CODE', 'YEAR']
+        t3q = {143: 'PBS-2', 144: 'EBP-2', 145: 'EB-2', 146: 'IYR-2',
+               147: 'MYR-2', 148: 'YER-2', 149: 'AR-2'}
+        for x in q:
+            if x >= 143:
+                HEADERS.append(t3q[x])
+            else:
+                HEADERS.append('Q '+str(x))
+        for x in q:
+            if x >= 143:
+                HEADERS.append(t3q[x] + ' (LETTER)')
+            else:
+                HEADERS.append('Q '+str(x)+' (LETTER)')
     else:
         HEADERS = ['COUNTRY_CODE', 'YEAR']
-        q = sorted([int(d) for d in dataset[countries][0].get('db_%d' % years[-1]).keys() if unicode.isdigit(d)])
+        q = sorted([int(d) for d in dataset[countries][0].get('db_%d' %
+                   years[-1]).keys() if unicode.isdigit(d)])  # noqa
         for x in q:
             HEADERS.append('Q '+str(x))
         for x in q:
@@ -223,13 +238,13 @@ def _scores_as_csv(dataset, years, countries):
                 continue
             row = [country['alpha2'], year]
             for x in q:
-                if x >= 134:
+                if (year == 2015 and x >= 134) or (year == 2017 and x >= 143):
                     qkey = t3q[x]
                     row.append(db[qkey])
                 else:
                     row.append(db[str(x)])
             for x in q:
-                if x >= 134:
+                if (year == 2015 and x >= 134) or (year == 2017 and x >= 143):
                     qkey = t3q[x]
                     score = db[qkey]
                 else:

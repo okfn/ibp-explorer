@@ -1,4 +1,3 @@
-
 <table id="question-table" class="table table-condensed">
   <tr>
     <th></th>
@@ -7,24 +6,13 @@
     {{/each}}
     <th class="space"></th>
   </tr>
-  {{#if last}}
-    {{#each questions}}
+  {{#each questions as |qvalue qkey| }}
     <tr class="question-row" data-question-number="{{number}}">
       <td class="number">{{number}}</td>
-      <td class="letter">{{#if l2015}}<img src="images/letter/{{l2015}}.png"/>{{else}}-{{/if}}</td>
+      {{#each ../years as |yvalue ykey| }}
+        <td class="letters{{#if ../threeLetterAnswer}} three-letter-answer{{/if}}"><span class="letter {{#if (lookup qvalue yvalue)}}{{lookup qvalue yvalue}}{{else}}null{{/if}}">{{#if (lookup qvalue yvalue)}}{{lookup qvalue yvalue}}{{else}}-{{/if}}</span></td>
+      {{/each}}
       <td class="space"></td>
     </tr>
-    {{/each}}
-  {{else}}
-    {{#each questions}}
-    <tr class="question-row" data-question-number="{{number}}">
-      <td class="number">{{number}}</td>
-      <td class="letter">{{#if l2006}}<img src="images/letter/{{l2006}}.png"/>{{else}}-{{/if}}</td>
-      <td class="letter">{{#if l2008}}<img src="images/letter/{{l2008}}.png"/>{{else}}-{{/if}}</td>
-      <td class="letter">{{#if l2010}}<img src="images/letter/{{l2010}}.png"/>{{else}}-{{/if}}</td>
-      <td class="letter">{{#if l2012}}<img src="images/letter/{{l2012}}.png"/>{{else}}-{{/if}}</td>
-      <td class="space"></td>
-    </tr>
-    {{/each}}
-  {{/if}}
+  {{/each}}
 </table>

@@ -17,9 +17,6 @@ rules:
   semi:
     - 2
     - never
-  comma-style:
-    - 2
-    - first
   comma-dangle:
     - 2
     - never
@@ -29,3 +26,6 @@ rules:
   eqeqeq:
     - 1
     - smart
+  no-underscore-dangle:
+    - error
+    - allowAfterThis: true

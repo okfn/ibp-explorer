@@ -111,6 +111,9 @@ To get those changes processed by the tool:
 * Run the tool locally to prove it works. 
 * Follow the above deployment instructions to get it ready for a live server.
 
+#### Testing etl pipeline
+
+Some basic tests for the python etl pipeline are provided in `./data/tests`. Run `$ pytest` in the `./data` directory. These compare the etl output with expected data.
 
 ### Updating the tracker translations
 

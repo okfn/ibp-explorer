@@ -8,11 +8,11 @@ import reportGenerator from '../reportgenerator.js'
 
 const MAP_NAME = 'world_mill_en'
 const COLOR_SCHEME = [
-  'B8282E',
-  'F48022',
-  'DAC300',
-  '007A78',
-  '0065A4'
+  '5C111B',
+  'AF1F24',
+  'FDB721',
+  '1F9E79',
+  '0B6866'
 ]
 // Hack JVectorMap (it is horribly coded and worse documented, and I have a deadline)
 jvm.NumericScale.prototype.getValue = (_x) => {
@@ -41,8 +41,8 @@ class ProjectPage extends View {
     $(window).scrollTop(0)
     this.$el.html(template_page())
     target.html(this.$el)
-    let map = this.$el.find('#map')
-    const x = map.vectorMap({
+    const map = this.$el.find('#map')
+    map.vectorMap({
       map: MAP_NAME,
       series: {
         regions: [{}],
@@ -78,7 +78,7 @@ class ProjectPage extends View {
     })
     this.mapObject = map.vectorMap('get', 'mapObject')
     $('#map-toggles button').click(this._mapToggle)
-    $('button[data-year="2015"]').click()
+    $('button[data-year="2017"]').click()
 
     /*
      * Debug gradient (usually a static PNG file)
@@ -96,55 +96,54 @@ class ProjectPage extends View {
     const target = $(e.delegateTarget)
     const lastYear = $('#map-toggles button.active').attr('data-year')
     const currentYear = target.attr('data-year')
-    const newReport = lastYear === '2015' || currentYear === '2015'
+    const newReport = (lastYear !== currentYear)
     $('#map-toggles button').removeClass('active')
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
-    let collapsed
     if (newReport) {
-      collapsed = false
+      let collapsed = false
       if ($('#accordion2 .accordion-body').hasClass('in')) {
         collapsed = true
       }
       reportGenerator.update(this.year, collapsed)
     }
-    this._repaint()
   }
 
   _repaint(dataset = reportGenerator.dataset,
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
-    var contained, country, i, j, k, len, len1, len2, ref, ref1, reg, stcolor, value, x;
+    let stcolor
     let datasetRegions
-    if (this.year !== '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_old
+    if (this.year === '2015') {
+      datasetRegions = _EXPLORER_DATASET.regions_2015
+    } else if (this.year === '2017') {
+      datasetRegions = _EXPLORER_DATASET.regions_2017
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions
+      datasetRegions = _EXPLORER_DATASET.regions_old
     }
-    const countries_in_map = jvm.WorldMap.maps[MAP_NAME].paths
-    let selected_countries = []
-    _.forEach(region, (reg) => {
-      _.forEach(datasetRegions[reg].contains, (contained) => {
-        selected_countries.push(contained)
+    const countriesInMap = jvm.WorldMap.maps[MAP_NAME].paths
+    const selectedCountries = []
+    _.forEach(region, reg => {
+      _.forEach(datasetRegions[reg].contains, contained => {
+        selectedCountries.push(contained)
       })
     })
     this.mapData = {}
     this.mapColor = {}
     this.countriesInSurvey = []
-    this.countriesInSurvey = []
-    _.forEach(countries_in_map, (obj, key) => {
+    _.forEach(countriesInMap, (obj, key) => {
       this.mapData[key] = -1
       this.mapColor[key] = 0
     })
     if (reportGenerator.questionSet.length > 0) {
-      _.forEach(dataset, (country) => {
-        if (!(_.has(countries_in_map, country.alpha2) && country.alpha2 !== 'ST')) return
-        if (!(_.contains(selected_countries, country.alpha2))) return
+      _.forEach(dataset, country => {
+        // if (!(_.has(countriesInMap, country.alpha2))) {
+        //   console.log(`Country not in map: ${country.country}`)
+        // }
+        if (!(_.contains(selectedCountries, country.alpha2))) return
         if (!(_.has(country, this.year))) return
-        let value = country[this.year]
-        if (value < 0) {
-          return
-        }
+        const value = country[this.year]
+        if (value < 0) return
         assert(value >= -1, 'Bad mapping value: ' + value)
         this.countriesInSurvey.push(country.alpha2)
         this.mapColor[country.alpha2] = Math.max(1, value)
@@ -153,30 +152,26 @@ class ProjectPage extends View {
     }
     // Repaint the map
     this.mapObject.series.regions[0].setValues(this.mapColor)
-    stcolor = (stcolor - (stcolor % 20)) / 20
-    stcolor = COLOR_SCHEME[stcolor]
-    this.mapObject.removeAllMarkers
-    this.mapObject.addMarker(0, {
-      latLng: [0.33, 6.73],
-      name: 'São Tomé e Príncipe'
-    }, [this.mapColor['ST']])
+    // console.log(this.circlePath(-10, 43.33330000000001, 1))
+  }
+
+  circlePath(lat, lng, r){
+    // A simple function to take a lat/long and return an x/y coord. Helps to
+    // place small islands to manually add to the world mill map.
+    const p = this.mapObject.latLngToPoint(lat, lng)
+    return 'M '+p.x+' '+p.y+' m -'+r+', 0 a '+r+','+r+' 0 1,0 '+(r*2)+',0 a '+r+','+r+' 0 1,0 -'+(r*2)+',0';
   }
 
   _labelShow(e, mapLabel, code) {
     this.mapLabel = mapLabel
 
-    if ((!(_.contains(this.countriesInSurvey, code)) && code !== '0') || (code === '0' && this.year === '2006')) {
+    if (!_.contains(this.countriesInSurvey, code)) {
       this.mapLabel.css({
-        'opacity': '0.5'
+        opacity: '0.5'
       })
-    } else if (code === '0' && this.year !== '2006') {
-      this.mapLabel.css({
-        'opacity': '1.0'
-      })
-      this.mapLabel.html(this.mapLabel.html() + ': ' + this.mapData['ST'])
     } else {
       this.mapLabel.css({
-        'opacity': '1.0'
+        opacity: '1.0'
       })
       this.mapLabel.html(this.mapLabel.html() + ': ' + this.mapData[code])
     }
@@ -188,12 +183,6 @@ class ProjectPage extends View {
         this.mapLabel.remove()
       }
       window.location = '#profile/' + alpha2
-    }
-    if (alpha2 === '0' && _.contains(this.countriesIncluded, 'ST')) {
-      if (this.mapLabel.length) {
-        this.mapLabel.remove()
-      }
-      window.location = '#profile/ST';
     }
   }
 }

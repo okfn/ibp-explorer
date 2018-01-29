@@ -81,7 +81,6 @@
                   {% else %}
                     <td></td>
                   {% endif %}
-
                   {% spaceless %}
                   {% for doc in docs %}
                     {% set cell = undefined %}
@@ -97,8 +96,11 @@
                       {% endfor %}
                     {% endif %}
 
-                    {% for year in country.obi.availability|reverse %}
-                      {% set year = lastChars(year, 4)%}
+                    {% if not cell %}
+                      {% set cell = {} %}
+                    {% endif %}
+
+                    {% for year in country.obi.availability|orderYears %}
                       {% if year > cellYear %}
                         {% if not cell.obi and country.obi.availability[year] %}
                           {% if isString(country.obi.availability[year][doc.title]) %}

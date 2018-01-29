@@ -3,35 +3,27 @@
     <td class="text-right">{{#if compareObj}}{{obj.year}}<br><span class="text-muted">{{compareObj.year}}</span>{{/if}}</td>
     <td class="text-center">{{ obj.score }}{{#if compareObj.score}}<br><span class="text-muted">{{ compareObj.score }}</span>{{/if}}</td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.prebudgetstatement }}"><span>{{ obj.prebudgetstatement }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.prebudgetstatement }}"><span>{{ compareObj.prebudgetstatement }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.prebudgetstatement }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.prebudgetstatement }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.prebudgetstatement }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.prebudgetstatement }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.executivesbudgetproposal }}"><span>{{ obj.executivesbudgetproposal }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.executivesbudgetproposal }}"><span>{{ compareObj.executivesbudgetproposal }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.executivesbudgetproposal }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.executivesbudgetproposal }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.executivesbudgetproposal }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.executivesbudgetproposal }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.enactedbudget }}"><span>{{ obj.enactedbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.enactedbudget }}"><span>{{ compareObj.enactedbudget }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.enactedbudget }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.enactedbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.enactedbudget }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.enactedbudget }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.citizensbudget }}"><span>{{ obj.citizensbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.citizensbudget }}"><span>{{ compareObj.citizensbudget }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.citizensbudget }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.citizensbudget }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.citizensbudget }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.citizensbudget }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.inyearreports }}"><span>{{ obj.inyearreports }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.inyearreports }}"><span>{{ compareObj.inyearreports }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.inyearreports }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.inyearreports }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.inyearreports }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.inyearreports }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.midyearreview }}"><span>{{ obj.midyearreview }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.midyearreview }}"><span>{{ compareObj.midyearreview }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.midyearreview }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.midyearreview }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.midyearreview }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.midyearreview }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.yearendreport }}"><span>{{ obj.yearendreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.yearendreport }}"><span>{{ compareObj.yearendreport }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.yearendreport }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.yearendreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.yearendreport }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.yearendreport }}</span></span>{{/if}}
     </td>
     <td class="text-center">
-        <span class="badge state state-{{ obj.auditreport }}"><span>{{ obj.auditreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.auditreport }}"><span>{{ compareObj.auditreport }}</span></span>
-        {{/if}}
+        <span class="badge state state-{{ obj.auditreport }} {{#if obj.pre2017}}pre2017{{/if}}"><span>{{ obj.auditreport }}</span></span>{{#if compareObj }}<br><span class="badge state state-{{ compareObj.auditreport }} {{#if compareObj.pre2017}}pre2017{{/if}}"><span>{{ compareObj.auditreport }}</span></span>{{/if}}
     </td>
 </tr>

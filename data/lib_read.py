@@ -7,7 +7,7 @@ from string import uppercase
 # ######
 
 
-def read(iso_data, datafiles, old):
+def read(iso_data, datafiles, postfix="old"):
     """Read all the input Excel files and produce an enormous data dict."""
     # Output to populate
     dataset = {}
@@ -21,7 +21,7 @@ def read(iso_data, datafiles, old):
     print('Reading %s...' % datafiles['av_xlsx'])
     av_workbook = load_workbook(filename=datafiles['av_xlsx'])
     # Generate dataset
-    if old:
+    if postfix == "old":
         dataset['country_old'] = \
             _read_answers(a_workbook, iso_data,
                           datafiles['a_xlsx_sheet'], datafiles['years'])
@@ -35,18 +35,20 @@ def read(iso_data, datafiles, old):
             _read_availability(av_workbook, iso_data,
                                datafiles['av_xlsx_sheets'])
     else:
+        if postfix:
+            postfix = "_%s" % postfix
         print('Reading %s...' % datafiles['pp_xlsx'])
         pp_workbook = load_workbook(filename=datafiles['pp_xlsx'])
-        dataset['country'] = \
+        dataset['country%s' % postfix] = \
             _read_answers(a_workbook, iso_data,
                           datafiles['a_xlsx_sheet'], datafiles['years'])
-        dataset['question'] = \
+        dataset['question%s' % postfix] = \
             _read_questions(q_workbook, datafiles['q_xlsx_sheet'])
-        dataset['groupings'] = \
+        dataset['groupings%s' % postfix] = \
             _read_groupings(g_workbook, datafiles['g_xlsx_qsheet'])
-        dataset['regions'] = \
+        dataset['regions%s' % postfix] = \
             _read_regions(g_workbook, iso_data, datafiles['g_xlsx_csheet'])
-        dataset['availability'] = \
+        dataset['availability%s' % postfix] = \
             _read_availability(av_workbook, iso_data,
                                datafiles['av_xlsx_sheets'])
         dataset['public_participation'] = \

@@ -1,10 +1,96 @@
-<div class="document-availability">
-    <iframe
-            src="{{tracker_url}}"
-            id="trackerIFrame"
-            width="100%"
-            height="900px"
-            frameborder="0"
-            scrolling="no">
-    </iframe>
+<link rel="stylesheet" href="/styles/vendor.css">
+
+<div class="document-availability" id="availability-tracker">
+  <div class="row">
+    <h2>Public Availability of Budget Documents</h2>
+    <h5>Select year:</h5>
+    <div class="year-selector btn-group" role="group" id="year-toggles">
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
+      <button data-year="2017" class="btn btn-default">2017</button>
+    </div>
+    <h5>Compare with:</h5>
+    <div class="year-selector btn-group" role="group" id="year-compare-toggles">
+      <button data-year="2006" class="btn btn-default">2006</button>
+      <button data-year="2008" class="btn btn-default">2008</button>
+      <button data-year="2010" class="btn btn-default">2010</button>
+      <button data-year="2012" class="btn btn-default">2012</button>
+      <button data-year="2015" class="btn btn-default">2015</button>
+      <button data-year="2017" class="btn btn-default">2017</button>
+      <button data-year="None" class="btn btn-default">None</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10" style="padding-left: 0px">
+      <div class="panel panel-default">
+        <div id="heading" class="panel-heading key">
+          <strong>Key:</strong>
+          <ul>
+            <li><span class="badge state state-available"><span>Available to the Public</span></span>
+            Available to the Public</li>
+            <li><span class="badge state state-internal"><span>Published Late, or Not Published Online, or Produced for Internal Use Only</span></span>
+            Published Late, or Not Published Online, or Produced for Internal Use Only</li>
+            <li><span class="badge state state-not-produced"><span>Not Produced</span></span>
+            Not Produced</li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="table-responsive">
+          <table id="overview-table" class="table table-hover">
+            <colgroup>
+              <col>
+              <col>
+              <col width="2%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+              <col width="9.5%">
+            </colgroup>
+            <thead class="header">
+              <tr>
+                <th>Country</th>
+                <th>&nbsp;</th>
+                <th class="text-center">Open Budget Index</th>
+                <th class="text-center">Pre-Budget Statement</th>
+                <th class="text-center">Executive's Budget Proposal</th>
+                <th class="text-center">Enacted Budget</th>
+                <th class="text-center">Citizens Budget</th>
+                <th class="text-center">In-Year Reports</th>
+                <th class="text-center">Mid-Year Review</th>
+                <th class="text-center">Year-End Report</th>
+                <th class="text-center">Audit Report</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div id="region">
+        <h6><img src="images/world.png"> Regions</h6>
+        <ul id="av-region-toggler">
+          <li><a id="region-0" class="av-region-toggler active" href="#">Entire World</a></li>
+          <li><a id="region-1" class="av-region-toggler" href="#">East Asia &amp; Pacific</a></li>
+          <li><a id="region-2" class="av-region-toggler" href="#">Eastern Europe</a></li>
+          <li><a id="region-3" class="av-region-toggler" href="#">Central Asia</a></li>
+          <li><a id="region-4" class="av-region-toggler" href="#">Latin America &amp; Caribbean</a></li>
+          <li><a id="region-5" class="av-region-toggler" href="#">Middle East &amp; North Africa</a></li>
+          <li><a id="region-6" class="av-region-toggler" href="#">South Asia</a></li>
+          <li><a id="region-7" class="av-region-toggler" href="#">Sub-Saharan Africa</a></li>
+          <li><a id="region-8" class="av-region-toggler" href="#">Western Europe, U.S., &amp; Canada</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 </div>
