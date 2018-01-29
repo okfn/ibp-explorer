@@ -217,7 +217,7 @@ class ReportGenerator extends Backbone.View {
         country: country.name,
         alpha2: country.alpha2
       }
-      _.forEach(this.years, (year) => {
+      _.forEach(this.years, year => {
         if (!(_.has(country, 'db_' + year))) {
           return
         }
@@ -227,9 +227,9 @@ class ReportGenerator extends Backbone.View {
       this.dataset_unrounded.push(obj)
     })
     this.dataset = []
-    _.forEach(this.dataset_unrounded, (x) => {
+    _.forEach(this.dataset_unrounded, x => {
       obj = $.extend({}, x)
-      _.forEach(this.years, (year) => {
+      _.forEach(this.years, year => {
         if (!_.has(obj, year)) {
           return
         }

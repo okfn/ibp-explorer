@@ -35,9 +35,6 @@ class DownloadPage extends Backbone.View {
     const currentYear = target.attr('value')
     const newReport = (lastYear !== currentYear)
     this.year = target.attr('value')
-    if (this.year === 'all') {
-      this.year = '2006'
-    }
     if (newReport) {
       let collapsed = false
       if ($('#accordion2 .accordion-body').hasClass('in')) {
