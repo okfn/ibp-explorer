@@ -13,7 +13,6 @@ class ReportGenerator extends Backbone.View {
     this.region = [0] // Initially our custom 'Entire World' collection
     this.year = '2017'
     this._download = _.bind(this._download, this)
-    this._csvAnswers = _.bind(this._csvAnswers, this)
     this._number_to_letter = _.bind(this._number_to_letter, this)
     this._writeLine = _.bind(this._writeLine, this)
     this._clickBoxToggle = _.bind(this._clickBoxToggle, this)
@@ -24,6 +23,7 @@ class ReportGenerator extends Backbone.View {
     this._select_or_clear = _.bind(this._select_or_clear, this)
     this._updated = _.bind(this._updated, this)
     this.update = _.bind(this.update, this)
+    this.csvAnswers = _.bind(this.csvAnswers, this)
     this.calculateScore = _.bind(this.calculateScore, this)
     this.render = _.bind(this.render, this)
     this.setInitialState = _.bind(this.setInitialState, this)
@@ -399,7 +399,7 @@ class ReportGenerator extends Backbone.View {
     }[value]
   }
 
-  _csvAnswers(dataset, region, questionSet) {
+  csvAnswers(dataset, region, questionSet, writeHeaders = true) {
     let datasetRegions
     let datasetCountry
     let allYears
@@ -416,28 +416,29 @@ class ReportGenerator extends Backbone.View {
       datasetCountry = _EXPLORER_DATASET.country_old
       allYears = ['2006', '2008', '2010', '2012']
     }
-    let out = []
+    const out = []
     const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
-    _.forEach(questionSet, (x) => {
+    _.forEach(questionSet, x => {
       headers.push(x.toString())
     })
-    _.forEach(questionSet, (x) => {
+    _.forEach(questionSet, x => {
       headers.push(x + 'l')
     })
-    this._writeLine(out, headers)
+    if (writeHeaders) {
+      this._writeLine(out, headers)
+    }
     // Quickly lookup country data
-    let tmp = {}
-    _.forEach(datasetCountry, (x) => {
+    const tmp = {}
+    _.forEach(datasetCountry, x => {
       tmp[x.alpha2] = x
     })
-    let selectedCountries = []
-    _.forEach(region, (reg) => {
-      _.forEach(datasetRegions[reg].contains, (contained) => {
+    const selectedCountries = []
+    _.forEach(region, reg => {
+      _.forEach(datasetRegions[reg].contains, contained => {
         selectedCountries.push(contained)
       })
     })
-    _.forEach(dataset, (country) => {
-      // Maybe has?
+    _.forEach(dataset, country => {
       if (!_.contains(selectedCountries, country.alpha2)) return
       let selectedYear = $('.year-selector button.active').attr('data-year') ||
                            $('input[name="downloadyear"]:checked').val()
@@ -449,11 +450,11 @@ class ReportGenerator extends Backbone.View {
       } else {
         selectedYear = [selectedYear]
       }
-      _.forEach(selectedYear, (year) => {
+      _.forEach(selectedYear, year => {
         if (!(_.has(country, year))) return
         const countryYearValue = (country[year] === -1) ? '' : country[year]
         const row = [country.alpha2, country.country, year, countryYearValue]
-        _.forEach(questionSet, (q) => {
+        _.forEach(questionSet, q => {
           const value = tmp[country.alpha2][`db_${year}`][q]
           const numValue = (value === -1) ? '' : value
           row.push(numValue)
@@ -467,7 +468,7 @@ class ReportGenerator extends Backbone.View {
   }
 
   _download(e) {
-    const csv = (this._csvAnswers(this.dataset, this.region, this.questionSet)).join('\n')
+    const csv = (this.csvAnswers(this.dataset, this.region, this.questionSet)).join('\n')
     const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv)
     $('.download-csv').attr({
       'download': 'custom-budget-report.csv',

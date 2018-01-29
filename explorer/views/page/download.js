@@ -47,112 +47,13 @@ class DownloadPage extends Backbone.View {
     }
   }
 
-  _writeLine(out, x) {
-    _.forEach(_.range(x.length), index => {
-      const element = x[index] || ''
-      assert(!_.contains(element, '"'), 'Cannot encode string: ' + element)
-      if (_.contains(element, ',')) {
-        x[index] = '"' + element + '"'
-      }
-    })
-    return out.push(x.join(','))
-  }
-
-  _csvQuestions(questionSet) {
-    // Prep
-    const out = []
-    // Headers
-    const headers = ['NUMBER', 'TEXT', 'A', 'B', 'C', 'D', 'E']
-    this._writeLine(out, headers)
-    // Content
-    const q = _EXPLORER_DATASET.question_2017
-    _.forEach(questionSet, (x) => {
-      this._writeLine(out, [x, q[x].text, q[x].a, q[x].b, q[x].c, q[x].d, q[x].e])
-    })
-    return out
-  }
-
-  _number_to_letter(value) {
-    // The given letters in the source data arent always there.
-    // 'q102l' does not exist while 'q102' does.
-    // Therefore it is safer to use this technique to extract a letter...
-    assert(value === (-1) || value === 0 || value === 33 || value === 67 ||
-           value === 100, 'Invalid value: ' + value)
-    return {
-      '-1': 'e',
-      0: 'd',
-      33: 'c',
-      67: 'b',
-      100: 'a'
-    }[value]
-  }
-
-  _csvAnswers(dataset, region, questionSet) {
-    let datasetRegions
-    let datasetCountry
-    let allYears
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-      datasetCountry = _EXPLORER_DATASET.country_2015
-      allYears = ['2015']
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-      datasetCountry = _EXPLORER_DATASET.country_2017
-      allYears = ['2017']
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-      allYears = ['2006', '2008', '2010', '2012']
-    }
-    const out = []
-    const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
-    _.forEach(questionSet, x => {
-      headers.push(x.toString())
-    })
-    _.forEach(questionSet, x => {
-      headers.push(x + 'l')
-    })
-    // Quickly lookup country data
-    const tmp = {}
-    _.forEach(datasetCountry, x => {
-      tmp[x.alpha2] = x
-    })
-    // Compile a CSV in the browser
-    const selectedCountries = []
-    _.forEach(region, reg => {
-      _.forEach(datasetRegions[reg].contains, contained => {
-        selectedCountries.push(contained)
-      })
-    })
-    _.forEach(dataset, country => {
-      if (!(_.contains(selectedCountries, country.alpha2))) return
-      let selectedYear = $('input[name="downloadyear"]:checked').val()
-      if (!(_.contains(allYears, selectedYear))) {
-        selectedYear = allYears
-      } else {
-        selectedYear = [selectedYear]
-      }
-      _.forEach(selectedYear, year => {
-        if (!(_.has(country, year))) return
-        const countryYearValue = (country[year] === -1) ? '' : country[year]
-        const row = [country.alpha2, country.country, year, countryYearValue]
-        _.forEach(questionSet, q => {
-          const value = tmp[country.alpha2][`db_${year}`][q]
-          const numValue = (value === -1) ? '' : value
-          row.push(numValue)
-          row.push(this._number_to_letter(value))
-        })
-        assert(row.length === headers.length, `Row length is ${row.length}. Header length is ${headers.length}.`)
-        this._writeLine(out, row)
-      })
-    })
-    return out
-  }
-
   _repaint(dataset = reportGenerator.dataset,
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
-    $('#custom-csv').html((this._csvAnswers(dataset, region, questionSet)).join('\n'))
+    $('#custom-csv').html((reportGenerator.csvAnswers(dataset,
+                                                       region,
+                                                       questionSet,
+                                                       true)).join('\n'))
   }
 
   _onNavChange(e) {
