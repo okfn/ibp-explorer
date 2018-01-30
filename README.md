@@ -6,14 +6,9 @@
 
 * Live version: http://survey.internationalbudget.org
 
-Developed in collaboration between the [International Budget Partnership](http://internationalbudget.org) and the [Open Knowledge Foundation](http://okfn.org). Written by [Tom Rees](http://github.com/zephod), [Hélène Durand](http://github.com/hdurand), [Tryggvi Björgvinsson](http://github.com/trickvi), and [Damjan Velickovski](https://github.com/dumyan).
+Developed in collaboration between the [International Budget Partnership](https://internationalbudget.org) and the [Open Knowledge Foundation](https://okfn.org). Written by [Tom Rees](https://github.com/zephod), [Hélène Durand](https://github.com/hdurand), [Tryggvi Björgvinsson](https://github.com/trickvi), [Damjan Velickovski](https://github.com/dumyan), and [Brook Elgie](https://github.com/brew).
 
-## Introduction
-
-This codebase contains two applications which function together from the end-
-user perspective. The two applications are *explorer* and *tracker*. They are
-logically separated in the code and served together through a central express
-[Node app](http://nodejs.org), on different routes (see `/app.js` for details).
+## Applications
 
 ### Explorer
 
@@ -22,10 +17,6 @@ endpoints, and is served from the root route - `/`.
 
 The *explorer* application is a static [backbone](https://backbonejs.org) app
 (served through express), built using [webpack](https://webpack.github.io/). Its data is built up from static files stored in the `./data` directory. See [below](#updating-the-explorer-data) for more details.
-
-### Tracker
-
-The *Tracker* app is concerned with the 'Document Availability' page and is served from the `/availability` route. It is an [express](https://expressjs.com/) app. Its data is retrieved during runtime from an external API using the separate [ibp-explorer-data-client](https://github.com/okfn/ibp-explorer-data-client) app.
 
 ### Questionnaire Review
 
@@ -37,6 +28,15 @@ The questionnaire data spreadsheet id, and the username and password are set as 
 
 The static pages are built using [Metalsmith](http://www.metalsmith.io/) into `/_build-questionnaires` and served as a static site from the central express app.
 
+### Tracker
+
+There is retired code for the the Tracker application in the `tracker`  directory that was concerned with the 'Document Availability' page, previously served at the `/availability` endpoint. The functionality offered by this app has since been moved into the Explorer and is now available from `#availability`.
+
+The Tracker will be removed at some point in the future. Below is the previous description:
+
+> The *Tracker* app is concerned with the 'Document Availability' page and is served from the `/availability` route. It is an [express](https://expressjs.com/) app. Its data is retrieved during runtime from an external API using the separate [ibp-explorer-data-client](https://github.com/okfn/ibp-explorer-data-client) app.
+
+Some of the installation instructions below concern the retired Tracker and can be ignored.
 
 ## Installation and Deployment
 
