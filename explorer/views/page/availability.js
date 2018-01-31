@@ -1,6 +1,6 @@
 import Backbone from 'backbone'
 import _ from 'underscore'
-import stickyTableHeaders from 'sticky-table-headers'
+import floatThead from 'floatthead'
 
 import template_page from '../templates/page/availability.hbs'
 import template_row from '../templates/availability_row.hbs'
@@ -24,7 +24,7 @@ class ProjectPage extends Backbone.View {
     $('#year-toggles button[data-year="2017"]').click()
     $('#year-compare-toggles button[data-year="None"]').click()
     $('.av-region-toggler').click(this.clickRegion)
-    $('table').stickyTableHeaders()
+    $('table').floatThead()
   }
 
   // Private methods
