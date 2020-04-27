@@ -72,7 +72,7 @@ class ProjectPage extends View {
     const score = _.find(dataset, (x) => {
       return x.alpha2 === country
     })
-    return score[year] || false
+    return score[year] != null ? score[year] : ''
   }
 
   _sortByNameToggle(e) {
@@ -119,8 +119,8 @@ class ProjectPage extends View {
       obj = {
         country: country.name,
         alpha2: country.alpha2,
-        score: this._findScore(dataset_unrounded, country.alpha2, this.year) || '',
-        score_rounded: this._findScore(dataset, country.alpha2, this.year) || '',
+        score: this._findScore(dataset_unrounded, country.alpha2, this.year),
+        score_rounded: this._findScore(dataset, country.alpha2, this.year),
         a: this._count(db, 100, questionSet),
         b: this._count(db, 67, questionSet),
         c: this._count(db, 33, questionSet),
