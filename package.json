@@ -26,7 +26,7 @@
     "build:dev": "npm run build:dev:explorer && npm run build:dev:tracker && npm run build:questionnaires:dev",
     "build:prod": "npm run build:prod:explorer && npm run build:prod:tracker && npm run build:questionnaires",
     "build:prod:start": "npm run build:prod && npm run start",
-    "test": "NODE_ENV=test istanbul cover _mocha --report lcovonly --check-coverage -- --compilers js:babel-core/register -R spec tests/ --harmony",
+    "test": "NODE_ENV=test istanbul cover _mocha --report lcovonly --check-coverage -- --require babel-core/register -R spec tests/ --harmony",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "extract-pot": "extract-pot --locale tracker/i18n --exclude node_modules --exclude _build -t jinja -f html .",
     "merge-po": "merge-po tracker/i18n",
@@ -113,9 +113,9 @@
     "istanbul": "^1.1.0-alpha.1",
     "jsdom": "9.4.1",
     "jsdom-global": "2.0.0",
-    "mocha": "^3.0.0",
+    "mocha": "^7.1.0",
     "webpack": "^1.15.0",
-    "webpack-dev-server": "^1.14.1",
+    "webpack-dev-server": "^3.10.3",
     "zombie": "^5.0.5"
   },
   "directories": {
