@@ -11,8 +11,17 @@ function sortFunction(a, b) {
   return x
 }
 
+function sortName(name) {
+  /*
+  We want The Gambia to have the label 'The Gambia'
+  but be sorted under G for Gambia.
+  If we hit any other cases like this special-case them here.
+  */
+  return name === 'The Gambia' ? 'Gambia' : name
+}
+
 function sortFunctionByName(a, b) {
-  let x = a.country.localeCompare(b.country)
+  let x = sortName(a.country).localeCompare(sortName(b.country))
   if (!x) {
     x = b.score - a.score
   }
