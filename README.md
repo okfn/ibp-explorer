@@ -111,6 +111,13 @@ To get those changes processed by the tool:
 * Run the tool locally to prove it works. 
 * Follow the above deployment instructions to get it ready for a live server.
 
+### Updating the explorer front-end
+
+After generating new data from the ETL script:
+
+* Update the `THIS_YEAR` and `INDIVIDUAL_YEARS` constants in `explorer/util.js` with the lastest survey year.
+* `explorer/views/templates/download_files.hbs` needs to be updated manually. The client will supply files.
+
 #### Testing etl pipeline
 
 Some basic tests for the python etl pipeline are provided in `./data/tests`. Run `$ pytest` in the `./data` directory. These compare the etl output with expected data.
