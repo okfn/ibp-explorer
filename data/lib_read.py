@@ -240,7 +240,7 @@ def _read_availability(av_workbook, iso_data, sheets):
         for y in range(2, height + 1):
             name = _lookup(sheet, 1, y)
             assert name in iso_data, \
-                '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name, year, name)
+                '[%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name, name)
             alpha2 = iso_data[name]
             data = {}
             data['alpha2'] = alpha2
