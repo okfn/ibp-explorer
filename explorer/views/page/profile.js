@@ -90,7 +90,8 @@ class ProfilePage extends Backbone.View {
       data: this.data,
       empty: this.alpha2 === '',
       main_website_url: this._ibpWebsiteUrl(this.alpha2),
-      years: this.years
+      years: this.years,
+      button_years: _EXPLORER_DATASET.INDIVIDUAL_YEARS,
     }
     this.viewPast = true
     this.$el.html(template_page(renderData))

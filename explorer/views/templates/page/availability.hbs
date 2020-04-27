@@ -5,21 +5,15 @@
     <h2>Public Availability of Budget Documents</h2>
     <h5>Select year:</h5>
     <div class="year-selector btn-group" role="group" id="year-toggles">
-      <button data-year="2006" class="btn btn-default">2006</button>
-      <button data-year="2008" class="btn btn-default">2008</button>
-      <button data-year="2010" class="btn btn-default">2010</button>
-      <button data-year="2012" class="btn btn-default">2012</button>
-      <button data-year="2015" class="btn btn-default">2015</button>
-      <button data-year="2017" class="btn btn-default">2017</button>
+      {{#each button_years}}
+      <button data-year="{{this}}" class="btn btn-default">{{this}}</button>
+      {{/each}}
     </div>
     <h5>Compare with:</h5>
     <div class="year-selector btn-group" role="group" id="year-compare-toggles">
-      <button data-year="2006" class="btn btn-default">2006</button>
-      <button data-year="2008" class="btn btn-default">2008</button>
-      <button data-year="2010" class="btn btn-default">2010</button>
-      <button data-year="2012" class="btn btn-default">2012</button>
-      <button data-year="2015" class="btn btn-default">2015</button>
-      <button data-year="2017" class="btn btn-default">2017</button>
+      {{#each button_years}}
+      <button data-year="{{this}}" class="btn btn-default">{{this}}</button>
+      {{/each}}
       <button data-year="None" class="btn btn-default">None</button>
     </div>
   </div>

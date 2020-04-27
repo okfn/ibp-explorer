@@ -27,6 +27,7 @@ class CalculatorPage extends Backbone.View {
     this.alpha2 = alpha2 || ''
     this.year = _EXPLORER_DATASET.THIS_YEAR
     this.years = [parseInt(_EXPLORER_DATASET.THIS_YEAR)]
+    this.calc_year = (parseInt(_EXPLORER_DATASET.THIS_YEAR) + 2).toString()
     this.countries = _EXPLORER_DATASET.forYear(this.year).country
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
@@ -111,7 +112,8 @@ class CalculatorPage extends Backbone.View {
   _setupYears() {
     const badges = {
       years: this.years,
-      groupings0: _EXPLORER_DATASET.forYear(this.year).groupings.slice(0, 1)
+      groupings0: _EXPLORER_DATASET.forYear(this.year).groupings.slice(0, 1),
+      calc_year: this.calc_year,
     }
     $('#profile-mode').empty().append($(template_calculator_badges(badges)))
     this.data = this.lookup(this.alpha2)
@@ -140,7 +142,8 @@ class CalculatorPage extends Backbone.View {
     $('.percentbar').tooltip({
       placement: 'right',
       delay: 50,
-      animation: true
+      animation: true,
+      calc_year: this.calc_year,
     })
     const detailsData = this._getDetails(this.data, questionSet)
     $('.future').show()

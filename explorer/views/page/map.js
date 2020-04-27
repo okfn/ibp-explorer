@@ -39,7 +39,9 @@ class ProjectPage extends View {
 
   renderPage(target) {
     $(window).scrollTop(0)
-    this.$el.html(template_page())
+    this.$el.html(template_page({
+      button_years: _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS),
+    }))
     target.html(this.$el)
     const map = this.$el.find('#map')
     map.vectorMap({

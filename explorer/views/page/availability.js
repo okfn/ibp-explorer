@@ -17,7 +17,9 @@ class ProjectPage extends Backbone.View {
   }
 
   renderPage(target) {
-    this.$el.html(template_page())
+    this.$el.html(template_page({
+      button_years: _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS),
+    }))
     target.html(this.$el)
     $('#year-toggles button').click(this._yearToggle)
     $('#year-compare-toggles button').click(this._yearCompareToggle)
