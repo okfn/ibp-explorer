@@ -223,11 +223,12 @@ class ProfilePage extends Backbone.View {
       t3yer: '139',
       t3ar: '140',
 
-      // t3 questions for 2017
+      // t3 questions for 2017/2019
       'PBS-2': 143,
       'EBP-2': 144,
       'EB-2': 145,
       'IYR-2': 146,
+      'IYRs-2': 146,
       'MYR-2': 147,
       'YER-2': 148,
       'AR-2': 149

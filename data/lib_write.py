@@ -225,8 +225,8 @@ def _scores_as_csv(dataset, years, countries):
     elif years[0] == 2019:
         q = range(1, 150)
         HEADERS = ['COUNTRY_CODE', 'YEAR']
-        t3q = {143: 't3pbs', 144: 't3ebp', 145: 't3eb', 146: 't3iyr',
-               147: 't3myr', 148: 't3yer', 149: 't3ar'}
+        t3q = {143: 'PBS-2', 144: 'EBP-2', 145: 'EB-2', 146: 'IYRs-2',
+               147: 'MYR-2', 148: 'YER-2', 149: 'AR-2'}
         for x in q:
             if x >= 143:
                 HEADERS.append(t3q[x])
