@@ -20,7 +20,6 @@ class CalculatorPage extends Backbone.View {
     this._onClickAnswer = _.bind(this._onClickAnswer, this)
     this._repaint = _.bind(this._repaint, this)
     this._setupYears = _.bind(this._setupYears, this)
-    this._onClickPrint = _.bind(this._onClickPrint, this)
     this._onClickReset = _.bind(this._onClickReset, this)
     this._clickCalculatorGroupToggle = _.bind(this._clickCalculatorGroupToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
@@ -389,64 +388,6 @@ class CalculatorPage extends Backbone.View {
     this.db_2019 = $.extend({}, this.data.db_2017, this.params)
     router.navigate(
       `#calculator/${this.alpha2}?${this._encodeParams(this.params)}`)
-    this._repaint()
-  }
-
-  _onClickPrint(e, questionSet = reportGenerator.questionSet) {
-    e.preventDefault()
-    const target = e.delegateTarget
-    const printHeader = printHeader || $('#country-header').text()
-    const detailsData = this._getDetails(this.data, questionSet)
-    const datasetQuestion = _EXPLORER_DATASET.question_2017
-    _.map(detailsData.questions, (val, key) => {
-      const question = _.find(datasetQuestion, (question) => {
-        return String(question['number']) === val['number']
-      })
-      return val['question'] = question
-    })
-    if (target.id === 'print-answered') {
-      $('.details').html(template_calculator_details_future_print({data: detailsData, year: 2019}))
-      if (window.location.toString().split('?')[1]) {
-        $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
-      } else {
-        $('#country-header').text(printHeader + ': ACTUAL RESULTS')
-      }
-      _.forEach($('.question-row-print'), (x) => {
-        x = $(x)
-        const qnum = x.attr('data-question-number')
-        const score = this.db_2019[qnum]
-        let previousAnswer = this._numberToLetter(this.data.db_2015, qnum)
-        if (previousAnswer) {
-          previousAnswer = previousAnswer.toUpperCase()
-          x.find('.previous-year').html(`Answer was ${previousAnswer} in 2015`)
-        }
-        x.find('div[data-score="' + score + '"]').addClass('active-print')
-      })
-    }
-    if (target.id === 'print-table') {
-      const score2019 = reportGenerator.calculateScore(this.db_2019,
-                                                 reportGenerator.questionSet)
-      const score2017 = reportGenerator.calculateScore(this.data.db_2017,
-                                                  reportGenerator.questionSet)
-      _.forEach(detailsData.questions, (question) => {
-        question['l2017'] = this._numberToLetter(this.db_2019,
-                                                   question['number'])
-      })
-      $('.details').html(template_calculator_details_future_print_table({
-        data: detailsData,
-        score2019: Math.round(score2019),
-        score2017: Math.round(score2017),
-        year: 2019 }))
-    }
-    _.forEach($('.question-row'), (x) => {
-      x = $(x)
-      const qnum = x.attr('data-question-number')
-      const score = this.db_2019[qnum]
-      x.find('img[data-score="' + score + '"]').removeClass('inactive')
-        .addClass('active')
-    })
-    window.print()
-    $('#country-header').text(printHeader)
     this._repaint()
   }
 
