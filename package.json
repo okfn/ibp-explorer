@@ -42,7 +42,7 @@
     "cookie-parser": "^1.4.4",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
-    "debug": "~0.7.4",
+    "debug": "~2.6.9",
     "del": "0.1.1",
     "dotenv": "^2.0.0",
     "exceljs": "^0.4.10",
