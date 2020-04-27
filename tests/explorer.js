@@ -40,6 +40,7 @@ describe('Explorer dataset', function () {
         const explorerJSON = JSON.parse(explorerData)
         // munge it with mungeExplorerDataset()
         mungedDataset = util.mungeExplorerDataset(explorerJSON)
+        delete mungedDataset.forYear
         return mungedDataset
       })
       .then(function () {
