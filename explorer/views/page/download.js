@@ -19,7 +19,7 @@ class DownloadPage extends Backbone.View {
     if ($('#accordion2 .accordion-body').hasClass('in')) {
       collapsed = true
     }
-    this.year = '2017'
+    this.year = _EXPLORER_DATASET.THIS_YEAR
     reportGenerator.update(this.year, collapsed)
     this.$el.html(template_page)
     target.html(this.$el)
@@ -58,21 +58,21 @@ class DownloadPage extends Backbone.View {
     const value = $(e.delegateTarget).val()
     const download = $('#dl-mode')
     download.empty()
+    const all_downloads = [
+      _EXPLORER_DATASET.downloads_old,
+      ..._EXPLORER_DATASET.INDIVIDUAL_YEARS.map(
+        year => _EXPLORER_DATASET.forYear(year).downloads
+      ),
+    ];
     if (value === 'fd') {
       renderFiles = {
         fd: true,
         sf: false,
         cq: false,
         cr: false,
-        excel: [_EXPLORER_DATASET.downloads_old[0],
-                _EXPLORER_DATASET.downloads_2015[0],
-                _EXPLORER_DATASET.downloads_2017[0]],
-        csv: [_EXPLORER_DATASET.downloads_old[1],
-              _EXPLORER_DATASET.downloads_2015[1],
-              _EXPLORER_DATASET.downloads_2017[1]],
-        json: [_EXPLORER_DATASET.downloads_old[2],
-               _EXPLORER_DATASET.downloads_2015[2],
-               _EXPLORER_DATASET.downloads_2017[2]]
+        excel: all_downloads.map(y=> y[0]),
+        csv: all_downloads.map(y=> y[1]),
+        json: all_downloads.map(y=> y[2]),
       }
     } else if (value === 'sf') {
       renderFiles = {

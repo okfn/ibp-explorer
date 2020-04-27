@@ -78,7 +78,7 @@ class ProjectPage extends View {
     })
     this.mapObject = map.vectorMap('get', 'mapObject')
     $('#map-toggles button').click(this._mapToggle)
-    $('button[data-year="2017"]').click()
+    $(`button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
 
     /*
      * Debug gradient (usually a static PNG file)
@@ -113,14 +113,7 @@ class ProjectPage extends View {
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
     let stcolor
-    let datasetRegions
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-    }
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
     const countriesInMap = jvm.WorldMap.maps[MAP_NAME].paths
     const selectedCountries = []
     _.forEach(region, reg => {

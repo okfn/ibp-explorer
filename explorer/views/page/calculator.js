@@ -25,12 +25,12 @@ class CalculatorPage extends Backbone.View {
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
-    this.year = '2017'
-    this.years = [2017]
-    this.countries = _EXPLORER_DATASET.country_2017
+    this.year = _EXPLORER_DATASET.THIS_YEAR
+    this.years = [parseInt(_EXPLORER_DATASET.THIS_YEAR)]
+    this.countries = _EXPLORER_DATASET.forYear(this.year).country
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
-    this.db_2019 = $.extend({}, this.data[`db_${this.year}`], this.params)
+    this.db = $.extend({}, this.data[`db_${this.year}`], this.params)
     // `initialize` gets called when the country dropdown is changed (page is
     // rerendered), so we want to unbind here, incase this has been bound
     // before, to prevent unnecessary _repaints.
@@ -111,7 +111,7 @@ class CalculatorPage extends Backbone.View {
   _setupYears() {
     const badges = {
       years: this.years,
-      groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1)
+      groupings0: _EXPLORER_DATASET.forYear(this.year).groupings.slice(0, 1)
     }
     $('#profile-mode').empty().append($(template_calculator_badges(badges)))
     this.data = this.lookup(this.alpha2)
@@ -133,7 +133,7 @@ class CalculatorPage extends Backbone.View {
     let score
     const percentageData = {
       percentages: [
-        this._getPercentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+        this._getPercentages(this.data.alpha2, this.data[`db_${this.year}`], this.year, questionSet)
       ]
     }
     $('.percentages').empty().append($(template_profile_percentages(percentageData)))
@@ -149,7 +149,7 @@ class CalculatorPage extends Backbone.View {
     _.forEach($('.question-row'), (x) => {
       x = $(x)
       const qnum = x.attr('data-question-number')
-      score = this.db_2019[qnum]
+      score = this.db[qnum]
       x.find('.letter[data-score="' + score + '"]').removeClass('inactive')
         .addClass('active')
     })
@@ -197,10 +197,10 @@ class CalculatorPage extends Backbone.View {
 
   _onHoverQuestion(e) {
     const target = $(e.delegateTarget)
-    const datasetQuestion = _EXPLORER_DATASET.question_2017
+    const datasetQuestion = _EXPLORER_DATASET.forYear(_EXPLORER_DATASET.THIS_YEAR).question
     const number = target.attr('data-question-number')
     const t3q = {
-      // t3 questions for 2017
+      // t3 questions
       'PBS-2': 143,
       'EBP-2': 144,
       'EB-2': 145,
@@ -240,15 +240,7 @@ class CalculatorPage extends Backbone.View {
   }
 
   _getQuestionsForYear(year) {
-    let questions
-    if (year === '2015') {
-      questions = _EXPLORER_DATASET.question_2015
-    } else if (year === '2017') {
-      questions = _EXPLORER_DATASET.question_2017
-    } else {
-      questions = _EXPLORER_DATASET.question_old
-    }
-    return questions
+    return _EXPLORER_DATASET.forYear(year).question
   }
 
   _isThreeLetterAnswer(questionItem) {
@@ -346,7 +338,8 @@ class CalculatorPage extends Backbone.View {
     const questions = this._getQuestionsForYear(this.year)
     const out = {
       questions: [],
-      years: this.years
+      years: this.years,
+      calc_year: this.calc_year,
     }
     _.forEach(questionSet, x => {
       const questionItem = _.find(questions, q => String(q.number) === x)
@@ -371,7 +364,7 @@ class CalculatorPage extends Backbone.View {
     const score = el.attr('data-score')
     tr.find('.multi .letter').removeClass('active').addClass('inactive')
     el.removeClass('inactive').addClass('active')
-    this.db_2019[qnum] = parseInt(score)
+    this.db[qnum] = parseInt(score)
     this.params = _.extend(this.params, { [qnum]: score })
     this._repaintFutureScore()
     this._animationHackScale($('.year-box.year-future'))
@@ -385,7 +378,7 @@ class CalculatorPage extends Backbone.View {
     */
     e.preventDefault()
     this.params = {}
-    this.db_2019 = $.extend({}, this.data.db_2017, this.params)
+    this.db = $.extend({}, this.data[`db_${this.year}`], this.params)
     router.navigate(
       `#calculator/${this.alpha2}?${this._encodeParams(this.params)}`)
     this._repaint()
@@ -395,7 +388,7 @@ class CalculatorPage extends Backbone.View {
     /*
     Update the future score for the calculator.
     */
-    let score = reportGenerator.calculateScore(this.db_2019,
+    let score = reportGenerator.calculateScore(this.db,
                                                reportGenerator.questionSet)
     score = Math.round(score)
     $('.scores .year-future .bottom').text('Score: ' + score)

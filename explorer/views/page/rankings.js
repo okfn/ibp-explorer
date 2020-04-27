@@ -36,7 +36,7 @@ class ProjectPage extends View {
     $('.sortbyname').click(this._sortByNameToggle)
     $('.sortbyname[data-sortbyname="' + this.sortByName + '"]').addClass('active')
     $('#rankings-toggles button').click(this._rankingsToggle)
-    $('button[data-year="2017"]').click()
+    $(`button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
   }
 
   // Private methods
@@ -87,18 +87,8 @@ class ProjectPage extends View {
           region = reportGenerator.region) {
     let obj
     let el
-    let datasetRegions
-    let datasetCountry
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-      datasetCountry = _EXPLORER_DATASET.country_2015
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-      datasetCountry = _EXPLORER_DATASET.country_2017
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-    }
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
+    let datasetCountry = _EXPLORER_DATASET.forYear(this.year).country
     const target = $('#rankings-table tbody').empty()
     if (questionSet.length === 0) {
       target.html('<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>')

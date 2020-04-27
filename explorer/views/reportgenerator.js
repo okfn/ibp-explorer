@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import Backbone from 'backbone'
+import * as util from '../util.js'
 
 import template from './templates/reportgenerator.hbs'
 const debug = false
@@ -11,7 +12,7 @@ class ReportGenerator extends Backbone.View {
       this.debugReports()
     }
     this.region = [0] // Initially our custom 'Entire World' collection
-    this.year = '2017'
+    this.year = '2019'
     this._download = _.bind(this._download, this)
     this._numberToLetter = _.bind(this._numberToLetter, this)
     this._writeLine = _.bind(this._writeLine, this)
@@ -49,39 +50,21 @@ class ReportGenerator extends Backbone.View {
 
 
   getRenderData() {
-    let renderData
-    if (this.year === '2015') {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_2015.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_2015.slice(1, 2),
-        groupings2: _EXPLORER_DATASET.groupings_2015.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question_2015, q => q),
-        country: _EXPLORER_DATASET.country_2015,
-        regions: _EXPLORER_DATASET.regions_2015
-      }
-      this.years = [2006, 2008, 2010, 2012, 2015]
-    } else if (this.year === '2017') {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_2017.slice(1, 2),
-        groupings2: _EXPLORER_DATASET.groupings_2017.slice(2, 3),
-        question: _.map(_EXPLORER_DATASET.question_2017, q => q),
-        country: _EXPLORER_DATASET.country_2017,
-        regions: _EXPLORER_DATASET.regions_2017
-      }
-      this.years = [2006, 2008, 2010, 2012, 2015, 2017]
-    } else {
-      renderData = {
-        groupings0: _EXPLORER_DATASET.groupings_old.slice(0, 1),
-        groupings1: _EXPLORER_DATASET.groupings_old.slice(1, 3),
-        groupings2: _EXPLORER_DATASET.groupings_old.slice(3, 5),
-        question: _.map(_EXPLORER_DATASET.question_old, q => q),
-        country: _EXPLORER_DATASET.country_old,
-        regions: _EXPLORER_DATASET.regions_old
-      }
-      this.years = [2006, 2008, 2010, 2012]
+    const data = _EXPLORER_DATASET.forYear(this.year)
+    let renderData = {
+      groupings0: data.groupings.slice(0, 1),
+      groupings1: data.groupings.slice(1, 2),
+      groupings2: data.groupings.slice(2, 3),
+      question: _.map(data.question, q => q),
+      country: data.country,
+      regions: data.regions,
     }
-
+    this.years = util.cumulativeYears(this.year).map(y => parseInt(y))
+    if (!(_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year))) {
+      renderData.groupings0 = _EXPLORER_DATASET.groupings_old.slice(0, 1)
+      renderData.groupings1 = _EXPLORER_DATASET.groupings_old.slice(1, 3)
+      renderData.groupings2 = _EXPLORER_DATASET.groupings_old.slice(3, 5)
+    }
     return renderData
   }
 
@@ -203,14 +186,7 @@ class ReportGenerator extends Backbone.View {
     // Inner function
     // Calculate dataset of countries and scores
     this.dataset_unrounded = []
-    let countries
-    if (this.year === '2015') {
-      countries = _EXPLORER_DATASET.country_2015
-    } else if (this.year === '2017') {
-      countries = _EXPLORER_DATASET.country_2017
-    } else {
-      countries = _EXPLORER_DATASET.country_old
-    }
+    let countries = _EXPLORER_DATASET.forYear(this.year).country
     let obj
     _.forEach(countries, (country) => {
       obj = {
@@ -394,21 +370,13 @@ class ReportGenerator extends Backbone.View {
   }
 
   csvAnswers(dataset, region, questionSet, writeHeaders = true) {
-    let datasetRegions
-    let datasetCountry
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
+    let datasetCountry = _EXPLORER_DATASET.forYear(this.year).country
     let allYears
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-      datasetCountry = _EXPLORER_DATASET.country_2015
-      allYears = ['2015']
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-      datasetCountry = _EXPLORER_DATASET.country_2017
-      allYears = ['2017']
+    if (_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year)) {
+      allYears = [this.year]
     } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-      allYears = ['2006', '2008', '2010', '2012']
+      allYears = _EXPLORER_DATASET.LEGACY_YEARS
     }
     const out = []
     const headers = ['COUNTRY', 'COUNTRY_NAME', 'YEAR', 'SCORE']
