@@ -9,6 +9,7 @@ import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
+import * as util from '../../util.js'
 
 
 class ProfilePage extends Backbone.View {
@@ -19,11 +20,10 @@ class ProfilePage extends Backbone.View {
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
-    this.year = '2017'
-    this.years = [2017]
+    this.year = _EXPLORER_DATASET.THIS_YEAR
+    this.years = [parseInt(_EXPLORER_DATASET.THIS_YEAR)]
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
-    this.db_2017 = $.extend({}, this.data.db_2015, this.params)
     // `initialize` gets called when the country dropdown is changed (page is
     // rerendered), so we want to unbind here, incase this has been bound
     // before, to prevent unnecessary _repaints.
@@ -73,17 +73,8 @@ class ProfilePage extends Backbone.View {
   }
 
   lookup(alpha2) {
-    /*
-    Look up a country object by alpha2 code.
-    */
-    if (this.year === '2015') {
-      return _.find(_EXPLORER_DATASET.country_2015, x => x.alpha2 === alpha2) || {}
-    } else if (this.year === '2017') {
-      return _.find(_EXPLORER_DATASET.country_2017, x => x.alpha2 === alpha2) || {}
-    } else {
-      // 'Old' data already has 2006-2012 combined.
-      return _.find(_EXPLORER_DATASET.country_old, x => x.alpha2 === alpha2) || {}
-    }
+    // Look up a country object by alpha2 code.
+    return _.find(_EXPLORER_DATASET.forYear(this.year).country, x => x.alpha2 === alpha2) || {}
   }
 
   renderPage(target) {
@@ -92,15 +83,16 @@ class ProfilePage extends Backbone.View {
       collapsed = true
     }
     this.year =
-      $('#datasheet-toggles button.active').attr('data-year') || '2017'
+      $('#datasheet-toggles button.active').attr('data-year') || this.year
     $(window).scrollTop(0)
     const renderData = {
       alpha2: this.alpha2,
-      countries: _EXPLORER_DATASET.country_2017,
+      countries: _EXPLORER_DATASET.forYear(this.year).country,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibpWebsiteUrl(this.alpha2),
-      years: this.years
+      main_website_url: util.ibpWebsiteUrl(this.alpha2, this.data.name),
+      years: this.years,
+      button_years: _EXPLORER_DATASET.INDIVIDUAL_YEARS,
     }
     this.viewPast = true
     this.$el.html(template_page(renderData))
@@ -111,10 +103,8 @@ class ProfilePage extends Backbone.View {
     nav.val(this.alpha2).trigger('chosen:updated')
     nav.bind('change', this._onNavChange)
     $('#datasheet-toggles button').click(this._yearToggle)
-    if (this.year === '2015') {
-      $('button[data-year="2015"]').click()
-    } else if (this.year === '2017') {
-      $('button[data-year="2017"]').click()
+    if (_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year)) {
+      $(`button[data-year="${this.year}"]`).click()
     } else {
       $('button[data-year="2006"]').click()
     }
@@ -128,20 +118,14 @@ class ProfilePage extends Backbone.View {
     $('#datasheet-toggles button').removeClass('active')
     target.addClass('active')
     this.year = $(e.delegateTarget).attr('data-year')
-    if (this.year === '2015') {
-      this.years = [2015]
-      badges = {
-        years: this.years,
-        last: false
-      }
-    } else if (this.year === '2017') {
-      this.years = [2017]
+    if (_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year)) {
+      this.years = [parseInt(this.year)]
       badges = {
         years: this.years,
         last: false
       }
     } else {
-      this.years = [2006, 2008, 2010, 2012]
+      this.years = _EXPLORER_DATASET.LEGACY_YEARS.map(y => parseInt(y))
       badges = {
         years: this.years,
         last: false
@@ -167,26 +151,17 @@ class ProfilePage extends Backbone.View {
            questionSet = reportGenerator.questionSet) {
     let score
     let percentageData
-    if (this.year === '2015') {
+    if (_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year)) {
       percentageData = {
         percentages: [
-          this._getPercentages(this.data.alpha2, this.data.db_2015, '2015', questionSet)
-        ]
-      }
-    } else if (this.year === '2017') {
-      percentageData = {
-        percentages: [
-          this._getPercentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+          this._getPercentages(this.data.alpha2, this.data[`db_${this.year}`], this.year, questionSet)
         ]
       }
     } else {
       percentageData = {
-        percentages: [
-          this._getPercentages(this.data.alpha2, this.data.db_2006, '2006', questionSet),
-          this._getPercentages(this.data.alpha2, this.data.db_2008, '2008', questionSet),
-          this._getPercentages(this.data.alpha2, this.data.db_2010, '2010', questionSet),
-          this._getPercentages(this.data.alpha2, this.data.db_2012, '2012', questionSet)
-        ]
+        percentages: _EXPLORER_DATASET.LEGACY_YEARS.map(y => {
+          return this._getPercentages(this.data.alpha2, this.data[`db_${y}`], y, questionSet)
+        })
       }
     }
     $('.percentages').empty().append($(template_profile_percentages(percentageData)))
@@ -212,41 +187,19 @@ class ProfilePage extends Backbone.View {
         return $('.scores .year-' + year + ' .bottom').text('-')
       }
     }
-    if (this.year === '2015') {
-      renderScore(2015, percentageData.percentages[0].score)
-    } else if (this.year === '2017') {
-      renderScore(2017, percentageData.percentages[0].score)
+    if (_EXPLORER_DATASET.INDIVIDUAL_YEARS.includes(this.year)) {
+      renderScore(this.year, percentageData.percentages[0].score)
     } else {
-      renderScore(2006, percentageData.percentages[0].score)
-      renderScore(2008, percentageData.percentages[1].score)
-      renderScore(2010, percentageData.percentages[2].score)
-      renderScore(2012, percentageData.percentages[3].score)
+      for (let i=0; i < _EXPLORER_DATASET.LEGACY_YEARS.length; i++) {
+        renderScore(_EXPLORER_DATASET.LEGACY_YEARS[i], percentageData.percentages[i].score)
+      }
     }
-  }
-
-  _ibpWebsiteUrl(alpha2) {
-    // Special cases: Links are inconsistent on the core website
-    if (alpha2 === 'BJ') {
-      alpha2 = 'benin'
-    }
-    // Quatar Tunisia and Myanmar have no page
-    if (alpha2 === 'QA' || alpha2 === 'TN' || alpha2 === 'MM') {
-      return ''
-    }
-    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' +
-           alpha2.toLowerCase()
   }
 
   _onHoverQuestion(e) {
     const target = $(e.delegateTarget)
-    let datasetQuestion
-    if ($('#datasheet-toggles button.active').attr('data-year') === '2015') {
-      datasetQuestion = _EXPLORER_DATASET.question_2015
-    } else if ($('#datasheet-toggles button.active').attr('data-year') === '2017') {
-      datasetQuestion = _EXPLORER_DATASET.question_2017
-    } else {
-      datasetQuestion = _EXPLORER_DATASET.question_old
-    }
+    const year = $('#datasheet-toggles button.active').attr('data-year')
+    let datasetQuestion = _EXPLORER_DATASET.forYear(year).question
     const number = target.attr('data-question-number')
     const t3q = {
       // t3 questions for 2015
@@ -258,11 +211,12 @@ class ProfilePage extends Backbone.View {
       t3yer: '139',
       t3ar: '140',
 
-      // t3 questions for 2017
+      // t3 questions for 2017/2019
       'PBS-2': 143,
       'EBP-2': 144,
       'EB-2': 145,
       'IYR-2': 146,
+      'IYRs-2': 146,
       'MYR-2': 147,
       'YER-2': 148,
       'AR-2': 149
@@ -298,15 +252,7 @@ class ProfilePage extends Backbone.View {
   }
 
   _getQuestionsForYear(year) {
-    let questions
-    if (year === '2015') {
-      questions = _EXPLORER_DATASET.question_2015
-    } else if (year === '2017') {
-      questions = _EXPLORER_DATASET.question_2017
-    } else {
-      questions = _EXPLORER_DATASET.question_old
-    }
-    return questions
+    return _EXPLORER_DATASET.forYear(year).question
   }
 
   _isThreeLetterAnswer(questionItem) {

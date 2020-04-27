@@ -4,7 +4,7 @@
     {{#each years}}
       <th><span class="badge">{{this}}</span></th>
     {{/each}}
-    <th><span class="badge badge-success">2019</span></th>
+    <th><span class="badge badge-success">{{ calc_year }}</span></th>
     <th class="space"></th>
   </tr>
   {{#each questions as |qvalue qkey| }}

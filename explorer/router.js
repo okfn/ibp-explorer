@@ -17,28 +17,44 @@ import reportGenerator from './views/reportgenerator.js'
 // Generator of singleton view pages
 const singletons = {
   mapPage() {
-    return this._map = this._map || new MapPage()
+    this._map = this._map || new MapPage()
+    this._map.initialize()
+    return this._map
   },
   timelinePage() {
-    return this._timeline = this._timeline || new TimelinePage()
+    this._timeline = this._timeline || new TimelinePage()
+    this._timeline.initialize()
+    return this._timeline
   },
   rankingsPage() {
-    return this._rankings = this._rankings || new RankingsPage()
+    this._rankings = this._rankings || new RankingsPage()
+    this._rankings.initialize()
+    return this._rankings
   },
   availabilityPage() {
-    return this._availHist = this._availHist || new AvailabilityPage()
+    this._availHist = this._availHist || new AvailabilityPage()
+    this._availHist.initialize()
+    return this._availHist
   },
   downloadPage() {
-    return this._download = this._download || new DownloadPage()
+    this._download = this._download || new DownloadPage()
+    this._download.initialize()
+    return this._download
   },
   splashPage() {
-    return this._splash = this._splash || new SplashPage()
+    this._splash = this._splash || new SplashPage()
+    this._splash.initialize()
+    return this._splash
   },
   calculatorPage() {
-    return this._calculator = this._calculator || new CalculatorPage()
+    this._calculator = this._calculator || new CalculatorPage()
+    this._calculator.initialize()
+    return this._calculator
   },
   searchPage() {
-    return this._search = this._search || new SearchPage()
+    this._search = this._search || new SearchPage()
+    this._search.initialize()
+    return this._search
   }
 }
 

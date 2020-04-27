@@ -10,7 +10,9 @@ class SplashPage extends View {
 
   renderPage(target) {
     // Write to DOM
-    this.$el.html(template_page)
+    this.$el.html(template_page({
+      calc_year: (parseInt(_EXPLORER_DATASET.THIS_YEAR) + 2).toString()
+    }))
     target.html(this.$el)
     // Bind to on-page elements
     // ... nothing to bind on this page

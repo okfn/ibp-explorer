@@ -72,6 +72,13 @@ def _lookup(sheet, x, y):
     return sheet.cell(cell_name).value
 
 
+def _sort_name(name):
+    # We want The Gambia to have the label 'The Gambia'
+    # but be sorted under G for Gambia.
+    # If we hit any other cases like this special-case them here.
+    return 'Gambia' if name == 'The Gambia' else name
+
+
 def _read_answers(a_workbook, iso_data, sheet_name, years):
     sheet = a_workbook.get_sheet_by_name(name=sheet_name)
     answers = {}
@@ -131,7 +138,7 @@ def _read_answers(a_workbook, iso_data, sheet_name, years):
         alpha2 = iso_data[name]
         answers[alpha2] = answers.get(alpha2, {'name': name, 'alpha2': alpha2})
         answers[alpha2]['db_%d' % year] = validated
-    return sorted(answers.values(), key=lambda x: x['name'])
+    return sorted(answers.values(), key=lambda x: _sort_name(x['name']))
 
 
 def _read_questions(q_workbook, sheet_name):
@@ -240,7 +247,7 @@ def _read_availability(av_workbook, iso_data, sheets):
         for y in range(2, height + 1):
             name = _lookup(sheet, 1, y)
             assert name in iso_data, \
-                '[%s/%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name, year, name)
+                '[%s] I have no ISO-3116 mapping for country name "%s". Please add one to the ISO mappings file.' % (name, name)
             alpha2 = iso_data[name]
             data = {}
             data['alpha2'] = alpha2
@@ -254,7 +261,10 @@ def _read_availability(av_workbook, iso_data, sheets):
             # Write the data into the structured JSON object
             out[alpha2] = out.get(alpha2, {})
             out[alpha2]['db_'+sheet_name] = data
-    return sorted(out.values(), key=lambda x: x.values()[0]['name'])
+    return sorted(
+        out.values(),
+        key=lambda x: _sort_name(x.values()[0]['name'])
+    )
 
 
 def _read_participation(pp_workbook, iso_data, sheet_name):

@@ -1,13 +1,18 @@
 {{#if fd}}
+  <p>
+      <strong>FULL DATASETS</strong><br />
+      encompassing all Open Budget Surveys published by the International Budget Partnership, are available in multiple formats.
+  </p>
   <table class="table table-bordered">
       <tr class="first-row">
-        <th class="blank" style="width: 300px;"></th>
         <th colspan="2" style="text-align: center;">2006-2012</th>
         <th colspan="2" style="text-align: center;">2015</th>
         <th colspan="2" style="text-align: center;">2017</th>
+        <th colspan="2" style="text-align: center;">2019</th>
       </tr>
       <tr>
-        <th class="blank"></th>
+        <th style="text-align: right;">Format</th>
+        <th>Filename</th>
         <th style="text-align: right;">Format</th>
         <th>Filename</th>
         <th style="text-align: right;">Format</th>
@@ -16,7 +21,6 @@
         <th>Filename</th>
       </tr>
       <tr>
-        <td rowspan="3"><strong>FULL DATASETS</strong><br />encompassing all Open Budget Surveys published by the International Budget Partnership, are available in multiple formats.</td>
       {{#each excel}}
         <td style="text-align: right;">{{format}}</td>
         <td><a href="downloads/{{filename}}">{{filename}}</a> ({{size}})</td>
@@ -38,15 +42,20 @@
 {{/if}}
 
 {{#if sf}}
+  <p>
+      <strong>STATISTICAL FILES</strong><br />
+      complement the datasets, and have been prepared and made available for researchers here.
+  </p>
   <table class="table table-bordered">
       <tr class="first-row">
-        <th class="blank" style="width: 300px;"></th>
         <th colspan="2" style="text-align: center;">2006-2012</th>
         <th colspan="2" style="text-align: center;">2015</th>
         <th colspan="2" style="text-align: center;">2017</th>
+        <th colspan="2" style="text-align: center;">2019</th>
       </tr>
       <tr>
-        <th class="blank"></th>
+        <th style="text-align: right;">Format</th>
+        <th>Filename</th>
         <th style="text-align: right;">Format</th>
         <th>Filename</th>
         <th style="text-align: right;">Format</th>
@@ -55,13 +64,14 @@
         <th>Filename</th>
       </tr>
       <tr>
-        <td rowspan="3"><strong>STATISTICAL FILES</strong><br />complement the datasets, and have been prepared and made available for researchers here.</td>
         <td style="text-align: right;">Excel</td>
         <td><a href="downloads/OBI 2006-2012 ALL for web.xlsx">Full Excel Source</a> (649kb)</td>
         <td style="text-align: right;">Excel</td>
         <td><a href="downloads/OBI 2006-2015 ALL for web.xlsx">Full Excel Source</a> (736kb)</td>
         <td style="text-align: right;">Excel</td>
         <td><a href="downloads/ibp_data_2017_statfile.xlsx">Full Excel Source</a> (178kb)</td>
+        <td style="text-align: right;">Excel</td>
+        <td><a href="downloads/ibp_data_2019_statfile.xlsx">Full Excel Source</a> (178kb)</td>
       </tr>
       <tr>
         <td style="text-align: right;">PDF</td>
@@ -70,6 +80,8 @@
         <td><a href="downloads/OBI 2006-2015 dataset codebook.pdf">Dataset Codebook</a> (1.6mb)</td>
         <td style="text-align: right;">PDF</td>
         <td><a href="downloads/OBS 2017 Codebook.pdf">Dataset Codebook</a> (383kb)</td>
+        <td style="text-align: right;">PDF</td>
+        <td><a href="downloads/OBS 2019 Codebook.pdf">Dataset Codebook</a> (177kb)</td>
       </tr>
       <tr>
         <td style="text-align: right;">STATA</td>
@@ -78,6 +90,8 @@
         <td><a href="downloads/OBI 2006-2015 dataset for web.dta">STATA package</a> (532kb)</td>
         <td style="text-align: right;">STATA</td>
         <td><a href="downloads/ibp_data_2017.dta">STATA package</a> (466kb)</td>
+        <td style="text-align: right;">STATA</td>
+        <td><a href="downloads/ibp_data_2019.dta">STATA package</a> (559kb)</td>
       </tr>
   </table>
 {{/if}}
@@ -119,8 +133,12 @@
           2015
       </label>
       <label class="radio inline">
-        <input type="radio" name="downloadyear" value="2017" checked>
+        <input type="radio" name="downloadyear" value="2017">
           2017
+      </label>
+      <label class="radio inline">
+        <input type="radio" name="downloadyear" value="2019" checked>
+          2019
       </label>
     </p>
   </div>

@@ -37,9 +37,8 @@ class TimelinePage extends View {
     /*
     Create report data structure to drive timeline.
 
-    Query reportGenerator for data from 2017, 2015 and 'old' years (2006-2012).
-    Collect results together, only include countries found in the most recent
-    year (2017).
+    Query reportGenerator for data from all years. Collect results together,
+    only include countries found in the most recent year.
     */
 
     const filteredYearReport = function (year, countries) {
@@ -58,7 +57,7 @@ class TimelinePage extends View {
     }
 
     // Initialise our most recent year object
-    reportGenerator.update('2017', false, true)
+    reportGenerator.update(_EXPLORER_DATASET.THIS_YEAR, false, true)
     const lastReport = {
       dataset: reportGenerator.dataset,
       region: reportGenerator.region,
@@ -68,19 +67,28 @@ class TimelinePage extends View {
     const latestCountries = _.pluck(lastReport.dataset, 'alpha2')
 
     // Get the old report, filtered for the countries we're interested in.
+    // slice(0, -1) because we've already got the current year in lastReport
     const reportOld = filteredYearReport('2006', latestCountries)
-    const report2015 = filteredYearReport('2015', latestCountries)
+    const reportsNew = _EXPLORER_DATASET.INDIVIDUAL_YEARS.slice(0, -1).map(
+      y => filteredYearReport(y, latestCountries)
+    )
 
     // Merge the report properties for latest, and old.
     const mergedDataset = _.map(lastReport.dataset, c => {
       const countryOld = _.find(reportOld.dataset, oc => oc.alpha2 === c.alpha2)
-      const country2015 = _.find(report2015.dataset, oc => oc.alpha2 === c.alpha2)
-      return _.extend(c, countryOld, country2015)
+      const countriesNew = reportsNew.map(
+        report => _.find(report.dataset, oc => oc.alpha2 === c.alpha2)
+      )
+      const currentName = { country: c.country }
+      return _.extend(c, countryOld, ...countriesNew, currentName)
     })
     const mergedDatasetUnrounded = _.map(lastReport.dataset_unrounded, c => {
       const countryOld = _.find(reportOld.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
-      const country2015 = _.find(report2015.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
-      return _.extend(c, countryOld, country2015)
+      const countriesNew = reportsNew.map(
+        report => _.find(report.dataset_unrounded, oc => oc.alpha2 === c.alpha2)
+      )
+      const currentName = { country: c.country }
+      return _.extend(c, countryOld, ...countriesNew, currentName)
     })
 
     this.timelineReport = {
@@ -146,13 +154,16 @@ class TimelinePage extends View {
     const target = $('#timeline-columns')
     if (target.length === 0) return
     const selectedCountries = []
+    const regions = _EXPLORER_DATASET.forYear(_EXPLORER_DATASET.THIS_YEAR).regions
     _.forEach(region, reg => {
-      _.forEach(_EXPLORER_DATASET.regions_2017[reg].contains, contained => {
+      _.forEach(regions[reg].contains, contained => {
         selectedCountries.push(contained)
       })
     })
     let html = ''
-    const years = [2006, 2008, 2010, 2012, 2015, 2017]
+
+    // always only take the 6 most recent years: that's all that will fit
+    const years = _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS).slice(-6)
     _.each(years, y => {
       const templ = (y === _.last(years)) ? template_timeline_column : template_timeline_column_abbr
       html += templ({
@@ -163,7 +174,9 @@ class TimelinePage extends View {
     target.html(html)
     target.find('tr').bind('mouseover', this._mouseoverRanking)
     if (!this.mouseoverAlpha2) {
-      this.mouseoverAlpha2 = $('#timeline-column-2017 tbody tr:first-child').attr('data-alpha2')
+      this.mouseoverAlpha2 = $(
+        `#timeline-column-${_EXPLORER_DATASET.THIS_YEAR} tbody tr:first-child`
+      ).attr('data-alpha2')
     }
     this._redrawJsPlumb()
     this._onToggleMode()

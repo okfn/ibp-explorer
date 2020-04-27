@@ -17,11 +17,13 @@ class ProjectPage extends Backbone.View {
   }
 
   renderPage(target) {
-    this.$el.html(template_page())
+    this.$el.html(template_page({
+      button_years: _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS),
+    }))
     target.html(this.$el)
     $('#year-toggles button').click(this._yearToggle)
     $('#year-compare-toggles button').click(this._yearCompareToggle)
-    $('#year-toggles button[data-year="2017"]').click()
+    $(`#year-toggles button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
     $('#year-compare-toggles button[data-year="None"]').click()
     $('.av-region-toggler').click(this.clickRegion)
     $('table').floatThead()
@@ -74,45 +76,13 @@ class ProjectPage extends Backbone.View {
 
     const tbody = $('#overview-table tbody')
     tbody.empty()
-    let datasetRegions
-    let datasetAv
-    let countries
-    let countriesExcluded
-    let datasetAvCompare
-    let countriesCompare
-    let countriesCompareExcluded
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-      datasetAv = _EXPLORER_DATASET.availability_2015
-      countries = _EXPLORER_DATASET.country_2015
-      countriesExcluded = _EXPLORER_DATASET.excluded_country
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-      datasetAv = _EXPLORER_DATASET.availability_2017
-      countries = _EXPLORER_DATASET.country_2017
-      countriesExcluded = _EXPLORER_DATASET.excluded_country
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetAv = _EXPLORER_DATASET.availability_old
-      countries = _EXPLORER_DATASET.country_old
-      countriesExcluded = _EXPLORER_DATASET.excluded_country_old
-    }
-
-    if (compareYear) {
-      if (compareYear === '2015') {
-        datasetAvCompare = _EXPLORER_DATASET.availability_2015
-        countriesCompare = _EXPLORER_DATASET.country_2015
-        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
-      } else if (compareYear === '2017') {
-        datasetAvCompare = _EXPLORER_DATASET.availability_2017
-        countriesCompare = _EXPLORER_DATASET.country_2017
-        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
-      } else {
-        datasetAvCompare = _EXPLORER_DATASET.availability_old
-        countriesCompare = _EXPLORER_DATASET.country_old
-        countriesCompareExcluded = _EXPLORER_DATASET.excluded_country_old
-      }
-    }
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
+    let datasetAv = _EXPLORER_DATASET.forYear(this.year).availability
+    let countries = _EXPLORER_DATASET.forYear(this.year).country
+    let countriesExcluded = _EXPLORER_DATASET.excluded_country
+    let datasetAvCompare = _EXPLORER_DATASET.forYear(compareYear).availability
+    let countriesCompare = _EXPLORER_DATASET.forYear(compareYear).country
+    let countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
 
     const countriesIncluded = []
     _.forEach(this.regionId, reg => {

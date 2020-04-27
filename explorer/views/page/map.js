@@ -34,12 +34,15 @@ class ProjectPage extends View {
     this._mapToggle = _.bind(this._mapToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
+    reportGenerator.unbind('update')
     reportGenerator.bind('update', this._repaint)
   }
 
   renderPage(target) {
     $(window).scrollTop(0)
-    this.$el.html(template_page())
+    this.$el.html(template_page({
+      button_years: _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS),
+    }))
     target.html(this.$el)
     const map = this.$el.find('#map')
     map.vectorMap({
@@ -77,8 +80,14 @@ class ProjectPage extends View {
       onMarkerClick: this._clickCountry
     })
     this.mapObject = map.vectorMap('get', 'mapObject')
+
+    // HACK: manually fiddle some of the JVectorMap country names
+    this.mapObject.series.regions[0].elements.SZ.config.name = 'Eswatini';
+    this.mapObject.series.regions[0].elements.GM.config.name = 'The Gambia';
+    this.mapObject.series.regions[0].elements.CI.config.name = "C\u00f4te d'Ivoire";
+
     $('#map-toggles button').click(this._mapToggle)
-    $('button[data-year="2017"]').click()
+    $(`button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
 
     /*
      * Debug gradient (usually a static PNG file)
@@ -113,14 +122,7 @@ class ProjectPage extends View {
            questionSet = reportGenerator.questionSet,
            region = reportGenerator.region) {
     let stcolor
-    let datasetRegions
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-    }
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
     const countriesInMap = jvm.WorldMap.maps[MAP_NAME].paths
     const selectedCountries = []
     _.forEach(region, reg => {

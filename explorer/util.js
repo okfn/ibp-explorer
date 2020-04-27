@@ -2,6 +2,7 @@
 
 import _ from 'underscore'
 import _s from 'underscore.string'
+const slugify = require('slugify')
 
 function sortFunction(a, b) {
   let x = b.score - a.score
@@ -11,8 +12,17 @@ function sortFunction(a, b) {
   return x
 }
 
+function sortName(name) {
+  /*
+  We want The Gambia to have the label 'The Gambia'
+  but be sorted under G for Gambia.
+  If we hit any other cases like this special-case them here.
+  */
+  return name === 'The Gambia' ? 'Gambia' : name
+}
+
 function sortFunctionByName(a, b) {
-  let x = a.country.localeCompare(b.country)
+  let x = sortName(a.country).localeCompare(sortName(b.country))
   if (!x) {
     x = b.score - a.score
   }
@@ -50,6 +60,35 @@ const COUNTRY_EXCLUDE_LIST = [
   , ['ZM', '2008']
   , ['SD', '2010']
 ]
+
+const LEGACY_YEARS = ['2006', '2008', '2010', '2012'];
+const INDIVIDUAL_YEARS = ['2015', '2017', '2019'];
+const THIS_YEAR = '2019';
+function cumulativeYears(year) {
+  let years = LEGACY_YEARS
+  if (INDIVIDUAL_YEARS.indexOf(year) > -1) {
+    years = years.concat(INDIVIDUAL_YEARS.slice(0, INDIVIDUAL_YEARS.indexOf(year)+1))
+  }
+  return years
+}
+
+function ibpWebsiteUrl(alpha2, name) {
+  // these 3 countries have a slightly non-standard URL slug
+  const exceptions = {
+    'CI': 'cote-divoire',
+    'CD': 'democratic-republic-congo',
+    'GM': 'gambia',
+  }
+  try {
+    let slug = slugify(name).toLowerCase()
+    if (alpha2 in exceptions) {
+      slug = exceptions[alpha2]
+    }
+    return `https://www.internationalbudget.org/open-budget-survey/country-results/${THIS_YEAR}/${slug}`
+  } catch(e) {
+    return ''
+  }
+}
 
 const mungeExplorerDataset = function (EXPLORER_DATASET) {
   /*
@@ -149,24 +188,47 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
     })
   }
 
-  // 2015 survey dataset
-  assignGroupIds(explorerDataset, '2015')
-  assignRegion(explorerDataset, '2015')
-
-  // 2017 survey dataset
-  assignGroupIds(explorerDataset, '2017')
-  assignRegion(explorerDataset, '2017')
+  INDIVIDUAL_YEARS.forEach(function(year) {
+    assignGroupIds(explorerDataset, year)
+    assignRegion(explorerDataset, year)
+  })
 
   // Pre-2015 survey dataset
   assignGroupIds(explorerDataset, 'old')
   assignRegion(explorerDataset, 'old')
 
+  explorerDataset.forYear = function(year) {
+    if (INDIVIDUAL_YEARS.includes(year)) {
+      return {
+        availability: explorerDataset['availability_' + year],
+        country: explorerDataset['country_' + year],
+        downloads: explorerDataset['downloads_' + year],
+        groupings: explorerDataset['groupings_' + year],
+        question: explorerDataset['question_' + year],
+        regions: explorerDataset['regions_' + year],
+      }
+    }
+    return {
+      availability: explorerDataset['availability_old'],
+      country: explorerDataset['country_old'],
+      downloads: explorerDataset['downloads_old'],
+      groupings: explorerDataset['groupings_old'],
+      question: explorerDataset['question_old'],
+      regions: explorerDataset['regions_old'],
+    }
+  }
+
+  explorerDataset.INDIVIDUAL_YEARS = INDIVIDUAL_YEARS
+  explorerDataset.LEGACY_YEARS = LEGACY_YEARS
+  explorerDataset.THIS_YEAR = THIS_YEAR
+
   return explorerDataset
 }
 
-
 export {
+  cumulativeYears,
+  ibpWebsiteUrl,
   sortFunction,
   sortFunctionByName,
-  mungeExplorerDataset
+  mungeExplorerDataset,
 }

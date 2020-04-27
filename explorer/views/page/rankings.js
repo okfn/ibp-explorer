@@ -26,17 +26,20 @@ class ProjectPage extends View {
     this._rankingsToggle = _.bind(this._rankingsToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
+    reportGenerator.unbind('update')
     reportGenerator.bind('update', this._reflow)
   }
 
   renderPage(target) {
     $(window).scrollTop(0)
-    this.$el.html(template_page())
+    this.$el.html(template_page({
+      button_years: _EXPLORER_DATASET.LEGACY_YEARS.concat(_EXPLORER_DATASET.INDIVIDUAL_YEARS),
+    }))
     target.html(this.$el)
     $('.sortbyname').click(this._sortByNameToggle)
     $('.sortbyname[data-sortbyname="' + this.sortByName + '"]').addClass('active')
     $('#rankings-toggles button').click(this._rankingsToggle)
-    $('button[data-year="2017"]').click()
+    $(`button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
   }
 
   // Private methods
@@ -69,7 +72,7 @@ class ProjectPage extends View {
     const score = _.find(dataset, (x) => {
       return x.alpha2 === country
     })
-    return score[year] || false
+    return score[year] != null ? score[year] : ''
   }
 
   _sortByNameToggle(e) {
@@ -84,21 +87,12 @@ class ProjectPage extends View {
 
   _reflow(dataset = reportGenerator.dataset,
           questionSet = reportGenerator.questionSet,
-          region = reportGenerator.region) {
+          region = reportGenerator.region,
+          dataset_unrounded = reportGenerator.dataset_unrounded) {
     let obj
     let el
-    let datasetRegions
-    let datasetCountry
-    if (this.year === '2015') {
-      datasetRegions = _EXPLORER_DATASET.regions_2015
-      datasetCountry = _EXPLORER_DATASET.country_2015
-    } else if (this.year === '2017') {
-      datasetRegions = _EXPLORER_DATASET.regions_2017
-      datasetCountry = _EXPLORER_DATASET.country_2017
-    } else {
-      datasetRegions = _EXPLORER_DATASET.regions_old
-      datasetCountry = _EXPLORER_DATASET.country_old
-    }
+    let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
+    let datasetCountry = _EXPLORER_DATASET.forYear(this.year).country
     const target = $('#rankings-table tbody').empty()
     if (questionSet.length === 0) {
       target.html('<p style="margin: 4px 15px; font-weight: bold; min-width: 400px;">(No questions selected)</p>')
@@ -125,7 +119,8 @@ class ProjectPage extends View {
       obj = {
         country: country.name,
         alpha2: country.alpha2,
-        score: this._findScore(dataset, country.alpha2, this.year) || '',
+        score: this._findScore(dataset_unrounded, country.alpha2, this.year),
+        score_rounded: this._findScore(dataset, country.alpha2, this.year),
         a: this._count(db, 100, questionSet),
         b: this._count(db, 67, questionSet),
         c: this._count(db, 33, questionSet),

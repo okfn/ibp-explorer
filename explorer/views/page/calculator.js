@@ -10,6 +10,7 @@ import template_question_text from '../templates/question_text.hbs'
 import template_calculator_badges from '../templates/calculator_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
+import * as util from '../../util.js'
 
 
 class CalculatorPage extends Backbone.View {
@@ -20,18 +21,18 @@ class CalculatorPage extends Backbone.View {
     this._onClickAnswer = _.bind(this._onClickAnswer, this)
     this._repaint = _.bind(this._repaint, this)
     this._setupYears = _.bind(this._setupYears, this)
-    this._onClickPrint = _.bind(this._onClickPrint, this)
     this._onClickReset = _.bind(this._onClickReset, this)
     this._clickCalculatorGroupToggle = _.bind(this._clickCalculatorGroupToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
     this.alpha2 = alpha2 || ''
-    this.year = '2017'
-    this.years = [2017]
-    this.countries = _EXPLORER_DATASET.country_2017
+    this.year = _EXPLORER_DATASET.THIS_YEAR
+    this.years = [parseInt(_EXPLORER_DATASET.THIS_YEAR)]
+    this.calc_year = (parseInt(_EXPLORER_DATASET.THIS_YEAR) + 2).toString()
+    this.countries = _EXPLORER_DATASET.forYear(this.year).country
     this.data = this.lookup(this.alpha2)
     this.params = this._decodeParams(params)
-    this.db_2019 = $.extend({}, this.data[`db_${this.year}`], this.params)
+    this.db = $.extend({}, this.data[`db_${this.year}`], this.params)
     // `initialize` gets called when the country dropdown is changed (page is
     // rerendered), so we want to unbind here, incase this has been bound
     // before, to prevent unnecessary _repaints.
@@ -94,7 +95,7 @@ class CalculatorPage extends Backbone.View {
       countries: this.countries,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibpWebsiteUrl(this.alpha2),
+      main_website_url: util.ibpWebsiteUrl(this.alpha2, this.data.name),
       years: this.years
     }
     this.$el.html(template_page(renderData))
@@ -112,7 +113,8 @@ class CalculatorPage extends Backbone.View {
   _setupYears() {
     const badges = {
       years: this.years,
-      groupings0: _EXPLORER_DATASET.groupings_2017.slice(0, 1)
+      groupings0: _EXPLORER_DATASET.forYear(this.year).groupings.slice(0, 1),
+      calc_year: this.calc_year,
     }
     $('#profile-mode').empty().append($(template_calculator_badges(badges)))
     this.data = this.lookup(this.alpha2)
@@ -134,14 +136,15 @@ class CalculatorPage extends Backbone.View {
     let score
     const percentageData = {
       percentages: [
-        this._getPercentages(this.data.alpha2, this.data.db_2017, '2017', questionSet)
+        this._getPercentages(this.data.alpha2, this.data[`db_${this.year}`], this.year, questionSet)
       ]
     }
     $('.percentages').empty().append($(template_profile_percentages(percentageData)))
     $('.percentbar').tooltip({
       placement: 'right',
       delay: 50,
-      animation: true
+      animation: true,
+      calc_year: this.calc_year,
     })
     const detailsData = this._getDetails(this.data, questionSet)
     $('.future').show()
@@ -150,7 +153,7 @@ class CalculatorPage extends Backbone.View {
     _.forEach($('.question-row'), (x) => {
       x = $(x)
       const qnum = x.attr('data-question-number')
-      score = this.db_2019[qnum]
+      score = this.db[qnum]
       x.find('.letter[data-score="' + score + '"]').removeClass('inactive')
         .addClass('active')
     })
@@ -183,25 +186,12 @@ class CalculatorPage extends Backbone.View {
     reportGeneratorGroupBtn.click()
   }
 
-  _ibpWebsiteUrl(alpha2) {
-    // Special cases: Links are inconsistent on the core website
-    if (alpha2 === 'BJ') {
-      alpha2 = 'benin'
-    }
-    // Quatar Tunisia and Myanmar have no page
-    if (alpha2 === 'QA' || alpha2 === 'TN' || alpha2 === 'MM') {
-      return ''
-    }
-    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' +
-           alpha2.toLowerCase()
-  }
-
   _onHoverQuestion(e) {
     const target = $(e.delegateTarget)
-    const datasetQuestion = _EXPLORER_DATASET.question_2017
+    const datasetQuestion = _EXPLORER_DATASET.forYear(_EXPLORER_DATASET.THIS_YEAR).question
     const number = target.attr('data-question-number')
     const t3q = {
-      // t3 questions for 2017
+      // t3 questions
       'PBS-2': 143,
       'EBP-2': 144,
       'EB-2': 145,
@@ -241,15 +231,7 @@ class CalculatorPage extends Backbone.View {
   }
 
   _getQuestionsForYear(year) {
-    let questions
-    if (year === '2015') {
-      questions = _EXPLORER_DATASET.question_2015
-    } else if (year === '2017') {
-      questions = _EXPLORER_DATASET.question_2017
-    } else {
-      questions = _EXPLORER_DATASET.question_old
-    }
-    return questions
+    return _EXPLORER_DATASET.forYear(year).question
   }
 
   _isThreeLetterAnswer(questionItem) {
@@ -347,7 +329,8 @@ class CalculatorPage extends Backbone.View {
     const questions = this._getQuestionsForYear(this.year)
     const out = {
       questions: [],
-      years: this.years
+      years: this.years,
+      calc_year: this.calc_year,
     }
     _.forEach(questionSet, x => {
       const questionItem = _.find(questions, q => String(q.number) === x)
@@ -372,7 +355,7 @@ class CalculatorPage extends Backbone.View {
     const score = el.attr('data-score')
     tr.find('.multi .letter').removeClass('active').addClass('inactive')
     el.removeClass('inactive').addClass('active')
-    this.db_2019[qnum] = parseInt(score)
+    this.db[qnum] = parseInt(score)
     this.params = _.extend(this.params, { [qnum]: score })
     this._repaintFutureScore()
     this._animationHackScale($('.year-box.year-future'))
@@ -386,67 +369,9 @@ class CalculatorPage extends Backbone.View {
     */
     e.preventDefault()
     this.params = {}
-    this.db_2019 = $.extend({}, this.data.db_2017, this.params)
+    this.db = $.extend({}, this.data[`db_${this.year}`], this.params)
     router.navigate(
       `#calculator/${this.alpha2}?${this._encodeParams(this.params)}`)
-    this._repaint()
-  }
-
-  _onClickPrint(e, questionSet = reportGenerator.questionSet) {
-    e.preventDefault()
-    const target = e.delegateTarget
-    const printHeader = printHeader || $('#country-header').text()
-    const detailsData = this._getDetails(this.data, questionSet)
-    const datasetQuestion = _EXPLORER_DATASET.question_2017
-    _.map(detailsData.questions, (val, key) => {
-      const question = _.find(datasetQuestion, (question) => {
-        return String(question['number']) === val['number']
-      })
-      return val['question'] = question
-    })
-    if (target.id === 'print-answered') {
-      $('.details').html(template_calculator_details_future_print({data: detailsData, year: 2019}))
-      if (window.location.toString().split('?')[1]) {
-        $('#country-header').text(`${printHeader}: MODIFIED ${this.year} RESULTS`)
-      } else {
-        $('#country-header').text(printHeader + ': ACTUAL RESULTS')
-      }
-      _.forEach($('.question-row-print'), (x) => {
-        x = $(x)
-        const qnum = x.attr('data-question-number')
-        const score = this.db_2019[qnum]
-        let previousAnswer = this._numberToLetter(this.data.db_2015, qnum)
-        if (previousAnswer) {
-          previousAnswer = previousAnswer.toUpperCase()
-          x.find('.previous-year').html(`Answer was ${previousAnswer} in 2015`)
-        }
-        x.find('div[data-score="' + score + '"]').addClass('active-print')
-      })
-    }
-    if (target.id === 'print-table') {
-      const score2019 = reportGenerator.calculateScore(this.db_2019,
-                                                 reportGenerator.questionSet)
-      const score2017 = reportGenerator.calculateScore(this.data.db_2017,
-                                                  reportGenerator.questionSet)
-      _.forEach(detailsData.questions, (question) => {
-        question['l2017'] = this._numberToLetter(this.db_2019,
-                                                   question['number'])
-      })
-      $('.details').html(template_calculator_details_future_print_table({
-        data: detailsData,
-        score2019: Math.round(score2019),
-        score2017: Math.round(score2017),
-        year: 2019 }))
-    }
-    _.forEach($('.question-row'), (x) => {
-      x = $(x)
-      const qnum = x.attr('data-question-number')
-      const score = this.db_2019[qnum]
-      x.find('img[data-score="' + score + '"]').removeClass('inactive')
-        .addClass('active')
-    })
-    window.print()
-    $('#country-header').text(printHeader)
     this._repaint()
   }
 
@@ -454,7 +379,7 @@ class CalculatorPage extends Backbone.View {
     /*
     Update the future score for the calculator.
     */
-    let score = reportGenerator.calculateScore(this.db_2019,
+    let score = reportGenerator.calculateScore(this.db,
                                                reportGenerator.questionSet)
     score = Math.round(score)
     $('.scores .year-future .bottom').text('Score: ' + score)

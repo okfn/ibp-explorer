@@ -26,7 +26,7 @@ swig.setDefaults({ cache: false })
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'tracker')))
 app.use(cookieParser())
 
