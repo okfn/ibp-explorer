@@ -10,6 +10,7 @@ import template_question_text from '../templates/question_text.hbs'
 import template_calculator_badges from '../templates/calculator_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
+import * as util from '../../util.js'
 
 
 class CalculatorPage extends Backbone.View {
@@ -94,7 +95,7 @@ class CalculatorPage extends Backbone.View {
       countries: this.countries,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibpWebsiteUrl(this.alpha2),
+      main_website_url: util.ibpWebsiteUrl(this.alpha2, this.data.name),
       years: this.years
     }
     this.$el.html(template_page(renderData))
@@ -183,19 +184,6 @@ class CalculatorPage extends Backbone.View {
     $('.group-toggler').removeClass('active')
 
     reportGeneratorGroupBtn.click()
-  }
-
-  _ibpWebsiteUrl(alpha2) {
-    // Special cases: Links are inconsistent on the core website
-    if (alpha2 === 'BJ') {
-      alpha2 = 'benin'
-    }
-    // Quatar Tunisia and Myanmar have no page
-    if (alpha2 === 'QA' || alpha2 === 'TN' || alpha2 === 'MM') {
-      return ''
-    }
-    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' +
-           alpha2.toLowerCase()
   }
 
   _onHoverQuestion(e) {

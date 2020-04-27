@@ -2,6 +2,7 @@
 
 import _ from 'underscore'
 import _s from 'underscore.string'
+const slugify = require('slugify')
 
 function sortFunction(a, b) {
   let x = b.score - a.score
@@ -69,6 +70,24 @@ function cumulativeYears(year) {
     years = years.concat(INDIVIDUAL_YEARS.slice(0, INDIVIDUAL_YEARS.indexOf(year)+1))
   }
   return years
+}
+
+function ibpWebsiteUrl(alpha2, name) {
+  // these 3 countries have a slightly non-standard URL slug
+  const exceptions = {
+    'CI': 'cote-divoire',
+    'CD': 'democratic-republic-congo',
+    'GM': 'gambia',
+  }
+  try {
+    let slug = slugify(name).toLowerCase()
+    if (alpha2 in exceptions) {
+      slug = exceptions[alpha2]
+    }
+    return `https://www.internationalbudget.org/open-budget-survey/country-results/${THIS_YEAR}/${slug}`
+  } catch(e) {
+    return ''
+  }
 }
 
 const mungeExplorerDataset = function (EXPLORER_DATASET) {
@@ -208,6 +227,7 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
 
 export {
   cumulativeYears,
+  ibpWebsiteUrl,
   sortFunction,
   sortFunctionByName,
   mungeExplorerDataset,

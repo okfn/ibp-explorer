@@ -89,6 +89,7 @@
     "run-sequence": "^1.2.2",
     "scrolltofixed": "1.0.6",
     "slug-component": "^1.1.0",
+    "slugify": "^1.4.0",
     "style-loader": "^0.13.1",
     "swig": "~1.4.2",
     "underscore": "^1.8.3",

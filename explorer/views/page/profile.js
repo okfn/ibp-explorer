@@ -9,6 +9,7 @@ import template_question_text from '../templates/question_text.hbs'
 import template_profile_badges from '../templates/profile_badges.hbs'
 
 import reportGenerator from '../reportgenerator.js'
+import * as util from '../../util.js'
 
 
 class ProfilePage extends Backbone.View {
@@ -89,7 +90,7 @@ class ProfilePage extends Backbone.View {
       countries: _EXPLORER_DATASET.forYear(this.year).country,
       data: this.data,
       empty: this.alpha2 === '',
-      main_website_url: this._ibpWebsiteUrl(this.alpha2),
+      main_website_url: util.ibpWebsiteUrl(this.alpha2, this.data.name),
       years: this.years,
       button_years: _EXPLORER_DATASET.INDIVIDUAL_YEARS,
     }
@@ -193,19 +194,6 @@ class ProfilePage extends Backbone.View {
         renderScore(_EXPLORER_DATASET.LEGACY_YEARS[i], percentageData.percentages[i].score)
       }
     }
-  }
-
-  _ibpWebsiteUrl(alpha2) {
-    // Special cases: Links are inconsistent on the core website
-    if (alpha2 === 'BJ') {
-      alpha2 = 'benin'
-    }
-    // Quatar Tunisia and Myanmar have no page
-    if (alpha2 === 'QA' || alpha2 === 'TN' || alpha2 === 'MM') {
-      return ''
-    }
-    return 'http://internationalbudget.org/what-we-do/open-budget-survey/country-info/?country=' +
-           alpha2.toLowerCase()
   }
 
   _onHoverQuestion(e) {
