@@ -45,7 +45,7 @@
     "debug": "~0.7.4",
     "del": "0.1.1",
     "dotenv": "^2.0.0",
-    "exceljs": "^0.4.10",
+    "exceljs": "^1.6.0",
     "expect.js": "0.1.2",
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
