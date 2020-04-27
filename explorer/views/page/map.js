@@ -80,6 +80,12 @@ class ProjectPage extends View {
       onMarkerClick: this._clickCountry
     })
     this.mapObject = map.vectorMap('get', 'mapObject')
+
+    // HACK: manually fiddle some of the JVectorMap country names
+    this.mapObject.series.regions[0].elements.SZ.config.name = 'Eswatini';
+    this.mapObject.series.regions[0].elements.GM.config.name = 'The Gambia';
+    this.mapObject.series.regions[0].elements.CI.config.name = "C\u00f4te d'Ivoire";
+
     $('#map-toggles button').click(this._mapToggle)
     $(`button[data-year="${_EXPLORER_DATASET.THIS_YEAR}"]`).click()
 
