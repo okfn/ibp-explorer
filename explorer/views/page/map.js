@@ -34,6 +34,7 @@ class ProjectPage extends View {
     this._mapToggle = _.bind(this._mapToggle, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
+    reportGenerator.unbind('update')
     reportGenerator.bind('update', this._repaint)
   }
 

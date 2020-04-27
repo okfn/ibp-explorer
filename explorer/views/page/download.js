@@ -11,6 +11,7 @@ class DownloadPage extends Backbone.View {
     this.changeyear = _.bind(this.changeyear, this)
     this.renderPage = _.bind(this.renderPage, this)
     this.initialize = _.bind(this.initialize, this)
+    reportGenerator.unbind('update')
     reportGenerator.bind('update', this._repaint)
   }
 
