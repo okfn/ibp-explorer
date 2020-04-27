@@ -33,7 +33,7 @@ def write_downloads(dataset, iso_data, downloadfoldername, files, years):
     # Import all data
     print('Importing all data...')
     Q_HEADERS, Q_DATA = _questions_as_csv(dataset, keys['question'])
-    G_HEADERS, G_DATA = _groupings_as_csv(dataset, keys['groupings'])
+    G_HEADERS, G_DATA = _groupings_as_csv(dataset, keys['groupings'], years[0])
     CN_HEADERS, CN_DATA = _countrynames_as_csv(dataset, iso_data)
     R_HEADERS, R_DATA = _regions_as_csv(dataset, keys['regions'])
     S_HEADERS, S_DATA = _scores_as_csv(dataset, years, keys['country'])
@@ -166,16 +166,19 @@ def _countrynames_as_csv(dataset, iso_data):
     return HEADERS, DATA
 
 
-def _groupings_as_csv(dataset, groupings):
+def _groupings_as_csv(dataset, groupings, year):
     HEADERS = ['CATEGORY', 'GROUP', 'QUESTION']
     DATA = []
-    t3q = {'134': 't3pbs', '135': 't3ebp', '136': 't3eb', '137': 't3iyr',
-           '138': 't3myr', '139': 't3yer', '140': 't3ar'}
+    if year < 2015:
+        _, t3q = _get_indicator_questions(2015)
+    else:
+        _, t3q = _get_indicator_questions(year)
     for category in dataset[groupings]:
         for entry in category['entries']:
             for question in entry['qs']:
-                if question in t3q:
-                    q = t3q[question]
+                iquestion = int(question)
+                if iquestion in t3q:
+                    q = t3q[iquestion]
                 else:
                     q = question
                 DATA.append([category['by'], entry['title'], q])
@@ -191,60 +194,49 @@ def _questions_as_csv(dataset, questions):
     return HEADERS, DATA
 
 
-def _scores_as_csv(dataset, years, countries):
-    if years[0] == 2015:
-        q = range(1, 141)
-        HEADERS = ['COUNTRY_CODE', 'YEAR']
+def _get_indicator_questions(year):
+    if year == 2015:
+        cols = range(1, 141)
         t3q = {134: 't3pbs', 135: 't3ebp', 136: 't3eb', 137: 't3iyr',
                138: 't3myr', 139: 't3yer', 140: 't3ar'}
-        for x in q:
-            if x >= 134:
-                HEADERS.append(t3q[x])
-            else:
-                HEADERS.append('Q '+str(x))
-        for x in q:
-            if x >= 134:
-                HEADERS.append(t3q[x] + ' (LETTER)')
-            else:
-                HEADERS.append('Q '+str(x)+' (LETTER)')
-    elif years[0] == 2017:
-        q = range(1, 150)
-        HEADERS = ['COUNTRY_CODE', 'YEAR']
+    elif year == 2017:
+        cols = range(1, 150)
         t3q = {143: 'PBS-2', 144: 'EBP-2', 145: 'EB-2', 146: 'IYR-2',
                147: 'MYR-2', 148: 'YER-2', 149: 'AR-2'}
-        for x in q:
-            if x >= 143:
-                HEADERS.append(t3q[x])
-            else:
-                HEADERS.append('Q '+str(x))
-        for x in q:
-            if x >= 143:
-                HEADERS.append(t3q[x] + ' (LETTER)')
-            else:
-                HEADERS.append('Q '+str(x)+' (LETTER)')
-    elif years[0] == 2019:
-        q = range(1, 150)
-        HEADERS = ['COUNTRY_CODE', 'YEAR']
+    elif year == 2019:
+        cols = range(1, 150)
         t3q = {143: 'PBS-2', 144: 'EBP-2', 145: 'EB-2', 146: 'IYRs-2',
                147: 'MYR-2', 148: 'YER-2', 149: 'AR-2'}
-        for x in q:
-            if x >= 143:
+    elif year >= 2020:
+        raise Exception('TODO')
+    return (cols, t3q)
+
+
+def _scores_as_csv(dataset, years, countries):
+    HEADERS = ['COUNTRY_CODE', 'YEAR']
+    if years[0] >= 2015:
+        cols, t3q = _get_indicator_questions(years[0])
+        q = cols
+        min_indicator_col = t3q.keys()[0]
+        for x in cols:
+            if x >= min_indicator_col:
                 HEADERS.append(t3q[x])
             else:
                 HEADERS.append('Q '+str(x))
-        for x in q:
-            if x >= 143:
+        for x in cols:
+            if x >= min_indicator_col:
                 HEADERS.append(t3q[x] + ' (LETTER)')
             else:
                 HEADERS.append('Q '+str(x)+' (LETTER)')
     else:
-        HEADERS = ['COUNTRY_CODE', 'YEAR']
         q = sorted([int(d) for d in dataset[countries][0].get('db_%d' %
                    years[-1]).keys() if unicode.isdigit(d)])  # noqa
+        min_indicator_col = None
         for x in q:
             HEADERS.append('Q '+str(x))
         for x in q:
             HEADERS.append('Q '+str(x)+' (LETTER)')
+
     DATA = []
     for country in dataset[countries]:
         for year in years:
@@ -253,13 +245,13 @@ def _scores_as_csv(dataset, years, countries):
                 continue
             row = [country['alpha2'], year]
             for x in q:
-                if (year == 2015 and x >= 134) or (year in [2017, 2019] and x >= 143):
+                if min_indicator_col and x >= min_indicator_col:
                     qkey = t3q[x]
                     row.append(db[qkey])
                 else:
                     row.append(db[str(x)])
             for x in q:
-                if (year == 2015 and x >= 134) or (year in [2017, 2019] and x >= 143):
+                if min_indicator_col and x >= min_indicator_col:
                     qkey = t3q[x]
                     score = db[qkey]
                 else:
