@@ -87,7 +87,8 @@ class ProjectPage extends View {
 
   _reflow(dataset = reportGenerator.dataset,
           questionSet = reportGenerator.questionSet,
-          region = reportGenerator.region) {
+          region = reportGenerator.region,
+          dataset_unrounded = reportGenerator.dataset_unrounded) {
     let obj
     let el
     let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
@@ -118,7 +119,8 @@ class ProjectPage extends View {
       obj = {
         country: country.name,
         alpha2: country.alpha2,
-        score: this._findScore(dataset, country.alpha2, this.year) || '',
+        score: this._findScore(dataset_unrounded, country.alpha2, this.year) || '',
+        score_rounded: this._findScore(dataset, country.alpha2, this.year) || '',
         a: this._count(db, 100, questionSet),
         b: this._count(db, 67, questionSet),
         c: this._count(db, 33, questionSet),
