@@ -274,6 +274,7 @@ def _summary_as_csv(dataset, years, countries, questions):
     q = range(1, 125)
     HEADERS = ['COUNTRY', 'YEAR', 'OPEN_BUDGET_INDEX', 'RANK']
     DATA = []
+
     for year in years:
         temp = []
         for country in dataset[countries]:
@@ -281,21 +282,36 @@ def _summary_as_csv(dataset, years, countries, questions):
             if not db:
                 continue
             score = db.get('roundobi')
-            row = [country['alpha2'], year, score, -1]
+            row = {
+                'COUNTRY': country['alpha2'],
+                'YEAR': year,
+                'OBI_UNROUNDED': db.get('obi'),
+                'OBI_ROUNDED': db.get('roundobi'),
+                'RANK': -1,
+            }
             temp.append(row)
+
         # Sort this year's array by score
-        temp = sorted(temp, key=lambda x: x[2], reverse=True)
+        temp = sorted(temp, key=lambda x: x['OBI_UNROUNDED'], reverse=True)
+
         # Add rankings
         rank = 0
         latest = -1
         for i in range(len(temp)):
-            if temp[i][2] != latest:
-                latest = temp[i][2]
+            if temp[i]['OBI_UNROUNDED'] != latest:
+                latest = temp[i]['OBI_UNROUNDED']
                 rank = i+1
-            temp[i][3] = rank
+            temp[i]['RANK'] = rank
+
         # Fold this year's results into the overall results
-        for x in temp:
-            DATA.append(x)
+        for row in temp:
+            DATA.append([
+                row['COUNTRY'],
+                row['YEAR'],
+                row['OBI_ROUNDED'],
+                row['RANK'],
+            ])
+
     DATA = sorted(DATA, key=lambda x: x[0])
     return HEADERS, DATA
 
