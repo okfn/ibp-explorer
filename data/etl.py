@@ -145,7 +145,7 @@ def run_etl(js_output_path, download_dir_path, skip_downloads=False):
         ['2006', '2008', '2010', '2012', '2015', '2017', '2019']
     datafiles['pp_xlsx'] = 'public participation.xlsx'
     datafiles['pp_xlsx_sheet'] = 'Sheet1'
-    datafiles['years'] = [2017, 2019]
+    datafiles['years'] = [2019]
 
     dataset_2019 = lib_read.read(iso_data, datafiles, '2019')
     if not skip_downloads:
