@@ -202,6 +202,7 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
       return {
         availability: explorerDataset['availability_' + year],
         country: explorerDataset['country_' + year],
+        excluded_country: explorerDataset['excluded_country' + year],
         downloads: explorerDataset['downloads_' + year],
         groupings: explorerDataset['groupings_' + year],
         question: explorerDataset['question_' + year],
@@ -211,6 +212,7 @@ const mungeExplorerDataset = function (EXPLORER_DATASET) {
     return {
       availability: explorerDataset['availability_old'],
       country: explorerDataset['country_old'],
+      excluded_country: explorerDataset['excluded_country_old'],
       downloads: explorerDataset['downloads_old'],
       groupings: explorerDataset['groupings_old'],
       question: explorerDataset['question_old'],

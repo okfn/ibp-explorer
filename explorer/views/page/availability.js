@@ -79,10 +79,10 @@ class ProjectPage extends Backbone.View {
     let datasetRegions = _EXPLORER_DATASET.forYear(this.year).regions
     let datasetAv = _EXPLORER_DATASET.forYear(this.year).availability
     let countries = _EXPLORER_DATASET.forYear(this.year).country
-    let countriesExcluded = _EXPLORER_DATASET.excluded_country
+    let countriesExcluded = _EXPLORER_DATASET.forYear(this.year).excluded_country
     let datasetAvCompare = _EXPLORER_DATASET.forYear(compareYear).availability
     let countriesCompare = _EXPLORER_DATASET.forYear(compareYear).country
-    let countriesCompareExcluded = _EXPLORER_DATASET.excluded_country
+    let countriesCompareExcluded = _EXPLORER_DATASET.forYear(compareYear).excluded_country
 
     const countriesIncluded = []
     _.forEach(this.regionId, reg => {
