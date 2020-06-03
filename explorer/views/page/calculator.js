@@ -196,6 +196,7 @@ class CalculatorPage extends Backbone.View {
       'EBP-2': 144,
       'EB-2': 145,
       'IYR-2': 146,
+      'IYRs-2': 146,
       'MYR-2': 147,
       'YER-2': 148,
       'AR-2': 149
