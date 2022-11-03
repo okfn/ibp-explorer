@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/okfn/ibp-explorer/badge.svg?branch=master)](https://coveralls.io/github/okfn/ibp-explorer?branch=master)
 [![Issues](https://img.shields.io/badge/issue-tracker-orange.svg)](https://github.com/okfn/ibp-explorer/issues)
 
-* Live version: http://survey.internationalbudget.org
+This project is no longer active. Live version used to live at: http://survey.internationalbudget.org (Archived version: https://web.archive.org/web/20220119021336/http://survey.internationalbudget.org/)
 
 Developed in collaboration between the [International Budget Partnership](https://internationalbudget.org) and the [Open Knowledge Foundation](https://okfn.org). Written by [Tom Rees](https://github.com/zephod), [Hélène Durand](https://github.com/hdurand), [Tryggvi Björgvinsson](https://github.com/trickvi), [Damjan Velickovski](https://github.com/dumyan), and [Brook Elgie](https://github.com/brew).
 
