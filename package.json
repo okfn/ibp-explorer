@@ -82,7 +82,7 @@
     "metalsmith": "^2.3.0",
     "metalsmith-json-to-files": "brew/metalsmith-json-to-files#json-from-metadata",
     "metalsmith-layouts": "^1.8.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "morgan": "^1.9.1",
     "request": "~2.81.0",
     "resolve-url-loader": "^1.6.0",
